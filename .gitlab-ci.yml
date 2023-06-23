@@ -1,0 +1,67 @@
+---
+variables:
+  DATABASE_VERSION: "13.7.1"
+  APP_VERSION: "1.1.2-fix"
+  PHP_VERSION: "8.0"
+  TAG_NAME: "smile-core"
+  APP_RELEASE_IMAGE: "smile:$APP_VERSION"
+  DATABASE_TAG_NAME: "smile-database"
+  PROXY_UNICAEN: "http://proxy.unicaen.fr:3128"
+  DOCKER_TLS_CERTDIR: ""
+  PATTERN_DEVELOP: "/(dev)\/?(.*)/"
+  PATTERN_MASTER: "master"
+
+stages:
+  - 🏗 image 🐋 build push smile core
+  - 🏗 image 🐋 build push smile database
+
+services:
+  - docker:18.09.7-dind
+
+🏗 image 🐋 build push smile core:
+  stage: 🏗 image 🐋 build push smile core
+  image:
+    name: docker:dind
+  services:
+    - name: docker:dind
+      alias: dockerdaemon
+      entrypoint: ["dockerd-entrypoint.sh"]
+  variables:
+    DISABLE_UNDERSCORE_INTENT: DEFAULT/value
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - export http_proxy=$PROXY_UNICAEN
+    - export https_proxy=$PROXY_UNICAEN
+    - docker login -u $UNISTRA_REGISTRY_USERNAME -p $UNISTRA_REGISTRY_PASSWORD quay.apps.ocp-warmup.di.unistra.fr
+  script:
+    - docker build -f ./Dockerfile --build-arg PHP_VERSION=$PHP_VERSION -t $TAG_NAME .
+    - docker tag $TAG_NAME quay.apps.ocp-warmup.di.unistra.fr/smile/$TAG_NAME:$APP_VERSION
+    - docker push quay.apps.ocp-warmup.di.unistra.fr/smile/$TAG_NAME:$APP_VERSION
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ $PATTERN_DEVELOP
+    - if: $CI_COMMIT_BRANCH =~ $PATTERN_MASTER
+
+🏗 image 🐋 build push smile database:
+  stage: 🏗 image 🐋 build push smile database
+  image:
+    name: docker:dind
+  services:
+    - name: docker:dind
+      alias: dockerdaemon
+      entrypoint: ["dockerd-entrypoint.sh"]
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - export http_proxy=$PROXY_UNICAEN
+    - export https_proxy=$PROXY_UNICAEN
+    - docker login -u $UNISTRA_REGISTRY_USERNAME -p $UNISTRA_REGISTRY_PASSWORD quay.apps.ocp-warmup.di.unistra.fr
+  script:
+    - docker build -f ./Dockerfile_Smile_Database -t $DATABASE_TAG_NAME .
+
+    - docker tag $DATABASE_TAG_NAME quay.apps.ocp-warmup.di.unistra.fr/smile/$DATABASE_TAG_NAME:$DATABASE_VERSION
+    - docker push quay.apps.ocp-warmup.di.unistra.fr/smile/$DATABASE_TAG_NAME:$DATABASE_VERSION
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ $PATTERN_DEVELOP
+    - if: $CI_COMMIT_BRANCH =~ $PATTERN_MASTER

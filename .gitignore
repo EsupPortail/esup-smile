@@ -1,0 +1,13 @@
+src/vendor/
+.idea
+.DS_Store
+.vscode/
+src/module/Test
+src/public/css/.sass-cache
+src/public/upload
+SQL/1-schema/000_database.sql
+upload/
+data/
+
+smiledata/
+src/.env

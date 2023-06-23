@@ -1,0 +1,3 @@
+FROM postgres:13.7
+
+COPY ./deploy_configuration/db /docker-entrypoint-initdb.d/
