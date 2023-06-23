@@ -1,0 +1,33 @@
+.chooseRole .checkRole {
+  cursor: pointer;
+}
+.chooseRole .checkRole:hover {
+  opacity: 0.5;
+}
+.chooseRole .checkRole.active:hover {
+  opacity: 1;
+}
+.chooseRole .checkRole.active .card {
+  background: #27ae60 !important;
+}
+.chooseRole .checkRole input[type=checkbox] {
+  padding: 10px;
+}
+.chooseRole .card img {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+.chooseRole .card .card-body {
+  text-align: center;
+  padding-top: 0;
+}
+.chooseRole .card .card-body span {
+  font-size: 1rem !important;
+}
+
+#create-inscription-form div {
+  margin-top: 2px;
+}
+
+/*# sourceMappingURL=inscription.css.map */

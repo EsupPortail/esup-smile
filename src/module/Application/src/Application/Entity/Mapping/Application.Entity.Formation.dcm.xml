@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Application\Entity\Formation" table="formation">
+    <indexes>
+      <index name="IDX_404021BFD543922B" columns="type_formation_id"/>
+      <index name="IDX_404021BFE22A2443" columns="domaine_formation_id"/>
+      <index name="IDX_404021BFAC12F1AD" columns="composante_id"/>
+      <index name="IDX_404021BF74F22DEA" columns="langue_enseignement_id"/>
+      <index name="IDX_404021BF953C1C61" columns="source_id"/>
+      <index name="IDX_404021BF238B9CE0" columns="histo_createur_id"/>
+      <index name="IDX_404021BFE005E3D6" columns="histo_modificateur_id"/>
+      <index name="IDX_404021BFF559C971" columns="histo_destructeur_id"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="formation_code_source_unique" columns="source_id,source_code"/>
+    </unique-constraints>
+    <id name="id" type="bigint" column="id">
+      <generator strategy="SEQUENCE"/>
+      <sequence-generator sequence-name="formation_id_seq" allocation-size="1" initial-value="1"/>
+    </id>
+    <field name="code" type="string" column="code" length="64" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="libelle" type="string" column="libelle" length="120" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="acronyme" type="string" column="acronyme" length="10" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="typeDiplomeId" type="bigint" column="type_diplome_id" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="niveauEtude" type="integer" column="niveau_etude" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="ouvertMobilite" type="boolean" column="ouvert_mobilite" nullable="true">
+      <options>
+        <option name="default">1</option>
+      </options>
+    </field>
+    <field name="mention" type="text" column="mention" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="objectifs" type="text" column="objectifs" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="programme" type="text" column="programme" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="prerequisPedagogique" type="text" column="prerequis_pedagogique" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="modaliteEnseignement" type="text" column="modalite_enseignement" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="bibliographie" type="text" column="bibliographie" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="contacts" type="string" column="contacts" length="250" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="informationsComplementaires" type="text" column="informations_complementaires" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="sourceCode" type="string" column="source_code" length="64" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="histoCreation" type="datetime" column="histo_creation" nullable="false">
+      <options>
+        <option name="default">now()</option>
+      </options>
+    </field>
+    <field name="histoModification" type="datetime" column="histo_modification" nullable="true"/>
+    <field name="histoDestruction" type="datetime" column="histo_destruction" nullable="true"/>
+    <many-to-one field="typeFormation" target-entity="Application\Entity\TypeFormation" fetch="LAZY">
+      <join-columns>
+        <join-column name="type_formation_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="domaineFormation" target-entity="Application\Entity\DomaineFormation" fetch="LAZY">
+      <join-columns>
+        <join-column name="domaine_formation_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="composante" target-entity="Application\Entity\Composante" fetch="LAZY">
+      <join-columns>
+        <join-column name="composante_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="langueEnseignement" target-entity="Application\Entity\Langue" fetch="LAZY">
+      <join-columns>
+        <join-column name="langue_enseignement_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="source" target-entity="UnicaenDbImport\Entity\Db\Source" fetch="LAZY">
+      <join-columns>
+        <join-column name="source_id" referenced-column-name="ID"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="histoCreateur" target-entity="UnicaenUtilisateur\Entity\Db\User" fetch="LAZY">
+      <join-columns>
+        <join-column name="histo_createur_id" referenced-column-name="ID"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="histoModificateur" target-entity="UnicaenUtilisateur\Entity\Db\User" fetch="LAZY">
+      <join-columns>
+        <join-column name="histo_modificateur_id" referenced-column-name="ID"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="histoDestructeur" target-entity="UnicaenUtilisateur\Entity\Db\User" fetch="LAZY">
+      <join-columns>
+        <join-column name="histo_destructeur_id" referenced-column-name="ID"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="inscription" target-entity="Application\Entity\Inscription" mapped-by="formation" fetch="LAZY"/>
+  </entity>
+</doctrine-mapping>

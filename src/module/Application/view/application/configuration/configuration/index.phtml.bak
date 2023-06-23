@@ -1,0 +1,250 @@
+<div class="container" id="configuration">
+    <div class="row">
+        <div class="col-12 text-center headTitle">
+            <h1>Configuration of your application SMILE</h1>
+        </div>
+        <div class="col-12">
+            <p>The processus of validation of SMILE is customizable, here you can choose where and what your manager have to validate.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <label class="form-label" for="providerSelect">I have a provider :</label>
+            <select class="form-select" id="providerSelect" name="providerSelect">
+                <option value="0">No</option>
+                <option value="1">Yes, enable EWP</option>
+            </select>
+        </div>
+        <div class="col-2 offset-6 d-grid pt-3">
+            <button id="saveSteps" class="btn btn-info">Save</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table id="stepTable" class="table table-condensed table-hover">
+                <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Need Validation</th>
+                    <th>Validator</th>
+                    <th>Order</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+         </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        let dataChange = []
+
+        let QTable = $('#stepTable');
+
+        let saveBtn = document.querySelector('#saveSteps')
+
+        if (jQuery().dataTable) {
+            let tableEl = QTable.DataTable({
+                order: [[4, 'desc']],
+                "responsive": true,
+                "stateSave": true,
+                "retrieve": true,
+                "autoWidth": true,
+                "processing": true,
+                "paging": false,
+                "searching": false,
+                "ordering": false,
+                "select": false,
+                "columns": [
+                    { "data": "code" },
+                    { "data": "name" },
+                    { "data": "needValidation" },
+                    { "data": "validator" },
+                    { "data": "order" },
+                ],
+                "columnDefs": [
+
+                    {
+                        render: function (data, type, row) {
+                            return `${data[0]}`
+                        },
+                        targets: [4],
+                    },
+                    {
+                        render: function (data, type, row) {
+                            return `
+                                    <div class="form-check">
+                                        <input type="checkbox" data-code="${data[1]}" class="form-check-input checkStep" ${(data[0]) ? 'checked': ''}>
+                                   </div>
+                                   `
+                        },
+                        targets: [2],
+                    }
+                ],
+                "ajax": {
+                    "url": "configuration/getData",
+                    "type": "POST",
+                    "dataSrc": function(json) {
+                        // console.log(json)
+                        return JSON.parse(json)
+                    }
+                },
+
+            })
+            // tableEl.ajax.reload()
+            // tableEl
+            //     .order( [ 1, 'asc' ] )
+            //     .draw();
+            //     <span data-order="${data[0]}" class='spanOrder spanOrder-${data[1]}'>${data[0]}</span>
+            // <i data-id="${data[1]}" data-type="up" class="fa-solid fa-arrow-up changeOrder"></i>
+            // <i data-id="${data[1]}" data-type="down" class="fa-solid fa-arrow-down changeOrder"></i>
+
+            let spanOrder = []
+            tableEl.on('init', () => {
+                console.log('init')
+                let changerOrderList = document.querySelectorAll('.changeOrder')
+                let checkStepList = document.querySelectorAll('.checkStep')
+
+                spanOrder = document.querySelectorAll('.spanOrder')
+
+                checkStepList.forEach((el, key) => {
+                    el.addEventListener('change', changeValidationAPI)
+                })
+
+                changerOrderList.forEach((el, key) => {
+                    el.addEventListener('click', changeOrderAPI)
+                })
+                // console.log(tableEl.row())
+                tableEl.row().on('click', (a, b) => {
+                    // console.log(a)
+                    // console.log(b)
+                })
+            })
+
+            function changeOrderAPI(event) {
+
+                let elem = event.target
+                let type = elem.dataset.type
+                let data = { data: event.target.dataset.type }
+                fetch('configuration/changeOrder', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then((response) => {
+                        return response.json()
+                    })
+                    .then((response) => {
+                        console.log(response)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            }
+
+            function changeValidationAPI(event) {
+
+                let elem = event.target
+                let type = elem.dataset.type
+                let data = {
+                    type: 'checkValidation',
+                    code: event.target.dataset.code
+                }
+                fetch('configuration/save', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then((response) => {
+                        return response.json()
+                    })
+                    .then((response) => {
+                        console.log(response)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            }
+
+            function changeOrder(event) {
+                let elem = event.target
+                let type = elem.dataset.type
+                let id = elem.dataset.id
+                let elemClicked = document.querySelector('.spanOrder-'+id)
+                let elemClickedO = parseInt(elemClicked.dataset.order)
+
+                if ((type === 'up' && (elemClickedO < spanOrder.length)) || (type === 'down' && (elemClickedO > 1))) {
+                    spanOrder.forEach((span) => {
+                        let spanO = parseInt(span.dataset.order)
+                        if(type === 'up' && (spanO === (elemClickedO+1))) {
+                            span.dataset.order = (spanO-1)+''
+                            span.innerHTML = span.dataset.order
+                        }else if (type === 'down' && (spanO === (elemClickedO-1))) {
+                            span.dataset.order = (spanO+1)+''
+                            span.innerHTML = span.dataset.order
+                        }
+                    })
+
+                    if(type === 'up') {
+                        elemClicked.dataset.order = (elemClickedO+1)+''
+                        elemClicked.innerHTML = elemClicked.dataset.order
+                    }else {
+                        elemClicked.dataset.order = (elemClickedO-1)+''
+                        elemClicked.innerHTML = elemClicked.dataset.order
+                    }
+                }else {
+
+                }
+
+
+                // tableEl.row.add({
+                //     'code': 'test',
+                //     'name': 'test',
+                //     'needValidation': 'alo',
+                //     'validator': 'validator',
+                //     'order': 'order'
+                // }).draw().node()
+
+                tableEl.ajax.reload()
+                // tableEl.draw()
+            }
+
+
+
+            saveBtn.addEventListener('click', () => {
+                console.log('save')
+                fetch('configuration/save',
+                    {
+                        method: 'POST',
+                        headers: {
+                        'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    })
+                    .then((response) => {
+                        return response.json()
+                    })
+                    .then((response) => {
+                        console.log(response)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            })
+
+        }
+    })
+</script>

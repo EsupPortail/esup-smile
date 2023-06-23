@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Application\Entity\Inscription" table="inscription">
+    <indexes>
+      <index name="inscription_step_id" columns="step_id"/>
+      <index name="inscription_etablissement_id" columns="etablissement_id"/>
+      <index name="inscription_mobilite_id" columns="mobilite_id"/>
+      <index name="inscription_composante_id" columns="composante_id"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="inscription_user_id" columns="user_id"/>
+      <unique-constraint name="inscription_diplomepays_id" columns="diplomepays_id"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+      <sequence-generator sequence-name="inscription_id_seq" allocation-size="1" initial-value="1"/>
+    </id>
+    <field name="uuid" type="guid" column="uuid" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="default">uuid_generate_v4()</option>
+      </options>
+    </field>
+    <field name="firstname" type="string" column="firstname" length="64" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="lastname" type="string" column="lastname" length="64" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="birthdate" type="date" column="birthdate" nullable="true"/>
+    <field name="esi" type="string" column="esi" length="100" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="city" type="string" column="city" length="100" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="postalcode" type="string" column="postalcode" length="100" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="street" type="string" column="street" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="numstreet" type="integer" column="numstreet" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="firstmobilite" type="boolean" column="firstmobilite" nullable="true"/>
+    <field name="handicap" type="boolean" column="handicap" nullable="true"/>
+    <field name="mailreferent" type="string" column="mailreferent" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="status" type="string" column="status" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="statuslibelle" type="string" column="statuslibelle" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="user" target-entity="UnicaenUtilisateur\Entity\Db\User" fetch="LAZY">
+      <join-columns>
+        <join-column name="user_id" referenced-column-name="ID"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="composante" target-entity="Application\Entity\Composante" fetch="LAZY">
+      <join-columns>
+        <join-column name="composante_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="mobilite" target-entity="Application\Entity\Mobilite" fetch="LAZY">
+      <join-columns>
+        <join-column name="mobilite_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="step" target-entity="Application\Entity\Step" fetch="LAZY">
+      <join-columns>
+        <join-column name="step_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="etablissement" target-entity="Application\Entity\Etablissement" fetch="LAZY">
+      <join-columns>
+        <join-column name="etablissement_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="diplomepays" target-entity="Application\Entity\Pays" fetch="LAZY">
+      <join-columns>
+        <join-column name="diplomepays_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="formation" target-entity="Application\Entity\Formation" inversed-by="inscription" fetch="LAZY">
+      <join-table name="inscription_formation_linker">
+        <join-columns>
+          <join-column name="inscription_id" referenced-column-name="id"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="formation_id" referenced-column-name="id"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+    <many-to-many field="cours" target-entity="Application\Entity\Cours" inversed-by="cours" fetch="LAZY">
+      <join-table name="inscription_cours_linker">
+        <join-columns>
+          <join-column name="inscription_id" referenced-column-name="id"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="cours_id" referenced-column-name="id"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+  </entity>
+</doctrine-mapping>

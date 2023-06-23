@@ -1,0 +1,179 @@
+/*
+	Unistrap n'est pas présent dans le <HEAD>
+	Je le charge ici mais il devrait être chargé normalement dans le <HEAD> avant ton app.css
+*/
+@import '../unistrap-1.0.0/css/unistrap.css';
+
+
+
+/* Tes variables */
+:root{
+	--unistrap-color-main: #F5F5F5;
+    --smile-main-color: #039DC1;
+    --smile-secondary-color: #F5F5F5;
+    --nav-link-color: #707070;
+    --footer-link-color: white;
+    --version-dev-color: orange;
+    --version-prod-color: green;
+    --version-test-color: grey;
+}
+
+
+
+/* Tes modifications d'unistrap */
+.unistrap footer {
+    position: relative;
+    background-color: var(--smile-main-color);
+}
+.unistrap .navbar.navbar-main  li.nav-item:nth-child(n+2) a.nav-link {
+    margin-left: inherit;
+}
+.unistrap.unistrap-tpl-light .navbar.navbar-main .nav-link,
+.unistrap.unistrap-tpl-light .navbar.navbar-main .nav-link:visited {
+    color: var(--nav-link-color);
+    border-bottom: 2px solid transparent;
+
+    padding: 1rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+
+}
+.unistrap.unistrap-tpl-light .navbar.navbar-main .nav-link:hover,
+.unistrap.unistrap-tpl-light .navbar.navbar-main .nav-link:active,
+.unistrap.unistrap-tpl-light .navbar.navbar-main .nav-link:focus {
+    border-bottom: 2px solid transparent;
+    color: var(--smile-main-color);
+}
+.unistrap.unistrap-tpl-light .navbar.navbar-main .nav-link:hover,
+.unistrap.unistrap-tpl-light .navbar.navbar-main .nav-link:active,
+.unistrap.unistrap-tpl-light .navbar.navbar-main .nav-link:focus {
+    border-bottom: 2px solid rgba(0,0,0,.5);
+}
+.unistrap .navbar.navbar-main .nav-link.active,
+.unistrap .navbar.navbar-main .nav-link.active:hover {
+    background: rgba(255,255,255,.2);
+    color: var(--smile-main-color);
+}
+.unistrap.unistrap-th-smile-light {
+    --unistrap-color-main: var(--smile-secondary-color);
+    --unistrap-color-light: var(--bs-gray-200);
+    --unistrap-color-dark: var(--bs-gray-700);
+    --bs-link-color: var(--bs-dark);
+}
+.shape-color-foot {
+    fill: var(--smile-main-color);
+}
+
+
+
+/*
+	------------------------------------------------
+		Proposition pour la structure globale
+		
+*/
+.unistrap .navbar.navbar-main .navbar-logo-smile {
+	transition: all .2s linear;
+}
+.unistrap.unistrap-scroll .navbar.navbar-main .navbar-logo-smile {
+	max-height: 48px;
+}
+.headTitle {
+	background: none;
+	color: #000;
+	text-align: left !important;
+}
+.headTitle h1 {
+	font-weight: bold;
+}
+h2:not(.h2-hp):not(.modal-title) {
+	border-left: 20px solid var(--smile-main-color);
+	padding-left: .5em;
+	display: inline-block;
+}
+.alert .fa-solid,
+.alert .fas {
+	color: var(--bs-alert-border-color);
+	margin: -8px 10px -4px 0;
+}
+/*
+	------------------------------------------------
+		Proposition pour la page / (home)
+
+*/
+.smile-home-heroes {
+	max-width: 475px;
+	background-image: url('/img/logo_smile_RVB.jpg');
+	background-position: center;
+	background-size: 50%;
+	background-repeat: no-repeat;
+}
+/*
+	------------------------------------------------
+		Proposition pour les pages /gestion/
+
+*/
+/* table */
+.unistrap table.table-smile {
+    width: 100%;
+    color:#444;
+    border: 1px solid #AAA;
+	border-collapse: collapse !important;
+}
+.unistrap table.table-smile tbody.serveur-inactif {
+    opacity: .5;
+}
+.unistrap table.table-smile th {
+    padding: 10px;
+    text-align: center;
+    font-size: smaller;
+    letter-spacing: .1em;
+    background-color: var(--smile-secondary-color);
+    border: 1px solid  #AAA;
+	background-clip: padding-box;
+}
+.unistrap table.table-smile td {
+    padding: 2px 5px;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid #EEE;
+	background-clip: padding-box;
+}
+.unistrap table.table-smile tr td[rowspan]:first-of-type {
+    border-left: 1px solid #AAA;  
+}
+.unistrap table.table-smile tr td[rowspan]:last-of-type {
+    border-right: 1px solid #AAA;  
+}
+.unistrap table.table-smile tr:hover td { background-color: #f0f8ff; }
+.unistrap table.table-smile tr:hover td:nth-child(1) {
+    background-color: var(--smile-main-color) !important;
+    color: #fff
+}
+.unistrap table.table-smile tr:hover td:nth-child(1) a,
+.unistrap table.table-smile tr:hover td:nth-child(1) a:visited {
+    color: #fff
+}
+/* boutons */
+.smile-btn {
+	display: inline-block;
+	padding: .1rem .2rem;
+}
+.smile-svg {
+	margin: -4px 0 -2px 0;
+	fill: grey;
+}
+.btn .smile-svg {
+	fill: #FFF;
+}
+
+.titleBlue {
+    color: var(--smile-main-color);
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}

@@ -1,0 +1,107 @@
+<?php
+
+
+use Application\Application\Form\Inscription\InscriptionForm;
+use Application\Application\View\Renderer\PhpRenderer;
+
+/**
+ * @var InscriptionForm $form
+ * @var PhpRenderer $this
+ * @var \Laminas\Form\Element\Collection $userColl
+ */
+$fe = $this->formErrors();
+$fcg = $this->formControlGroup();
+
+$fr = $this->formrow();
+$fct = $this->formControlText();
+$fcd = $this->formdate();
+
+?>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <?php
+            $fieldset = $form->getBaseFieldset();
+            echo $this->form()->openTag($form->prepare());
+            ?>
+            <fieldset>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-12">
+                        <h1 class="text-center">Registration</h1>
+                    </div>
+                    <div class="col-md-12">
+
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?= $fct($fieldset->get($fieldset::INPUT_FIRSTNAME)) ?>
+                            </div>
+                            <div class="col-md-6">
+                                <?= $fct($fieldset->get($fieldset::INPUT_LASTNAME)) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?= $fcg($fieldset->get($fieldset::INPUT_BIRTHDATE)) ?>
+                            </div>
+                            <div class="col-md-6">
+                                <?= $fcg($fieldset->get($fieldset::INPUT_CITY)) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?= $fcg($fieldset->get($fieldset::INPUT_POSTALCODE)) ?>
+                            </div>
+                            <div class="col-md-6">
+                                <?= $fcg($fieldset->get($fieldset::INPUT_STREET)) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?= $fcg($fieldset->get($fieldset::INPUT_NUM_STREET)) ?>
+                            </div>
+                            <div class="col-md-6">
+                                <?= $fcg($fieldset->get($fieldset::INPUT_FIRST_MOBILITE)) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?= $fcg($fieldset->get($fieldset::INPUT_EMAIL_REFERENT)) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <?= $fcg($fieldset->get($fieldset::CSRF)) ?>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6 d-grid" style="margin-top: 10px;">
+                        <?= $fcg($fieldset->get($fieldset::INPUT_SUBMIT)) ?>
+                    </div>
+                </div>
+            </fieldset>
+            <?= $this->form()->closeTag(); ?>
+        </div>
+    </div>
+</div>

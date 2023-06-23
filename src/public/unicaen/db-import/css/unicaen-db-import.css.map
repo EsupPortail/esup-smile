@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AACE,KAAG;EACD,aAAa,EAAE,OAAO;;AAIxB,KAAG;EACD,aAAa,EAAE,CAAC;;AAIlB,8EAAO;EACL,SAAS,EAAE,GAAG;EACd,WAAW,EAAE,MAAM;EACnB,aAAa,EAAE,CAAC;;AAGpB,OAAQ;EACN,WAAW,EAAE,GAAG;EAChB,SAAS,EAAE,IAAI",
+"sources": ["unicaen-db-import.scss"],
+"names": [],
+"file": "unicaen-db-import.css"
+}

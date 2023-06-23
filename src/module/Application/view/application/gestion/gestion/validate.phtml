@@ -1,0 +1,17 @@
+<?php
+
+use Application\Application\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer $this
+ */
+
+
+if($this->isValid)
+{
+    echo 'Validé !';
+}else {
+    echo $this->msg;
+}
+
+?>

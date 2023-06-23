@@ -1,0 +1,32 @@
+<?php
+
+use Application\Application\Form\Formation\FormationForm;
+use Application\Application\View\Helper\Formation\FormationViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Formation\FormationController;
+
+/**
+ * @see FormationController::ajouterAction()
+ * @var PhpRenderer $this
+ * @var string $title
+ * @var FormationForm $form
+ */
+
+$this->headTitle($title);
+
+/** @var FormationViewHelper $vh */
+$vh = $this->formation();
+?>
+
+<?= $vh->renderForm($form) ?>
+
+<script>
+    $(function () {
+        let body = $("body");
+        body.off("<?= FormationController::EVENT_AJOUTER?>", closeModal)
+            .one("<?= FormationController::EVENT_AJOUTER?>", closeModal)
+
+        body.off("<?= FormationController::EVENT_AJOUTER?>", refreshFlashMessage)
+            .one("<?= FormationController::EVENT_AJOUTER?>", refreshFlashMessage);
+    });
+</script>

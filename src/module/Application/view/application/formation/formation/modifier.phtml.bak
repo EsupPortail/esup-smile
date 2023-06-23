@@ -1,0 +1,46 @@
+<?php
+
+use Application\Application\Form\Composante\ComposanteForm;
+use Application\Application\Form\Formation\FormationForm;
+use Application\Application\View\Helper\Composante\ComposanteViewHelper;
+use Application\Application\View\Helper\Formation\FormationViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Composante\ComposanteController;
+use Application\Controller\Formation\FormationController;
+
+/**
+ * @see FormationController::modifierAction()
+ * @var PhpRenderer $this
+ * @var string $title
+ * @var FormationForm $form
+ */
+
+$this->headTitle($title);
+
+/** @var FormationViewHelper $vh */
+$vh = $this->formation();
+?>
+
+<div class="card border-0">
+    <?php if ($title) : ?>
+        <h1 class="card-header page-header">
+            <?= $title ?>
+        </h1>
+    <?php endif; ?>
+    <div class="card-body">
+        <?= $vh->renderForm($form) ?>
+    </div>
+</div>
+
+
+
+<script>
+    $(function () {
+        let body = $("body");
+        body.off("<?= FormationController::EVENT_MODIFIER?>", closeModal)
+            .one("<?= FormationController::EVENT_MODIFIER?>",   closeModal)
+
+        body.off("<?= FormationController::EVENT_MODIFIER?>", refreshFlashMessage)
+            .one("<?= FormationController::EVENT_MODIFIER?>",   refreshFlashMessage);
+    });
+</script>

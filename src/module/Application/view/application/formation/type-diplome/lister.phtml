@@ -1,0 +1,15 @@
+<?php
+
+use Application\Application\View\Renderer\PhpRenderer;
+use  Application\Entity\TypeDiplome;
+
+/**
+ * @see TypeDiplomeController::listerAction()
+ * @var PhpRenderer $this
+ * @var TypeDiplome[] $typesDiplomes
+ */
+?>
+<?php
+echo $this->typeDiplome()->renderListe($typesDiplomes)
+?>
+

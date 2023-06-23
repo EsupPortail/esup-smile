@@ -1,0 +1,47 @@
+//.containerMobilite {
+//    a {
+//        color: white;
+//    }
+//    .row{
+//        margin-top: 1rem;
+//    }
+//}
+.chooseRole {
+    .checkRole {
+        cursor: pointer;
+        &:hover {
+            opacity: 0.5;
+        }
+        &.active{
+            &:hover {
+                opacity: 1;
+            }
+            .card {
+                background: #27ae60!important;
+            }
+        }
+        input[type=checkbox] {
+            padding: 10px;
+        }
+    }
+    .card {
+        img {
+            margin: auto;
+            width: 50%;
+            padding: 10px;
+        }
+        .card-body {
+            text-align: center;
+            padding-top: 0;
+            span {
+                font-size: 1rem!important;
+            }
+        }
+    }
+}
+
+#create-inscription-form {
+    div{
+        margin-top: 2px;
+    }
+}

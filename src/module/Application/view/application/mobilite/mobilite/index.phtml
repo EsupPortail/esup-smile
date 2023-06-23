@@ -1,0 +1,122 @@
+<?php
+use Application\Entity\Mobilite;
+
+/**
+ * @var $mobilites Mobilite[]
+ */
+
+$mobilites = $this->mobilite;
+
+?>
+
+<div class="modal modal-medium fade" id="addMobiliteModal" tabindex="-1" aria-labelledby="addMobiliteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="<?= $this->url('mobilite/add') ?>">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add mobilite</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <label for="mobiliteLibelle" class="col-form-label">Libelle</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" name="mobiliteLibelle" id="mobiliteLibelle" class="form-control">
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="active" name="mobiliteActive" id="mobiliteActive" checked>
+                                <label class="form-check-label" for="mobiliteActive">
+                                    Active
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Save changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col">
+        <h2>MOBILITY</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <button type="button" class="btn btn-primary icon icon-ajouter pe-2 mb-2" data-bs-toggle="modal" data-bs-target="#addMobiliteModal">
+            Create new mobility
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Active</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach($mobilites as $m): ?>
+                <tr>
+                    <td><?= $m->getLibelle() ?></td>
+                    <td>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="checkActive" data-id="<?= $m->getId() ?>" <?= $m->getActive() ? 'checked' : '' ?>>
+                            <label class="form-check-label" for="flexSwitchCheckChecked"></label></div>
+                    </td>
+                    <td>
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <a href="<?= $this->url('mobilite/delete').'/'.$m->getId() ?>">
+                            <i class="fa-solid fa-trash" style="color: red;"></i>
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    jQuery(document).ready(function($) {
+        let checkActive = document.querySelectorAll('#checkActive')
+
+        checkActive.forEach((c) => {
+            c.addEventListener('change', (event) => {
+                let target = event.target
+
+                postMobilite('mobilite/activeMobilite', {mobiliteId: target.dataset.id, active: target.checked})
+                    .then((data) => {
+                        console.log(data); // JSON data parsed by `data.json()` call
+                    });
+            })
+        })
+
+        async function postMobilite(url = '', data = {}) {
+            // Default options are marked with *
+            const response = await fetch(url, {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data) // body data type must match "Content-Type" header
+            });
+            return response.json(); // parses JSON response into native JavaScript objects
+        }
+    })
+
+
+</script>

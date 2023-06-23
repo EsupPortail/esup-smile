@@ -1,0 +1,80 @@
+<?php
+
+use Application\Application\View\Helper\Formation\TypeDiplomeViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Formation\TypeDiplomeController;
+use  Application\Entity\Composante;
+use  Application\Entity\TypeDiplome;
+use UnicaenApp\Util;
+
+/**
+ * @see \Application\Controller\Formation\TypeDiplomeController::listerAction()
+ * @var PhpRenderer $this
+ * @var TypeDiplome[] $typesDiplomes
+ */
+
+/** @var TypeDiplomeViewHelper $vh */
+$vh = $this->typeDiplome();
+
+$tableId = "liste-types-formations";
+?>
+
+<table id="<?= $tableId ?>" class="table table-condensed table-hover">
+        <thead>
+        <tr>
+            <th class="col-md-2">Code</th>
+            <th class="col-md-1 no-search" data-type="num">Ordre</th>
+            <th>Libellé</th>
+            <th class="col-md-1 text-end no-search no-sort">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($typesDiplomes as $typeDiplome) : ?>
+            <?php $vh->setTypeDiplome($typeDiplome); ?>
+            <tr>
+                <td>
+                    <?= $typeDiplome->getCode() ?>
+                </td>
+                <td class="text-center"><?= $typeDiplome->getOrdre() ?></td>
+                <td> <?= $typeDiplome->getLibelle() ?> </td>
+                <td class="text-end">
+                    <?= $vh->renderActionsMenu() ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+<script>
+    $(function (){
+        if (jQuery().dataTable) {
+            $('#<?=$tableId ?>').DataTable({
+                "responsive": true,
+                "stateSave": true,
+                "retrieve": true,
+                "autoWidth": false,
+                "lengthMenu": [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "Tous"]],
+                "order": [[1, 'asc'], [2, 'asc'], [0, 'asc']],
+                "columnDefs": [
+                    {"targets": ["no-sort"], "orderable": false},
+                    {"targets": ["no-search"], "searchable": false},
+                    {"targets": ["hidden"], "visible": false},
+                ],
+                "language": {
+                    "lengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                    "search": "Filtre de recherche : _INPUT_",
+                    "loadingRecords": "Chargement en cours...",
+                    "info": "<small class=\"text-highlight\">Affichage : <strong><i class=\"far fa-list-alt\"></i> _START_ - _END_ sur _TOTAL_</strong></small>",
+                    "infoEmpty": "",
+                    "infoFiltered": "<small class=\"text-highlight\">(_MAX_ &eacute;l&eacute;ments au total)</small>",
+                    "emptyTable": "Aucune donnée disponible.",
+                    "zeroRecords": "Aucun enregistrement trouvé.",
+                    "paginate": {
+                        "previous": "<i class=\"fas fa-chevron-left\"></i>",
+                        "next": "<i class=\"fas fa-chevron-right\"></i>"
+                    }
+                },
+            });
+        }
+    });
+</script>
+

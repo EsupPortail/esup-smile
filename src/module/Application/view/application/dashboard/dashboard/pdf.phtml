@@ -1,0 +1,137 @@
+<?php
+
+/**
+ * @var \Application\Entity\Inscription $inscription
+ * @var \UnicaenUtilisateur\Entity\Db\User $user
+ */
+
+$user = $this->user;
+$inscription = $this->inscription;
+
+?>
+<style>
+.container {
+}
+.header h1{
+    text-align: center;
+}
+.body {
+    width: 100%;
+}
+.row {
+}
+.b {
+    width: 100%;
+}
+.ib {
+    display: inline-block;
+    box-sizing: border-box;
+}
+.ib-2 {
+    width: 50%;
+}
+.ib-3 {
+    width: 33%;
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+</style>
+<div class='container'>
+    <div class="header">
+        <h1>CONTRAT D'ETUDE</h1>
+    </div>
+    <div class="body">
+        <div class="b">
+            <h3>Etudiant</h3>
+        </div>
+        <div class="b">
+            <div class="ib ib-2 left">
+                Nom : <b><?= $inscription->getFirstname().' '.strtoupper($inscription->getLastname()) ?></b><br>
+                Date de naissance : <b><?= $inscription->getBirthdate() ? $inscription->getBirthdate()->format('d/m/yy') : '' ?></b><br>
+                Nationalité : <b>Française</b><br>
+                Genre : <b>?</b><br>
+            </div>
+            <div class="ib ib-2 right">
+                ESI : <b><?= $inscription->getEsi() ?></b><br>
+                Cycle d'études (EQF) : <b>?</b><br>
+                Code ISCED (discipline) : <b>?</b><br>
+                Discipline : <b>?</b><br>
+            </div>
+        </div>
+        <div class="b">
+            <div class="ib ib-2 right">
+                <h3>Université d'origine</h3>
+                Nom : <b>?</b><br>
+                Faculté : <b>?</b><br>
+                code Erasmus+ : <b>?</b><br>
+                Pays : <b>?</b><br>
+                Contact administratif (nom, email, téléphone) : <b>?</b><br>
+            </div>
+            <div class="ib ib-2 left">
+                <h3>Université d'accueil</h3>
+                Nom : <b>?</b><br>
+                Faculté : <b>?</b><br>
+                Code Erasmus+ : <b>?</b><br>
+                Pays : <b>?</b><br>
+                Contact administratif (nom, email, téléphone) : <b>?</b><br>
+            </div>
+        </div>
+        <div class="b">
+            <div class="ib ib-2 left">
+                <h3>Mobilité prévue</h3>
+                Type de mobilité (physique, virtuelle, hybride) : <b>?</b><br>
+                Durée prévisionnelle de la mobilité (date de début et date de fin prévues) : <b>?</b><br>
+            </div>
+            <div class="ib ib-2 right">
+
+            </div>
+        </div>
+        <div class="b">
+            <div class="ib ib-2 left">
+                <h3>Programme d'études dans l'université d'accueil</h3>
+                Pour chaque cours choisi : code, intitulé du cours, semestre pendant lequel le
+                cours est dispensé, ECTS
+                Le total d'ECTS
+                Lien vers le catalogue de cours
+            </div>
+            <div class="ib ib-2 right">
+                <h3>Programme d'études reconnu dans l'université d'origine</h3>
+                Pour chaque cours : code, intitulé du cours, semestre pendant lequel le cours est
+                dispensé, ECTS, indication sur la reconnaissance automatique du cours
+                (OUI/non)
+                Le total d'ECTS reconnus pour la validation du programme d'études à l'étranger
+            </div>
+        </div>
+        <div class="b">
+            <div class="ib ib-3 left">
+                Les engagements des 3 signataires du contrat d'études (étudiant, université
+                d'origine, université d'accueil) :
+                Informations sur chacun des 3 signataires : Nom, prénom, email, poste occupé,
+                date de signature, signature digitalisée
+            </div>
+            <div class="ib ib-3 left">
+                Programme d'études reconnu dans l'université d'origine (liste des cours de
+                l'université d'origine validés et reconnus par équivalence) :
+                Pour chaque cours : code, intitulé du cours, semestre pendant lequel le cours est
+                dispensé, ECTS, indication sur la reconnaissance automatique du cours
+                (OUI/non)
+                Le total d'ECTS reconnus pour la validation du programme d'études à l'étranger
+            </div>
+            <div class="ib ib-3 right">
+                Programme d'études reconnu2 dans l'université d'origine (liste des cours de
+                l'université d'origine validés et reconnus par équivalence) :
+                Pour chaque cours : code, intitulé du cours, semestre pendant lequel le cours est
+                dispensé, ECTS, indication sur la reconnaissance automatique du cours
+                (OUI/non)
+                Le total d'ECTS reconnus pour la validation du programme d'études à l'étranger
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+
+    </div>
+</div>

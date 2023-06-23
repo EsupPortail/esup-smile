@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Application\Entity\TypeFormationMapping" table="type_formation_mapping">
+    <indexes>
+      <index name="IDX_B028756AD543922B" columns="type_formation_id"/>
+      <index name="IDX_B028756A953C1C61" columns="source_id"/>
+    </indexes>
+    <id name="id" type="bigint" column="id">
+      <generator strategy="SEQUENCE"/>
+      <sequence-generator sequence-name="type_formation_mapping_id_seq" allocation-size="1" initial-value="1"/>
+    </id>
+    <field name="codeSrc" type="string" column="code_src" length="64" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="typeFormation" target-entity="Application\Entity\TypeFormation" fetch="LAZY">
+      <join-columns>
+        <join-column name="type_formation_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="source" target-entity="Application\Entity\Source" fetch="LAZY">
+      <join-columns>
+        <join-column name="source_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

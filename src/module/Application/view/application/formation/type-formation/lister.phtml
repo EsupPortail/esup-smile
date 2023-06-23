@@ -1,0 +1,15 @@
+<?php
+
+use Application\Application\View\Renderer\PhpRenderer;
+use  Application\Entity\TypeFormation;
+
+/**
+ * @see TypeFormationController::listerAction()
+ * @var PhpRenderer $this
+ * @var TypeFormation[] $typesFormations
+ */
+?>
+<?php
+echo $this->typeFormation()->renderListe($typesFormations)
+?>
+

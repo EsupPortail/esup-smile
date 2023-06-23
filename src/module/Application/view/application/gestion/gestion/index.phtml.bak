@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * @var PhpRenderer $this
+ * @var User[] $etudiants
+ * @var User $etudiant
+ * @var array $inscriptions
+ * @var \Application\Entity\Inscription $i
+ */
+
+use Application\Application\View\Renderer\PhpRenderer;
+use UnicaenUtilisateur\Entity\Db\User;
+
+Locale::setDefault('en_US');
+$inscriptions = $this->inscriptions;
+$etudiants = $this->etudiants;
+$steps = $this->steps;
+?>
+<div class="row">
+    <div class="col text-center headTitle">
+        <h1>Administration</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h2>Students</h2>
+        <button class="btn btn-success" disabled>New</button>
+        <button class="btn btn-info" title="Import list of students" disabled>Import by CSV</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table class="table table-responsive table-striped table-bordered">
+            <thead>
+                <th>Students</th>
+                <?php foreach($steps as $step) : ?>
+                    <th>
+                            <?= $step->getLibelle() ?>
+                    </th>
+                <?php endforeach; ?>
+                    <th>Actions</th>
+            </thead>
+            <tbody>
+                <?php foreach($etudiants as $etudiant) : ?>
+                    <?php if($inscriptions[$etudiant->getUsername()]): ?>
+                    <tr>
+                        <td>
+                            <?= $etudiant->getDisplayName() ?>
+                        </td>
+                        <?php foreach($steps as $step): ?>
+                            <td>
+                                <?php
+                                    $stepOrder = $inscriptions[$etudiant->getUsername()]->getStep()->getOrder();
+                                    if($stepOrder > $step->getOrder()) {
+                                        echo '<i class="fa-solid fa-check" style="color: green;"></i>';
+                                    }
+                                    if ((intval($stepOrder)) === $step->getOrder()) {
+                                        echo '<i class="fa-solid fa-clock" style="color: darkorange"></i>';
+                                        if ($step->getNeedValidation()) {
+                                            echo '<br><form method="POST" action="gestion/validate"><input name="data" type="hidden" value="'.$inscriptions[$etudiant->getUsername()]->getUuid().'"/><input type="submit" class="btn btn-link" value="Validate"/></form>';
+                                            echo '<br><form method="POST" action="gestion/denied"><input name="data" type="hidden" value="'.$inscriptions[$etudiant->getUsername()]->getUuid().'"/><input type="submit" class="btn btn-link" value="Denied"/></form>';
+                                        }
+                                    }
+                                ?>
+                            </td>
+                        <?php endforeach; ?>
+                        <td>
+                            <a href="/gestion/<?= $inscriptions[$etudiant->getUsername()]->getUuid() ?>" class="">Show</a>
+                        </td>
+                    </tr>
+
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,224 @@
+<?php
+use Application\Entity\Cours;
+
+/**
+ * @var Cours $cours
+ * @var bool $editable
+ */
+
+$form = new \Laminas\Form\Form();
+echo $this->form()->openTag($form->prepare())
+?>
+<div class="row">
+    <div class="col mb-3">
+        <?php if(!$cours->getLibelle()): ?>
+            <h2>ADD COURSE</h2>
+        <?php else: ?>
+            <h2>DESCRIPTION</h2>
+        <?php endif; ?>
+    </div>
+</div>
+<?php
+ if($this->message !== null):
+?>
+    <div class="row">
+        <div class="col">
+            <p class="alert alert-success"><?= $this->message ?></p>
+        </div>
+    </div>
+<?php
+endif;
+if($cours):
+?>
+<div class="row mb-2">
+    <div class="col">
+        <a class="btn btn-info" href="<?= $this->url('formations/mobilite') ?>"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+</div>
+<div class="row" id="descriptifCours">
+    <div class="col">
+        <label for="composante" class="form-label">Composante</label>
+        <?php if($editable): ?>
+            <select class="form-select" name="composante" id="composante" required>
+                <?php if(!$cours->getFormation()): ?>
+                    <option value="" selected>Composantes</option>
+                    <?php foreach($composantes as $composante): ?>
+                        <option value="<?= $composante->getCode() ?>"><?= $composante->getLibelle() ?></option>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <?php foreach($composantes as $composante): ?>
+                        <option value="<?= $composante->getCode() ?>" <?php if($composante->getCode() === $cours->getFormation()->getComposante()->getCode()){ echo 'selected'; } ?>><?= $composante->getLibelle() ?></option>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </select>
+        <?php else: ?>
+            <input class="form-control" type="text" name="composante" id="composante" value="<?= $cours->getFormation()->getComposante()->getLibelle() ?>" disabled>
+        <?php endif; ?>
+    </div>
+    <div class="col">
+        <label for="formation" class="form-label">Formation</label>
+        <?php if($editable): ?>
+            <select class="form-select" name="formation" id="formation" required>
+                <?php if(!$cours->getFormation()): ?>
+                    <option value="" selected>Formations</option>
+                    <?php foreach($formations as $formation): ?>
+                        <option data-composante="<?= $formation->getComposante()->getCode() ?>" value="<?= $formation->getCode() ?>"><?= $formation->getLibelle() ?></option>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <?php foreach($formations as $formation): ?>
+                        <option data-composante="<?= $formation->getComposante()->getCode() ?>" value="<?= $formation->getCode() ?>" <?php if($formation->getCode() === $cours->getFormation()->getCode()){ echo 'selected'; } ?>><?= $formation->getLibelle() ?></option>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
+            </select>
+        <?php else: ?>
+            <input class="form-control" type="text" name="formation" id="formation" value="<?= $cours->getFormation()->getLibelle() ?>" disabled>
+        <?php endif; ?>
+    </div>
+    <div class="col">
+        <label for="code" class="form-label">Code de l'objet</label>
+        <?php if($editable): ?>
+            <input class="form-control" type="text" name="code" id="code" value="<?= $cours->getCodeElp() ?>" required>
+        <?php else: ?>
+            <input class="form-control" type="text" name="code" id="code" value="<?= $cours->getCodeElp() ?>" disabled>
+        <?php endif; ?>
+    </div>
+    <div class="col">
+        <label for="libelle" class="form-label">Libellé</label>
+        <?php if($editable): ?>
+            <input class="form-control" type="text" name="libelle" id="libelle" value="<?= $cours->getLibelle() ?>" required>
+        <?php else: ?>
+            <input class="form-control" type="text" name="libelle" id="libelle" value="<?= $cours->getLibelle() ?>" disabled>
+        <?php endif; ?>
+    </div>
+
+</div>
+<div class="row mt-3">
+    <div class="col">
+        <label for="ects" class="form-label">ECTS</label>
+        <?php if($editable): ?>
+            <input class="form-control" type="number" name="ects" id="ects" value="<?= $cours->getEcts() ?>" required>
+        <?php else: ?>
+            <input class="form-control" type="number" name="ects" id="ects" value="<?= $cours->getEcts() ?>" disabled>
+        <?php endif; ?>
+    </div>
+    <div class="col">
+        <label for="niveau" class="form-label">Niveau</label>
+        <?php if($editable): ?>
+            <input class="form-control" type="text" name="niveau" id="niveau" value="" disabled>
+        <?php else: ?>
+            <input class="form-control" type="text" name="niveau" id="niveau" value="<?= $cours->getFormation()->getNiveauEtude() ?>" disabled>
+        <?php endif; ?>
+    </div>
+    <div class="col">
+        <label for="semester" class="form-label">Semestre</label>
+        <?php if($editable): ?>
+            <select class="form-select" name="semester" id="semester" required>
+                <option value="1" <?php if($cours->getS1() && !$cours->getS2()) { echo 'selected'; } ?>>S1</option>
+                <option value="2" <?php if(!$cours->getS1() && $cours->getS2()) { echo 'selected'; } ?>>S2</option>
+                <option value="3" <?php if($cours->getS1() && $cours->getS2()) { echo 'selected'; } ?>>S1 & S2</option>
+            </select>
+        <?php else: ?>
+            <input class="form-control" type="text" name="semester" id="semester" value="<?= (($cours->getS1()) ? 'S1' : '').' '.(($cours->getS2()) ? 'S2' : '') ?>" disabled>
+        <?php endif; ?>
+    </div>
+    <div class="col">
+        <label for="vH" class="form-label">Volume horaire</label>
+        <?php if($editable): ?>
+            <input class="form-control" type="text" name="vH" id="vH" value="<?= $cours->getVolElp() ?>" required>
+        <?php else: ?>
+            <input class="form-control" type="text" name="vH" id="vH" value="<?= $cours->getVolElp() ?>" disabled>
+        <?php endif; ?>
+    </div>
+    <div class="col">
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col">
+        <div class="form-floating">
+            Description
+            <textarea class="form-control" name="description" id="description"><?= $cours->getDescription() ?></textarea>
+        </div>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col">
+        <div class="form-floating">
+            Objectif
+            <textarea class="form-control" name="objectif" id="objectif"><?= $cours->getObjectif() ?></textarea>
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col">
+        <?php if(!$cours->getLibelle()): ?>
+            <input type="submit" class="btn btn-success right" value="Add">
+        <?php else: ?>
+            <input type="submit" class="btn btn-success right" value="Update">
+        <?php endif; ?>
+    </div>
+</div>
+<?php
+endif;
+?>
+<?= $this->form()->closeTag(); ?>
+
+<script>
+    $(document).ready(function() {
+        tinymce.init({
+            selector: '#description',
+            toolbar: 'newdocument undo redo | bold italic | bullist table | alignjustify alignleft alignright aligncenter | formatselect',
+            block_formats: 'Normal=p;Titre 1=h1;Titre 2=h2;Titre 3=h3',
+            resize: true,
+            language: 'fr_FR',
+            entity_encoding : "raw",
+            plugins: 'lists table',
+            statusbar: true,
+            browser_spellcheck: true,
+            branding: false,
+            menu: {},
+            body_id: 'sujet',
+            setup: function (editor) {
+                editor.on("focusout", function () {
+                    $('textarea#description').val(tinymce.get('description').getContent());
+                });
+            }
+        });
+        tinymce.init({
+            selector: '#objectif',
+            toolbar: 'newdocument undo redo | bold italic | bullist table | alignjustify alignleft alignright aligncenter | formatselect',
+            block_formats: 'Normal=p;Titre 1=h1;Titre 2=h2;Titre 3=h3',
+            resize: true,
+            language: 'fr_FR',
+            entity_encoding : "raw",
+            plugins: 'lists table',
+            statusbar: true,
+            browser_spellcheck: true,
+            branding: false,
+            menu: {},
+            body_id: 'objectif',
+            setup: function (editor) {
+                editor.on("focusout", function () {
+                    $('textarea#objectif').val(tinymce.get('objectif').getContent());
+                });
+            }
+        });
+
+        let composanteSelect = document.querySelector('#composante');
+        let formationSelect = document.querySelector('#formation');
+
+        composanteSelect.addEventListener('change', (e) => {
+            let composanteCode = e.target.value
+            let i;
+            for (i = 0; i < formationSelect.options.length; i++) {
+                let option = formationSelect.options[i]
+                if(option.dataset['composante'] !== composanteCode) {
+                    $(option).prop('disabled', true);
+                }else {
+                    $(option).prop('disabled', false);
+                }
+            }
+        })
+
+    })
+</script>

@@ -1,0 +1,202 @@
+<?php
+
+
+use Application\Application\Form\Inscription\InscriptionForm;
+use Application\Application\Form\Inscription\InscriptionUserForm;
+use Application\Application\View\Renderer\PhpRenderer;
+
+/**
+ * @var InscriptionForm $form
+ * @var InscriptionUserForm $formUser
+ * @var PhpRenderer $this
+ */
+$form = $this->form;
+$formUser = $this->formUser;
+
+$fe = $this->formErrors();
+$fcg = $this->formControlGroup();
+
+$fr = $this->formrow();
+$fct = $this->formControlText();
+$fcd = $this->formdate();
+
+?>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <?php
+            $fieldset = $form->getBaseFieldset();
+            $fieldsetUser = $formUser->getBaseFieldset();
+            $formUser->prepare();
+            echo $this->form()->openTag($form->prepare());
+            ?>
+            <fieldset>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-12">
+                        <h1 class="text-center">Inscription</h1>
+                    </div>
+                    <div class="col-md-12">
+
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?= $fct($fieldset->get($fieldset::INPUT_FIRSTNAME)) ?>
+                            </div>
+                            <div class="col-md-6">
+                                <?= $fct($fieldset->get($fieldset::INPUT_LASTNAME)) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col">
+                                <label>Vous êtes :</label>
+                            </div>
+                        </div>
+                        <div class="row chooseRole">
+                            <div class="col-4 checkRole">
+                                <div class="card">
+                                    <img class="card-img-top" src="/img/internship.png" alt="internship">
+                                    <div class="card-body">
+                                        <span class="card-text fs-2">
+                                            Stagiaire
+                                        </span>
+                                        <div>
+                                            <input class="form-check-input checkRole" type="checkbox" id="stagiaire" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 checkRole active">
+                                <div class="card">
+                                    <img class="card-img-top" src="/img/student.png" alt="student">
+                                    <div class="card-body">
+                                        <span class="card-text fs-2">
+                                            Étudiant
+                                        </span>
+                                        <div>
+                                            <input class="form-check-input checkRole" type="checkbox" id="etudiant" value="" checked>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 checkRole">
+                                <div class="card">
+                                    <img class="card-img-top" src="/img/doctorant.png" alt="doctor">
+                                    <div class="card-body">
+                                        <span class="card-text mobilite-text fs-2">
+                                            Doctorant
+                                        </span>
+                                        <div>
+                                            <input class="form-check-input checkRole" type="checkbox" id="doctorant" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?= $this->formhidden($fieldsetUser->get($fieldsetUser::INPUT_ROLE)) ?>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6" id="divEsi">
+                        <?= $fct($fieldset->get($fieldset::INPUT_ESI)) ?>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?= $fcg($fieldsetUser->get($fieldsetUser::INPUT_USERNAME)) ?>
+                            </div>
+                            <div class="col-md-6">
+                                <?= $fcg($fieldsetUser->get($fieldsetUser::INPUT_EMAIL)) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <?= $fcg($fieldsetUser->get($fieldsetUser::INPUT_PASSWORD)) ?>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <?= $fcg($fieldsetUser->get($fieldsetUser::INPUT_PASSWORD2)) ?>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <?= $fcg($fieldset->get($fieldset::CSRF)) ?>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6 d-grid" style="margin-top: 10px;">
+                        <?= $fcg($fieldset->get($fieldset::INPUT_SUBMIT)) ?>
+                    </div>
+                </div>
+            </fieldset>
+            <?= $this->form()->closeTag(); ?>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = () => {
+        let cards = document.querySelectorAll('div.checkRole')
+        let divEsi = document.querySelector('#divEsi')
+        let inputEsi = document.querySelector('#inputEsi')
+        let pw1 = document.querySelector('#inputPw')
+        let pw2 = document.querySelector('#inputPw2')
+
+        pw1.addEventListener('input', checkPw)
+        pw2.addEventListener('input', checkPw)
+
+        cards.forEach(card => {
+            card.addEventListener('click',(e) => {
+                e.preventDefault();
+                if(!card.classList.contains('active')) {
+                    card.classList.add('active')
+                    let checkEl = card.querySelector('.checkRole')
+                    checkEl.checked = true
+                    document.querySelector('#role').value = checkEl.id
+                    divEsi.hidden = (checkEl.id !== 'etudiant')
+                    inputEsi.value = ''
+                }
+                removeActive(cards, card)
+            })
+        })
+
+        function removeActive(cards, card) {
+            cards.forEach((el) => {
+                if(el !== card) {
+                    el.classList.remove('active')
+                    el.querySelector('.checkRole').checked = false
+                }
+            })
+        }
+
+        function checkPw(e) {
+            let tooltip = document.querySelector('.invalid-tooltip')
+            if(tooltip) {
+                tooltip.remove()
+            }
+            if(pw1.value !== pw2.value) {
+                pw1.classList.add('is-invalid')
+                pw2.classList.add('is-invalid')
+                pw1.classList.remove('is-valid')
+                pw2.classList.remove('is-valid')
+            }else {
+                pw1.classList.remove('is-invalid')
+                pw2.classList.remove('is-invalid')
+                pw1.classList.add('is-valid')
+                pw2.classList.add('is-valid')
+
+            }
+        }
+    }
+</script>

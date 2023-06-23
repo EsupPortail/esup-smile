@@ -1,0 +1,90 @@
+<h2>Profil</h2>
+<?php if (isset($inscription)): ?>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="firstname">Firstname</label>
+            <input class="form-control" type="text" name="firstname" id="firstname"
+                   value="<?= $inscription->getFirstname() ?>"
+                   disabled>
+        </div>
+        <div class="col-md-6">
+            <label for="lastname">Name</label>
+            <input class="form-control" type="text" name="lastname" id="lastname"
+                   value="<?= $inscription->getLastname() ?>"
+                   disabled>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <label for="esi">Eppn</label>
+            <input class="form-control" type="text" name="esi" id="esi"
+                   value="<?= $user->getUsername() ?>"
+                   disabled>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <label for="esi">ESI</label>
+            <input class="form-control" type="text" name="esi" id="esi"
+                   value="
+                               <?php
+                   $esi = $inscription->getEsi();
+                   $esiFormated = explode(':', $esi);
+                   echo $esiFormated[count($esiFormated)-1];
+                   ?>"
+                   disabled>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="birthdate">Birth date</label>
+            <input class="form-control" type="date" name="birthdate" id="birthdate"
+                   value="<?php if ($inscription->getBirthdate() !== null) { echo $inscription->getBirthdate()->format('Y-m-d'); } ?>"
+                   disabled>
+        </div>
+        <div class="col-md-6">
+            <label for="cp">Postal code</label>
+            <input class="form-control" type="text" name="cp" id="cp"
+                   value="<?= $inscription->getPostalcode() ?>"
+                   disabled>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <label for="city">City</label>
+            <input class="form-control" type="text" name="city" id="city"
+                   value="<?= $inscription->getCity() ?>"
+                   disabled>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="nStreet">Street Number</label>
+            <input class="form-control" type="text" name="nStreet" id="nStreet"
+                   value="<?= $inscription->getNumstreet() ?>"
+                   disabled>
+        </div>
+        <div class="col-md-6">
+            <label for="street">Street name</label>
+            <input class="form-control" type="text" name="street" id="street"
+                   value="<?= $inscription->getStreet() ?>"
+                   disabled>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <label for="street">Email</label>
+            <input class="form-control" type="text" name="street" id="street"
+                   value="<?= $user->getEmail() ?>"
+                   disabled>
+        </div>
+    </div>
+<?php else: ?>
+    <p>Aucune information disponible</p>
+
+<?php endif; ?>
+<div class="row">
+    <div class="col-md-12 d-grid" style="padding: 20px;">
+        <a class="btn btn-info" href="<?= $this->url('inscription/information') ?>">Mes Informations</a>
+    </div>
+</div>

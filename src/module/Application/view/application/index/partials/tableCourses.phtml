@@ -1,0 +1,26 @@
+<p>Composante: <?= ($this->mainComponent) ? $this->mainComponent->getLibelle() : '' ?></p>
+<table id="tableChoices" class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">ECTS</th>
+        <th scope="col">Main</th>
+    </tr>
+    </thead>
+    <tbody id="choices">
+    <?php
+    foreach ($this->courses as $c) :
+        ?>
+        <tr>
+            <td><?= $c->getLibelle() ?></td>
+            <td><?= $c->getEcts() ?></td>
+            <td><?php
+                if($c->getFormation()->getComposante()->getId() === $this->mainComponent->getId())
+                {
+                    echo '<i class="fa-solid fa-check"></i>';
+                }
+                ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>

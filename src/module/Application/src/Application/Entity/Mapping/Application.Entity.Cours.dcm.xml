@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Application\Entity\Cours" table="cours">
+    <indexes>
+      <index name="IDX_FDCA8C9C5200282E" columns="formation_id"/>
+      <index name="IDX_FDCA8C9C74F22DEA" columns="langue_enseignement_id"/>
+      <index name="IDX_FDCA8C9C953C1C61" columns="source_id"/>
+      <index name="IDX_FDCA8C9C238B9CE0" columns="histo_createur_id"/>
+      <index name="IDX_FDCA8C9CE005E3D6" columns="histo_modificateur_id"/>
+      <index name="IDX_FDCA8C9CF559C971" columns="histo_destructeur_id"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="cours_code_source_unique" columns="source_id,source_code"/>
+    </unique-constraints>
+    <id name="id" type="bigint" column="id">
+      <generator strategy="SEQUENCE"/>
+      <sequence-generator sequence-name="cours_id_seq" allocation-size="1" initial-value="1"/>
+    </id>
+    <field name="codeElp" type="string" column="code_elp" length="64" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="libelle" type="string" column="libelle" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="objectif" type="string" column="objectif" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="description" type="string" column="description" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="typeCours" type="string" column="type_cours" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="langueEnseignement" type="string" column="langue_enseignement" length="20" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="s1" type="string" column="s1" length="1" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="s2" type="string" column="s2" length="1" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="ects" type="decimal" column="ects" precision="6" scale="2" nullable="true"/>
+    <field name="volElp" type="decimal" column="vol_elp" precision="6" scale="2" nullable="true"/>
+    <field name="ouvertMobilite" type="boolean" column="ouvert_mobilite" nullable="true">
+      <options>
+        <option name="default">1</option>
+      </options>
+    </field>
+    <field name="sourceCode" type="string" column="source_code" length="64" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="histoCreation" type="datetime" column="histo_creation" nullable="false">
+      <options>
+        <option name="default">now()</option>
+      </options>
+    </field>
+    <field name="histoModification" type="datetime" column="histo_modification" nullable="true"/>
+    <field name="histoDestruction" type="datetime" column="histo_destruction" nullable="true"/>
+    <many-to-one field="formation" target-entity="Application\Entity\Formation" fetch="LAZY">
+      <join-columns>
+        <join-column name="formation_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="langueEnseignement2" target-entity="Application\Entity\Langue" fetch="LAZY">
+      <join-columns>
+        <join-column name="langue_enseignement_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="source" target-entity="UnicaenDbImport\Entity\Db\Source" fetch="LAZY">
+      <join-columns>
+        <join-column name="source_id" referenced-column-name="ID"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="histoCreateur" target-entity="UnicaenUtilisateur\Entity\Db\User" fetch="LAZY">
+      <join-columns>
+        <join-column name="histo_createur_id" referenced-column-name="ID"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="histoModificateur" target-entity="UnicaenUtilisateur\Entity\Db\User" fetch="LAZY">
+      <join-columns>
+        <join-column name="histo_modificateur_id" referenced-column-name="ID"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="histoDestructeur" target-entity="UnicaenUtilisateur\Entity\Db\User" fetch="LAZY">
+      <join-columns>
+        <join-column name="histo_destructeur_id" referenced-column-name="ID"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="inscription" target-entity="Application\Entity\Inscription" mapped-by="cours" fetch="LAZY"/>
+    <many-to-many field="mobilite" target-entity="Application\Entity\Mobilite" mapped-by="cours" fetch="LAZY"/>
+  </entity>
+</doctrine-mapping>

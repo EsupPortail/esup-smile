@@ -1,0 +1,64 @@
+<?php
+
+use Application\Application\View\Helper\Composante\ComposanteViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Composante\ComposanteController;
+use  Application\Entity\Composante;
+
+/**
+ * @see ComposanteController::indexAction()
+ * @var PhpRenderer $this
+ */
+
+/** @var ComposanteViewHelper $vh */
+$vh = $this->composante();
+$this->headTitle("Les composantes");
+?>
+
+
+<h1 class="page-header">
+    <span class="icon">
+        <i class="fas fa-university"></i>
+    </span>
+    Gestion des composantes
+</h1>
+
+<div class="row mb-3">
+    <div class="col-md-12">
+        <?= $vh->renderLienAjouter() ?>
+    </div>
+</div>
+
+<div class="card border-default mb-3">
+    <div class="card-header bg-default d-flex ">
+        <h2>
+            Liste des composantes
+        </h2>
+    </div>
+
+    <div class="card-body" data-event-listener='body'>
+        <?php
+        $containerId = uniqid('container-');
+        $url = $this->url(ComposanteController::ROUTE_LISTER, [], [], true);
+        ?>
+        <div id='<?=$containerId?>' data-url="<?= $url ?>">
+            <?= $this->messenger()->renderMessage("Chargement en cours ...") ?>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('body').on(
+            '<?= ComposanteController::EVENT_AJOUTER?> ' +
+            '<?= ComposanteController::EVENT_MODIFIER?> ' +
+            '<?= ComposanteController::EVENT_ARCHIVER?> ' +
+            '<?= ComposanteController::EVENT_RESTAURER?> ' +
+            '<?= ComposanteController::EVENT_SUPPRIMER?> ' +
+            '', function () {
+                $('#<?=$containerId ?>').refresh();
+            });
+        $('#<?=$containerId ?>').refresh();
+    })
+
+</script>

@@ -1,0 +1,48 @@
+#courses #coursesProgress {
+  height: 2rem;
+  position: relative;
+}
+#courses #coursesProgressValue {
+  display: inline;
+}
+#courses #coursesProgressLimit {
+  border-left: 1px solid #483c3c;
+  height: 100%;
+  display: block;
+  left: 60%;
+  position: absolute;
+}
+#courses .checkCourses {
+  cursor: pointer;
+  /* Double-sized Checkboxes */
+  transform: scale(1.5);
+  text-align: center;
+}
+#courses .deleteChoices {
+  cursor: pointer;
+}
+#courses #tableChoices tr:hover {
+  opacity: 0.7;
+}
+
+#dashboard #myspaceProgress {
+  height: 4rem;
+}
+#dashboard #myspaceProgress .progress-bar p {
+  white-space: normal;
+  color: #000;
+}
+#dashboard .validation {
+  color: red;
+}
+#dashboard .informations {
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 5px 0 rgba(0, 0, 0, 0.19);
+}
+#dashboard .inscriptionStatus {
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 5px 0 rgba(0, 0, 0, 0.19);
+}
+#dashboard .contract {
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 5px 0 rgba(0, 0, 0, 0.19);
+}
+
+/*# sourceMappingURL=dashboard.css.map */

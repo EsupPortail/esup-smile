@@ -1,0 +1,30 @@
+/** MODAL *************************************************************************************************************/
+
+div.modal div.modal-dialog {
+    width: 80%;
+    max-width: none;
+}
+
+div.modal div.modal-content {
+    width: 100%;
+}
+div.modal-medium {
+    width: 50%;
+    left: 25%;
+}
+
+div.modal div.modal-header {
+    border-radius : 0;
+    background: var(--unistrap-color-main);
+    color: var(--bs-dark);
+}
+
+button.btn-close {
+    color: var(--bs-dark);
+    opacity: 1;
+    font-size: large;
+}
+
+div.modal div.modal-footer {
+    display: none;
+}

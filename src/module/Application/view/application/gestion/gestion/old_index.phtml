@@ -1,0 +1,121 @@
+<?php
+
+/**
+ * @var PhpRenderer $this
+ * @var User[] $etudiants
+ * @var User $etudiant
+ * @var array $inscriptions
+ * @var \Application\Entity\Inscription $i
+ */
+
+use Application\Application\View\Renderer\PhpRenderer;
+use UnicaenUtilisateur\Entity\Db\User;
+
+Locale::setDefault('en_US');
+$inscriptions = $this->inscriptions;
+$etudiants = $this->etudiants;
+?>
+<div class="row">
+    <div class="col text-center">
+        <h1>Administration</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h2>Students</h2>
+        <button class="btn btn-success">New</button>
+        <button class="btn btn-info" title="Import list of students">Import by CSV</button>
+        <table id="liste-etudiant" class="table table-condensed table-hover">
+            <thead>
+            <tr>
+                <th >Eppn</th>
+                <th >Name</th>
+                <th >ESI</th>
+                <th >Email</th>
+                <th class="no-search">Step</th>
+                <th class="col-md-1 text-end no-search no-sort">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($this->etudiants as $etudiant) : ?>
+                <?php
+                $i = $inscriptions[$etudiant->getUsername()];
+                ?>
+                <tr>
+                    <td class="">
+                        <?= $etudiant->getUsername() ?>
+                    </td>
+                    <td> <?= $etudiant->getDisplayName() ?> </td>
+                    <td class="text-center" data-order="">
+                        <?php if(isset($i)): ?>
+                            <?php
+                            $esi = $i->getEsi();
+                            $esiFormated = explode(':', $esi);
+                            echo $esiFormated[count($esiFormated)-1];
+                            ?>
+                        <?php else: ?>
+                            /
+                        <?php endif; ?>
+                    </td>
+                    <td class="text-center" data-order="">
+                        <?= $etudiant->getEmail() ?>
+                    </td>
+                    <td class="text-center" data-order="">
+                        <?php if(isset($i)): ?>
+                            <?= $i->getStep()->getLibelle() ?>
+                        <?php else: ?>
+                            /
+                        <?php endif; ?>
+                    </td>
+
+                    <td class="text-end">
+                        <button class="btn btn-info">Show</button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(function (){
+            if (jQuery().dataTable) {
+                $('#liste-etudiant').DataTable({
+                    "responsive": true,
+                    "stateSave": true,
+                    "retrieve": true,
+                    "autoWidth": true,
+                    "lengthMenu": [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "Tous"]],
+                    "order": [[3, 'desc'],[2, 'desc'],[1, 'asc'], [0, 'asc']],
+                    "columnDefs": [
+                        {"targets": ["no-sort"], "orderable": false},
+                        {"targets": ["no-search"], "searchable": false},
+                        {"targets": ["hidden"], "visible": false},
+                    ],
+                    "language": {
+                        "lengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                        "search": "Filtre de recherche : _INPUT_",
+                        "loadingRecords": "Chargement en cours...",
+                        "info": "<small class=\"text-highlight\">Affichage : <strong><i class=\"far fa-list-alt\"></i> _START_ - _END_ sur _TOTAL_</strong></small>",
+                        "infoEmpty": "",
+                        "infoFiltered": "<small class=\"text-highlight\">(_MAX_ &eacute;l&eacute;ments au total)</small>",
+                        "emptyTable": "Aucune donnée disponible.",
+                        "zeroRecords": "Aucun enregistrement trouvé.",
+                        "paginate": {
+                            "previous": "<i class=\"fas fa-chevron-left\"></i>",
+                            "next": "<i class=\"fas fa-chevron-right\"></i>"
+                        }
+                    },
+                });
+            }
+        });
+    </script>
+
+
+</div>

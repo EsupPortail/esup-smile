@@ -1,0 +1,82 @@
+<?php
+
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Composante\ComposanteController;
+use  Application\Entity\Composante;
+use UnicaenApp\Util;
+
+/**
+ * @see \Application\Controller\Composante\ComposanteController::listerAction()
+ * @var PhpRenderer $this
+ * @var Composante[] $composantes
+ */
+
+$vh = $this->composante();
+$tableId = "liste-composantes";
+
+//Idée d'amélioration : faire un refresh uniquement sur une ligne ? si celà a du sens, pas sur
+?>
+<table id="<?= $tableId ?>" class="table table-condensed table-hover">
+    <thead>
+    <tr>
+        <th class="col-md-2">Code</th>
+        <th>Libellé</th>
+        <th class="col-md-1 no-search" data-type="num">Statut</th>
+        <th class="col-md-1 text-end no-search no-sort">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($composantes as $composante) :
+        $desactive = $composante->estHistorise();
+        $url = $this->url(ComposanteController::ROUTE_AFFICHER, ['composante' => $composante->getId()], [], true);
+        $vh->setComposante($composante);
+        ?>
+        <tr class="<?= ($desactive) ? "historise " : "" ?>">
+            <td>
+                <a href="<?= $url ?>"><?=$composante->getCode() ?></a>
+            </td>
+            <td>
+                <?= $composante->getLibelle() ?>
+            </td>
+            <td data-order="<?= $composante->estHistorise() ? PHP_INT_MAX : PHP_INT_MIN ?>">
+                <?= $this->historique($composante)->renderHistoStatut() ?>
+            </td>
+            <td class="text-end">
+                <?= $vh->renderActionsMenu() ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+
+<script>
+        if (jQuery().dataTable) {
+            $('#<?=$tableId ?>').DataTable({
+                "responsive": true,
+                "stateSave": true,
+                "retrieve": true,
+                "autoWidth": false,
+                "lengthMenu": [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "Tous"]],
+                "order": [[2, 'asc'], [0, 'asc'], [1, 'asc']],
+                "columnDefs": [
+                    {"targets": ["no-sort"], "orderable": false},
+                    {"targets": ["no-search"], "searchable": false},
+                    {"targets": ["hidden"], "visible": false},
+                ],
+                "language": {
+                    "lengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                    "search": "Filtre de recherche : _INPUT_",
+                    "loadingRecords": "Chargement en cours...",
+                    "info": "<small class=\"text-highlight\">Affichage : <strong><i class=\"far fa-list-alt\"></i> _START_ - _END_ sur _TOTAL_</strong></small>",
+                    "infoEmpty": "",
+                    "infoFiltered": "<small class=\"text-highlight\">(_MAX_ &eacute;l&eacute;ments au total)</small>",
+                    "emptyTable": "Aucune donnée disponible.",
+                    "zeroRecords": "Aucun enregistrement trouvé.",
+                    "paginate": {
+                        "previous": "<i class=\"fas fa-chevron-left\"></i>",
+                        "next": "<i class=\"fas fa-chevron-right\"></i>"
+                    }
+                },
+            });
+        }
+</script>

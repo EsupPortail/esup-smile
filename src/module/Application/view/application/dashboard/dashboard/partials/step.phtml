@@ -1,0 +1,33 @@
+<?php
+
+$steps = $this->steps;
+$step = $this->step;
+
+?>
+<table class="table">
+    <?php foreach($steps as $s): ?>
+        <?php
+        $style = '';
+        if($s->getOrder() > $step->getOrder()){
+//                        $style = '<i class="fa-solid fa-circle-xmark"></i>';
+            $style = '<span class="fa-layers fa-fw">
+            <i class="fa-regular fa-xl fa-circle"></i>
+            <span class="fa-layers-text" data-fa-transform="right-2" style="font-weight:900; font-size:1em">'.$s->getOrder().'</span>
+        </span>';
+        }elseif($s->getOrder() < $step->getOrder() || ($s === end($steps))) {
+            $style = '<i class="fa-sharp fa-xl fa-circle-check" style="color: forestgreen"></i>';
+        }else {
+            $style = '<span class="fa-layers fa-fw text-warning">
+            <i class="fa-regular fa-xl fa-circle"></i>
+            <span class="fa-layers-text" data-fa-transform="right-2" style="font-weight:900; font-size:1em">'.$s->getOrder().'</span>
+        </span>';
+        }
+        ?>
+
+        <tr>
+            <td><?= $style ?></td>
+            <td><?= $s->getLibelle() ?></td>
+        </tr>
+
+    <?php endforeach; ?>
+</table>

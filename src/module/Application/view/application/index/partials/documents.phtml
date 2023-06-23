@@ -1,0 +1,40 @@
+<?php
+
+use Application\Entity\Document;
+use UnicaenApp\Filter\BytesFormatter;
+
+/**
+ * @var Document[] $documents
+ */
+?>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>File size</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+
+    /**
+     * @see \Application\Controller\Dashboard\DashboardController::removeDocumentAction()
+     */
+
+    if($documents): ?>
+        <?php foreach ($documents as $doc): ?>
+            <tr>
+                <td><?= $doc->getFichier()->getNature()->getLibelle() ?></td>
+                <td><?= $doc->getFichier()->getNomOriginal() ?></td>
+                <td><?= (new BytesFormatter())->filter($doc->getFichier()->getTaille()) ?></td>
+                <td>
+                    <a target="_blank" href="/upload/<?= $doc->getFichier()->getNomStockage() ?>"><i class="fa-solid fa-eye"></i></a>
+                    <a href="<?= $this->url('dashboard/removeDocument').'/'.$doc->getFichier()->getNomOriginal() ?>"><i class="fa-solid fa-trash" style="color: red;"></i></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    </tbody>
+</table>

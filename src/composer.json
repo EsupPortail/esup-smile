@@ -1,0 +1,65 @@
+{
+    "name": "unicaen/smile",
+    "description": "SMILE : Système de gestion informatique pour la Mobilité Internationale en Ligne des Étudiants",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://gest.unicaen.fr/packagist"
+        }
+    ],
+    "require": {
+        "unicaen/app": "6.0.7",
+        "unicaen/ldap": "6.0.0",
+        "unicaen/utilisateur": "6.0.6",
+        "unicaen/privilege": "6.0.2",
+        "unicaen/authentification": "6.0.4",
+        "unicaen/mail":       "6.0.4",
+        "unicaen/renderer":       "6.0.1",
+        "unicaen/pdf":          "6.1.0",
+        "unicaen/evenement":          "6.0.2",
+        "unicaen/egracon":      "0.1.1",
+        "laminas/laminas-dependency-plugin": "2.2.0",
+        "doctrine/doctrine-laminas-hydrator": "3.3.0",
+        "laminas/laminas-cli": "1.8.0",
+        "laminas/laminas-config-aggregator" : "1.13.0",
+        "laminas/laminas-development-mode": "3.10.0",
+        "ext-intl": "*",
+        "ext-json": "*",
+        "ext-gettext": "*",
+        "php": "^8.0",
+        "unicaen/console": "6.0.0",
+        "doctrine/doctrine-orm-module": "5.3.0",
+        "unicaen/code": "6.0.8",
+        "unicaen/db-import" : "dev-smile",
+        "vlucas/phpdotenv": "^5.5@dev"
+    },
+    "minimum-stability": "dev",
+    "require-dev": {
+        "laminas/laminas-test": "*",
+        "laminas/laminas-developer-tools": "^2"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "mkdir -p data/DoctrineORMModule/Proxy ; chmod -R 777 data/DoctrineORMModule/Proxy",
+            "mkdir -p public/unicaen ; cp -r vendor/unicaen/db-import/public/unicaen public/"
+        ]
+    },
+    "autoload": {
+        "psr-4": {
+            "Application\\": "module/Application/src"
+        },
+        "files": [
+            "module/Application/Module.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ApplicationTest\\": "module/Application/test"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "laminas/laminas-dependency-plugin": true
+        }
+    }
+}

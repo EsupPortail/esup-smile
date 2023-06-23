@@ -1,0 +1,32 @@
+<?php
+
+use Application\Application\Form\Composante\ComposanteForm;
+use Application\Application\View\Helper\Composante\ComposanteViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Composante\ComposanteController;
+
+/**
+ * @see ComposanteController::ajouterAction()
+ * @var PhpRenderer $this
+ * @var string $title
+ * @var ComposanteForm $form
+ */
+
+$this->headTitle($title);
+
+/** @var ComposanteViewHelper $vh */
+$vh = $this->composante();
+?>
+
+<?= $vh->renderForm($form) ?>
+
+<script>
+    $(function () {
+        let body = $("body");
+        body.off("<?= ComposanteController::EVENT_AJOUTER?>", closeModal)
+            .one("<?= ComposanteController::EVENT_AJOUTER?>",   closeModal)
+
+        body.off("<?= ComposanteController::EVENT_AJOUTER?>", refreshFlashMessage)
+            .one("<?= ComposanteController::EVENT_AJOUTER?>",   refreshFlashMessage);
+    });
+</script>

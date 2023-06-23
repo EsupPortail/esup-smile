@@ -1,0 +1,32 @@
+<?php
+
+use Application\Application\Form\Formation\TypeFormationForm;
+use Application\Application\View\Helper\Formation\TypeFormationViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Formation\TypeFormationController;
+
+/**
+ * @see TypeFormationController::ajouterAction()
+ * @var PhpRenderer $this
+ * @var string $title
+ * @var TypeFormationForm $form
+ */
+
+$this->headTitle($title);
+
+/** @var TypeFormationViewHelper $vh */
+$vh = $this->typeFormation();
+?>
+
+<?= $vh->renderForm($form) ?>
+
+<script>
+    $(function () {
+        let body = $("body");
+        body.off("<?= TypeFormationController::EVENT_AJOUTER?>", closeModal)
+            .one("<?= TypeFormationController::EVENT_AJOUTER?>", closeModal)
+
+        body.off("<?= TypeFormationController::EVENT_AJOUTER?>", refreshFlashMessage)
+            .one("<?= TypeFormationController::EVENT_AJOUTER?>", refreshFlashMessage);
+    });
+</script>

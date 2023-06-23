@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * @var \Application\Application\Form\Misc\ConfirmationForm $form
+ */
+
+?>
+
+
+<div class="fieldset">
+    <?= $this->form()->openTag($form->prepare()) ?>
+
+    <?php if($form->getQuestion() !== "") :?>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-warning">
+            <strong><?= $form->getQuestion() ?></strong>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <div class="row">
+        <div class="col-md-12">
+            <span class="mx-3"><?= $this->formElement($form->get($form::INPUT_CONFIRM)) ?></span>
+            <span class="mx-3"><?= $this->formElement($form->get($form::INPUT_CANCEL)) ?></span>
+        </div>
+    </div>
+    <?= $this->formHidden($form->get($form::CSRF)); ?>
+    <?= $this->formHidden($form->get($form::INPUT_RESPONSE)); ?>
+    <?= $this->form()->closeTag(); ?>
+</div>
+
+<script>
+    $(function() {
+        $("#<?=$form::INPUT_CANCEL?>").click(function(e){
+            $('div.modal').modal('hide');
+            e.preventDefault(e);
+        });
+    });
+</script>
+

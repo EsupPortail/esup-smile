@@ -1,0 +1,225 @@
+<?php
+
+use Application\Application\View\Helper\Composante\ComposanteViewHelper;
+use Application\Application\View\Helper\Formation\FormationViewHelper;
+use Application\Application\View\Helper\Formation\TypeFormationViewHelper;
+use Application\Application\View\Helper\Source\SourceViewHelper;
+use Application\Application\View\Renderer\HistoriqueViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Composante\ComposanteController;
+use Application\Controller\Formation\FormationController;
+use Application\Controller\Formation\TypeFormationController;
+use  Application\Entity\Formation;
+use Application\Provider\Privilege\FormationPrivileges;
+use UnicaenPrivilege\Provider\Privilege\Privileges;
+
+/**
+ * @see \Application\Controller\Formation\FormationController::afficherAction()
+ * @var PhpRenderer $this
+ * @var string $title
+ * @var Formation $formation
+ */
+
+$this->headTitle($title);
+
+/** @var FormationViewHelper $vh */
+$vh = $this->formation($formation);
+
+/** @var \Application\Application\View\Renderer\HistoriqueViewHelper $histo */
+$histo = $this->historique($formation);
+/** @var SourceViewHelper $sourceVh */
+$sourceVh = $this->source($formation);
+
+$typeFormation = $formation->getTypeFormation();
+$typeDiplome = $formation->getTypeDiplome();
+$composante = $formation->getComposante();
+
+$canSeeComposante = $this->isAllowed(Privileges::getResourceId(FormationPrivileges::COMPOSANTE_AFFICHER));
+
+?>
+
+<h1 class="page-header">
+    <span class="icon">
+        <i class="fas fa-graduation-cap"></i>
+    </span>
+    <?= $title ?>
+</h1>
+
+<div class="row mb-3">
+    <div class="col-md-12">
+        <a class="btn btn-primary" href="<?= $this->url(FormationController::ROUTE_INDEX) ?>"><span
+                    class='icon icon-lister'></span> Liste des formations</a>
+        <?= $vh->renderLienModifier(); ?>
+        <?= $vh->renderLienArchiver() ?>
+        <?= $vh->renderLienRestaurer() ?>
+        <?= $vh->renderLienSupprimer() ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                    <li role="presentation" class="nav-item">
+                        <button class="nav-link active" id="infos-tab" data-bs-toggle="tab"
+                                data-bs-target="#infos-content" type="button"
+                                role="tab" aria-controls="infos-content" aria-selected="true">
+                            Informations générales
+                        </button>
+                    </li>
+                    <li role="presentation" class="nav-item">
+                        <button class="nav-link" id="type-formation-tab" data-bs-toggle="tab"
+                                data-bs-target="#type-formation-content" type="button"
+                                role="tab" aria-controls="type-formation-content" aria-selected="true">
+                            Type de formation
+                        </button>
+                    </li>
+                    <?php if ($sourceVh->canSeeSources()) : ?>
+                        <li role="presentation" class="nav-item">
+                            <button class="nav-link" id="sources-tab" data-bs-toggle="tab"
+                                    data-bs-target="#source-content" type="button"
+                                    role="tab" aria-controls="source-content" aria-selected="true">
+                                Sources
+                            </button>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+            <div class="card-body tab-content">
+                <div class="tab-pane active" id="infos-content" role="tabpanel"
+                     aria-labelledby="infos-tab">
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-4">
+                                    <strong>Statut</strong>
+                                </div>
+                                <div class="col-md-4 col-sm-8">
+                                    <?= $histo->renderHistoStatut() ?>
+                                </div>
+                                <div class="col-md-6 col-sm-12 text-muted small">
+                                    <div><?= $histo->renderHistoDate(HistoriqueViewHelper::DATE_SUPPRESSION) ?></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-4">
+                                    <strong>Libellé</strong>
+                                </div>
+                                <div class="col-md-4 col-sm-8">
+                                    <?= $formation->getLibelle(); ?>
+                                </div>
+                                <div class="col-md-2 col-sm-4">
+                                    <strong>Accronyme </strong>
+                                </div>
+                                <div class="col-md-4 col-sm-8">
+                                    <?= $formation->getAcronyme(); ?>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-4">
+                                    <strong>Composante</strong>
+                                </div>
+                                <div class="col-md-4 col-sm-8">
+                                    <?php if (!$composante) : ?>
+                                        <span class='text-muted'>Indéterminée</span>
+                                    <?php
+                                    elseif ($canSeeComposante) :
+                                        $url = $this->url(ComposanteController::ROUTE_AFFICHER, ['composante' => $composante->getId()], [], true);
+                                        ?>
+                                        <a href="<?= $url ?>"><?= $composante->getLibelle() ?></a>
+                                    <?php else : echo $composante->getLibelle(); endif; ?>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tab-pane" id="type-formation-content" role="tabpanel"
+                     aria-labelledby="type-formation-tab">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-4">
+                                    <strong>Type de formation</strong>
+                                </div>
+                                <div class="col-md-4 col-sm-8">
+                                    <?= ($typeFormation) ? $typeFormation->getLibelle() : "<span class='text-muted'>Indéterminé</span>" ?>
+                                </div>
+                                <div class="col-md-2 col-sm-4">
+                                    <strong>Mobilité</strong>
+                                </div>
+                                <div class="col-md-4 col-sm-8">
+                                    <?= ($formation->isOuvertMobilite()) ? "<span class='badge badge-success'>Ouvert</span>" : "<span class='badge badge-danger'>Fermé</span>" ?>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-4">
+                                    <strong>Type de diplome</strong>
+                                </div>
+                                <div class="col-md-4 col-sm-8">
+                                    <?= ($typeDiplome) ? $typeDiplome->getLibelle() : "<span class='text-muted'>Indéterminé</span>" ?>
+                                </div>
+                                <?php if ($formation->getNiveauEtude()) : ?>
+                                    <div class="col-md-2 col-sm-4">
+                                        <strong>Niveau d'étude </strong>
+                                    </div>
+                                    <div class="col-md-4 col-sm-8">
+                                        <?= $formation->getNiveauEtude(); ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <?php if ($sourceVh->canSeeSources()) : ?>
+                    <div class="tab-pane" id="source-content" role="tabpanel"
+                         aria-labelledby="sources-tab">
+                        <?= $this->source()->renderEntitySourcesInformations($formation); ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 small">
+                        <?= $this->backButton(); ?>
+                    </div>
+                    <div class="col-md-6 col-sm-6 text-end text-muted small">
+                        <div><?= $histo->renderHistoDate(HistoriqueViewHelper::DATE_CREATION) ?></div>
+                        <div><?= $histo->renderHistoDate(HistoriqueViewHelper::DATE_MODIFICATION) ?></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("body").on("<?=FormationController::EVENT_MODIFIER?> " +
+            "<?=FormationController::EVENT_ARCHIVER?> " +
+            "<?=FormationController::EVENT_RESTAURER ?> "
+            , function (event) {
+                window.location.reload();
+            }
+        )
+
+        $("body").on("<?=FormationController::EVENT_SUPPRIMER?> "
+            , function (event) {
+                $('.tab-pane').empty().append('<div class="row"><div class="col-md-12"><div class="alert alert-info">Vous allez être redirigé dans quelques seconde </div></div></div>');
+                setTimeout(function () {
+                    window.location = "<?= $this->url(FormationController::ROUTE_INDEX, [], [], true);?>";
+                }, 3000)
+            }
+        )
+    })
+</script>

@@ -1,0 +1,125 @@
+<?php
+
+/**
+ * @var PhpRenderer $this
+ * @var User[] $etudiants
+ * @var User $etudiant
+ * @var array $inscriptions
+ * @var \Application\Entity\Inscription $i
+ */
+
+use Application\Application\View\Renderer\PhpRenderer;
+use UnicaenUtilisateur\Entity\Db\User;
+
+$inscriptions = $this->inscriptions;
+$etudiants = $this->etudiants;
+$steps = $this->steps;
+?>
+<div class="row">
+    <div class="col text-center headTitle">
+        <h2>ADMINISTRATION</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h3 class="d-inline-block titleBlue">Students</h3>
+        <button class="btn btn-sm btn-dark float-end" title="Import list of students" disabled>Import by CSV</button>
+        <button class="btn btn-sm btn-success float-end me-2" disabled>New</button>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-2">
+        <div class="form-group">
+            <label for="labelSearchName">Search name</label>
+            <input type="text" class="form-control" id="searchName" aria-describedby="searchName" placeholder="Name">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table id="tableStudent" class="table table-smile table-responsive table-striped-nope table-bordered">
+            <thead>
+                <th class="fw-normal text-center fs-7">Students</th>
+                <?php foreach($steps as $step) : ?>
+                    <th class="fw-normal text-center fs-7">
+                            <?= $step->getLibelle() ?>
+                    </th>
+                <?php endforeach; ?>
+                    <th class="fw-normal text-center fs-7">Actions</th>
+            </thead>
+            <tbody>
+                <?php foreach($etudiants as $etudiant) : ?>
+                    <?php if($inscriptions[$etudiant->getUsername()]): ?>
+                    <tr class="toSearch" data-name="<?= $etudiant->getDisplayName() ?>">
+                        <td class="fw-bold">
+                            <?= $etudiant->getDisplayName() ?>
+                        </td>
+                        <?php foreach($steps as $step): ?>
+                            <td class="text-center">
+                                <?php
+                                    $stepOrder = $inscriptions[$etudiant->getUsername()]->getStep()->getOrder();
+                                    if( ($stepOrder > $step->getOrder()) || ($inscriptions[$etudiant->getUsername()]->getStep() === end($steps)) ) {
+                                        //echo '<i class="fa-solid fa-check" style="color: green;"></i>';
+										echo '<span class="smile-btn"><svg class="bi smile-svg svg-valide" width="16" height="16"><use xlink:href="#smile-valide"/></svg></span>';
+                                    }
+                                    else if ((intval($stepOrder)) === $step->getOrder()) {
+										echo '<span class="smile-btn"><svg class="bi smile-svg svg-sablier" width="16" height="16"><use xlink:href="#smile-sablier"/></svg></span>';
+                                        if ($step->getNeedValidation()) {
+                                            echo '
+												<form method="POST" action="gestion/validate" class="d-inline">
+													<input name="data" type="hidden" value="'.$inscriptions[$etudiant->getUsername()]->getUuid().'"/>
+													<button type="submit" class="btn btn-sm btn-success smile-btn" title="Validate"><svg class="bi smile-svg svg-valide" width="16" height="16"><use xlink:href="#smile-valide"/></svg></button>
+												</form>
+												<form method="POST" action="gestion/denied" class="d-inline">
+													<input name="data" type="hidden" value="'.$inscriptions[$etudiant->getUsername()]->getUuid().'"/>
+													<button type="submit" class="btn btn-sm btn-danger smile-btn" title="Denied"><svg class="bi smile-svg svg-invalide" width="16" height="16"><use xlink:href="#smile-invalide"/></svg></button>
+												</form>
+											';
+                                        }
+                                    }
+                                ?>
+                            </td>
+                        <?php endforeach; ?>
+                        <td class="text-center">
+                            <a href="/gestion/<?= $inscriptions[$etudiant->getUsername()]->getUuid() ?>" class="btn btn-sm btn-dark">Show</a>
+                        </td>
+                    </tr>
+
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $( document ).ready(function() {
+        let tableStudent = document.querySelector('#tableStudent');
+        let rows = document.querySelectorAll('.toSearch');
+        let searchName = document.querySelector('#searchName');
+        console.log(rows)
+        searchName.addEventListener('keyup',(e) => {
+            let el = e.target
+            let elVal = el.value.toLowerCase()
+
+            if(elVal !== '') {
+                rows.forEach((r) => {
+                    let name = r.dataset.name.toLowerCase()
+                    if(name.indexOf(elVal) < 0) {
+                        $(r).hide()
+                    }else {
+                        $(r).show()
+                    }
+                })
+            }else {
+                rows.forEach((r) => {
+
+                    $(r).show()
+
+                })
+            }
+
+        })
+    });
+</script>

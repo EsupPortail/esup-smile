@@ -1,0 +1,32 @@
+<?php
+
+use Application\Application\Form\Formation\TypeDiplomeForm;
+use Application\Application\View\Helper\Formation\TypeDiplomeViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Formation\TypeDiplomeController;
+
+/**
+ * @see TypeDiplomeController::modifierAction()
+ * @var PhpRenderer $this
+ * @var string $title
+ * @var TypeDiplomeForm $form
+ */
+
+$this->headTitle($title);
+
+/** @var TypeDiplomeViewHelper $vh */
+$vh = $this->typeDiplome();
+?>
+
+<?= $vh->renderForm($form) ?>
+
+<script>
+    $(function () {
+        let body = $("body");
+        body.off("<?= TypeDiplomeController::EVENT_MODIFIER?>", closeModal)
+            .one("<?= TypeDiplomeController::EVENT_MODIFIER?>",   closeModal)
+
+        body.off("<?= TypeDiplomeController::EVENT_MODIFIER?>", refreshFlashMessage)
+            .one("<?= TypeDiplomeController::EVENT_MODIFIER?>",   refreshFlashMessage);
+    });
+</script>

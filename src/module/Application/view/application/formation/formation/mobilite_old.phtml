@@ -1,0 +1,100 @@
+<?php
+
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Entity\Composante;
+use Application\Entity\Cours;
+use Application\Entity\Formation;
+use Application\Entity\Langue;
+use Application\Entity\Mobilite;
+
+/**
+ * @see \Application\Controller\Formation\FormationController::mobiliteAction()
+ * @var PhpRenderer $this
+ * @var Formation[] $formations
+ * @var Cours[] $cours
+ * @var Composante[] $composantes
+ * @var Mobilite[] $mobilites
+ * @var Langue[] $langues
+ */
+
+$formations = $this->formations;
+$composantes = $this->composantes;
+$cours = $this->cours;
+$mobilites = $this->mobilites;
+$langues = $this->langues;
+?>
+<div class="row">
+    <div class="col">
+        <select class="form-select" aria-label="Composante">
+            <option selected>Composante</option>
+            <?php foreach($composantes as $composante): ?>
+                <option value="<?= $composante->getCode() ?>"><?= $composante->getLibelle() ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <div class="col">
+        <input type="text" name="searchIntituleCours" id="searchIntituleCours" class="form-control" placeholder="Intitulé des cours">
+    </div>
+    <div class="col">
+        <input type="text" name="searchNiveau" id="searchNiveau" class="form-control" placeholder="Niveau">
+    </div>
+    <div class="col">
+        <select class="form-select" aria-label="Composante">
+            <option selected>Semestre</option>
+            <option value="1">S1</option>
+            <option value="2">S2</option>
+            <option value="3">S1 & S2</option>
+        </select>
+    </div>
+    <div class="col">
+        <input type="number" name="searchEcts" id="searchEcts" class="form-control" placeholder="ECTS">
+    </div>
+    <div class="col">
+        <select class="form-select" aria-label="Langue">
+            <option selected>Langue</option>
+            <?php foreach($langues as $langue): ?>
+                <option value="<?= $langue->getCode() ?>"><?= $langue->getLibelle() ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Composante</th>
+                <th>Code</th>
+                <th>Intitulé des cours</th>
+                <?php foreach($mobilites as $mobilite):?>
+                    <th>
+                        <?= $mobilite->getLibelle() ?>
+                    </th>
+                <?php endforeach; ?>
+            </tr>
+            </thead>
+            <tbody>
+
+            <?php foreach ($cours as $c) : ?>
+                l
+                <tr>
+                    <td><?= $c->getFormation()->getComposante()->getLibelle() ?></td>
+                    <td><?= $c->getCodeElp() ?></td>
+                    <td><?= $c->getLibelle() ?></td>
+                    <?php foreach($mobilites as $mobilite): ?>
+                        <td>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                <label class="form-check-label" for="flexSwitchCheckChecked"></label></div>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+
+            <?php endforeach; ?>
+            <tr>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

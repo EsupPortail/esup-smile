@@ -1,0 +1,199 @@
+<?php
+
+use Application\Application\Form\Composante\ComposanteFieldset;
+use Application\Application\Form\Formation\FormationFieldset;
+use Application\Application\Form\Formation\FormationForm;
+use Application\Application\View\Renderer\PhpRenderer;
+
+/**
+ * @see FormationController::ajouterAction()
+ * @see FormationController::modifierAction()
+ * @var PhpRenderer $this
+ * @var FormationForm $form
+ * TODO - Amélioration a faire :
+ * Faire l'un des accordéon à l'ouverture d'un autre (ou radio)
+ * Sauvegarder l'item ouvert l'hors de la soumission du formulaire.
+ */
+
+$fe = $this->formErrors();
+$fcg = $this->formControlGroup();
+$fr = $this->formrow();
+$fct = $this->formControlText();
+
+//TODO : voir comment rajouter d'autres texte que required (ie : des notes) et les inclures dans le formulaire
+
+/** @var FormationFieldset $fieldset */
+$fieldset = $form->getEntityFieldset();
+?>
+
+<div class="fieldset">
+
+    <?= $this->form()->openTag($form->prepare()) ?>
+    <div class="row">
+        <div class="col-md-12">
+            <?= $fe($form->prepare(), $form::INVALIDE_ERROR_MESSAGE) ?>
+        </div>
+    </div>
+
+
+	<div class="accordion" id="accordionFormation">
+		<div class="accordion-item">
+			<h3 class="accordion-header" id="headingOne">
+				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+					Informations générales
+				</button>
+			</h3>
+			<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionFormation">
+				<div class="accordion-body">
+
+					<div class="row">
+						<div class="col-md-6">
+							<?= $fct($fieldset->get($fieldset::INPUT_CODE)) ?>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<?= $fct($fieldset->get($fieldset::INPUT_LIBELLE)) ?>
+						</div>
+						<div class="col-md-6">
+							<?= $fct($fieldset->get($fieldset::INPUT_ACRONYME)) ?>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<?= $fcg($fieldset->get($fieldset::INPUT_COMPOSANTE)) ?>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="accordion-item">
+			<h3 class="accordion-header" id="headingTwo">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+					Type de formation
+				</button>
+			</h3>
+			<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionFormation">
+				<div class="accordion-body">
+
+					<div class="row">
+						<div class="col-md-12">
+							<?= $fcg($fieldset->get($fieldset::INPUT_DOMAINE_FORMATION)) ?>
+						</div>
+						<div class="col-md-6">
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<?= $fcg($fieldset->get($fieldset::INPUT_TYPE_FORMATION)) ?>
+						</div>
+						<div class="col-md-6">
+							<?= $fcg($fieldset->get($fieldset::INPUT_MOBILITE)) ?>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<?= $fcg($fieldset->get($fieldset::INPUT_TYPE_DIPLOME)) ?>
+						</div>
+						<div class="col-md-6">
+							<?= $fcg($fieldset->get($fieldset::INPUT_NIVEAU_ETUDE)) ?>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="accordion-item">
+			<h3 class="accordion-header" id="headingThree">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+					Description de la formation
+				</button>
+			</h3>
+			<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionFormation">
+				<div class="accordion-body">
+
+					<div class="row">
+						<div class="col-md-6">
+							<?= $fcg($fieldset->get($fieldset::INPUT_LANGUE)) ?>
+						</div>
+						<div class="col-md-6">
+							<?= $fct($fieldset->get($fieldset::INPUT_MENTION)) ?>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<?= $this->formlabel($fieldset->get($fieldset::INPUT_PROGRAMME)) ?>
+							<?= $this->formelement($fieldset->get($fieldset::INPUT_PROGRAMME)) ?>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<?= $this->formControlGroup($fieldset->get($fieldset::INPUT_MODALITE)) ?>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<?= $this->formlabel($fieldset->get($fieldset::INPUT_OBJECTIFS)) ?>
+							<?= $this->formelement($fieldset->get($fieldset::INPUT_OBJECTIFS)) ?>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-md-12">
+							<?= $this->formlabel($fieldset->get($fieldset::INPUT_PREREQUIS)) ?>
+							<?= $this->formelement($fieldset->get($fieldset::INPUT_PREREQUIS)) ?>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="accordion-item">
+			<h3 class="accordion-header" id="headingFour">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+					Informations complémentaires
+				</button>
+			</h3>
+			<div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionFormation">
+				<div class="accordion-body">
+
+					<div class="row">
+						<div class="col-md-6">
+							<?= $this->formlabel($fieldset->get($fieldset::INPUT_BIBLIO)) ?>
+							<?= $this->formelement($fieldset->get($fieldset::INPUT_BIBLIO)) ?>
+						</div>
+						<div class="col-md-6">
+							<?= $this->formlabel($fieldset->get($fieldset::INPUT_CONTACTS)) ?>
+							<?= $this->formelement($fieldset->get($fieldset::INPUT_CONTACTS)) ?>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<?= $this->formlabel($fieldset->get($fieldset::INPUT_COMPLEMENTS)) ?>
+							<?= $this->formelement($fieldset->get($fieldset::INPUT_COMPLEMENTS)) ?>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <?= $fcg($form->get($form::INPUT_SUBMIT)) ?>
+        </div>
+    </div>
+    <?= $this->formHidden($form->get($form::CSRF)); ?>
+    <?= $this->form()->closeTag(); ?>
+
+</div>

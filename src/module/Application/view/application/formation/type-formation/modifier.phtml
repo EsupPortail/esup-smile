@@ -1,0 +1,35 @@
+<?php
+
+use Application\Application\Form\Composante\ComposanteForm;
+use Application\Application\Form\Formation\TypeFormationForm;
+use Application\Application\View\Helper\Composante\ComposanteViewHelper;
+use Application\Application\View\Helper\Formation\TypeFormationViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Composante\ComposanteController;
+use Application\Controller\Formation\TypeFormationController;
+
+/**
+ * @see TypeFormationController::modifierAction()
+ * @var PhpRenderer $this
+ * @var string $title
+ * @var TypeFormationForm $form
+ */
+
+$this->headTitle($title);
+
+/** @var TypeFormationViewHelper $vh */
+$vh = $this->typeFormation();
+?>
+
+<?= $vh->renderForm($form) ?>
+
+<script>
+    $(function () {
+        let body = $("body");
+        body.off("<?= TypeFormationController::EVENT_MODIFIER?>", closeModal)
+            .one("<?= TypeFormationController::EVENT_MODIFIER?>",   closeModal)
+
+        body.off("<?= TypeFormationController::EVENT_MODIFIER?>", refreshFlashMessage)
+            .one("<?= TypeFormationController::EVENT_MODIFIER?>",   refreshFlashMessage);
+    });
+</script>

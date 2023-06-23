@@ -1,0 +1,40 @@
+div.note {
+    border: 1px gray solid;
+    background: rgb(245,245,240);
+    min-width: fit-content;
+    width:15rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+th.action {
+    width: 10rem;
+}
+
+td.action a {
+    text-decoration: none;
+    font-size: small;
+}
+
+table.conversion {
+    border: 1px black solid;
+}
+
+table.conversion tr {
+    height: 4rem;
+}
+
+table.conversion th {
+    border: 1px black solid;
+    min-width: 10rem;
+    text-align:center;
+    background: rgb(245,245,240);
+}
+table.conversion td {
+    border: 1px black solid;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+table.conversion td.missing {
+    background: lightcoral;
+}

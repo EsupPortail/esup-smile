@@ -1,0 +1,48 @@
+<?php
+
+use  Application\Application\Entity\Interfaces\SourceAwareInterface;
+use Application\Application\View\Renderer\PhpRenderer;
+
+/**
+ * @see \Application\Application\View\Helper\Source\SourceViewHelper::renderEntitySourcesInformations()
+ * @var PhpRenderer $this
+ * @var SourceAwareInterface $entity ;
+ */
+
+$vh = $this->source();
+$source = $entity->getSource();
+$smileSource = $vh->getSmileSource();
+?>
+
+<ul class="list-group list-group-flush">    <li class="list-group-item">
+        <div class="row">
+            <div class="col-md-2 col-sm-4">
+                <strong>Identifiant <?php
+                    $vh->setSource($smileSource);
+                    echo $vh->renderBadge() ?>
+                </strong>
+            </div>
+            <div class="col-md-4 col-sm-8">
+                #<?= $entity->getId(); ?>
+            </div>
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col-md-2 col-sm-4">
+                <strong>Source de référence</strong>
+            </div>
+            <div class="col-md-4 col-sm-8">
+                <?php $vh->setSource($source);
+                echo $vh->renderBadge() ?>
+                </strong>
+            </div>
+            <div class="col-md-2 col-sm-4">
+                <strong>Code</strong>
+            </div>
+            <div class="col-md-4 col-sm-8">
+                <?= $entity->getCode(); ?>
+            </div>
+        </div>
+    </li>
+</ul>

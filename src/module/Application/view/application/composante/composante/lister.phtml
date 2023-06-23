@@ -1,0 +1,18 @@
+<?php
+
+use Application\Application\View\Helper\Composante\ComposanteViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Composante\ComposanteController;
+use  Application\Entity\Composante;
+
+/**
+ * @see ComposanteController::listerAction()
+ * @var PhpRenderer $this
+ * @var Composante[] $composantes
+ */
+?>
+<?php
+
+echo $this->composante()->renderListe($composantes)
+?>
+

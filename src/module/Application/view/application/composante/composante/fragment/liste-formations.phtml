@@ -1,0 +1,133 @@
+<?php
+
+use Application\Application\View\Helper\Composante\ComposanteViewHelper;
+use Application\Application\View\Helper\Formation\FormationViewHelper;
+use Application\Application\View\Helper\Formation\TypeFormationViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Formation\FormationController;
+use Application\Controller\Formation\TypeFormationController;
+use  Application\Entity\Composante;
+use  Application\Entity\Formation;
+use Application\Entity\TypeFormation;
+use Application\Provider\Privilege\FormationPrivileges;
+use Laminas\Form\Element\Select;
+use UnicaenApp\Util;
+use UnicaenPrivilege\Provider\Privilege\Privileges;
+
+/**
+ * @var PhpRenderer $this
+ * @var Composante $composante
+ */
+
+/** @var Formation[] $formations */
+$formations = $composante->getFormations();
+$tableId = "formations_composante-" . $composante->getId();
+
+/** @var FormationViewHelper $formationVh */
+$formationVh = $this->formation();
+
+/** @var TypeFormationViewHelper $typeFormationVh */
+$typeFormationVh = $this->typeFormation();
+
+$canSeeFormation = $this->isAllowed(Privileges::getResourceId(FormationPrivileges::FORMATION_AFFICHER));
+
+?>
+
+<table id="<?= $tableId ?>" class="table table-condensed table-hover">
+    <thead>
+    <tr>
+        <th class="col-md-4">Type de formation</th>
+        <th class="col-md-6">Formation</th>
+        <th class="col-md-1 no-search" data-type="num">Niveau</th>
+        <th class="col-md-1" data-type="num">Statut</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($formations as $formation) :
+        $typeFormation = $formation->getTypeFormation();
+        $formationUrl = $this->url(FormationController::ROUTE_AFFICHER, ['formation' => $formation->getId()], [], true);
+        if ($formation->estArchivee()) $nbArchivees++;
+        ?>
+        <tr>
+            <td>
+               <?= ($typeFormation) ? $typeFormation->getLibelle() : "<span class='text-muted mx-3'>-</span>"?>
+            </td>
+            <td>
+                <?php if($canSeeFormation) :?>
+                    <a href="<?= $formationUrl ?>"><?= $formation->getLibelle() ?></a>
+                <?php  else : echo $formation->getLibelle(); endif; ?>
+            </td>
+            <td class="text-center">
+                <?= $formation->getNiveau() ?>
+            </td>
+            <td class="" data-filter="<?= (!$formation->estHistorise()) ? 'Active' : 'Archivée' ?>"
+                data-order="<?= (!$formation->estHistorise()) ? 1 : 0 ?>">
+                <?= $this->historique($formation)->renderHistoStatut() ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <strong>Filtre de recherche avancée</strong>
+    </div>
+    <div class="col-md-6">
+        <div class="form-switch">
+            <input class="form-check-input" type="checkbox"
+                   id="formations_archivees"
+            >
+             <label class="form-check-label" for="formations_archivees">Afficher les formations archivées</label>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        if (jQuery().dataTable) {
+            let table = $('#<?=$tableId ?>').DataTable({
+                "responsive": true,
+                "stateSave": true,
+                "retrieve": true,
+                "autoWidth": false,
+                "lengthMenu": [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "Tous"]],
+                "order": [[3, 'desc'],[2, 'desc'], [1, 'asc'], [0, 'asc']],
+                "columnDefs": [
+                    {"targets": ["no-sort"], "orderable": false},
+                    {"targets": ["no-search"], "searchable": false},
+                    {"targets": ["hidden"], "visible": false},
+                ],
+                "language": {
+                    "lengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                    "search": "Filtre de recherche : _INPUT_",
+                    "loadingRecords": "Chargement en cours...",
+                    "info": "<small class=\"text-highlight\">Affichage : <strong><i class=\"far fa-list-alt\"></i> _START_ - _END_ sur _TOTAL_</strong></small>",
+                    "infoEmpty": "",
+                    "infoFiltered": "<small class=\"text-highlight\">Affichage : <strong><i class=\"far fa-list-alt\"></i> _START_ - _END_ sur _TOTAL_</strong></small>",
+                    // "infoFiltered": "<small class=\"text-highlight\">(_MAX_ &eacute;l&eacute;ments au total)</small>",
+                    "emptyTable": "Aucune donnée disponible.",
+                    "zeroRecords": "Aucun enregistrement trouvé.",
+                    "paginate": {
+                        "previous": "<i class=\"fas fa-chevron-left\"></i>",
+                        "next": "<i class=\"fas fa-chevron-right\"></i>"
+                    }
+                },
+            });
+
+            $('#formations_archivees').on('change', function (e) {
+                values = $(this).prop('checked');
+                if (!values) {
+                    table.column(3).search("Active").draw();
+                    return;
+                }
+                table.column(3).search("").draw();
+            });
+            if (table.column(3).search() === '') {
+                $('#formations_archivees').prop('checked', true)
+            }
+        }
+    });
+</script>
+

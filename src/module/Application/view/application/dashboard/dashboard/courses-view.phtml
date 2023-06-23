@@ -1,0 +1,63 @@
+<?php
+use Application\Entity\Cours;
+
+/**
+ * @var Cours $cours
+ */
+
+?>
+    <div class="row">
+        <div class="col mb-3">
+            <h2>DESCRIPTION</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label for="composante" class="form-label">Composante :</label>
+            <p><?= $cours->getFormation()->getComposante()->getLibelle() ?></p>
+        </div>
+        <div class="col">
+            <label for="code" class="form-label">Code de l'objet :</label>
+            <p><?= $cours->getCodeElp() ?></p>
+        </div>
+        <div class="col">
+            <label for="libelle" class="form-label">Libellé long :</label>
+            <p><?= $cours->getLibelle() ?></p>
+        </div>
+        <div class="col">
+            <label for="ects" class="form-label">ECTS :</label>
+            <p><?= $cours->getEcts() ?></p>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <label for="niveau" class="form-label">Niveau :</label>
+            <p><?= $cours->getFormation()->getNiveauEtude() ?></p>
+        </div>
+        <div class="col">
+            <label for="code" class="form-label">Semestre :</label>
+            <p><?= (($cours->getS1()) ? 'S1' : '').' '.(($cours->getS2()) ? 'S2' : '') ?></p>
+        </div>
+        <div class="col">
+            Volume horaire :
+            <p><?= $cours->getVolElp() ?></p>
+        </div>
+        <div class="col">
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <div class="form-floating">
+                Description :
+                <p><?= $cours->getDescription() ?></p>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <div class="form-floating">
+                Objectif :
+                <p><?= $cours->getObjectif() ?></p>
+            </div>
+        </div>
+    </div>

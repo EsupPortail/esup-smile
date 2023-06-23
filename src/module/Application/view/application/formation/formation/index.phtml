@@ -1,0 +1,130 @@
+<?php
+
+use Application\Application\View\Helper\Formation\FormationViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Formation\FormationController;
+use Application\Controller\Formation\TypeDiplomeController;
+use Application\Controller\Formation\TypeFormationController;
+
+/**
+ * @see FormationController::indexAction()
+ * @var PhpRenderer $this
+ */
+
+/** @var FormationViewHelper $vh */
+$vh = $this->formation();
+$this->headTitle("Les formations");
+
+
+/** container ID */
+$formationsContainer = uniqid('container-');
+$typesFormationsContainer = uniqid('container-');
+$typesDiplomesContainer = uniqid('container-');
+
+
+?>
+
+
+<h1 class="page-header">
+    <span class="icon">
+        <i class="fas fa-graduation-cap"></i>
+    </span>
+    Gestion des formations
+</h1>
+
+<nav class="mt-4">
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="<?=$formationsContainer ?>-tab" data-bs-toggle="tab" data-bs-target="#<?=$formationsContainer ?>-panel" type="button" role="tab" aria-controls="<?=$formationsContainer ?>" aria-selected="true">Formations</button>
+        <button class="nav-link" id="<?=$typesFormationsContainer ?>-tab" data-bs-toggle="tab" data-bs-target="#<?=$typesFormationsContainer ?>-panel" type="button" role="tab" aria-controls="<?=$typesFormationsContainer ?>" aria-selected="false" tabindex="-1">Types de formations</button>
+        <button class="nav-link" id="<?=$typesDiplomesContainer ?>-tab" data-bs-toggle="tab" data-bs-target="#<?=$typesDiplomesContainer ?>-panel" type="button" role="tab" aria-controls="<?=$typesDiplomesContainer ?>" aria-selected="false" tabindex="-1">Types de diplomes</button>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="<?=$formationsContainer ?>-panel" role="tabpanel" aria-labelledby="<?=$formationsContainer ?>-tab">
+
+		<h2 class="d-none">Liste des formations</h2>
+
+        <div class="card-text my-3">
+            <?= $vh->renderLienAjouter() ?>
+        </div>
+
+        <?php
+            $url = $this->url(FormationController::ROUTE_LISTER, [], [], true);
+        ?>
+        <div id='<?= $formationsContainer ?>' class="card-text" data-url="<?= $url ?>">
+            <?= $this->messenger()->renderMessage("Chargement en cours ...") ?>
+        </div>
+
+	</div>
+    <div class="tab-pane fade" id="<?=$typesFormationsContainer ?>-panel" role="tabpanel" aria-labelledby="<?=$typesFormationsContainer ?>-tab">
+
+        <h2 class="d-none">Liste des types de formations</h2>
+
+        <div class="card-text my-3">
+            <?= $this->typeFormation()->renderLienAjouter() ?>
+        </div>
+
+        <?php
+            $url = $this->url(TypeFormationController::ROUTE_LISTER, [], [], true);
+        ?>
+        <div id='<?= $typesFormationsContainer ?>' class="card-text" data-url="<?= $url ?>">
+            <?= $this->messenger()->renderMessage("Chargement en cours ...") ?>
+        </div>
+	
+	</div>
+    <div class="tab-pane fade" id="<?=$typesDiplomesContainer ?>-panel" role="tabpanel" aria-labelledby="<?=$typesDiplomesContainer ?>-tab">
+	
+        <h2 class="d-none">Liste des types de diplomes</h2>
+
+        <div class="card-text my-3">
+            <?= $this->typeDiplome()->renderLienAjouter() ?>
+        </div>
+
+        <?php
+            $url = $this->url(TypeDiplomeController::ROUTE_LISTER, [], [], true);
+        ?>
+        <div id='<?= $typesDiplomesContainer ?>' class="card-text" data-url="<?= $url ?>">
+            <?= $this->messenger()->renderMessage("Chargement en cours ...") ?>
+        </div>
+
+	</div>
+</div>
+
+<script>
+    $(function () {
+        let body =  $('body')
+        let formations =  $('#<?=$formationsContainer ?>')
+        let typesFormations =  $('#<?=$typesFormationsContainer ?>')
+        let typesDiplomes =  $('#<?=$typesDiplomesContainer ?>')
+
+        body.on(
+            '<?= FormationController::EVENT_AJOUTER?> ' +
+            '<?= FormationController::EVENT_MODIFIER?> ' +
+            '<?= FormationController::EVENT_ARCHIVER?> ' +
+            '<?= FormationController::EVENT_RESTAURER?> ' +
+            '<?= FormationController::EVENT_SUPPRIMER?> ' +
+            '', function () {
+                    formations.refresh();
+            });
+
+        body.on(
+            '<?= TypeFormationController::EVENT_AJOUTER?> ' +
+            '<?= TypeFormationController::EVENT_MODIFIER?> ' +
+            '<?= TypeFormationController::EVENT_SUPPRIMER?> ' +
+            '', function () {
+                typesFormations.refresh();
+            });
+        body.on(
+            '<?= TypeDiplomeController::EVENT_AJOUTER?> ' +
+            '<?= TypeDiplomeController::EVENT_MODIFIER?> ' +
+            '<?= TypeDiplomeController::EVENT_SUPPRIMER?> ' +
+            '', function () {
+                typesDiplomes.refresh();
+            });
+
+        formations.refresh();
+        typesFormations.refresh();
+        typesDiplomes.refresh();
+    })
+
+</script>

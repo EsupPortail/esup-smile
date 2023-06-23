@@ -1,0 +1,59 @@
+<?php
+
+use Application\Application\Form\Composante\ComposanteFieldset;
+use Application\Application\Form\Formation\TypeDiplomeFieldset;
+use Application\Application\Form\Formation\TypeDiplomeForm;
+use Application\Application\View\Renderer\PhpRenderer;
+
+/**
+ * @see TypeDiplomeController::ajouterAction()
+ * @see TypeDiplomeController::modifierAction()
+ * @var PhpRenderer $this
+ * @var TypeDiplomeForm $form
+ */
+
+$fe = $this->formErrors();
+$fcg = $this->formControlGroup();
+$fr = $this->formrow();
+$fct = $this->formControlText();
+
+//TODO : voir comment rajouter d'autres texte que required (ie : des notes) et les inclures dans le formulaire
+
+/** @var TypeDiplomeFieldset $fieldset */
+$fieldset = $form->getEntityFieldset();
+?>
+
+<div class="fieldset">
+<?= $this->form()->openTag($form->prepare()) ?>
+    <div class="row">
+        <div class="col-md-12">
+            <?= $fe($form->prepare(), $form::INVALIDE_ERROR_MESSAGE) ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <?= $fct($fieldset->get($fieldset::INPUT_CODE)) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $fcg($fieldset->get($fieldset::INPUT_ORDRE)) ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <?= $fct($fieldset->get($fieldset::INPUT_LIBELLE)) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $fct($fieldset->get($fieldset::INPUT_ACRONYME)) ?>
+        </div>
+    </div>
+
+	<div class="row mt-3">
+        <div class="col-md-12">
+            <?= $fcg($form->get($form::INPUT_SUBMIT)) ?>
+        </div>
+    </div>
+<?= $this->formHidden($form->get($form::CSRF)); ?>
+<?= $this->form()->closeTag(); ?>
+</div>

@@ -1,0 +1,116 @@
+<?php
+
+use Application\Application\View\Renderer\PhpRenderer;
+/**
+ * @see \Application\Controller\IndexController::indexAction()
+ * @var PhpRenderer $this
+ * @var \UnicaenUtilisateur\Entity\Db\Role $role
+ */
+
+$role = $this->role;
+$isShib = $this->isShib;
+$isShib = true;
+
+?>
+
+
+
+<div class="container py-5 bg-white">
+	<div class="row">
+		<div class="col px-5">
+			<h1 class="fw-bold" style="padding-left:15px;border-left: 20px solid var(--smile-main-color)">SMILE</h1>
+			<p class="text-uppercase fs-3">Système de gestion en ligne des étudiants en mobilité internationale</p>
+			<p>
+            	<?= $this->translate("This application allows students to consult the catalogue of courses offered by the host university. It also makes it possible to facilitate administrative procedures and to define one's study contract (OLA) before the start of the academic year.") ?>
+			</p>
+        </div>
+        <div class="smile-home-heroes"></div>
+    </div>
+    <hr class="my-4">
+			<div class="row my-4" style="padding-left:2rem;">
+
+				<?php if (!$this->identity()): ?>
+
+					<?php if ($isShib): ?>
+
+
+							<div class="col-md-6">
+
+								<?=
+								$this->partial('partials/shibWayf.phtml', []);
+								?>
+
+							</div>
+                            <div class="col-md-6">
+                                <H2>DEMO</H2>
+                                <div class="alert alert-info">
+                                    <p>
+                                        Si vous ne pouvez pas vous connecter avec la fédération (formulaire de gauche), utiliser votre compte de demo ici :
+                                    </p>
+                                    <a class="btn btn-info" href="/auth/connexion/local">Se connecter avec mon compte de demo</a>
+                                </div>
+                            </div>
+
+<!--						<div class="row">-->
+<!--							<div class="col-md-12">-->
+<!--								<a class="btn btn-warning" href="/Shibboleth.sso/Logout?return=https://ksmile-pp.unicaen.fr/">[DEV] Force logout</a>-->
+<!--							</div>-->
+<!--						</div>-->
+
+					<?php else: ?>
+
+						<div class="row">
+							<div class="col">
+								<h2>Shibboleth disabled in local</h2>
+							</div>
+							<div class="col-md-6">
+								<!--                                           <h5 class="card-title">Déjà inscrit ?</h5>-->
+								<a class="btn btn-success btn-lg" href="<?php echo $this->url('zfcuser/login') ?>">
+									<?php echo $this->translate('Login')?>
+								</a>
+							</div>
+						</div>
+						
+					<?php endif ?>
+
+					<!--
+					<div class="col p-3 border rounded-3 bg-light">
+						<h2 class="h2-hp fs-5 text-center">Nouvel arrivant ?</h2>
+						<p class="text-center m-0">
+							<a class="btn btn-sm btn-success text-white" href="<?php echo $this->url('inscription') ?>">
+								<?php echo $this->translate('Creer votre compte') ?>
+							</a>
+						</p>
+					</div>
+					<div class="col-1"></div>
+					<div class="col p-3 border rounded-3 bg-light">
+						<h2 class="h2-hp fs-5 text-center">Déjà inscrit ?</h2>
+						<p class="text-center m-0">
+							<a class="btn btn-sm btn-primary text-white" href="<?php echo $this->url('zfcuser/login') ?>">
+							<?php echo $this->translate('Connectez-vous...') ?>
+							</a>
+						</p>
+					</div>
+					-->
+
+				<?php else: ?>
+
+					<div class="col p-3">
+						<p class="text-center m-0">
+							<?php if ($this->role === 'Gestionnaire'): ?>
+								<a class="btn btn-dark btn-lg" type="button" href="<?= $this->url('gestion') ?>">
+									<svg class="bi smile-svg me-2" width="25" height="25"><use xlink:href="#smile-dashboard"/></svg>
+									<?= $this->translate("Administrator space") ?>
+								</a>
+							<?php elseif ($this->role !== 'Standard' && $this->role !== 'guest'): ?>
+								<a class="btn btn-dark btn-lg" type="button" href="<?= $this->url('dashboard') ?>">
+									<svg class="bi smile-svg me-2" width="25" height="25"><use xlink:href="#smile-myspace"/></svg>
+									<?= $this->translate("MY SPACE") ?>
+								</a>
+							<?php endif ?>
+						</p>
+					</div>
+
+        		<?php endif; ?>
+			</div>
+</div>

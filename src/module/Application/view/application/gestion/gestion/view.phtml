@@ -1,0 +1,167 @@
+<?php
+use Application\Application\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer $this
+ * @var \Application\Entity\Inscription $inscription
+ * @var \Application\Entity\Step $step
+ * @var \Application\Entity\Step $nextStep
+ * @var \Application\Entity\Cours[] $courses
+ * @var bool $isCoursesDone
+ */
+
+$inscription = $this->inscription;
+$step = $inscription->getStep();
+$nextStep = $this->nextStep;
+$courses = $this->courses;
+$isCoursesDone = $this->isCoursesDone;
+$steps = $this->steps;
+$mainComponent = $this->mainComponent;
+?>
+<div class="row">
+    <div class="col text-center headTitle">
+        <h2>VALIDATION</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-5">
+        <div class="row">
+            <div class="col">
+                <h3 class="titleBlue">Steps</h3>
+                <?= $this->render('application/dashboard/dashboard/partials/step.phtml', ['steps' => $steps, 'step' => $step]); ?>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <h3 class="titleBlue">Informations</h3>
+        <div class="row">
+            <div class="col-6">
+                Name : <span style="font-weight: bold"><?= $inscription->getUser()->getDisplayName() ?></span>
+            </div>
+            <div class="col-6">
+                Birthdate : <span style="font-weight: bold"><?php if($inscription->getBirthdate()) { echo $inscription->getBirthdate()->format('d/m/y'); } ?></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                Postal code : <span style="font-weight: bold"><?= $inscription->getPostalcode() ?></span>
+            </div>
+            <div class="col-6">
+                City : <span style="font-weight: bold"><?= $inscription->getCity() ?></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                Address : <span style="font-weight: bold"><?= $inscription->getNumstreet() ?> <?= $inscription->getStreet() ?></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                 ESI : <span style="font-weight: bold"><?= $inscription->getEsi() ?></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                Référent : <span style="font-weight: bold"><?= $inscription->getMailreferent() ?></span>
+            </div>
+            <div class="col-6">
+                Mobility : <span style="font-weight: bold">Dev</span>
+            </div>
+        </div>
+        <hr>
+        <h4>University</h4>
+        <div class="row">
+            <div class="col-6">
+                Name : <span style="font-weight: bold"><?php if($inscription->getEtablissement()) { echo $inscription->getEtablissement()->getLibelle(); } ?></span>
+            </div>
+            <div class="col-6">
+                Country : <span style="font-weight: bold">
+                    <?php
+                        if($inscription->getEtablissement()) {
+                            if($inscription->getEtablissement()->getPays()) {
+                                echo $inscription->getEtablissement()->getPays()->getEn();
+                            } else {
+                                echo $inscription->getEtablissement()->getPaysCode();
+                            }
+
+                        }
+                    ?>
+                </span>
+            </div>
+            <div class="col-6">
+                City : <span style="font-weight: bold"><?php if($inscription->getEtablissement()) { echo $inscription->getEtablissement()->getCity(); } ?></span>
+            </div>
+            <div class="col-6">
+                Street : <span style="font-weight: bold"><?php if($inscription->getEtablissement()) { echo $inscription->getEtablissement()->getStreet(); } ?></span>
+            </div>
+            <div class="col-6">
+                Erasmus Code : <span style="font-weight: bold"><?php if($inscription->getEtablissement()) { $inscription->getEtablissement()->getCode(); } ?></span>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <h3 class="titleBlue">Courses</h3>
+                <?php if($isCoursesDone): ?>
+                    <?= $this->render('application/index/partials/tableCourses.phtml', ['courses' => $courses, 'mainComponent' => $mainComponent]); ?>
+                    <!--                    <div class="row">-->
+                    <!--                        <div class="col-md-12">-->
+                    <!--                            <label for="nStreet">Institution</label>-->
+                    <!--                            <input class="form-control" type="text" name="nStreet" id="nStreet"-->
+                    <!--                                   value=" "-->
+                    <!--                                   disabled>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="col-md-12">-->
+                    <!--                            <label for="street">Mobility</label>-->
+                    <!--                            <input class="form-control" type="text" name="street" id="street"-->
+                    <!--                                   value=" "-->
+                    <!--                                   disabled>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                <?php else: ?>
+                    <div class="row">
+                        <div class="col-md-12 d-grid">
+                            <p>No courses selected yet.</p>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <h3 class="titleBlue">Documents</h3>
+                <?= $this->render('application/index/partials/documents.phtml'); ?>
+            </div>
+        </div>
+        <hr>
+        <div class="row mt-3">
+            <div class="col">
+                <form method="POST" action="<?= $this->url('gestion/denied') ?>">
+                <div class="row">
+                    <div class="col-9">
+                        <input name="data" type="hidden" value="<?= $inscription->getUuid()?>"/>
+                        <textarea class="form-control" name="msgDenied"  placeholder="Justify the rejection"></textarea>
+                    </div>
+                    <div class="col-3">
+                        <input type="submit" class="btn btn-danger right" value="Denied"/>
+                    </div>
+                </div>
+
+
+<!--                    <input name="msgDenied" class="form-control mb-2" type="text"  value=""/>-->
+
+
+                </form>
+            </div>
+            <div class="col">
+                <form method="POST" action="<?= $this->url('gestion/validate') ?>">
+                    <input name="data" type="hidden" value="<?= $inscription->getUuid()?>"/>
+                    <input type="submit" class="btn btn-success right" value="Validate"/>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

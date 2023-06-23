@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Application\Entity\TypeDiplomeMapping" table="type_diplome_mapping">
+    <indexes>
+      <index name="IDX_F4CFA13C3BFB8FC7" columns="type_diplome_id"/>
+      <index name="IDX_F4CFA13C953C1C61" columns="source_id"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="type_diplome_mapping_unique" columns="type_diplome_id,source_id,code_src"/>
+    </unique-constraints>
+    <id name="id" type="bigint" column="id">
+      <generator strategy="SEQUENCE"/>
+      <sequence-generator sequence-name="type_diplome_mapping_id_seq" allocation-size="1" initial-value="1"/>
+    </id>
+    <field name="codeSrc" type="string" column="code_src" length="64" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="typeDiplome" target-entity="Application\Entity\TypeDiplome" fetch="LAZY">
+      <join-columns>
+        <join-column name="type_diplome_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="source" target-entity="Application\Entity\Source" fetch="LAZY">
+      <join-columns>
+        <join-column name="source_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

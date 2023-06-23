@@ -1,0 +1,286 @@
+<?php
+
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Entity\Composante;
+use Application\Entity\Cours;
+use Application\Entity\Formation;
+use Application\Entity\Langue;
+use Application\Entity\Mobilite;
+
+/**
+ * @see \Application\Controller\Formation\FormationController::mobiliteAction()
+ * @var PhpRenderer $this
+ * @var Formation[] $formations
+ * @var Cours[] $cours
+ * @var Composante[] $composantes
+ * @var Mobilite[] $mobilites
+ * @var Langue[] $langues
+ */
+
+$formations = $this->formations;
+$composantes = $this->composantes;
+$cours = $this->cours;
+$mobilites = $this->mobilites;
+$langues = $this->langues;
+
+//$tableId = "liste-formations-mobilite";
+$mTableId = "liste-formations-mobilite";
+
+?>
+<div class="row mb-3">
+    <div class="col">
+        <h2>MANAGE MOBILITY</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <a class="btn btn-primary icon icon-ajouter pe-2 mb-2" href="<?= $this->url('mobilite') ?>"> Add mobility</a>
+    </div>
+    <div class="col">
+        <?php
+        /**
+         * @see \Application\Controller\Formation\FormationController::activeAllMobilityAction()
+         */
+        ?>
+        <a class="btn btn-info icon icon-ajouter pe-2 mb-2 right" href="<?= $this->url('formations/mobilite/activeAllMobility') ?>"> Active All Mobility</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <a class="btn btn-primary icon icon-ajouter pe-2 mb-2" href="mobilite/ADD"> Add course</a>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col">
+        <select class="form-select" id="searchComposante" aria-label="Composante">
+            <option value="" selected>Composante</option>
+            <?php foreach($composantes as $composante): ?>
+                <option value="<?= $composante->getLibelle() ?>"><?= $composante->getLibelle() ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <div class="col">
+        <input type="text" name="searchIntituleCours" id="searchIntituleCours" class="form-control" placeholder="Intitulé des cours">
+    </div>
+    <div class="col">
+        <input type="text" name="searchNiveau" id="searchNiveau" class="form-control" placeholder="Niveau" disabled>
+    </div>
+    <div class="col">
+        <select class="form-select" id="searchSemestre" aria-label="Composante">
+            <option selected>Semestre</option>
+            <option value="1">S1</option>
+            <option value="2">S2</option>
+        </select>
+    </div>
+    <div class="col">
+        <input type="number" name="searchEcts" id="searchEcts" class="form-control" placeholder="ECTS">
+    </div>
+    <div class="col">
+        <select id="searchLangue" class="form-select" aria-label="Langue">
+            <option value="" selected>Langue</option>
+            <?php foreach($langues as $langue): ?>
+                <option value="<?= $langue->getLibelle() ?>"><?= $langue->getLibelle() ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+</div>
+<div class="row rowTable">
+    <div class="col">
+        <table id="<?= $mTableId ?>" class="table table-condensed table-hover">
+            <thead>
+            <tr>
+                <th>Component</th>
+                <th>Code</th>
+                <th>Title</th>
+                <th>ECTS</th>
+                <th>Langage</th>
+                <th>S1</th>
+                <th>S2</th>
+                <?php foreach($mobilites as $mobilite):?>
+                    <th>
+                        <?= $mobilite->getLibelle() ?>
+                    </th>
+                <?php endforeach; ?>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <?php foreach($mobilites as $mobilite): ?>
+                    <td>
+                    </td>
+                <?php endforeach; ?>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    jQuery(document).ready(function($) {
+        let QTable = $('#<?=$mTableId ?>');
+
+        let dTable = QTable.DataTable({
+            // "responsive": true,
+            "stateSave": true,
+            // "retrieve": true,
+            // "autoWidth": true,
+            "processing": true,
+            "paging": true,
+            "columns": [
+                { "data": "component" },
+                { "data": "code" },
+                { "data": "title" },
+                { "data": "ects" },
+                { "data": "langage" },
+                { "data": "S1" },
+                { "data": "S2" },
+                <?php foreach($mobilites as $mobilite):?>
+                { "data": "<?= 'mobilite'.$mobilite->getId() ?>" },
+                <?php endforeach; ?>
+                { "data": "action" },
+            ],
+            "ajax": {
+                "url": "",
+                "type": "POST",
+                "dataSrc": function(json) {
+                    // console.log(json)
+                    return json
+                }
+            },
+        });
+
+        let dataTable = document.querySelector('#liste-formations-mobilite_wrapper');
+        dataTable.firstChild.remove()
+
+        let searchIntitule = document.querySelector('#searchIntituleCours');
+        let searchComposante = document.querySelector('#searchComposante');
+        let searchSemestre = document.querySelector('#searchSemestre');
+        let searchEcts = document.querySelector('#searchEcts');
+        let searchLangue = document.querySelector('#searchLangue');
+
+        dTable.on('draw', updateCheckEvent)
+
+        function updateCheckEvent() {
+            let checkMobilite = document.querySelectorAll('.checkMobilite');
+            let checkS1 = document.querySelectorAll('.checkS1');
+            let checkS2 = document.querySelectorAll('.checkS2');
+
+            searchIntitule.addEventListener('keyup', (event) => {
+                target = event.target
+                QTable.DataTable()
+                    .column(2)
+                    .search(
+                        target.value
+                    )
+                    .draw()
+            })
+            searchComposante.addEventListener('change', (event) => {
+                target = event.target
+                QTable.DataTable()
+                    .column(0)
+                    .search(
+                        target.value
+                    )
+                    .draw()
+            })
+            searchEcts.addEventListener('keyup', (event) => {
+                target = event.target
+                QTable.DataTable()
+                    .column(3)
+                    .search(
+                        target.value
+                    )
+                    .draw()
+            })
+            searchLangue.addEventListener('change', (event) => {
+                target = event.target
+                QTable.DataTable()
+                    .column(4)
+                    .search(
+                        target.value
+                    )
+                    .draw()
+            })
+            searchSemestre.addEventListener('change', (event) => {
+                // target = event.target
+                // let col = 3
+                // if(target.value === '2') {
+                //     col = 4
+                // }
+                // QTable.DataTable()
+                //     .column(col)
+                //     .search(
+                //         true
+                //     )
+                //     .draw()
+            })
+            checkMobilite.forEach((elem) => {
+                elem.addEventListener('change', updateMobilite)
+            })
+            checkS1.forEach((elem) => {
+                elem.addEventListener('change', updateS1)
+            })
+            checkS2.forEach((elem) => {
+                elem.addEventListener('change', updateS2)
+            })
+        }
+
+
+        function updateMobilite (event) {
+            let target = event.target
+            let mobiliteId = target.dataset.id
+            let codeCours = target.dataset.codecours
+            let active = target.checked
+
+            postMobilite('saveMobilite', { mobiliteId: mobiliteId, codeCours: codeCours, active: active })
+                .then((data) => {
+                    console.log(data); // JSON data parsed by `data.json()` call
+                });
+
+        }
+        function updateS1 (event) {
+            console.log('updateS1')
+            let target = event.target
+            let codeCours = target.dataset.codecours
+            let active = target.checked
+
+            postMobilite('saveMobilite', { codeCours: codeCours, active: active, S1: true })
+                .then((data) => {
+                    console.log(data); // JSON data parsed by `data.json()` call
+                });
+
+        }
+        function updateS2 (event) {
+            let target = event.target
+            let codeCours = target.dataset.codecours
+            let active = target.checked
+
+            postMobilite('saveMobilite', {codeCours: codeCours, active: active, S2: true })
+                .then((data) => {
+                    console.log(data); // JSON data parsed by `data.json()` call
+                });
+
+        }
+
+        async function postMobilite(url = '', data = {}) {
+            // Default options are marked with *
+            const response = await fetch(url, {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data) // body data type must match "Content-Type" header
+            });
+            return response.json(); // parses JSON response into native JavaScript objects
+        }
+    } );
+</script>

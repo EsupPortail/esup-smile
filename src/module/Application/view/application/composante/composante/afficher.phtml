@@ -1,0 +1,174 @@
+<?php
+
+use Application\Application\View\Helper\Composante\ComposanteViewHelper;
+use Application\Application\View\Helper\Source\SourceViewHelper;
+use Application\Application\View\Renderer\HistoriqueViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Composante\ComposanteController;
+use  Application\Entity\Composante;
+use Application\Provider\Privilege\SmilePrivileges;
+use UnicaenApp\View\Helper\Messenger;
+use UnicaenPrivilege\Provider\Privilege\Privileges;
+
+/**
+ * @see \Application\Controller\Composante\ComposanteController::afficherAction()
+ * @var PhpRenderer $this
+ * @var string $title
+ * @var Composante $composante
+ */
+
+$this->headTitle($title);
+
+/** @var ComposanteViewHelper $vh */
+$vh = $this->composante($composante);
+
+/** @var SourceViewHelper $sourceVh */
+$sourceVh = $this->source($composante);
+
+/** @var \Application\Application\View\Renderer\HistoriqueViewHelper $histo */
+$histo = $this->historique($composante);
+?>
+
+<h1 class="page-header">
+    <span class="icon">
+        <i class="fas fa-university"></i>
+    </span>
+    <?= $title ?>
+</h1>
+
+<div class="row mb-3">
+<div class="col-md-12">
+    <a class ="btn btn-primary" href="<?= $this->url(ComposanteController::ROUTE_INDEX) ?>"><span class='icon icon-lister'></span> Liste des composantes</a>
+    <?= $vh->renderLienModifier(); ?>
+    <?= $vh->renderLienArchiver(); ?>
+    <?= $vh->renderLienRestaurer(); ?>
+    <?= $vh->renderLienSupprimer(); ?>
+</div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                    <li role="presentation" class="nav-item">
+                        <button class="nav-link active" id="infos-tab" data-bs-toggle="tab"
+                                data-bs-target="#infos-content" type="button"
+                                role="tab" aria-controls="infos-contente" aria-selected="true">
+                            Informations générales
+                        </button>
+                    </li>
+
+                    <li role="presentation" class="nav-item">
+                        <button class="nav-link" id="formations-tab" data-bs-toggle="tab"
+                                data-bs-target="#formations-content" type="button"
+                                role="tab" aria-controls="formations-content" aria-selected="true">
+                            Liste des formations
+                        </button>
+                    </li>
+
+                    <?php if ($sourceVh->canSeeSources()) : ?>
+                        <li role="presentation" class="nav-item">
+                            <button class="nav-link" id="sources-tab" data-bs-toggle="tab"
+                                    data-bs-target="#source-content" type="button"
+                                    role="tab" aria-controls="source-content" aria-selected="true">
+                                Source
+                            </button>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+            <div class="card-body tab-content">
+                <div class="tab-pane active" id="infos-content" role="tabpanel"
+                     aria-labelledby="sources-tab">
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-4">
+                                    <strong>Statut</strong>
+                                </div>
+                                <div class="col-md-4 col-sm-8">
+                                    <?= $histo->renderHistoStatut() ?>
+                                </div>
+                                <div class="col-md-6 col-sm-12 text-muted small">
+                                    <div><?= $histo->renderHistoDate(HistoriqueViewHelper::DATE_SUPPRESSION) ?></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-4">
+                                    <strong>Libellé</strong>
+                                </div>
+                                <div class="col-md-4 col-sm-8">
+                                    <?= $composante->getLibelle(); ?>
+                                </div>
+                                <div class="col-md-2 col-sm-4">
+                                    <strong>Accronyme </strong>
+                                </div>
+                                <div class="col-md-4 col-sm-8">
+                                    <?= ($composante->getAcronyme() && $composante->getAcronyme() != "") ? $composante->getAcronyme() : "<span class='text-muted'>Non défini</span>" ?>
+                                </div>
+                                <div class="col-md-2 col-sm-4">
+                                    <strong>Libellé long </strong>
+                                </div>
+                                <div class="col-md-4 col-sm-8">
+                                    <?= ($composante->getLibelleLong() && $composante->getLibelleLong() != "") ? $composante->getLibelleLong() : "<span class='text-muted'>Non défini</span>" ?>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tab-pane" id="formations-content" role="tabpanel"
+                     aria-labelledby="formations-tab">
+                    <?= $this->partial('fragment/liste-formations', [
+                        'composante' => $composante
+                    ]);
+                    ?>
+                </div>
+
+                <?php if ($sourceVh->canSeeSources()) : ?>
+                    <div class="tab-pane" id="source-content" role="tabpanel"
+                         aria-labelledby="sources-tab">
+                        <?= $this->source()->renderEntitySourcesInformations($composante);
+                        ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-md-1 col-sm-1 small">
+                        <?= $this->backButton(); ?>
+                    </div>
+                    <div class="col-md-11 col-sm-11 text-end text-muted small">
+                        <div><?= $histo->renderHistoDate(HistoriqueViewHelper::DATE_CREATION) ?></div>
+                        <div><?= $histo->renderHistoDate(HistoriqueViewHelper::DATE_MODIFICATION) ?></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("body").on("<?=ComposanteController::EVENT_MODIFIER?> "+
+            "<?=ComposanteController::EVENT_ARCHIVER?> "+
+            "<?=ComposanteController::EVENT_RESTAURER ?> "
+            , function (event) {
+                window.location.reload();
+            }
+        )
+
+        $("body").on("<?=ComposanteController::EVENT_SUPPRIMER?> "
+            , function (event) {
+                $('.tab-pane').empty().append('<div class="row"><div class="col-md-12"><div class="alert alert-info">Vous allez être redirigé dans quelques seconde </div></div></div>');
+                setTimeout(function () {
+                    window.location = "<?= $this->url(ComposanteController::ROUTE_INDEX, [], [], true);?>";
+                }, 3000)
+            }
+        )
+    })
+</script>

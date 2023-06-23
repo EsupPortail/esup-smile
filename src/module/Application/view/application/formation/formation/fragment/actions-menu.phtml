@@ -1,0 +1,39 @@
+<?php
+
+use Application\Application\Form\Misc\ConfirmationForm;
+use Application\Application\View\Helper\Composante\ComposanteViewHelper;
+use Application\Application\View\Helper\Formation\FormationViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Composante\ComposanteController;
+use  Application\Entity\Composante;
+use  Application\Entity\Formation;
+use UnicaenApp\View\Helper\Messenger;
+
+/**
+ * @see \Application\Controller\Formation\FormationController::getActionsMenuAction()
+ * @var PhpRenderer $this
+ * @var Formation $formation
+ */
+/** @var FormationViewHelper $vh */
+
+$vh = $this->formation($formation);
+
+$actions = [];
+$actions[] = $vh->renderLienAfficher();
+$actions[] = $vh->renderLienModifier();
+$actions[] = $vh->renderLienArchiver();
+$actions[] = $vh->renderLienRestaurer();
+$actions[] = $vh->renderLienSupprimer();
+$actions = array_filter($actions, function($link){
+    return (isset($link) && $link != null);
+});
+?>
+
+<span class="collapsable-actions" data-auto-toggle="true">
+    <?php foreach ($actions as $link) : ?>
+        <?=$link?>
+    <?php endforeach; ?>
+    <?php if(sizeof($actions) == 0) :?>
+        <span class="text-muted mx-3">Aucune action disponible</span>
+    <?php endif; ?>
+</span>

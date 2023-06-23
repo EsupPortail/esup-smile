@@ -1,0 +1,16 @@
+dt h3 {
+  margin-bottom: 0.25rem; }
+
+dl dl {
+  margin-bottom: 0; }
+
+dl.caracteristiques dd > dl dd > dl dt, dl.caracteristiques dd > dl dd > dl dd {
+  font-size: 90%;
+  line-height: normal;
+  margin-bottom: 0; }
+
+dd.name {
+  font-weight: 700;
+  font-size: 140%; }
+
+/*# sourceMappingURL=unicaen-db-import.css.map */

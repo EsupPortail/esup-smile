@@ -1,0 +1,41 @@
+<?php
+
+use Application\Application\Form\Formation\TypeDiplomeForm;
+use Application\Application\View\Helper\Formation\TypeDiplomeViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Formation\TypeDiplomeController;
+
+/**
+ * @see TypeDiplomeController::ajouterAction()
+ * @var PhpRenderer $this
+ * @var string $title
+ * @var TypeDiplomeForm $form
+ */
+
+$this->headTitle($title);
+
+/** @var TypeDiplomeViewHelper $vh */
+$vh = $this->typeDiplome();
+?>
+
+<div class="card border-0">
+    <?php if ($title) : ?>
+        <h1 class="card-header page-header">
+            <?= $title ?>
+        </h1>
+    <?php endif; ?>
+    <div class="card-body">
+        <?= $vh->renderForm($form) ?>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        let body = $("body");
+        body.off("<?= TypeDiplomeController::EVENT_AJOUTER?>", closeModal)
+            .one("<?= TypeDiplomeController::EVENT_AJOUTER?>", closeModal)
+
+        body.off("<?= TypeDiplomeController::EVENT_AJOUTER?>", refreshFlashMessage)
+            .one("<?= TypeDiplomeController::EVENT_AJOUTER?>", refreshFlashMessage);
+    });
+</script>

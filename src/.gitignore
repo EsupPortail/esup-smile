@@ -1,0 +1,9 @@
+.env
+data/
+vendor/
+
+
+
+public/css/.sass-cache
+public/upload
+upload/

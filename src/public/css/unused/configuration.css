@@ -1,0 +1,9 @@
+#configuration .changeOrder:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+#configuration .form-check-input:hover {
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=configuration.css.map */

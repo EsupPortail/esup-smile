@@ -1,0 +1,73 @@
+$borderColor: grey;
+$backgroundColor: rgba(255, 255, 255, 0.8);
+$boxShadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 5px 0 rgba(0, 0, 0, 0.19);
+
+// COURSES VIEW
+#courses {
+  .rowTable {
+    //margin-top: 3rem;
+  }
+  #coursesProgress {
+    height: 3rem;
+    position: relative;
+  }
+  #coursesProgressBar {
+    //position: relative;
+  }
+  #coursesProgressValue {
+    display: inline;
+  }
+  #coursesProgressLimit {
+    border-left: 1px solid #483c3c;
+    height: 100%;
+    display: block;
+    left: 60%;
+    position: absolute;
+  }
+  .checkCourses {
+    cursor: pointer;
+    /* Double-sized Checkboxes */
+    transform: scale(1.5);
+    text-align: center;
+  }
+  .deleteChoices {
+    cursor: pointer;
+  }
+  #tableChoices{
+    tr:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+// OLD
+
+#dashboard {
+ #myspaceProgress {
+    height: 4rem;
+   .progress-bar {
+      p {
+        white-space: normal;
+        color: #000;
+      }
+   }
+ }
+  .validation {
+    color: red;
+  }
+  .informations {
+    //outline: $borderColor solid 1px;
+    box-shadow: $boxShadow;
+  }
+
+  .inscriptionStatus {
+    //outline: $borderColor solid 1px;
+    box-shadow: $boxShadow;
+  }
+
+  .contract {
+    //outline: $borderColor solid 1px;
+    box-shadow: $boxShadow;
+  }
+
+}

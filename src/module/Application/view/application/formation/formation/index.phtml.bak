@@ -1,0 +1,160 @@
+<?php
+
+use Application\Application\View\Helper\Formation\FormationViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Formation\FormationController;
+use Application\Controller\Formation\TypeDiplomeController;
+use Application\Controller\Formation\TypeFormationController;
+
+/**
+ * @see FormationController::indexAction()
+ * @var PhpRenderer $this
+ */
+
+/** @var FormationViewHelper $vh */
+$vh = $this->formation();
+$this->headTitle("Les formations");
+
+?>
+
+
+<h1 class="page-header">
+    <span class="icon">
+        <i class="fas fa-graduation-cap"></i>
+    </span>
+    Gestion des formations
+</h1>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" role="tablist">
+
+                    <li role="presentation" class="nav-item">
+                        <button class="nav-link active" id="formations-tab" data-bs-toggle="tab"
+                                data-bs-target="#formations-content" type="button"
+                                role="tab" aria-controls="formations-content" aria-selected="true">
+                            Formations
+                        </button>
+                    </li>
+                    <li role="presentation" class="nav-item">
+                        <button class="nav-link" id="types-formations-tab" data-bs-toggle="tab"
+                                data-bs-target="#types-formations-content" type="button"
+                                role="tab" aria-controls="types-formations-content" aria-selected="true">
+                            Types de formations
+                        </button>
+                    </li>
+                    <li role="presentation" class="nav-item">
+                        <button class="nav-link" id="types-diplomes-tab" data-bs-toggle="tab"
+                                data-bs-target="#types-diplomes-content" type="button"
+                                role="tab" aria-controls="types-diplomes-content" aria-selected="true">
+                            Types de diplomes
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-body tab-content">
+                <div class="tab-pane active" id="formations-content" role="tabpanel"
+                     aria-labelledby="formations-tab">
+                    <h2 class="card-title">
+                        Liste des formations
+                    </h2>
+
+                    <div class="card-text my-3">
+                        <?= $vh->renderLienAjouter() ?>
+                    </div>
+
+                    <?php
+                    $formationsContainer = uniqid('container-');
+                    $url = $this->url(FormationController::ROUTE_LISTER, [], [], true);
+                    ?>
+                    <div id='<?= $formationsContainer ?>' class="card-text" data-url="<?= $url ?>">
+                        <?= $this->messenger()->renderMessage("Chargement en cours ...") ?>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="types-formations-content" role="tabpanel"
+                     aria-labelledby="types-formations-tab">
+                    <h2 class="card-title">
+                        Liste des types de formations
+                    </h2>
+
+                    <div class="card-text my-3">
+                        <?= $this->typeFormation()->renderLienAjouter() ?>
+                    </div>
+
+                    <?php
+                    $typesFormationsContainer = uniqid('container-');
+                    $url = $this->url(TypeFormationController::ROUTE_LISTER, [], [], true);
+                    ?>
+                    <div id='<?= $typesFormationsContainer ?>' class="card-text" data-url="<?= $url ?>">
+                        <?= $this->messenger()->renderMessage("Chargement en cours ...") ?>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="types-diplomes-content" role="tabpanel"
+                     aria-labelledby="types-diplomes-tab">
+                    <h2 class="card-title">
+                        Liste des types de diplomes
+                    </h2>
+
+                    <div class="card-text my-3">
+                        <?= $this->typeDiplome()->renderLienAjouter() ?>
+                    </div>
+
+                    <?php
+                    $typesDiplomesContainer = uniqid('container-');
+                    $url = $this->url(TypeDiplomeController::ROUTE_LISTER, [], [], true);
+                    ?>
+                    <div id='<?= $typesDiplomesContainer ?>' class="card-text" data-url="<?= $url ?>">
+                        <?= $this->messenger()->renderMessage("Chargement en cours ...") ?>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        let body =  $('body')
+        let formations =  $('#<?=$formationsContainer ?>')
+        let typesFormations =  $('#<?=$typesFormationsContainer ?>')
+        let typesDiplomes =  $('#<?=$typesDiplomesContainer ?>')
+
+        body.on(
+            '<?= FormationController::EVENT_AJOUTER?> ' +
+            '<?= FormationController::EVENT_MODIFIER?> ' +
+            '<?= FormationController::EVENT_ARCHIVER?> ' +
+            '<?= FormationController::EVENT_RESTAURER?> ' +
+            '<?= FormationController::EVENT_SUPPRIMER?> ' +
+            '', function () {
+                    formations.refresh();
+            });
+
+        body.on(
+            '<?= TypeFormationController::EVENT_AJOUTER?> ' +
+            '<?= TypeFormationController::EVENT_MODIFIER?> ' +
+            '<?= TypeFormationController::EVENT_SUPPRIMER?> ' +
+            '', function () {
+                typesFormations.refresh();
+            });
+        body.on(
+            '<?= TypeDiplomeController::EVENT_AJOUTER?> ' +
+            '<?= TypeDiplomeController::EVENT_MODIFIER?> ' +
+            '<?= TypeDiplomeController::EVENT_SUPPRIMER?> ' +
+            '', function () {
+                typesDiplomes.refresh();
+            });
+
+        formations.refresh();
+        typesFormations.refresh();
+        typesDiplomes.refresh();
+    })
+
+</script>

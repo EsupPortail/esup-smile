@@ -1,0 +1,615 @@
+<?php
+
+use Application\Application\View\Helper\Formation\FormationViewHelper;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Formation\FormationController;
+use  Application\Entity\Composante;
+use  Application\Entity\Formation;
+use Application\Entity\Inscription;
+use Application\Entity\Step;
+use UnicaenApp\Util;
+
+/**
+ * @see \Application\Controller\Formation\FormationController::listerAction()
+ * @var PhpRenderer $this
+ * @var Formation[] $formations
+ * @var Composante[] $composantes
+ * @var Inscription $inscription
+ */
+
+/** @var FormationViewHelper $vh */
+$vh = $this->formation();
+$stepMsg = $this->stepMsg;
+$tableId = "liste-formations";
+$inscription = $this->inscription;
+
+?>
+<div class="container" id="courses">
+    <div class="row">
+        <div class="col text-center headTitle">
+            <h2>COURSES</h2>
+        </div>
+    </div>
+    <?php
+    if($stepMsg):
+        ?>
+        <div class="row">
+            <div class="col text-center">
+                <div class="alert alert-warning" role="alert">
+                    <p>
+                        Your registration has been returned to previous step with the following message :<br>
+                        <b><?= $stepMsg->getLibelle() ?></b>
+                    </p>
+                </div>
+            </div>
+        </div>
+    <?php
+    endif;
+    ?>
+    <div class="row mt-4">
+        <div class="col-4">
+            <div class="row">
+                <div class="col">
+                    <h3 class="titleBlue">My main component</h3>
+                    <!--            <label for="selectMainComposante"></label>-->
+                    <select name="selectMainComposante" id="selectMainComposante" class='form-select'>
+                        <option value="">Select...</option>
+                        <?php
+                        foreach ($composantes as $composante) {
+                            $str = '<option value="';
+                            $str .= $composante->getCode().'" ';
+                            if($inscription) {
+                                if($inscription->getComposante()) {
+                                    if($inscription->getComposante()->getId() === $composante->getId()) {
+                                        $str .= 'selected';
+                                    }
+                                }
+                            }
+
+                            $str .= '>'.$composante->getLibelle().'</option>';
+                            echo $str;
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <h3 class="titleBlue">Allocation</h3>
+                    <p>
+                        ECTS: <span id="ectsText">0</span> (min 30 by semester)<br>
+                        Minimum 60% of main component
+                    </p>
+                    <div class="progress" id="coursesProgress" style="width: 80%;">
+                        <div id="coursesProgressBar" class="progress-bar bg-warning" role="progressbar" style="width: 0%">
+                            <span id="coursesProgressValue">0%</span>
+                        </div>
+                        <div id="coursesProgressBarOther" class="progress-bar bg-info" role="progressbar" style="width: 0%">
+                            <span id="coursesProgressValueOther">0%</span>
+                        </div>
+                        <span id="coursesProgressLimit"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div class="col-1"></div>
+        <div class="col">
+            <h3  class="titleBlue">Choices</h3>
+
+                <table id="tableChoices" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">ECTS</th>
+                        <th scope="col">Main</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody id="choices">
+
+                    </tbody>
+                </table>
+
+            <?php
+                if ($this->role) :
+                    if ($this->role->getRoleId() === 'administrateur' || $this->role->getLibelle() === 'Etudiant') :
+                        if($inscription) :
+                            if ($inscription->getStep()->getCode()==='course') :
+            ?>
+            <form action="saveCourses" method="POST">
+                <input id="inputSaveCourses" name="courses" type="hidden" value="">
+                <input id="inputSaveCoursesComposante" name="mainComponent" type="hidden" value="">
+                <button type="submit" id="btnSaveCourses" class="btn btn-success right">Save courses</button>
+            </form>
+            <?php
+                            else:
+                                echo '<p class="alert alert-info">While waiting for validation, simulate your course choices.</p>';
+                            endif;
+                        else:
+                            echo '<p class="alert alert-info">While waiting for validation, simulate your course choices.</p>';
+                        endif;
+                    else:
+                        echo '<p class="alert alert-info">While waiting for validation, simulate your course choices.</p>';
+                    endif;
+                endif;
+            ?>
+        </div>
+    </div>
+    <div class="row mb-0 mt-4">
+        <div class="col">
+            <select class="form-select" name="selectSearchComposante" id="selectSearchComposante" aria-label="Composante">
+                <option value="All" selected>All</option>
+                <?php foreach($composantes as $composante): ?>
+                    <option value="<?= $composante->getCode() ?>"><?= $composante->getLibelle() ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col">
+            <input type="text" name="searchIntituleCours" id="searchIntituleCours" class="form-control" placeholder="Intitulé des cours">
+        </div>
+        <div class="col">
+            <input type="text" name="searchNiveau" id="searchNiveau" class="form-control" placeholder="Niveau">
+        </div>
+        <div class="col">
+            <select class="form-select" id="searchSemestre" aria-label="Composante">
+                <option value="All" selected>Semestre</option>
+                <option value="S1">S1</option>
+                <option value="S2">S2</option>
+            </select>
+        </div>
+        <div class="col">
+            <input type="number" name="searchEcts" id="searchEcts" class="form-control" placeholder="ECTS">
+        </div>
+        <div class="col">
+            <select id="searchLangue" class="form-select" aria-label="Langue">
+                <option value="" selected>Langue</option>
+                <?php foreach($langues as $langue): ?>
+                    <option value="<?= $langue->getLibelle() ?>"><?= $langue->getLibelle() ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+    <div class="row rowTable mt-4">
+        <div class="col">
+            <table id="<?= $tableId ?>" class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Name</th>
+                        <th>Level</th>
+                        <th>Semester</th>
+                        <th>Language</th>
+                        <th>ECTS</th>
+                        <th>View</th>
+                        <th>Select</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-7" style="display: inline-block" id="searchToMove">
+    <!--            <label for="selectSearchComposante" class="col-form-label">Search component</label>-->
+    <select name="selectSearchComposante" id="selectSearchComposante" class='form-select'>
+        <option value="All">Search by component</option>
+        <?php
+        foreach ($composantes as $composante) {
+            $str = '<option value="';
+            $str .= $composante->getCode();
+            $str .= '">'.$composante->getLibelle().'</option>';
+            echo $str;
+        }
+        ?>
+    </select>
+</div>
+<script>
+    let allChecked = []
+    $(function (){
+
+        let selectSearchComposante = document.querySelector('#selectSearchComposante');
+        let selectMainComposante = document.querySelector('#selectMainComposante');
+
+        let QTable = $('#<?=$tableId ?>');
+
+        if (jQuery().dataTable) {
+            let tableEl = QTable.DataTable({
+                // "responsive": true,
+                "stateSave": true,
+                // "retrieve": true,
+                // "autoWidth": true,
+                "processing": true,
+                "paging": true,
+                "columns": [
+                    { "data": "component" },
+                    { "data": "name" },
+                    { "data": "level" },
+                    { "data": "semester" },
+                    { "data": "language" },
+                    { "data": "ects" },
+                    { "data": "view" },
+                    { "data": "select" },
+                ],
+                "ajax": {
+                    "url": "",
+                    "type": "POST",
+                    "dataSrc": function(json) {
+                        let parsed = JSON.parse(json)
+                        console.log(parsed)
+                        parsed.forEach((j) => {
+                            if (j.selected === 'true') {
+                                allChecked.push({
+                                    ects: parseInt(j.ects),
+                                    composanteId: j.composanteId,
+                                    formationId: j.formationId,
+                                    formationLibelle: j.formationLibelle
+                                })
+                            }
+                        })
+                        return JSON.parse(json)
+                    }
+                },
+            });
+
+            let dataTable = document.querySelector('#liste-formations_wrapper');
+            dataTable.firstChild.remove()
+
+            // let toMove = document.querySelector('#searchToMove')
+            // let toDest = document.querySelector('#liste-formations_length')
+            // let labelDest = toDest.firstElementChild
+            // labelDest.classList.add('col-5')
+            // toDest.appendChild(toMove)
+
+            let elemListeners = []
+            let mainComponent = selectMainComposante.value
+            let searchIntitule = document.querySelector('#searchIntituleCours');
+            let searchEcts = document.querySelector('#searchEcts');
+            let searchLangue = document.querySelector('#searchLangue');
+            let searchSemestre = document.querySelector('#searchSemestre');
+            let searchNiveau = document.querySelector('#searchNiveau');
+
+
+            function init()
+            {
+                selectSearchComposante.value = selectMainComposante.value
+            }
+
+            init()
+
+            function updateCheckEvent ()
+            {
+                console.log('updateCheckEvent')
+                removeListeners()
+                let checkCourses = document.querySelectorAll('.checkCourses')
+                if(checkCourses) {
+                    checkCourses.forEach((elem) => {
+                        elem.addEventListener('change', checkElem)
+                        elemListeners.push(elem)
+                        // if(elem.checked) {
+                        //     let data = {
+                        //         target : elem
+                        //     }
+                        //     checkElem(data)
+                        // }
+                    })
+                }
+
+                calcRatio()
+            }
+
+            function isAlreadyCheck(elem) {
+                let res = false
+                allChecked.forEach((el) => {
+                    console.log(el.formationId, elem.dataset.id)
+                    if(el.formationId === elem.dataset.id) {
+                        res = true;
+                    }
+                })
+                return res;
+            }
+
+            function checkElem(event, el) {
+                let elem = event.target || el
+                let ects = parseInt(elem.dataset.ects)
+                let composanteId = elem.dataset.composanteid
+                let formationId = elem.dataset.id
+                let formationLibelle = elem.dataset.formationlibelle
+
+                let checked = elem.checked
+                console.log(isAlreadyCheck(elem))
+
+                if (checked) {
+                    if(!isAlreadyCheck(elem)) {
+                        allChecked.push({
+                            ects: ects,
+                            composanteId: composanteId,
+                            formationId: formationId,
+                            formationLibelle: formationLibelle
+                        })
+                    }
+                }else {
+                    let toSplice = allChecked.find((ch) => {
+                        return ch.formationId === formationId
+                    })
+                    allChecked.splice(allChecked.indexOf(toSplice),1)
+               }
+                calcRatio()
+            }
+
+            function showChoices() {
+                let divChoices = document.querySelector('#choices')
+                let inputSaveCourses = document.querySelector('#inputSaveCourses')
+                let inputSaveCoursesComposante = document.querySelector('#inputSaveCoursesComposante')
+
+                if(inputSaveCourses) {
+                    inputSaveCourses.value = ''
+                }
+                divChoices.innerHTML = ""
+                allChecked.forEach((c) => {
+                    let tr = document.createElement('tr')
+                    tr.classList.add('trId-'+c.formationId)
+                    let tdLib = document.createElement('td')
+                    let tdEcts = document.createElement('td')
+                    let tdMain = document.createElement('td')
+                    let tdRemove = document.createElement('td')
+                    tdRemove.classList.add('deleteChoices')
+                    tdRemove.dataset.formationId = c.formationId
+
+                    tdLib.innerHTML = c.formationLibelle
+                    tdEcts.innerHTML = c.ects
+                    tdMain.innerHTML = (c.composanteId === mainComponent) ? '<i class="fa-solid fa-circle-check"></i>' : ''
+                    tdRemove.innerHTML = '<span style="color: #e74c3c"><i class="fa-sharp fa-trash"></i></span>'
+
+                    tdRemove.addEventListener('click', removeChoice)
+
+                    tr.appendChild(tdLib)
+                    tr.appendChild(tdEcts)
+                    tr.appendChild(tdMain)
+                    tr.appendChild(tdRemove)
+                    divChoices.appendChild(tr)
+
+                    if(inputSaveCourses) {
+                        inputSaveCourses.value = c.formationId + '-' + inputSaveCourses.value
+                        inputSaveCoursesComposante.value = mainComponent
+                    }
+                })
+            }
+
+            function removeChoice(e, t) {
+                let elem = e.currentTarget
+
+                let check = document.querySelector('.checkCourse-'+elem.dataset.formationId)
+                if(check) {
+                    check.checked = false;
+                    check.dispatchEvent(new Event('change'))
+                }else {
+                    let indexToDelete = allChecked.findIndex(c => c.formationId === elem.dataset.formationId)
+                    allChecked.splice(indexToDelete, 1)
+                    calcRatio()
+                }
+
+            }
+
+            function calcRatio() {
+                let ectsMain = 0
+                let ectsOther = 0
+                let ratio = 0
+                let ratioOther = 0
+                allChecked.forEach((c) => {
+                    if (c.composanteId === mainComponent) {
+                        ectsMain += c.ects
+                    }else {
+                        ectsOther += c.ects
+                    }
+                })
+
+                if(ectsMain === 0) {
+                    ratio = 0
+                } else {
+                    ratio = Math.round(ectsMain/(ectsMain+ectsOther)*100)
+                }
+
+                if(ectsOther === 0) {
+                    ratioOther = 0
+                } else {
+                    ratioOther = Math.round(ectsOther/(ectsMain+ectsOther)*100)
+                }
+                if(ratio === 0) {
+                    ratioOther = 0
+                }
+                draw(ratio, ratioOther, ectsMain, ectsOther)
+                showChoices()
+            }
+
+            function draw(ratio, ratioOther,ectsMain, ectsOther) {
+                document.querySelector('#ectsText').innerHTML = ectsMain + ectsOther
+                document.querySelector('#coursesProgressBar').style.width = ratio+"%"
+                document.querySelector('#coursesProgressValue').innerHTML = ratio+"%"+" "+ectsMain+" ECTS"
+                document.querySelector('#coursesProgressBarOther').style.width = ratioOther+"%"
+                document.querySelector('#coursesProgressValueOther').innerHTML = ratioOther+"%"+" "+ectsOther+" ECTS"
+                if(ratio >= 60) {
+                    document.querySelector('#coursesProgressBar').classList.remove('bg-warning')
+                    document.querySelector('#coursesProgressBar').classList.add('bg-success')
+                    if(document.querySelector('#btnSaveCourses')) {
+                        document.querySelector('#btnSaveCourses').classList.remove('disabled')
+                    }
+                }else {
+                    if(document.querySelector('#btnSaveCourses')) {
+                        document.querySelector('#btnSaveCourses').classList.add('disabled')
+                    }
+                    document.querySelector('#coursesProgressBar').classList.remove('bg-success')
+                    document.querySelector('#coursesProgressBar').classList.add('bg-warning')
+                }
+                if(ratioOther > 40) {
+                    document.querySelector('#coursesProgressBarOther').classList.remove('bg-info')
+                    document.querySelector('#coursesProgressBarOther').classList.add('bg-danger')
+                }else {
+                    document.querySelector('#coursesProgressBarOther').classList.remove('bg-danger')
+                    document.querySelector('#coursesProgressBarOther').classList.add('bg-info')
+                }
+            }
+
+            function removeListeners() {
+                elemListeners.forEach((elem) => {
+                    elem.removeEventListener('change', checkElem)
+                })
+                elemListeners = []
+            }
+
+            selectMainComposante.addEventListener('change', e => {
+                let libelle = selectMainComposante.options[selectMainComposante.selectedIndex].text
+                mainComponent = selectMainComposante.value
+                calcRatio()
+            })
+
+            selectSearchComposante.addEventListener('change', e => {
+                let libelle = selectSearchComposante.options[selectSearchComposante.selectedIndex].text
+                let optionId = selectSearchComposante.options[selectSearchComposante.selectedIndex].value
+                console.log(optionId)
+                if(optionId === 'All') {
+                    libelle = ''
+                }
+                QTable.DataTable()
+                    .column(0)
+                    .search(
+                        libelle
+                    )
+                    .draw()
+            })
+
+            searchIntitule.addEventListener('keyup', (event) => {
+                target = event.target
+                QTable.DataTable()
+                    .column(1)
+                    .search(
+                        target.value
+                    )
+                    .draw()
+            })
+
+            searchEcts.addEventListener('keyup', (event) => {
+                target = event.target
+                QTable.DataTable()
+                    .column(5)
+                    .search(
+                        target.value
+                    )
+                    .draw()
+            })
+            searchLangue.addEventListener('change', (event) => {
+                target = event.target
+                QTable.DataTable()
+                    .column(4)
+                    .search(
+                        target.value
+                    )
+                    .draw()
+            })
+            searchSemestre.addEventListener('change', (event) => {
+                let target = event.target
+                let searchLibelle = target.value
+                if(target.value === "All") {
+                    searchLibelle = ''
+                }
+                QTable.DataTable()
+                    .column(3)
+                    .search(
+                        searchLibelle
+                    )
+                    .draw()
+            })
+            searchNiveau.addEventListener('keyup', (event) => {
+                let target = event.target
+                let searchLibelle = target.value
+                if(target.value === "All") {
+                    searchLibelle = ''
+                }
+                QTable.DataTable()
+                    .column(2)
+                    .search(
+                        searchLibelle
+                    )
+                    .draw()
+            })
+
+            // tableEl.on('xhr', updateCheckEvent)
+            // tableEl.on('search', updateCheckEvent)
+            // tableEl.on('page', updateCheckEvent)
+            tableEl.on('draw', updateCheckEvent)
+
+            // checkCourses.addEventListener('change', e => {
+            //     console.log(e)
+            // })
+
+            //$('#//=$tableId //').DataTable({
+            //    "responsive": true,
+            //    "stateSave": true,
+            //    "retrieve": true,
+            //    "autoWidth": false,
+            //    "processing": true,
+            //    "ajax": {
+            //        "url": "",
+            //        "type": "POST",
+            //        "dataSrc": function(json) {
+            //            // console.log(json)
+            //            // console.log(JSON.parse(json))
+            //            return JSON.parse(json)
+            //        }
+            //    },
+            //    "lengthMenu": [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "Tous"]],
+            //    "order": [[3, 'desc'],[2, 'desc'],[1, 'asc'], [0, 'asc']],
+            //    "columns": [
+            //        { "data": "name" },
+            //        { "data": "truc" }
+            //    ],
+                // "columnDefs": [
+                //     {"targets": ["no-sort"], "orderable": false},
+                //     {"targets": ["no-search"], "searchable": false},
+                //     {"targets": ["hidden"], "visible": false},
+                // ],
+                // "language": {
+                //     "lengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                //     "search": "Filtre de recherche : _INPUT_",
+                //     "loadingRecords": "Chargement en cours...",
+                //     "info": "<small class=\"text-highlight\">Affichage : <strong><i class=\"far fa-list-alt\"></i> _START_ - _END_ sur _TOTAL_</strong></small>",
+                //     "infoEmpty": "",
+                //     "infoFiltered": "<small class=\"text-highlight\">(_MAX_ &eacute;l&eacute;ments au total)</small>",
+                //     "emptyTable": "Aucune donnée disponible.",
+                //     "zeroRecords": "Aucun enregistrement trouvé.",
+                //     "paginate": {
+                //         "previous": "<i class=\"fas fa-chevron-left\"></i>",
+                //         "next": "<i class=\"fas fa-chevron-right\"></i>"
+                //     }
+                // },
+            // });
+        }
+
+
+
+        // if (window.fetch) {
+        //     console.log('fetch')
+        //     fetch('', {
+        //         method: 'POST'
+        //     }).then(function(res) {
+        //         console.log(res)
+        //         return res.json()
+        //     }).then(function(data) {
+        //         console.log(data)
+        //     })
+        // } else {
+        //     console.log('pas fetch')
+        // }
+
+    });
+</script>

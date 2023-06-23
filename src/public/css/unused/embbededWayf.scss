@@ -1,0 +1,40 @@
+//////////////////// ADDITIONAL CSS CUSTOMIZATIONS ////////////////////
+
+// To further customize the appearance of the Embedded WAYF you could
+// define CSS rules for the following CSS IDs that are used within the
+// Embedded WAYF:
+// #wayf_div                     - Container for complete Embedded WAYF
+// #wayf_logo_div                - Container for logo
+// #wayf_logo                    - Image for logo
+// #wayf_intro_div               - Container of drop-down list intro label
+// #wayf_intro_label             - Label of intro text
+// #IdPList                      - The form element
+// #user_idp                     - Select element for drop-down list
+// #wayf_remember_checkbox_div   - Container of checkbox and its label
+// #wayf_remember_checkbox       - Checkbox for remembering settings for session
+// #wayf_remember_checkbox_label - Text of checkbox
+// #wayf_submit_button           - Submit button
+//
+// Use these CSS IDs carefully and at own risk because future updates could
+// interfere with the rules you created and the IDs may change without notice!
+
+#wayf_div {
+  #wayf_intro_label {
+    //font-size: 16px;
+  }
+  #wayf_intro_div {
+
+  }
+  #user_idp {
+    //padding-left: 5px;
+    //height: 50px;
+    //font-size: 1.5rem;
+    //cursor: pointer;
+
+  }
+  #user_idp_iddtext {
+    //cursor: pointer;
+  }
+  #user_idp_iddlist {
+  }
+}

@@ -1,0 +1,14 @@
+<?php
+
+use Application\Application\View\Renderer\PhpRenderer;
+use  Application\Entity\Formation;
+
+/**
+ * @see FormationController::listerAction()
+ * @var PhpRenderer $this
+ * @var Formation[] $formations
+ */
+?>
+<?php
+echo $this->formation()->renderListe($formations)
+?>

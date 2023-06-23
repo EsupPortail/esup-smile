@@ -1,0 +1,37 @@
+/**
+ *Régles pour les formulaire pour surcharge celle de Boostrap5
+ */
+
+form{
+  label{
+    margin-bottom: 0.25rem;
+    font-weight: 700;
+  }
+  .form-group{
+    margin-bottom: 0.5rem;
+  }
+
+  //On retire le position initial de BS-5 pour ne pas cacher les labels des inputs du dessous
+  //A revoir a l'usage
+  .invalid-tooltip{
+    //TODO voir pour retirer le important
+    display: inline-block !important;
+    position: initial;
+  }
+  .has-clear {
+    position: relative;
+    .form-control-clear {
+      position: absolute;
+      right: 0;
+      top : 25px;
+      width: 34px;
+      height: 34px;
+      line-height: 34px;
+      text-align: center;
+      z-index: 10;
+      pointer-events: auto;
+      cursor: pointer;
+      color: #6c757d;
+    }
+  }
+}

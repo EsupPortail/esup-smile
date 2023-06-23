@@ -1,0 +1,82 @@
+<?php
+
+use Application\Application\View\Renderer\PhpRenderer;
+/**
+ * @see \Application\Controller\IndexController::indexAction()
+ * @var PhpRenderer $this
+ */
+
+$isShib = $this->isShib;
+$isShib = true;
+?>
+<div class="row mt-5">
+    <div class="col-md-3 mx-auto">
+        <img src="/img/logo_smile_RVB.jpg" class="img-fluid" alt="">
+    </div>
+    <div class="col-md-7">
+        <p class="fs-5 text-start">
+            <?= $this->translate("This application allows students to consult the catalogue of courses offered by the host university. It also makes it possible to facilitate administrative procedures and to define one's study contract (OLA) before the start of the academic year.") ?>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-7 offset-md-5">
+        <?php if (!$this->identity()): ?>
+            <?php if ($isShib): ?>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <?=
+                        $this->partial('partials/shibWayf.phtml', []);
+                        ?>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <a class="btn btn-warning" href="/Shibboleth.sso/Logout?return=https://ksmile-pp.unicaen.fr/">[DEV] Force logout</a>
+                    </div>
+                </div>
+            <?php else: ?>
+                <div class="row">
+                    <div class="col">
+                        <h2>Shibboleth disabled in local</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <!--                                           <h5 class="card-title">Déjà inscrit ?</h5>-->
+                        <a class="btn btn-success btn-lg" href="<?php echo $this->url('zfcuser/login') ?>">
+                            <?php echo $this->translate('Login')?>
+                        </a>
+                    </div>
+                </div>
+            <?php endif ?>
+            <!--<div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="card-title">Nouvel arrivant ?</h5>
+                                    <a class="btn btn-primary btn-lg" href="<?php echo $this->url('inscription') ?>">
+                                        <?php echo $this->translate('Creer votre compte') ?>
+                                    </a>
+                                </div>
+                                <div class="col-md-6">vi
+                                    <h5 class="card-title">Déjà inscrit ?</h5>
+                                    <a class="btn btn-success btn-lg" href="<?php echo $this->url('zfcuser/login') ?>">
+                                        <?php echo $this->translate('Connectez-vous...') ?>
+                                    </a>
+                                </div>
+                            </div>-->
+        <?php else: ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-grid">
+                        <?php if ($this->role === 'Gestionnaire'): ?>
+                            <a class="btn btn-success btn-lg" type="button" href="<?= $this->url('gestion') ?>"><?= $this->translate("Administrator space") ?></a>
+                        <?php else: ?>
+                            <a class="btn btn-success btn-lg" type="button" href="<?= $this->url('dashboard') ?>"><?= $this->translate("MY SPACE") ?></a>
+                        <?php endif ?>
+
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

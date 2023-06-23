@@ -1,0 +1,121 @@
+<div class="row">
+    <!-- EMBEDDED-WAYF-START -->
+    <script type="text/javascript"><!--
+        //////////////////// ESSENTIAL SETTINGS ////////////////////
+
+        // EntityID of the Service Provider that protects this Resource
+        // [Mandatory]
+        wayf_sp_entityID = "https://smile.unicaen.fr/shibboleth-sp";
+
+        // Shibboleth Service Provider handler URL
+        // Examples: "https://point.switch.ch/Shibboleth.sso", "https://rr.aai.switch.ch/aaitest/Shibboleth.sso"
+        // [Mandatory, if wayf_use_discovery_service = false]
+        var wayf_sp_handlerURL = "https://smile-pp.unicaen.fr/Shibboleth.sso";
+
+        // Session Initiator URL of the Service Provider
+        var wayf_sp_samlDSURL = wayf_sp_handlerURL + "/Login";
+
+        // URL of the WAYF to use
+        // [Mandatory]
+        wayf_URL = "https://smile-pp.unicaen.fr/wayf/WAYF";
+
+        // URL on this resource that the user shall be returned to after authentication
+        // [Mandatory]
+        wayf_return_url = "https://smile-pp.unicaen.fr/auth/authenticate/shib";
+
+        // Whether to show the checkbox to remember settings for this session
+        var wayf_show_remember_checkbox = true;
+
+        // Width of the embedded WAYF in pixels or "auto"
+        var wayf_width = 'auto';
+        var wayf_height = 'auto';
+
+        var wayf_background_color = 'white';
+        var wayf_font_size = 16;
+        var wayf_font_color = '#000000';
+        var wayf_border_color = 'white'
+
+        var wayf_auto_login = false;
+
+        var wayf_hide_logo = true;
+        var wayf_use_small_logo = true;
+
+        var wayf_hide_after_login = true;
+        var wayf_show_categories =  true;
+
+        // Overwrites the text of the submit button
+        var wayf_overwrite_submit_button_text = 'Se connecter';
+
+        // Overwrites the intro text above the drop-down list
+        var wayf_overwrite_intro_text = "Sélectionner votre établissement d'origine";
+
+        // Whether to hide the WAYF after the user was logged in
+        // If you want to hide the embedded WAYF completely, uncomment
+        // the property and set it to "". This then won't draw anything
+        var wayf_logged_in_messsage = "Vous êtes authentifié";
+
+
+        // Overwites the text of the checkbox if
+        // wayf_show_remember_checkbox is set to true
+        // [Optional, default: none]
+        var wayf_overwrite_checkbox_label_text = 'Se souvenir de moi';
+
+        // If enabled, the Embedded WAYF will activate the
+        // improved drop down list feature, which will transform the list of
+        // organisations into a search-field while keeping its original function as
+        // a select list. To make this work, the JQuery library will dynamically be
+        // loaded if it is not yet present. Additionally, another Javascript and CSS
+        // file are loaded to perform the actual transformation.
+        // Please note that this feature will also display the organisations' logos,
+        // which might be loaded from a remote domain. While generally not especially
+        // dangerous, there is always a risk when loading content (in this case
+        // images) from third party hosts.
+        // [Optional, default: false]
+        var wayf_use_improved_drop_down_list = true;
+
+
+        // EntityIDs of Identity Provider that should not be shown at all
+        // Example of how to hide certain Identity Provider
+        // var wayf_hide_idps = new Array("https://idp.u-paris2.fr/idp/shibboleth", "https://idp.unicaen.fr/idp/shibboleth", "http://auth.chu-limoges.fr/adfs/services/trust");
+        var wayf_most_used_idps = new Array("https://test-idp.federation.renater.fr/idp/shibboleth", "https://shib-pp.unicaen.fr/idp/shibboleth")
+        var wayf_default_idp = "https://test-idp.federation.renater.fr/idp/shibboleth";
+
+        // Whether to load Identity Providers from the Discovery Feed provided by
+        // the Service Provider.
+        // IdPs that are not listed in the Discovery Feed and that the SP therefore is
+        // not  are able to accept assertions from, are hidden by the Embedded WAYF
+        // IdPs that are in the Discovery Feed but are unknown to the SWITCHwayf
+        // are added to the wayf_additional_idps.
+        // The list wayf_additional_idps will be sorted alphabetically
+        // The SP must have configured the discovery feed handler that generates a
+        // JSON object. Otherwise it won't generate the JSON data containing the IdPs.
+        // [Optional, commented out by default]
+        var wayf_use_disco_feed = true;
+
+        //-->
+    </script>
+
+    <script type="text/javascript" src="https://smile-pp.unicaen.fr/wayf/WAYF/embedded-wayf.js"></script>
+
+    <noscript>
+        <!--
+        Fallback to Shibboleth DS session initiator for non-JavaScript users
+        You should set the value of the target GET parameter to an URL-encoded
+        absolute URL that points to a Shibboleth protected web page where the user
+        is logged in into your application.
+        -->
+        <p>
+            <strong>Login:</strong> Javascript is not available for your web browser. Therefore, please <a href="/Shibboleth.sso/Login?target=">proceed manually</a>.
+        </p>
+    </noscript>
+
+    <script>
+        // let logo = document.querySelector('#wayf_logo')
+        // logo.src = "https://smile-pp.unicaen.fr/img/logo_smile_RVB.jpg"
+        let btnLogin = document.querySelector('#wayf_submit_button')
+        btnLogin.classList.add('btn')
+        btnLogin.classList.add('btn-success')
+    </script>
+
+    <!-- EMBEDDED-WAYF-END -->
+</div>

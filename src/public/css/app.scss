@@ -1,0 +1,70 @@
+@import './variables';
+
+/** Actions menu **/
+
+//Ligne d'un tableau désactivé
+table {
+  tbody {
+    tr {
+      td.historise, th.historise {
+        background: $muted-background-color;
+        color: $color-muted;
+      }
+    }
+    tr.historise{
+      td, th {
+        background: $muted-background-color;
+        color: $color-muted;
+      }
+    }
+  }
+}
+
+.headTitle {
+  background: #2980b9;
+  color: white;
+}
+p {
+  color: #707070;
+}
+
+// NAVBAR
+
+#user_idp_iddwrap {
+  width: 100%;
+  #user_idp_iddtext {
+    color: #707070;
+    border: 1px solid #707070 !important;
+    border-radius: 3px;
+    width: calc(100% - 25px) !important;
+  }
+}
+
+ul.navbar-nav.bordered {
+  li {
+    border-left: 1px solid var(--nav-link-color);
+    a {
+      display: block;
+      width:100%;
+      height:100%;
+    }
+  }
+  li:last-child {
+    border-right: 1px solid var(--nav-link-color);
+  }
+}
+.unistrap .navbar.navbar-main  li.nav-item:nth-child(n+2) a.nav-link {
+  /*margin-left: 1em;*/
+}
+.border-right {
+  border-right: 1px solid var(--nav-link-color);
+}
+
+// FOOTER
+
+.footer-unistrap a {
+  color: white !important;
+  &:hover {
+    color: rgba(255, 255, 255, 0.73)!important;
+  }
+}

@@ -1,0 +1,81 @@
+<div class="container containerMobilite">
+    <div class="row">
+        <h1 class="text-center">VOUS ÊTES :</h1>
+    </div>
+    <div class="row text-center chooseMobilite">
+        <div class="col">
+            <div class="card checkMobilite">
+                <img class="card-img-top" src="/img/internship.png" alt="internship">
+                <div class="card-body">
+                    <p class="card-text fs-2">
+                        STAGIAIRE
+                    </p>
+                    <div>
+                        <input class="form-check-input checkMobilite" type="checkbox" id="stagiaire" value="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card checkMobilite">
+                <img class="card-img-top" src="/img/student.png" alt="student">
+                <div class="card-body">
+                    <p class="card-text text-uppercase fs-2">
+                        étudiant
+                    </p>
+                    <div>
+                        <input class="form-check-input checkMobilite" type="checkbox" id="etudiant" value="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card checkMobilite">
+                <img class="card-img-top" src="/img/doctorant.png" alt="doctor">
+                <div class="card-body">
+                    <p class="card-text mobilite-text fs-2">
+                        DOCTORANT
+                    </p>
+                    <div>
+                        <input class="form-check-input checkMobilite" type="checkbox" id="doctorant" value="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="offset-4 col-4">
+            <div class="d-grid">
+                <a class="btn btn-primary" id="linkMobilite" data-url="inscription/mobilite" href="#">CONTINUER</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+window.onload = () => {
+    let cards = document.querySelectorAll('div.checkMobilite')
+    cards.forEach(card => {
+        card.addEventListener('click',(e) => {
+            e.preventDefault();
+            if(!card.classList.contains('active')) {
+                card.classList.add('active')
+                let checkEl = card.querySelector('.checkMobilite')
+                checkEl.checked = true
+                let link = document.querySelector('#linkMobilite')
+                link.href = link.dataset.url + '/' + checkEl.id
+            }
+            removeActive(cards, card)
+        })
+    })
+
+    function removeActive(cards, card) {
+        cards.forEach((el) => {
+            if(el !== card) {
+                el.classList.remove('active')
+                el.querySelector('.checkMobilite').checked = false
+            }
+        })
+    }
+}
+</script>

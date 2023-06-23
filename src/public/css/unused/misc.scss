@@ -1,0 +1,145 @@
+@import './variables';
+/** Css pour divers options **/
+
+/** Scrollup pour remonter dans les pages de grandes tailles */
+.scrollup {
+  width: 40px;
+  height: 40px;
+  opacity: 0.3;
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  display: none;
+}
+
+/** Class hidden redéfinie car n'existe pas en BS-5 */
+.hidden{
+  display: none;
+}
+
+/** Modal **/
+.modal {
+  .modal-dialog{
+    max-width: 75%;
+  }
+
+  //On affiche pas le page header si l'on est dans une modal car il est automatiquement inclus dans le modal header
+  .page-header{
+    display: none;
+  }
+}
+
+/** Lien désactivé **/
+a.disabled{
+  cursor: none;
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+
+/** spinner lors du chargement **/
+.loadingInProgress {
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+
+
+/** Fond personnalisée */
+//Pour inclure les variantes
+//.badge {
+//  @each $color, $value in $theme-colors {
+//    &.badge-#{$color} {
+//      @include button-variant($value, $value);
+//    }
+//  }
+//}
+
+  .badge.badge-primary {
+    color: $color-light ;
+    background-color: $primary;
+  }
+  .badge.text-secondary {
+    color: $color-light ;
+    background-color: $secondary;
+  }
+  .badge.badge-success {
+    color: $color-light ;
+    background-color: $success;
+  }
+  .badge.badge-info {
+    color: $color-light ;
+    background-color: $info;
+  }
+  .badge.badge-warning {
+    color: $color-light ;
+    background-color: $warning;
+  }
+  .badge.badge-danger {
+    color:$color-light ;
+    background-color: $danger;
+  }
+  .badge.badge-dark {
+    color: $color-light ;
+    background-color: $dark;
+  }
+  .badge.badge-muted {
+    color: $color-light;
+    background-color: $color-medium;
+  }
+
+/** Action menu */
+.collapsable-actions{
+  &:not([data-bs-display]) {
+    display: none;
+  }
+  .dropdown-toggle:not([data-carret]){
+    &::before, &::after {
+      display: none;
+    }
+  }
+  .dropdown-menu {
+    border-color: $color-dark;
+    li {
+      a.dropdown-item,
+      {
+        &.btn{
+          border: 0;
+          border-radius : 0;
+          color: $content-color;
+          &:active,&:focus,&:hover{
+            border: 0;
+            box-shadow: unset;
+            background-color: $color-medium;
+          }
+        }
+        @each $color, $value in $theme-colors {
+          &.btn-#{$color} {
+            &:disabled,&.disabled,&:active,&:focus,&:hover{ //Inclusion des régles sur les btn mais uniquement pour les hovers, focus ...
+              @include button-variant($value, $value);
+            }
+          }
+        }
+      }
+      //Pour ne pas avoir le padding du dropdown-item sur une span précédent un lien (permettant par exemple d'afficher le title
+      span.dropdown-item{
+        padding: 0;
+        a {
+          @extend .dropdown-item;
+        }
+      }
+    }
+  }
+}
+
+//
+//.collapsable-actions{
+//  > .dropdown-toggle {
+//    .collapsable-actions& {
+//      background: red;
+//    }
+//  }
+//
+//}

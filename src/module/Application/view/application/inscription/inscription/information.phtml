@@ -1,0 +1,196 @@
+<?php
+
+use Application\Application\Form\Inscription\InscriptionForm;
+use Application\Application\Form\Inscription\InscriptionUserForm;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Entity\Etablissement;
+use Application\Entity\Inscription;
+use Application\Entity\Mobilite;
+use Application\Entity\Stepmessage;
+
+/**
+ * @var InscriptionForm $form
+ * @var InscriptionUserForm $formUser
+ * @var Stepmessage $stepMsg
+ * @var PhpRenderer $this
+ * @var Mobilite[] $mobilite
+ * @var Mobilite $mobiliteSelected
+ * @var Etablissement[] $listHei
+ * @var Inscription $inscription
+ */
+
+$form = $this->form;
+$formUser = $this->formUser;
+
+$stepMsg = $this->stepMsg;
+$mobilite = $this->mobilite;
+$mobiliteSelected = $this->mobiliteSelected;
+
+$fe = $this->formErrors();
+$fcg = $this->formControlGroup();
+
+$fr = $this->formrow();
+$fct = $this->formControlText();
+$fcd = $this->formdate();
+
+?>
+<div class="row">
+    <div class="col text-center headTitle">
+        <h2>REGISTRATION</h2>
+    </div>
+</div>
+<?php
+if($stepMsg):
+    ?>
+    <div class="row">
+        <div class="col text-center">
+            <div class="alert alert-warning" role="alert">
+                <p>
+                    Your registration has been returned to previous step with the following message :<br>
+                    <b><?= $stepMsg->getLibelle() ?></b>
+                </p>
+            </div>
+        </div>
+    </div>
+<?php
+endif;
+?>
+<?php
+$fieldset = $form->getBaseFieldset();
+$fieldsetUser = $formUser->getBaseFieldset();
+$formUser->prepare();
+echo $this->form()->openTag($form->prepare());
+?>
+<div class="row">
+    <div class="col-6">
+        <div class="row">
+            <div class="col">
+                <h3 class="mb-3 mt-3 titleBlue">1. Choose your mobility</h3>
+
+                <?php foreach($mobilite as $m): ?>
+
+                    <div class="form-check radioMobilite">
+                        <input class="form-check-input" type="radio" name="mobiliteRadioChoice"
+                               id="mobilite<?= $m->getId() ?>"
+                               value="<?= $m->getId() ?>"
+                               <?php if($mobiliteSelected): ?>
+                                   <?php if($mobiliteSelected->getId() === $m->getId()) { echo 'checked'; } ?>
+                               <?php endif; ?>
+                               required>
+                        <label class="form-check-label" for="mobilite<?= $m->getId() ?>">
+                            <?= $m->getLibelle() ?>
+                        </label>
+                    </div>
+
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <h3 class="mb-3 mt-3 titleBlue">2. Check your information</h3>
+        <fieldset>
+            <div class="row justify-content-md-center">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?= $fct($fieldset->get($fieldset::INPUT_FIRSTNAME)) ?>
+                        </div>
+                        <div class="col-md-6">
+                            <?= $fct($fieldset->get($fieldset::INPUT_LASTNAME)) ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php /** echo $this->formhidden($fieldsetUser->get($fieldsetUser::INPUT_ROLE))**/ ?>
+            <div class="row justify-content-md-center">
+                <div class="col" id="divEsi">
+                    <?= $fct($fieldset->get($fieldset::INPUT_ESI)) ?>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?= $fcg($fieldsetUser->get($fieldsetUser::INPUT_USERNAME)) ?>
+                        </div>
+                        <div class="col-md-6">
+                            <?= $fcg($fieldsetUser->get($fieldsetUser::INPUT_EMAIL)) ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col">
+                    <?= $fcg($fieldset->get($fieldset::CSRF)) ?>
+                </div>
+            </div>
+
+        </fieldset>
+        <div class="row">
+            <div class="col-6 d-grid" style="margin-top: 10px;">
+                <?= $fcg($fieldset->get($fieldset::INPUT_BIRTHDATE)) ?>
+            </div>
+            <div class="col-6 d-grid" style="margin-top: 10px;">
+                <?= $fcg($fieldset->get($fieldset::INPUT_CITY)) ?>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-6 d-grid" style="margin-top: 10px;">
+                <?= $fcg($fieldset->get($fieldset::INPUT_POSTALCODE)) ?>
+            </div>
+            <div class="col-6 d-grid" style="margin-top: 10px;">
+                <?= $fcg($fieldset->get($fieldset::INPUT_STREET)) ?>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-6 d-grid" style="margin-top: 10px;">
+                <?= $fcg($fieldset->get($fieldset::INPUT_NUM_STREET)) ?>
+            </div>
+            <div class="col-6 d-grid" style="margin-top: 10px;">
+                <?= $fcg($fieldset->get($fieldset::INPUT_EMAIL_REFERENT)) ?>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-12 d-grid" style="margin-top: 10px;">
+                <label for="heiDatalistInput" class="form-label">Etablissement</label>
+                <input class="form-control"
+                       list="heiDatalist"
+                       id="heiDatalistInput"
+                       name="heiDatalist"
+                       placeholder="Type to search..."
+                       <?php
+
+                        if ($inscription) {
+                            $hei = $inscription->getEtablissement();
+                            if($hei) {
+                                $val = $hei->getCode().'. '.$hei->getLibelle();
+                                echo 'value="'.$val.'"';
+                            }
+                        }
+
+                       ?>
+                       >
+                <datalist id="heiDatalist">
+                    <?php
+
+                        foreach ($listHei as $hei) {
+                            $str = $hei->getLibelle(). ' | '.$hei->getPaysCode();
+                            $val = $hei->getCode().'. '.$hei->getLibelle();
+                            echo "<option value='".$val."'>".$str."</option>";
+                        }
+
+                    ?>
+                </datalist>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 d-grid" style="margin-top: 10px;">
+                <?= $fcg($fieldset->get($fieldset::INPUT_FIRST_MOBILITE)) ?>
+            </div>
+        </div>
+    </div>
+    <div class="offset-10 col-2">
+            <?= $fcg($fieldset->get($fieldset::INPUT_SUBMIT)) ?>
+    </div>
+</div>
+<?= $this->form()->closeTag(); ?>

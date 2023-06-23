@@ -1,0 +1,39 @@
+<?php
+
+use Application\Application\Form\Misc\ConfirmationForm;
+use Application\Application\View\Renderer\PhpRenderer;
+use Application\Controller\Composante\ComposanteController;
+
+/**
+ * @see \Application\Controller\Composante\ComposanteController::restaurerAction()
+ * @var PhpRenderer $this
+ * @var string $title
+ * @var ConfirmationForm $form
+ */
+
+$this->headTitle($title);
+?>
+
+<div class="card border-0">
+    <?php if ($title) : ?>
+        <h1 class="card-header page-header">
+            <?= $title ?>
+        </h1>
+    <?php endif; ?>
+    <div class="card-body">
+        <?= $this->confirmation($form) ?>
+    </div>
+</div>
+
+
+
+<script>
+    $(function () {
+        let body = $("body");
+        body.off("<?= ComposanteController::EVENT_RESTAURER?>", closeModal)
+            .one("<?= ComposanteController::EVENT_RESTAURER?>",   closeModal)
+
+        body.off("<?= ComposanteController::EVENT_RESTAURER?>", refreshFlashMessage)
+            .one("<?= ComposanteController::EVENT_RESTAURER?>",   refreshFlashMessage);
+    });
+</script>
