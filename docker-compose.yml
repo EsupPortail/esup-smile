@@ -2,36 +2,50 @@ version: '2.1'
 
 services:
   smile-app:
-    image: smile-image/php8
-    container_name: smile-container
     build:
       context: .
-      args:
-        PHP_VERSION: 8.0
-    env_file:
-      - .env
-    ports:
-     - "8080:80"
-     - "8443:443"
+    container_name: smile-app
+    environment:
+      DB_HOST: smile-database
+      DB_USER: admin
+      DB_PSWD: admin
+      DB_NAME: demo
+      DB_PORT: 5432
+    networks:
+      - smile-network
     volumes:
-     - .:/var/www/html:delegated
-    working_dir: /var/www/html
-
-  db:
+      - ./src:/smile-app:z
+      - ./deploy_configuration/generate_env.sh:/smile-app/generate_env.sh
+      - ./deploy_configuration/apache/000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./deploy_configuration/php/99-app.ini:/usr/local/etc/php/php.ini-development
+      - ./deploy_configuration/php/99-app.ini:/usr/local/etc/php/php.ini-production
+    ports:
+      - 8080:80
+      - 8443:443
+    entrypoint:
+      - /smile-app/generate_env.sh
+ 
+  smile-database:
     image: postgres:13.7
+    container_name: smile-database
     restart: always
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: demo
+      PGDATA: /smiledata
     ports:
-      - 8432:5432
+      - 5432:5432
+    networks:
+      - smile-network
     volumes:
-      - ./data/db:/var/lib/postgresql/data
-      - ./docker/db/:/docker-entrypoint-initdb.d/
+      - ./smiledata:/smile-db-data:z
+      - ./deploy_configuration/db/:/docker-entrypoint-initdb.d/:z
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 9080:8080
+volumes:
+  deploy_configuration:
+  src:
+  smiledata:
+networks:
+  smile-network:
+    driver: bridge
