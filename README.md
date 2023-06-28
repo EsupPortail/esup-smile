@@ -18,4 +18,4 @@ La [`procédure de mise à jour`](UPDATE.md) vous indiquera comment mettre à ni
 
 
 # Nous contacter
-Pour une première prise de contact, vous pouvez nous joindre au moyen de l'adresse mail fanny.houillier@unicaen.fr
+Pour une première prise de contact, vous pouvez nous joindre au moyen de l'adresse mail unicaen.fr
