@@ -1,30 +1,21 @@
-# SMILE
+![alt text](https://smile.unicaen.fr/wp-content/uploads/sites/28/2022/06/logo_smile.png)
 
 Système de gestion informatique pour la Mobilité Internationale en Ligne des Étudiants
 
-## Divers liens utiles :
+# Nouveautés
 
-- https://developers.erasmuswithoutpaper.eu/  
-- https://github.com/erasmus-without-paper/ewp-specs-mobility-flowcharts/tree/v0.5.0
-- https://github.com/orgs/erasmus-without-paper/repositories?type=all
-- https://wiki.uni-foundation.eu/display/DASH/OLA
-- https://wiki.uni-foundation.eu/display/WELCOME/Knowledge+base+user+guide
+La [`liste des changements`](CHANGELOG.md) vous permettra de savoir : 
+- si une version est sortie
+- quelles en sont les nouveautés
+- quelles sont les éventuels bugs corrigés
+- s'il y a des notes de mise à jour à prendre en compte pour installer cette nouvelle version.
 
-# Build & Deploy
+# Installation et mise à jour
 
-Application déployée localement avec Apache et basée sur les images officielles de php.
+Une [`procédure d'installation`](INSTALL.md) est à votre disposition pour mettre en place une nouvelle instance de OSE, que se soit en test ou en production.
 
-## Dépendances
-- PHP: v8.0
-- Laminas : 1.8.0
+La [`procédure de mise à jour`](UPDATE.md) vous indiquera comment mettre à niveau votre instance.
 
-## Docker-compose
 
-```
-docker-compose -f docker-compose.yml up
-```
-
-## Acéder à l'application via un navigateur 
-
-### Local  
-https://127.0.0.1:8080
+# Nous contacter
+Pour une première prise de contact, vous pouvez nous joindre au moyen de l'adresse mail fanny.houillier@unicaen.fr
