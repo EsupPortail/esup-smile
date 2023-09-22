@@ -9,11 +9,13 @@ use Application\Controller\Gestion\GestionController;
 use Application\Entity\Step;
 use Application\Service\Dashboard\DashboardService;
 use Application\Service\Document\DocumentService;
+use Application\Service\Etablissement\EtablissementService;
 use Application\Service\Inscription\InscriptionService;
 use Application\Service\Step\StepService;
 use Fichier\Service\Fichier\FichierService;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Message\Service\Message\MessageService;
 use Psr\Container\ContainerInterface;
 use UnicaenAuthentification\Service\ShibService;
 use UnicaenUtilisateur\Service\Role\RoleService;
@@ -51,6 +53,12 @@ class GestionControllerFactory implements FactoryInterface
 
         $entityService = $container->get('ServiceManager')->get(DocumentService::class);
         $controller->setDocumentService($entityService);
+
+        $messageService = $container->get('ServiceManager')->get(MessageService::class);
+        $controller->setMessageService($messageService);
+
+        $etablissementService = $container->get('ServiceManager')->get(EtablissementService::class);
+        $controller->setEtablissementService($etablissementService);
 
 //        $entityManager = $container->get('EntityService')->get(Step::class);
 //        $controller->entityManagerStep = $entityManager;

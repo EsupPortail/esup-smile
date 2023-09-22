@@ -9,5 +9,11 @@ SQL/1-schema/000_database.sql
 upload/
 data/
 
-smiledata/
+cache/
+smile-database-data/
 src/.env
+.env
+deploy_configuration/shibboleth/
+deploy_configuration/db/999_demo_unicaen.sql
+tmp.tmp
+deploy_configuration/.env_proxy

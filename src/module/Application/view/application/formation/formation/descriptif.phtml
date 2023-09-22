@@ -125,9 +125,10 @@ if($cours):
     <div class="col">
         <label for="vH" class="form-label">Volume horaire</label>
         <?php if($editable): ?>
-            <input class="form-control" type="text" name="vH" id="vH" value="<?= $cours->getVolElp() ?>" required>
+            <input class="form-control" style="display: inline-block; width: 90%;" type="number" name="vH" id="vH" value="<?= $cours->getVolElp() ?>" required>
+            <span style="display: inline-block">H</span>
         <?php else: ?>
-            <input class="form-control" type="text" name="vH" id="vH" value="<?= $cours->getVolElp() ?>" disabled>
+            <input class="form-control" type="number" name="vH" id="vH" value="<?= $cours->getVolElp() ?>" disabled>
         <?php endif; ?>
     </div>
     <div class="col">

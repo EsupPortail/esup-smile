@@ -139,23 +139,6 @@ class AuthenticateController extends AbstractActionController
         return $this->userService->createLocal($user);
     }
 
-    private function createInscription($data, $user): Inscription
-    {
-        $inscription = new Inscription();
-        $inscription->setFirstname($data['firstname']);
-        $inscription->setLastname($data['lastname']);
-        $inscription->setBirthdate($data['bithDate']);
-        $inscription->setEsi($data['ESI']);
-        $inscription->setUser($user);
-        $inscription->setStatus(0);
-        $inscription->setStatusLibelle('En attente du choix de mobilité');
-        $inscription->setStep($this->entityManager->find(Step::class,2));
-        $inscription->setUuid(Uuid::uuid4()->toString());
-        // TODO: Gérer l'établissement
-
-        return $this->inscriptionService->add($inscription);
-    }
-
     private function parseServer(array $server): array
     {
         // Voir https://registry.federation.renater.fr/entities

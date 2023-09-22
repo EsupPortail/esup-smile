@@ -131,7 +131,7 @@ class InscriptionController extends AbstractActionController
         /**
          * @var Inscription $inscription
          */
-        $inscription = $this->inscriptionService->findByUser($user);
+        $inscription = $this->getInscriptionService()->findByUser($user);
 
         $this->form->bind($inscription);
         $this->formUser->bind($user);
@@ -178,13 +178,17 @@ class InscriptionController extends AbstractActionController
                                       'listHei' => $listHei
                 ]);
             }
-            $this->inscriptionService->update($inscription);
 
-            $stepRegistration = $this->stepService->findOneBy(['code' => 'pre-registration']);
+            $this->getInscriptionService()->update($inscription);
+
+            $stepRegistration = $this->getStepService()->findOneBy(['code' => 'pre-registration']);
             $step = $inscription->getStep();
 
             $isAtPreregistration = ($step->getOrder() === $stepRegistration->getOrder()) ? 1 : 0;
             if($isAtPreregistration) {
+                $inscription->setStatus(Inscription::STATUS_INSCRIT[0]);
+                $inscription->setStatusLibelle(Inscription::STATUS_INSCRIT[1]);
+                $this->getInscriptionService()->update($inscription);
                 $this->stepService->validateStep($inscription,$user,'Registration', true);
             }
             return $this->redirect()->toRoute('dashboard');

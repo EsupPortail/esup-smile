@@ -23,8 +23,8 @@ class FichierControllerFactory {
          */
         $uploadForm = $container->get('FormElementManager')->get(UploadForm::class);
 
-        /** @var FichierController $controller */
-        $controller = new FichierController();
+        /** @var MessageController $controller */
+        $controller = new MessageController();
         $controller->setNatureService($natureService);
         $controller->setFichierService($fichierService);
         $controller->setUploadForm($uploadForm);

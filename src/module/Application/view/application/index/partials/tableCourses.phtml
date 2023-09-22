@@ -1,10 +1,10 @@
-<p>Composante: <?= ($this->mainComponent) ? $this->mainComponent->getLibelle() : '' ?></p>
+<p><?= $this->translate('Faculty');?>: <?= ($this->mainComponent) ? $this->mainComponent->getLibelle() : '' ?></p>
 <table id="tableChoices" class="table table-striped">
     <thead>
     <tr>
-        <th scope="col">Name</th>
-        <th scope="col">ECTS</th>
-        <th scope="col">Main</th>
+        <th scope="col"><?= $this->translate('Name')?></th>
+        <th scope="col"><?= $this->translate('ECTS')?></th>
+        <th scope="col"><?= $this->translate('Main')?></th>
     </tr>
     </thead>
     <tbody id="choices">

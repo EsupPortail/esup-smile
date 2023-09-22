@@ -1,27 +1,46 @@
 <div class="row">
     <!-- EMBEDDED-WAYF-START -->
-    <script type="text/javascript"><!--
+<?php
+    // Retreive the base URI
+    if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+        $protocol = 'https';
+    } else {
+        $protocol = 'http';
+    }
+
+    $baseUri = sprintf(
+        "%s://%s",
+        $protocol,
+        $_SERVER['SERVER_NAME']
+    );
+
+    // check if we are in local dev env
+    if (str_contains($baseUri, 'localhost')) {
+        $baseUri .= ':8080';
+    }
+?>
+    <script type="text/javascript">
         //////////////////// ESSENTIAL SETTINGS ////////////////////
 
         // EntityID of the Service Provider that protects this Resource
         // [Mandatory]
-        wayf_sp_entityID = "https://smile.unicaen.fr/shibboleth-sp";
+        wayf_sp_entityID = "<?= $_ENV['WAYF_SP_ENTITYID']; ?>";
 
         // Shibboleth Service Provider handler URL
         // Examples: "https://point.switch.ch/Shibboleth.sso", "https://rr.aai.switch.ch/aaitest/Shibboleth.sso"
         // [Mandatory, if wayf_use_discovery_service = false]
-        var wayf_sp_handlerURL = "https://smile-pp.unicaen.fr/Shibboleth.sso";
+        var wayf_sp_handlerURL = "<?= $_ENV['WAYF_SP_HANDLERURL']; ?>";
 
         // Session Initiator URL of the Service Provider
         var wayf_sp_samlDSURL = wayf_sp_handlerURL + "/Login";
 
         // URL of the WAYF to use
         // [Mandatory]
-        wayf_URL = "https://smile-pp.unicaen.fr/wayf/WAYF";
+        wayf_URL = "<?= $baseUri  ?>/wayf/WAYF";
 
         // URL on this resource that the user shall be returned to after authentication
         // [Mandatory]
-        wayf_return_url = "https://smile-pp.unicaen.fr/auth/authenticate/shib";
+        wayf_return_url = "<?= $_ENV['WAYF_RETURN_URL']; ?>";
 
         // Whether to show the checkbox to remember settings for this session
         var wayf_show_remember_checkbox = true;

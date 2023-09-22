@@ -2,22 +2,31 @@
 
 namespace Application\Controller\Gestion;
 
+use Application\Application\Service\Etablissement\EtablissementServiceAwareTrait;
 use Application\Application\Service\Inscription\InscriptionServiceAwareTrait;
 use Application\Application\Service\Step\StepServiceAwareTrait;
 use Application\Entity\Inscription;
 use Application\Entity\Step;
+use Application\Provider\Privilege\GestionPrivileges;
 use Application\Service\Document\DocumentServiceAwareTrait;
+use DateTime;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Fichier\Service\Fichier\FichierServiceAwareTrait;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait;
 use Laminas\View\Model\ViewModel;
+use Message\Service\Message\MessageServiceAwareTrait;
 use Ramsey\Uuid\Uuid;
+use UnicaenApp\Traits\SessionContainerTrait;
 use UnicaenAuthentification\Service\Traits\ShibServiceAwareTrait;
 use UnicaenUtilisateur\Entity\Db\User;
 use UnicaenUtilisateur\Service\Role\RoleServiceAwareTrait;
 use UnicaenUtilisateur\Service\User\UserServiceAwareTrait;
 use ZfcUser\Controller\Plugin\ZfcUserAuthentication;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -33,13 +42,19 @@ class GestionController extends AbstractActionController
     use StepServiceAwareTrait;
     use FichierServiceAwareTrait;
     use DocumentServiceAwareTrait;
+    use MessageServiceAwareTrait;
+    use EtablissementServiceAwareTrait;
+    use SessionContainerTrait;
 
-    /** ACTION */
+    /** ACTION
+     * @see GestionPrivileges
+     */
     const ACTION_INDEX = "index";
     const ACTION_GENERATE = "generate";
     const ACTION_VIEW = "view";
     const ACTION_VALIDATE = "validate";
     const ACTION_DENIED = "denied";
+    const ACTION_IMPORT_NOMINATION = "import_nomination";
 
     private EntityManager $entityManager;
 
@@ -50,33 +65,55 @@ class GestionController extends AbstractActionController
 
     public function indexAction()
     {
-        $roleEtudiant = $this->roleService->findByLibelle('Etudiant');
-        $etudiants = $this->userService->findByRole($roleEtudiant);
+        $this->changelangage('fr_FR');
+        $resultCsv = null;
+        $queryCsv = $this->params()->fromQuery('resultCsv');
+        if($queryCsv) {
+            $queryDecoded = base64_decode($queryCsv);
+            $resultCsv = unserialize($queryDecoded);
+        }
 
-        usort($etudiants, function($a, $b) {
-            if ($a->getDisplayName() == $b->getDisplayName()) {
-                return 0;
-            }
-            return ($a->getDisplayName() < $b->getDisplayName()) ? -1 : 1;
-        });
+        $year = $this->params('year') ?? 2023;
+        $page = $this->params('page') ?? 1;
+        $elemByPage = $this->params('elemByPage') ?? 10;
+
+//        $etudiants = $this->getEtudiants($year);
 
         $steps = $this->stepService->findAllOrdered();
-        $entityInstance = $this->userService->getEntityInstance();
-        $entityClass = $this->userService->getEntityClass();
 
-        // TODO: Modifier le mapping doctrine pour avoir un getInscription() dans User
-        $inscriptionBind = [];
-        foreach ($etudiants as $e) {
-            $inscriptionBind[$e->getUsername()] = $this->inscriptionService->findByUser($e);
-        }
+        // TODO: Modifier le mapping doctrine pour avoir un getInscription() dans User, quoique...
+//        $inscriptionBind = [];
+//        foreach ($etudiants as $e) {
+//            $inscriptionBind[$e->getUsername()] = $this->inscriptionService->findByUser($e);
+//        }
+//        $inscriptions = $this->getInscriptionService()->findAllBy(
+//            ['year' => $year]
+//        );
+        $inscriptions = $this->getInscriptionService()->getEntityRepository()->findBy(
+            ['year' => $year],
+            ['step' => 'DESC'],
+            $elemByPage,
+            ($page - 1) * $elemByPage
+        );
+
+        usort($inscriptions, function(Inscription $a, Inscription $b) {
+            if ($a->getStep() == null || $b->getStep() == null) {
+                return 0;
+            }
+            if ($a->getStep()->getOrder() == $b->getStep()->getOrder()) {
+                return 0;
+            }
+            return ($a->getStep()->getOrder() > $b->getStep()->getOrder()) ? -1 : 1;
+        });
 
         return new ViewModel(
             [
-                'etudiants' => $etudiants,
-                'inscriptions' => $inscriptionBind,
-                'class' => $entityClass,
-                'instance' => $entityInstance,
-                'steps' => $steps
+//                'etudiants' => $etudiants,
+                'inscriptions' => $inscriptions,
+//                'inscriptions' => $inscriptionBind,
+                'steps' => $steps,
+                'year' => $year,
+                'headMsg' => $resultCsv,
             ]
         );
     }
@@ -84,6 +121,7 @@ class GestionController extends AbstractActionController
     public function viewAction()
     {
         $uuid = $this->params('uuid');
+
         if(Uuid::isValid($uuid)) {
             /**
              * @var Inscription $inscription
@@ -98,7 +136,15 @@ class GestionController extends AbstractActionController
             $steps = $this->stepService->findAllOrdered();
             $courses = $inscription->getCours();
             $isCoursesDone = $this->stepService->isCoursesDone($inscription);
-            $documents = $this->getDocumentService()->findAllBy(['user' => $userInscription]);
+            if($userInscription != null) {
+                $documents = $this->getDocumentService()->findAllBy(['user' => $userInscription]);
+                $messages = $this->messageService->getMessages($userInscription);
+            }else {
+                $documents = null;
+                $messages = null;
+            }
+
+            $user = $this->userService->getConnectedUser();
 
             return new ViewModel(
                 [
@@ -109,12 +155,123 @@ class GestionController extends AbstractActionController
                     'courses' => $courses,
                     'isCoursesDone' => $isCoursesDone,
                     'documents' => $documents,
+                    'messages' => $messages,
+                    'user' => $user,
                 ]
             );
         }else {
             $this->getResponse()->setStatusCode(404);
             return;
         }
+    }
+
+    private function changelangage($langage){
+        $sessionContainer = $this->getSessionContainer();
+
+    }
+
+    public function importNominationAction()
+    {
+        if($this->getRequest()->isPost()){
+            // read file from post
+            $fileInfo = $this->getRequest()->getFiles()->toArray()['fileImportNomination'];
+            $fileType = $fileInfo['type'];
+            $tmpName = $fileInfo['tmp_name'];
+            $name = $fileInfo['name'];
+
+            if($fileType != 'text/csv'){
+                $this->flashMessenger()->addErrorMessage('Le fichier doit être au format CSV');
+                return $this->redirect()->toRoute('gestion');
+            }
+
+            $failed = [];
+            $success = [];
+            $duplicate = [];
+
+            $file = fopen($tmpName, 'r');
+            while (($line = fgetcsv($file)) !== FALSE) {
+                if($line[0] == 'firstname') {
+                    continue;
+                }
+                $firstname = $line[0];
+                $lastname = $line[1];
+                $email = $line[2];
+                $year = $line[3];
+                if($line[4] != null && $line[4] != false) {
+                    $birthdate = DateTime::createFromFormat('d/m/Y', $line[4]);
+                }else {
+                    $birthdate = null;
+                }
+                $esi = $line[5];
+                $city = $line[6];
+                $postalcode = $line[7];
+                $street = $line[8];
+                $numstreet = $line[9];
+                $mailreferent = $line[10];
+                $codeEtablissement = $line[11];
+
+                // check if firstname, lastname, email and year are not empty
+                if (empty($firstname) || empty($lastname) || empty($email)
+                    || empty($year)
+                ) {
+                    $failed[] = $line;
+                    continue;
+                }
+                // check if inscription already exists
+                $inscription = $this->inscriptionService->findOneBy(
+                    ['email' => $email]
+                );
+                if ($inscription) {
+                    $duplicate[] = $line;
+                    continue;
+                }
+                $inscription = new Inscription();
+                $inscription->setUuid(Uuid::uuid4()->toString());
+                $inscription->setFirstname($firstname);
+                $inscription->setLastname($lastname);
+                $inscription->setEmail($email);
+                $inscription->setYear($year);
+                $inscription->setBirthdate($birthdate ?? null);
+                $inscription->setEsi($esi);
+                $inscription->setCity($city);
+                $inscription->setPostalcode($postalcode);
+                $inscription->setStreet($street);
+                $inscription->setStatus(Inscription::STATUS_NOMINE[0]);
+                $inscription->setStatuslibelle(Inscription::STATUS_NOMINE[1]);
+                $inscription->setStep($this->getStepService()->findOneBy(['order' => 1]));
+                $inscription->setCreatedAt(new \DateTime());
+                if (!empty($numstreet) && is_numeric($numstreet)) {
+                    $inscription->setNumstreet($numstreet);
+                }
+                $inscription->setMailreferent($mailreferent);
+
+                $etablissement = $this->getEtablissementService()->findOneBy(
+                    ['code' => $codeEtablissement]
+                );
+                if ($etablissement) {
+                    $inscription->setEtablissement($etablissement);
+                }
+
+                try {
+                    $this->inscriptionService->add($inscription);
+                    $success[] = $line;
+                } catch (\Exception $e) {
+                    $line[] = $e->getMessage();
+                    $failed[] = $line;
+                }
+            }
+            $result = [
+                'success' => $success,
+                'failed' => $failed,
+                'duplicate' => $duplicate,
+            ];
+            $result = base64_encode(serialize($result));
+
+            return $this->redirect()->toRoute('gestion', ['action' => 'index'], ['query' => ['resultCsv' => $result]]);
+
+        }
+
+        return $this->redirect()->toRoute('home');
     }
 
     public function validateAction()
@@ -195,9 +352,11 @@ class GestionController extends AbstractActionController
             $inscription->setEsi('urn:schac:personalUniqueCode:int:esi:fr:1234567890G'.$i);
             $inscription->setCity('City'.$i);
             $inscription->setBirthdate(new \DateTime());
+            $inscription->setEmail($user->getEmail());
             $inscription->setPostalcode('1400'.$i);
-            $inscription->setStatus($i);
-            $inscription->setStatusLibelle('En attente du choix de mobilité');
+            $inscription->setStatus(Inscription::STATUS_NOMINE[0]);
+            $inscription->setCreatedAt(new \DateTime());
+            $inscription->setStatusLibelle(Inscription::STATUS_NOMINE[1]);
             $inscription->setUuid(Uuid::uuid4()->toString());
 
             $step = $this->entityManager->find(Step::class,$i);
@@ -206,5 +365,31 @@ class GestionController extends AbstractActionController
         }
 
         return $this->redirect()->toRoute('gestion');
+    }
+
+    /**
+     * @param int $year
+     *
+     * @return \UnicaenUtilisateur\Entity\Db\UserInterface[]
+     */
+    private function getEtudiants(int $year): array
+    {
+        $inscriptions = $this->inscriptionService->findAllBy(['year' => $year]);
+
+        foreach ($inscriptions as $inscription) {
+            $etudiants[] = $inscription->getUser();
+        }
+
+        $roleEtudiant = $this->roleService->findByLibelle('Etudiant');
+        $etudiants = $this->userService->findByRole($roleEtudiant);
+
+        usort($etudiants, function($a, $b) {
+            if ($a->getDisplayName() == $b->getDisplayName()) {
+                return 0;
+            }
+            return ($a->getDisplayName() < $b->getDisplayName()) ? -1 : 1;
+        });
+
+        return $etudiants;
     }
 }

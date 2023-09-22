@@ -47,6 +47,7 @@ class InscriptionService extends CommonEntityService
         if (isset($fieldset['city'])) {
             $inscription->setCity($fieldset['city']);
         }
+
         $this->add($inscription);
     }
 
@@ -57,6 +58,29 @@ class InscriptionService extends CommonEntityService
         }
         $this->update($inscription);
         return $inscription;
+    }
+
+    public function isNomine(UserInterface $user, string $year) : Inscription|false {
+        $inscription = $this->findOneBy(['year' => $year, 'email' => $user->getEmail()]);
+        if ($inscription !== null) {
+            return $inscription;
+        }
+        return false;
+    }
+
+    /**
+     * @param Inscription $inscription
+     * @param int|null    $year
+     *
+     * @return array
+     */
+    public function getNominations(Inscription $inscription, int|null $year) {
+        if($year !== null) {
+            $nominations = $this->findAllBy(['user' => null, 'year' => $year]);
+        }else {
+            $nominations = $this->findAllBy(['user' => null]);
+        }
+        return $nominations;
     }
 
     protected UserContext $userContext;

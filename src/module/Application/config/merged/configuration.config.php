@@ -1,6 +1,8 @@
 <?php
 
 
+use Application\Application\View\Helper\Parametre\Factory\ParametreViewHelperFactory;
+use Application\Application\View\Helper\Parametre\ParametreViewHelper;
 use Application\Controller\Configuration\ConfigurationController;
 use Application\Controller\Configuration\Factory\ConfigurationControllerFactory;
 use Application\Provider\Privilege\ConfigurationPrivileges;
@@ -95,8 +97,10 @@ return [
 
     'view_helpers' => [
         'aliases' => [
+            'parametre' => ParametreViewHelper::class,
         ],
         'factories' => [
+            ParametreViewHelper::class => ParametreViewHelperFactory::class,
         ]
     ],
 ];

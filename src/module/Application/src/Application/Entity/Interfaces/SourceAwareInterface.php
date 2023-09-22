@@ -4,7 +4,7 @@ namespace  Application\Application\Entity\Interfaces;
 
 
 use phpDocumentor\Reflection\Types\Boolean;
-use UnicaenDbImport\Entity\Db\Source;
+use Application\Entity\Source;
 
 /**
  * Pour faire le liens entre les données est différentes sources externes possible

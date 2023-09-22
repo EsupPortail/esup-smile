@@ -2,6 +2,7 @@
 
 use Application\Application\Misc\Util;
 use Application\Application\Misc\Version;
+use Application\Application\View\Helper\Parametre;
 
 $navigationHelper = $this->navigation('default');
 $env = getenv('APPLICATION_ENV') ?: 'production';
@@ -17,14 +18,14 @@ echo $this->doctype();
     <meta charset="utf-8">
     <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0')
         ->appendName('description', '')
-        ->appendHttpEquiv("X-UA-Compatible", "IE=edge,chrome=1") ?>
+        ->appendHttpEquiv("X-UA-Compatib<le", "IE=edge,chrome=1") ?>
     <!-- Title -->
     <?php echo $this->headTitle($this->appInfos()->nom)->setSeparator(' - ')->setAutoEscape(false) ?>
     <!-- Links -->
     <?php echo $this->headLink(array(
-        'rel'   => 'shortcut icon',
-        'type'  => 'image/vnd.microsoft.icon',
-        'href'  => '//www.unicaen.fr/favicon.ico')) ?>
+        'rel'   => 'icon',
+        'type'  => 'image/x-icon',
+        'href'  => '/img/smile_favicon.ico')) ?>
     <!-- Scripts -->
     <script>
         function generateAdresse(name, domaine) {
@@ -112,24 +113,6 @@ echo $this->doctype();
 				<?php echo $this->appLink("<img src='/img/smile_icon.png' title='SMILE' alt='SMILE' class='navbar-logo-smile' />") ?>
 			</div>
 		</div>
-        <?php if ($env != 'production'): //Bandeau pour les versions non "prod"?>
-            <div class="version <?php echo $env; ?>-version">
-                <span title="environnement"><i class="fas fa-server"></i> <?php echo $env; ?></span> &nbsp;&nbsp;
-                <span title="branche Git"><i class="fas fa-code-branch"></i> <?php echo Version::getBranch(); ?></span>
-                &nbsp;&nbsp;
-                <span title="version">
-                <i class="fas fa-tag"></i>
-                <?php
-                echo sprintf('%s-r%s-%s (%s)',
-                    Version::getTag(),
-                    Version::getRevision(),
-                    Version::getLastCommitHash(),
-                    Util::formatIntlDateTime(Version::getLastCommitDate(), 'd MMM yyyy')
-                );
-                ?>
-            </span>
-            </div>
-        <?php endif; ?>
 
         <div id="flash-message"  class="flash-message"
             <?= sprintf('data-url="%s"',
@@ -155,9 +138,9 @@ echo $this->doctype();
         <div class="container-sm d-flex flex-wrap justify-content-between align-items-center">
             <div class="col-md-4">
                 <img src="/unistrap-1.0.0/img/logo/republique-francaise.svg" width="110" height="100" class="logo-rf">
-                <img src="/unistrap-1.0.0/img/logo/unicaen-horizontal-noir.svg" width="168" height="100" class="logo-unicaen">
-<!--                <img src="/img/logo_unistra.png" width="168" height="100" class="logo-unicaen">-->
-<!--                <div id="etablissement" style="display: inline-block;"></div>-->
+                <a href="<?= $this->parametre('contenu', 'url-institution') ?>" target="_blank">
+                    <img src="<?= $this->parametre('contenu','logo'); ?>" width="168" height="80" class="logo-unicaen">
+                </a>
             </div>
             <div class="nav col-md-8 justify-content-end nav-foot">
                 <?php echo $navigationHelper->menuPiedDePage('navigation'); ?>

@@ -1,0 +1,78 @@
+version: '2.1'
+services:
+  memcached:
+    build:
+      context: .
+      dockerfile: DockerfileMemcached
+    container_name: memcached
+    networks:
+      - smile-network    
+
+  smile-app:
+    build:
+      context: .
+      dockerfile: DockerfileApp
+    container_name: smile-app
+    networks:
+      - smile-network
+    working_dir: /var/www/html/smile
+    user: root
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+    - | 
+        composer install 
+        php-fpm
+    volumes:
+      - ./src:/var/www/html/smile/
+      - ./src/vendor:/var/www/html/smile/vendor
+      - ./.env:/var/www/html/smile/.env
+      - ./deploy_configuration/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./deploy_configuration/php/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
+      - ./deploy_configuration/php/90-dev.ini:/usr/local/etc/php/php.ini
+    ports:
+      - 9000:9000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  
+  smile-service:
+    container_name: smile-service
+    build:
+      context: .
+      dockerfile: DockerfileService
+    working_dir: /var/www/html/smile/public
+    networks:
+      - smile-network
+    volumes:
+      - ./cache:/var/www/html/smile/cache
+      - ./deploy_configuration/nginx/default.conf:/etc/nginx/nginx.conf
+      - ./src:/var/www/html/smile
+    ports:
+      - 8080:80
+      - 8443:443
+ 
+  smile-database:
+    image: postgres:13.7
+    container_name: smile-database
+    restart: always
+    networks:
+      - smile-network
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DB_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_PSWD:-admin}
+      POSTGRES_DB: ${DB_NAME:-demo}
+      PGDATA: /smile-database-data
+    ports:
+      - 5432:5432
+    volumes:
+      - ./smile-database-data:/smile-database-data
+      - ./deploy_configuration/db/:/scripts_to_init/
+      - ./deploy_configuration/run_sql.sh:/docker-entrypoint-initdb.d/run_sql.sh
+
+volumes:
+  deploy_configuration:
+  smile-database-data:
+  src:
+networks:
+  smile-network:
+    driver: bridge

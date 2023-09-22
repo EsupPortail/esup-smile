@@ -22,7 +22,6 @@ $vh = $this->formation();
 $stepMsg = $this->stepMsg;
 $tableId = "liste-formations";
 $inscription = $this->inscription;
-
 ?>
 <div class="container" id="courses">
     <div class="row">
@@ -50,7 +49,7 @@ $inscription = $this->inscription;
         <div class="col-4">
             <div class="row">
                 <div class="col">
-                    <h3 class="titleBlue">My main component</h3>
+                    <h3 class="titleBlue">My main faculty</h3>
                     <!--            <label for="selectMainComposante"></label>-->
                     <select name="selectMainComposante" id="selectMainComposante" class='form-select'>
                         <option value="">Select...</option>
@@ -77,8 +76,8 @@ $inscription = $this->inscription;
                 <div class="col">
                     <h3 class="titleBlue">Allocation</h3>
                     <p>
-                        ECTS: <span id="ectsText">0</span> (min 30 by semester)<br>
-                        Minimum 60% of main component
+                        ECTS: <span id="ectsText">0</span> (min <?= $this->minAlloc ?> )<br>
+                        Minimum <?= $this->ratioAlloc ?>% of main component
                     </p>
                     <div class="progress" id="coursesProgress" style="width: 80%;">
                         <div id="coursesProgressBar" class="progress-bar bg-warning" role="progressbar" style="width: 0%">
@@ -114,7 +113,8 @@ $inscription = $this->inscription;
                 if ($this->role) :
                     if ($this->role->getRoleId() === 'administrateur' || $this->role->getLibelle() === 'Etudiant') :
                         if($inscription) :
-                            if ($inscription->getStep()->getCode()==='course') :
+                            if($inscription->getStatus() != Inscription::STATUS_ABANDON[0]) :
+                                if ($inscription->getStep()->getCode()==='course') :
             ?>
             <form action="saveCourses" method="POST">
                 <input id="inputSaveCourses" name="courses" type="hidden" value="">
@@ -122,14 +122,13 @@ $inscription = $this->inscription;
                 <button type="submit" id="btnSaveCourses" class="btn btn-success right">Save courses</button>
             </form>
             <?php
-                            else:
-                                echo '<p class="alert alert-info">While waiting for validation, simulate your course choices.</p>';
+                                else:
+                                    echo '<p class="alert alert-info">While waiting for validation, simulate your course choices.</p>';
+                                endif;
                             endif;
                         else:
                             echo '<p class="alert alert-info">While waiting for validation, simulate your course choices.</p>';
                         endif;
-                    else:
-                        echo '<p class="alert alert-info">While waiting for validation, simulate your course choices.</p>';
                     endif;
                 endif;
             ?>
@@ -158,9 +157,6 @@ $inscription = $this->inscription;
             </select>
         </div>
         <div class="col">
-            <input type="number" name="searchEcts" id="searchEcts" class="form-control" placeholder="ECTS">
-        </div>
-        <div class="col">
             <select id="searchLangue" class="form-select" aria-label="Langue">
                 <option value="" selected>Langue</option>
                 <?php foreach($langues as $langue): ?>
@@ -168,13 +164,16 @@ $inscription = $this->inscription;
                 <?php endforeach; ?>
             </select>
         </div>
+        <div class="col">
+            <input type="number" name="searchEcts" id="searchEcts" class="form-control" placeholder="ECTS">
+        </div>
     </div>
     <div class="row rowTable mt-4">
         <div class="col">
             <table id="<?= $tableId ?>" class="table table-condensed table-hover">
                 <thead>
                     <tr>
-                        <th>Component</th>
+                        <th>Faculty</th>
                         <th>Name</th>
                         <th>Level</th>
                         <th>Semester</th>
@@ -199,20 +198,6 @@ $inscription = $this->inscription;
             </table>
         </div>
     </div>
-</div>
-<div class="col-7" style="display: inline-block" id="searchToMove">
-    <!--            <label for="selectSearchComposante" class="col-form-label">Search component</label>-->
-    <select name="selectSearchComposante" id="selectSearchComposante" class='form-select'>
-        <option value="All">Search by component</option>
-        <?php
-        foreach ($composantes as $composante) {
-            $str = '<option value="';
-            $str .= $composante->getCode();
-            $str .= '">'.$composante->getLibelle().'</option>';
-            echo $str;
-        }
-        ?>
-    </select>
 </div>
 <script>
     let allChecked = []
@@ -438,7 +423,9 @@ $inscription = $this->inscription;
                 document.querySelector('#coursesProgressValue').innerHTML = ratio+"%"+" "+ectsMain+" ECTS"
                 document.querySelector('#coursesProgressBarOther').style.width = ratioOther+"%"
                 document.querySelector('#coursesProgressValueOther').innerHTML = ratioOther+"%"+" "+ectsOther+" ECTS"
-                if(ratio >= 60) {
+                document.querySelector('#coursesProgressLimit').style.left = '<?= $this->ratioAlloc ?>%'
+
+                if(ratio >= <?= $this->ratioAlloc ?>) {
                     document.querySelector('#coursesProgressBar').classList.remove('bg-warning')
                     document.querySelector('#coursesProgressBar').classList.add('bg-success')
                     if(document.querySelector('#btnSaveCourses')) {
@@ -451,7 +438,7 @@ $inscription = $this->inscription;
                     document.querySelector('#coursesProgressBar').classList.remove('bg-success')
                     document.querySelector('#coursesProgressBar').classList.add('bg-warning')
                 }
-                if(ratioOther > 40) {
+                if(ratioOther > (100-<?= $this->ratioAlloc ?>)) {
                     document.querySelector('#coursesProgressBarOther').classList.remove('bg-info')
                     document.querySelector('#coursesProgressBarOther').classList.add('bg-danger')
                 }else {

@@ -17,6 +17,8 @@ $courses = $this->courses;
 $isCoursesDone = $this->isCoursesDone;
 $steps = $this->steps;
 $mainComponent = $this->mainComponent;
+$messages = $this->messages;
+$user = $this->user;
 ?>
 <div class="row">
     <div class="col text-center headTitle">
@@ -32,12 +34,21 @@ $mainComponent = $this->mainComponent;
                 <?= $this->render('application/dashboard/dashboard/partials/step.phtml', ['steps' => $steps, 'step' => $step]); ?>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <?= $this->render('application/index/partials/messagerie.phtml', [
+                        'messages' => $messages,
+                        'user' => $user,
+                        'inscription' => $inscription
+                ]); ?>
+            </div>
+        </div>
     </div>
     <div class="col">
         <h3 class="titleBlue">Informations</h3>
         <div class="row">
             <div class="col-6">
-                Name : <span style="font-weight: bold"><?= $inscription->getUser()->getDisplayName() ?></span>
+                Name : <span style="font-weight: bold"><?= $inscription->getFirstname().' '.$inscription->getLastname() ?></span>
             </div>
             <div class="col-6">
                 Birthdate : <span style="font-weight: bold"><?php if($inscription->getBirthdate()) { echo $inscription->getBirthdate()->format('d/m/y'); } ?></span>
@@ -54,6 +65,9 @@ $mainComponent = $this->mainComponent;
         <div class="row">
             <div class="col-6">
                 Address : <span style="font-weight: bold"><?= $inscription->getNumstreet() ?> <?= $inscription->getStreet() ?></span>
+            </div>
+            <div class="col-6">
+                Status : <span style="font-weight: bold"><?= $inscription->getStatuslibelle() ?></span>
             </div>
         </div>
         <div class="row">

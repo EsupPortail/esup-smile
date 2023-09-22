@@ -32,11 +32,13 @@ use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use Laminas\View\Renderer\PhpRenderer;
+use Message\Service\Message\MessageServiceAwareTrait;
 use Mpdf\MpdfException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Ramsey\Uuid\Uuid;
 use RuntimeException;
+use UnicaenParametre\Service\Parametre\ParametreServiceAwareTrait;
 use UnicaenPdf\Exporter\PdfExporter;
 use UnicaenRenderer\Service\Rendu\RenduServiceAwareTrait;
 use UnicaenUtilisateur\Service\Role\RoleServiceAwareTrait;
@@ -57,6 +59,8 @@ class DashboardController extends AbstractActionController
     use DocumentServiceAwareTrait;
     use LangueServiceAwareTrait;
     use RenduServiceAwareTrait;
+    use ParametreServiceAwareTrait;
+    use MessageServiceAwareTrait;
 
     /** ACTION */
     const ACTION_INDEX = "index";
@@ -68,6 +72,7 @@ class DashboardController extends AbstractActionController
     const ACTION_VALIDATECOURSES = "validateCourses";
     const ACTION_COURSES_VIEW = "coursesView";
     const ACTION_REMOVE_DOCUMENT = "removeDocument";
+    const ACTION_ABANDON = "abandon";
 
     protected Containerinterface $container;
     private $renderer;
@@ -89,13 +94,24 @@ class DashboardController extends AbstractActionController
         $steps = $this->stepService->findAllBy(['status' => 1], ['order' => 'ASC']);
 
         if (!$inscription) {
-            $inscription = new Inscription();
-            $inscription->setFirstname(explode(' ', $user->getDisplayName())[0]);
-            $inscription->setLastname(explode(' ', $user->getDisplayName())[1]);
+
+            // TODO: Fiabiliser l'année en cours
+            $inscription = $this->getInscriptionService()->isNomine($user, 2023);
+
+            if (!$inscription) {
+                $inscription = new Inscription();
+                $inscription->setFirstname(explode(' ', $user->getDisplayName())[0]);
+                $inscription->setLastname(explode(' ', $user->getDisplayName())[1]);
+                $inscription->setEmail($user->getEmail());
+                $inscription->setCreatedAt(new \DateTime());
+                $inscription->setUser($user);
+                $inscription->setUuid(Uuid::uuid4()->toString());
+            }
             $inscription->setStep($this->stepService->getFirstStep());
-            $inscription->setStatus(true);
+            $inscription->setStatus(Inscription::STATUS_INSCRIT[0]);
+            $inscription->setStatuslibelle(Inscription::STATUS_INSCRIT[1]);
             $inscription->setUser($user);
-            $inscription->setUuid(Uuid::uuid4()->toString());
+
 
             $this->inscriptionService->update($inscription);
         }
@@ -108,9 +124,9 @@ class DashboardController extends AbstractActionController
             return $this->redirect()->toRoute($redirectToStep);
         }
         $stepMsg = $this->stepService->getLastStepMsg($inscription);
+        $messages = $this->messageService->findAllBy(['inscription' => $inscription], ['createdAt' => 'DESC']);
 //        $documents = $this->getDocumentService()->findAll();
         $documents = $this->getDocumentService()->findAllBy(['user' => $user]);
-
 
         return new ViewModel(['inscription' => $inscription,
                               'user' => $user,
@@ -121,7 +137,8 @@ class DashboardController extends AbstractActionController
                               'stepApprovalStudent' => $stepApprovalStudent,
                               'stepMsg' => $stepMsg,
                               'steps' => $steps,
-                              'documents' => $documents
+                              'documents' => $documents,
+                              'messages' => $messages
         ]);
     }
 
@@ -166,6 +183,18 @@ class DashboardController extends AbstractActionController
             'form' => $form,
         ]);
         return $vm;
+    }
+
+    public function abandonAction()
+    {
+        if($this->getRequest()->isPost()) {
+            $user = $this->userService->getConnectedUser();
+            $inscription = $this->inscriptionService->findByUser($user);
+            $inscription->setStatus(Inscription::STATUS_ABANDON[0]);
+            $inscription->setStatusLibelle(Inscription::STATUS_ABANDON[1]);
+            $this->inscriptionService->update($inscription);
+        }
+        return $this->redirect()->toRoute('dashboard');
     }
 
     public function coursesAction()
@@ -255,12 +284,20 @@ class DashboardController extends AbstractActionController
             return $response;
         }else{
             $composantes = $this->composanteService->findAllWithFormations();
+            $ratioAlloc = $this->getParametreService()->getValeurForParametre('ects','ratio');
+            $minAlloc = $this->getParametreService()->getValeurForParametre('ects','min');
+            $maxAlloc = $this->getParametreService()->getValeurForParametre('ects','max');
+
 //            $composantes = $this->composanteService->findAllBy(['formations']);
             if (!$this->userService->getConnectedUser()) {
+
                 return new ViewModel(
                     [
                         'composantes' => $composantes,
-                        'role' => $this->userService->getConnectedRole()
+                        'role' => $this->userService->getConnectedRole(),
+                        'ratioAlloc' => $ratioAlloc,
+                        'minAlloc' => $minAlloc,
+                        'maxAlloc' => $maxAlloc
                     ]
                 );
             }
@@ -270,13 +307,17 @@ class DashboardController extends AbstractActionController
             $langues = $this->getLangueService()->findAll();
 
             $stepMsg = $this->stepService->getLastStepMsg($inscription);
+
             $vm = new ViewModel(
                 [
                     'composantes' => $composantes,
                     'role' => $this->userService->getConnectedRole(),
                     'stepMsg' => $stepMsg,
                     'inscription' => $inscription,
-                    'langues' => $langues
+                    'langues' => $langues,
+                    'ratioAlloc' => $ratioAlloc,
+                    'minAlloc' => $minAlloc,
+                    'maxAlloc' => $maxAlloc,
                 ]
             );
             $vm->setTemplate('application/dashboard/dashboard/courses');
@@ -416,22 +457,23 @@ class DashboardController extends AbstractActionController
         $rendu = $this->getRenduService()->generateRenduByTemplateCode(PdfTemplate::OLA, $vars);
 
         try {
-            $relativePathToPdf = (is_dir('/var/www/smile/public/upload/pdf')) ? '/var/www/smile/public/upload/pdf': '/var/www/html/public/upload/pdf';
+            $relativePathToPdf = $_SERVER['DOCUMENT_ROOT'].'/upload/pdf';
+            $filename = 'contrat_pedagogique_'.$inscription->getFirstname().'_'.$inscription->getLastname().'.pdf';
             $exporter = new PdfExporter();
             $exporter->setExportDirectoryPath($relativePathToPdf);
             $exporter->getMpdf()->SetTitle($rendu->getSujet());
             $exporter->setHeaderScript('');
             $exporter->setFooterScript('');
             $exporter->addBodyHtml($rendu->getCorps());
-            $exporter->export($rendu->getSujet(), PdfExporter::DESTINATION_FILE);
-            $size = filesize($relativePathToPdf.'/'.$rendu->getSujet());
+            $exporter->export($filename, PdfExporter::DESTINATION_FILE);
+            $size = filesize($relativePathToPdf.'/'.$filename);
 
             $file = new Fichier();
             $nature = $this->getNatureService()->getNatureByCode('ola');
             $file->setId(uniqid());
             $file->setNature($nature);
-            $file->setNomOriginal($rendu->getSujet());
-            $file->setNomStockage('pdf/'.$rendu->getSujet());
+            $file->setNomOriginal($filename);
+            $file->setNomStockage('pdf/'.$filename);
             $file->setTypeMime('application/pdf');
             $file->setTaille($size);
             $this->getFichierService()->create($file);

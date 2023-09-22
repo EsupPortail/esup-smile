@@ -9,4 +9,5 @@ class GestionPrivileges extends Privileges
     const GESTION_INDEX = 'gestion-gestion_index';
     const GESTION_GENERATE = 'gestion-gestion_generate';
     const GESTION_VIEW = 'gestion-gestion_view';
+    const GESTION_IMPORT_NOMINATION = 'gestion-gestion_import_nomination';
 }

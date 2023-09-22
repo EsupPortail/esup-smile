@@ -1,19 +1,33 @@
 ---
 variables:
-  DATABASE_VERSION: "13.7.1"
-  APP_VERSION: "1.1.2-fix"
+  DATABASE_VERSION: "13.7.1-12"
+  APP_VERSION: "1.1.8-release"
+  SERVICE_VERSION: "1.0.3-3"
+  MEMCACHED_VERSION: "1.6.21-2"
   PHP_VERSION: "8.0"
   TAG_NAME: "smile-core"
+  SERVICE_TAG_NAME: "smile-service"
   APP_RELEASE_IMAGE: "smile:$APP_VERSION"
   DATABASE_TAG_NAME: "smile-database"
-  PROXY_UNICAEN: "http://proxy.unicaen.fr:3128"
+  MEMCACHED_TAG_NAME: "smile-memcached"
+  PROXY_UNICAEN: $PROXY_UNICAEN
   DOCKER_TLS_CERTDIR: ""
   PATTERN_DEVELOP: "/(dev)\/?(.*)/"
   PATTERN_MASTER: "master"
 
 stages:
+  - cleanup-runner
   - 🏗 image 🐋 build push smile core
   - 🏗 image 🐋 build push smile database
+  - 🏗 image 🐋 build push smile service
+  - 🏗 image 🐋 build push smile memcached
+  - tag_this_branch_if_success
+  - mirror_release_branches
+  
+cleanup-runner:
+  stage: cleanup-runner
+  script:
+    - docker system prune -f
 
 services:
   - docker:18.09.7-dind
@@ -35,12 +49,9 @@ services:
     - export https_proxy=$PROXY_UNICAEN
     - docker login -u $UNISTRA_REGISTRY_USERNAME -p $UNISTRA_REGISTRY_PASSWORD quay.apps.ocp-warmup.di.unistra.fr
   script:
-    - docker build -f ./Dockerfile --build-arg PHP_VERSION=$PHP_VERSION -t $TAG_NAME .
+    - docker build -f ./DockerfileApp --build-arg HTTP_PROXY_CI=$PROXY_UNICAEN -t $TAG_NAME .
     - docker tag $TAG_NAME quay.apps.ocp-warmup.di.unistra.fr/smile/$TAG_NAME:$APP_VERSION
     - docker push quay.apps.ocp-warmup.di.unistra.fr/smile/$TAG_NAME:$APP_VERSION
-  rules:
-    - if: $CI_COMMIT_BRANCH =~ $PATTERN_DEVELOP
-    - if: $CI_COMMIT_BRANCH =~ $PATTERN_MASTER
 
 🏗 image 🐋 build push smile database:
   stage: 🏗 image 🐋 build push smile database
@@ -58,10 +69,77 @@ services:
     - export https_proxy=$PROXY_UNICAEN
     - docker login -u $UNISTRA_REGISTRY_USERNAME -p $UNISTRA_REGISTRY_PASSWORD quay.apps.ocp-warmup.di.unistra.fr
   script:
-    - docker build -f ./Dockerfile_Smile_Database -t $DATABASE_TAG_NAME .
-
+    - docker build -f ./DockerfileDatabase -t $DATABASE_TAG_NAME .
     - docker tag $DATABASE_TAG_NAME quay.apps.ocp-warmup.di.unistra.fr/smile/$DATABASE_TAG_NAME:$DATABASE_VERSION
     - docker push quay.apps.ocp-warmup.di.unistra.fr/smile/$DATABASE_TAG_NAME:$DATABASE_VERSION
-  rules:
-    - if: $CI_COMMIT_BRANCH =~ $PATTERN_DEVELOP
-    - if: $CI_COMMIT_BRANCH =~ $PATTERN_MASTER
+
+🏗 image 🐋 build push smile service:
+  stage: 🏗 image 🐋 build push smile service
+  image:
+    name: docker:dind
+  services:
+    - name: docker:dind
+      alias: dockerdaemon
+      entrypoint: ["dockerd-entrypoint.sh"]
+  variables:
+    DISABLE_UNDERSCORE_INTENT: DEFAULT/value
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - export http_proxy=$PROXY_UNICAEN
+    - export https_proxy=$PROXY_UNICAEN
+    - docker login -u $UNISTRA_REGISTRY_USERNAME -p $UNISTRA_REGISTRY_PASSWORD quay.apps.ocp-warmup.di.unistra.fr
+  script:
+    - docker build -f ./DockerfileService --build-arg HTTP_PROXY_CI=$PROXY_UNICAEN -t $SERVICE_TAG_NAME .
+    - docker tag $SERVICE_TAG_NAME quay.apps.ocp-warmup.di.unistra.fr/smile/$SERVICE_TAG_NAME:$SERVICE_VERSION
+    - docker push quay.apps.ocp-warmup.di.unistra.fr/smile/$SERVICE_TAG_NAME:$SERVICE_VERSION
+
+🏗 image 🐋 build push smile memcached:
+  stage: 🏗 image 🐋 build push smile memcached
+  image:
+    name: docker:dind
+  services:
+    - name: docker:dind
+      alias: dockerdaemon
+      entrypoint: ["dockerd-entrypoint.sh"]
+  variables:
+    DISABLE_UNDERSCORE_INTENT: DEFAULT/value
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - export http_proxy=$PROXY_UNICAEN
+    - export https_proxy=$PROXY_UNICAEN
+    - docker login -u $UNISTRA_REGISTRY_USERNAME -p $UNISTRA_REGISTRY_PASSWORD quay.apps.ocp-warmup.di.unistra.fr
+  script:
+    - docker build -f ./DockerfileMemcached --build-arg PHP_VERSION=$PHP_VERSION -t $MEMCACHED_TAG_NAME .
+    - docker tag $SERVICE_TAG_NAME quay.apps.ocp-warmup.di.unistra.fr/smile/$MEMCACHED_TAG_NAME:$MEMCACHED_VERSION
+    - docker push quay.apps.ocp-warmup.di.unistra.fr/smile/$MEMCACHED_TAG_NAME:$MEMCACHED_VERSION
+
+tag_this_branch_if_success:
+  stage: tag_this_branch_if_success
+  image:
+    name: docker:dind
+  script:
+    - export http_proxy=$PROXY_UNICAEN
+    - export https_proxy=$PROXY_UNICAEN
+    - apk update
+    - apk add git
+    - git tag -a v$APP_VERSION -m "Auto-tag by ci"
+    - git push origin v$APP_VERSION
+
+mirror_release_branches:
+  stage: mirror_release_branches
+  image:
+    name: docker:dind
+  script:
+    - export http_proxy=$PROXY_UNICAEN
+    - export https_proxy=$PROXY_UNICAEN
+    - apk update
+    - apk add git
+    - git clone --mirror $SMILE_REPOSITORY
+    - cd smile
+    - |
+      for branch in $(git for-each-ref --format="%(refname:short)" refs/heads/release-*); do
+        echo "Pousser la branche release nommée $branch vers GitHub..."
+        git push --mirror https://${GITHUB_UNICAEN_SMILE_USER}:${GITHUB_ACCESS_TOKEN}@github.com/EsupPortail/esup-smile.git $branch
+      done

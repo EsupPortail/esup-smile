@@ -2,7 +2,7 @@
 
 /**
  * @see \Application\Controller\Dashboard\DashboardController::indexAction()
- * @var Application\Entity\Inscription $inscription
+ * @var Inscription $inscription
  * @var \UnicaenUtilisateur\Entity\Db\User $user
  * @var \Application\Entity\Step $step
  * @var \Application\Entity\Step[] $steps
@@ -14,10 +14,12 @@
  * @var \Application\Entity\Mobilite $mobilite
  */
 
+use Application\Entity\Inscription;
 use UnicaenApp\Filter\BytesFormatter;
 
 $inscription = $this->inscription;
 $user = $this->user;
+$messages = $this->messages;
 $step = $inscription->getStep();
 $steps = $this->steps;
 $stepMsg = $this->stepMsg;
@@ -41,99 +43,149 @@ $isAtApprovalStudent = ($step->getOrder() === ($stepApprovalStudent->getOrder())
         </div>
     </div>
     <?php
-    if($stepMsg):
+    if($inscription->getStatus() != Inscription::STATUS_ABANDON[0]) :
+        if($stepMsg):
+            ?>
+            <div class="row">
+                <div class="col text-center">
+                    <div class="alert alert-warning" role="alert">
+                        <p>
+                            Your registration has been returned to previous step with the following message :<br>
+                            <b><?= $stepMsg->getLibelle() ?></b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <?php
+        endif;
         ?>
+
+        <div class="row">
+            <div class="col-4 informations">
+                <div class="row text-center ">
+                    <div class="col">
+                        <a class="btn btn-info m-3" href="<?= $this->url('inscription/information') ?>">My registration</a>
+                    </div>
+                    <?php echo $this->partial('partials/step.phtml', ['steps' => $steps, 'step' => $step]) ?>
+                </div>
+                <div class="row">
+                    <?= $this->render('application/index/partials/messagerie.phtml', [
+                        'messages' => $messages,
+                        'user' => $user,
+                        'inscription' => $inscription
+                    ]); ?>
+                </div>
+            </div>
+            <div class="col-8 text-center inscriptionStatus">
+                <?php
+                if($isAtApprovalStudent):
+                    ?>
+                    <div class="row">
+                        <div class="col text-center">
+                            <?php
+                            /**
+                             * @see Application\Controller\Dashboard\DashboardController::generatePdfAction()
+                             */
+                            ?>
+                            <p class="alert alert-info">
+                                Validate my information and generate my OLA<br><a href="<?= $this->url('dashboard/generatePdf') ?>" class="btn btn-success mt-1">Validate</a>
+                            </p>
+                        </div>
+                    </div>
+                <?php
+                endif;
+                ?>
+                <div class="row">
+                    <div class="offset-8 col-4">
+                        <a href="" class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#abandonModal">
+                            <?= $this->translate('Abandonner mon inscription') ?>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="titleBlue">Courses - <?php if($mobilite) { echo $mobilite->getLibelle(); } ?></h3>
+                        <?php if(!$isBeforeCourses): ?>
+                            <?= $this->render('application/index/partials/tableCourses.phtml', ['courses' => $this->courses, 'mainComponent' => $this->mainComponent]); ?>
+                            <?php
+                                if(!$isAfterCourses) :
+                            ?>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <a class="btn btn-info left" href="dashboard/courses"><?= $this->translate('Select my courses'); ?></a>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="alert alert-info mb-0 p-2 right"><?= $this->translate('Validate your courses to proceed to the next step'); ?></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <form action="dashboard/validateCourses" method="POST">
+                                            <button class="btn btn-success right" type="submit" <?php if($this->courses->isEmpty()) { echo 'disabled'; } ?>> <?= $this->translate('Valid my courses');?></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            <?php
+                                endif;
+                            ?>
+                        <?php else: ?>
+                            <div class="row">
+                                <div class=" col-md-12" style="padding: 20px;">
+                                    <p class="alert alert-info"><?= $this->translate('Pending validation, you can only view the courses.');?></p>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="titleBlue">Documents</h3>
+
+                        <?= $this->render('application/index/partials/documents.phtml'); ?>
+                        <a href="<?= $this->url('dashboard/uploadFichier') ?>" class="btn btn-info ajax-modal right mb-2" data-event="modification">Upload</a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    <?php else: ?>
         <div class="row">
             <div class="col text-center">
-                <div class="alert alert-warning" role="alert">
+                <div class="alert alert-danger" role="alert">
                     <p>
-                        Your registration has been returned to previous step with the following message :<br>
-                        <b><?= $stepMsg->getLibelle() ?></b>
+                        <?= $this->translate('Your registration has been abandoned. ') ?>
                     </p>
                 </div>
             </div>
         </div>
-    <?php
-    endif;
-    ?>
-
-    <div class="row">
-        <div class="col-4 text-center informations">
-            <a class="btn btn-info m-3" href="<?= $this->url('inscription/information') ?>">My registration</a>
-            <?php echo $this->partial('partials/step.phtml', ['steps' => $steps, 'step' => $step]) ?>
-        </div>
-        <div class="col-8 text-center inscriptionStatus">
-            <?php
-            if($isAtApprovalStudent):
-                ?>
-                <div class="row">
-                    <div class="col text-center">
-                        <?php
-                        /**
-                         * @see Application\Controller\Dashboard\DashboardController::generatePdfAction()
-                         */
-                        ?>
-                        <p class="alert alert-info">
-                            Validate my information and generate my OLA<br><a href="<?= $this->url('dashboard/generatePdf') ?>" class="btn btn-success mt-1">Validate</a>
-                        </p>
-                    </div>
+    <?php endif; ?>
+    </div>
+    <div class="modal vanilla fade" id="abandonModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Abandon</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            <?php
-            endif;
-            ?>
-            <div class="row">
-                <div class="col">
-                    <h3 class="titleBlue">Courses - <?php if($mobilite) { echo $mobilite->getLibelle(); } ?></h3>
-                    <?php if(!$isBeforeCourses): ?>
-                        <?= $this->render('application/index/partials/tableCourses.phtml', ['courses' => $this->courses, 'mainComponent' => $this->mainComponent]); ?>
-                        <?php
-                            if(!$isAfterCourses) :
-                        ?>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <a class="btn btn-info left" href="dashboard/courses">Select my courses</a>
-                                </div>
-                                <div class="col-6">
-                                    <p class="alert alert-info mb-0 p-2 right">Validate your courses to proceed to the next step</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <form action="dashboard/validateCourses" method="POST">
-                                        <button class="btn btn-success right" type="submit" <?php if($this->courses->isEmpty()) { echo 'disabled'; } ?>>Valid my courses</button>
-                                    </form>
-                                </div>
-                            </div>
-                        <?php
-                            endif;
-                        ?>
-                    <?php else: ?>
-                        <div class="row">
-                            <div class=" col-md-12" style="padding: 20px;">
-                                <p class="alert alert-info">Pending validation, you can only view the courses.</p>
-                            </div>
-                        </div>
-                    <?php endif; ?>
+                <div class="modal-body">
+                    <p class="alert alert-danger">
+                        <?= $this->translate("L'abandon est définitif, êtes-vous sûr ?") ?>
+                    </p>
                 </div>
-
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col">
-                    <h3 class="titleBlue">Documents</h3>
-
-                    <?= $this->render('application/index/partials/documents.phtml'); ?>
-                    <a href="<?= $this->url('dashboard/uploadFichier') ?>" class="btn btn-info ajax-modal right mb-2" data-event="modification">Upload</a>
-
+                <div class="modal-footer">
+                    <form action="<?= $this->url('dashboard/abandon') ?>" method="POST">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <input type="submit" class="btn btn-danger" value="<?= $this->translate('Abandonner') ?>"/>
+                    </form>
                 </div>
             </div>
         </div>
-
     </div>
 
-</div>
-
-<script>
-    $("body").on("modification", function (event) {
-        event.div.modal('hide');
-        window.location.reload();
-    });
-</script>
+    <script>
+        $("body").on("modification", function (event) {
+            event.div.modal('hide');
+            window.location.reload();
+        });
+    </script>

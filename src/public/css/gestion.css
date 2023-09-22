@@ -1,0 +1,13 @@
+#messagerie {
+
+}
+#messagerie .msgInscription {
+    border-radius: 5px;
+    padding: 5px;
+}
+#messagerie .msgInscription.receiver {
+    background: #0882c3;
+}
+#messagerie .msgInscription.sender {
+    background: rgba(105,174,126,0.88);
+}

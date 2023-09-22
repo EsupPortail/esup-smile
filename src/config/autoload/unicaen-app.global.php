@@ -67,7 +67,6 @@ return [
     // Session configuration.
     //
     'session_config' => [
-        'use_cookies'     => true,
         // Session cookie will expire in 1 hour.
         'cookie_lifetime' => 60*60*10,
         // Session data will be stored on server maximum for 30 days.

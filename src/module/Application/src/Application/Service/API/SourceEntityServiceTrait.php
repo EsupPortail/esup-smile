@@ -7,7 +7,7 @@ use  Application\Application\Entity\Interfaces\SourceAwareInterface;
 use Application\Application\Provider\Entities\CodeSourceProvider;
 use Doctrine\DBAL\ParameterType;
 use UnicaenApp\Service\EntityManagerAwareTrait;
-use UnicaenDbImport\Entity\Db\Source;
+use Application\Entity\Source;
 
 /** Trait permettant de gerer les bases sources des étntités */
 Trait SourceEntityServiceTrait

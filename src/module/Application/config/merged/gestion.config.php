@@ -36,6 +36,8 @@ return [
                     'controller' => GestionController::class,
                     'action' => [
                         GestionController::ACTION_VIEW,
+                        GestionController::ACTION_VALIDATE,
+                        GestionController::ACTION_DENIED,
                     ],
                     'privileges' => [
                         GestionPrivileges::GESTION_VIEW,
@@ -44,11 +46,10 @@ return [
                 [
                     'controller' => GestionController::class,
                     'action' => [
-                        GestionController::ACTION_VALIDATE,
-                        GestionController::ACTION_DENIED,
+                        GestionController::ACTION_IMPORT_NOMINATION
                     ],
                     'privileges' => [
-                        GestionPrivileges::GESTION_VIEW,
+                        GestionPrivileges::GESTION_IMPORT_NOMINATION,
                     ],
                 ]
             ],
@@ -68,16 +69,32 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
-                    'gestionInscription' => [
+                    'indexInscription' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/[:uuid]',
+                            'route' => '/[:year]',
                             'constraints' => [
-                                'slug' => '[a-zA-Z0-9_-]+',
+                                'year' => '[0-9]{4}',
                             ],
                             'defaults' => [
                                 'controller' => GestionController::class,
-                                'action' => GestionController::ACTION_VIEW,
+                                'action' => GestionController::ACTION_INDEX,
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'gestionInscription' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/[:uuid]',
+                                    'constraints' => [
+                                        'slug' => '[a-zA-Z0-9_-]+',
+                                    ],
+                                    'defaults' => [
+                                        'controller' => GestionController::class,
+                                        'action' => GestionController::ACTION_VIEW,
+                                    ],
+                                ]
                             ],
                         ]
                     ],
@@ -110,7 +127,17 @@ return [
                                 'action' => GestionController::ACTION_GENERATE
                             ]
                         ]
-                    ]
+                    ],
+                    'importNomination' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/import-nomination',
+                            'defaults' => [
+                                'controller' => GestionController::class,
+                                'action' => GestionController::ACTION_IMPORT_NOMINATION
+                            ]
+                        ]
+                    ],
                 ]
             ]
         ]

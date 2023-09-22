@@ -5,7 +5,7 @@ namespace  Application\Application\Entity\Traits\InterfacesImplementation;
 use Application\Application\Entity\Interfaces\SourceAwareInterface;
 use Application\Application\Misc\Util;
 use Application\Application\Provider\Entities\CodeSourceProvider;
-use UnicaenDbImport\Entity\Db\Source;
+use Application\Entity\Source;
 
 trait SourceAwareTrait
 {
