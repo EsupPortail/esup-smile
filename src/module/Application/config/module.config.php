@@ -627,6 +627,7 @@ return [
             '065_unicaen-icon'        => 'unicaen/app/css/unicaen-icon.css',
             '075_logos'        => 'css/logos.css',
             '085_modal'        => 'css/modal.css',
+            '086_gestion'        => 'css/gestion.css',
             /** Smile styles */
             '501_dashboard' => 'css/dashboard.css',
         ],

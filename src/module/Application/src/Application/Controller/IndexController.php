@@ -16,6 +16,7 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use Locale;
 use UnicaenAuthentification\Service\Traits\ShibServiceAwareTrait;
+use UnicaenParametre\Service\Parametre\ParametreServiceAwareTrait;
 use UnicaenUtilisateur\Entity\Db\User;
 use UnicaenUtilisateur\Service\User\UserServiceAwareTrait;
 
@@ -30,13 +31,8 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
-
         $user = $this->userService->getConnectedUser();
-//        var_dump(count($user->getRoles()));
-//        die();
-
-//        $user = $this->shibService->getAuthenticatedUser();
-//        $user = $user->getEppn();
+        
         $isShib = $this->authConfig['shib']['enabled'];
         $role = null;
         if ($this->authenticationService->hasIdentity() && $this->userService->getConnectedRole()) {

@@ -206,6 +206,7 @@ class FormationController extends AbstractEntityController
         $formations = $this->getFormationService()->findAll();
         $cours = $this->getCoursService()->findOneBy(['codeElp' => $codeC]);
 
+
         if($codeC === 'ADD' ) {
             $request = $this->getRequest();
 
@@ -221,6 +222,7 @@ class FormationController extends AbstractEntityController
                 $vH = $request->getPost('vH');
                 $s1 = ($semester === '1' || $semester === '3') ? '1' : '';
                 $s2 = ($semester === '2' || $semester === '3') ? '1' : '';
+
 
                 $formation = $this->getFormationService()->findOneBy(['code' => $formationCode]);
 

@@ -1,0 +1,41 @@
+# Utilisation d'une image de base Ubuntu
+FROM ubuntu:20.04
+
+# Mettre à jour les paquets et installer les dépendances nécessaires
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    libapache2-mod-shib2 \
+    supervisor \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configuration d'Apache pour Shibboleth
+RUN a2enmod shib2
+
+# Copier les fichiers de configuration Shibboleth dans le conteneur
+COPY shibboleth/ /etc/shibboleth/
+
+# Exposer le port Apache (habituellement le port 80)
+EXPOSE 80
+
+# Copier les fichiers de configuration Apache dans le conteneur
+COPY apache-config/ /etc/apache2/sites-available/
+
+# Activer le site Shibboleth dans Apache
+RUN a2ensite default-ssl
+RUN a2enmod ssl
+
+# Installation de l'outil WAYF
+RUN apt-get install -y php
+
+# Copier les fichiers de l'outil WAYF dans le conteneur
+COPY deploy_configuration/switchwayf /var/www/html/wayf/
+
+# Configuration de l'IDP (Identity Provider) Shibboleth
+RUN sed -i 's#<ApplicationDefaults>#<ApplicationDefaults entityID="https://your-idp-entity-id" REMOTE_USER="eppn">#' /etc/shibboleth/shibboleth2.xml
+RUN sed -i 's#<SSO entityID="https://idp.example.org/idp/shibboleth">#<SSO entityID="https://your-idp-url">#' /etc/shibboleth/shibboleth2.xml
+
+# Configuration du Superviseur pour gérer plusieurs services
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Commande de démarrage du Superviseur
+CMD ["/usr/bin/supervisord", "-n"]

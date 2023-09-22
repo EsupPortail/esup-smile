@@ -1,0 +1,91 @@
+<?php
+
+use Application\Entity\Document;
+use Application\Entity\Inscription;
+use Message\Entity\Db\Message;
+use UnicaenApp\Filter\BytesFormatter;
+use UnicaenUtilisateur\Entity\Db\User;
+
+/**
+ * @var Document[] $documents
+ * @var Message[] $messages
+ * @var User $user
+ * @var Inscription $inscription
+ */
+?>
+
+<div id="messagerie" class="row" style="">
+
+    <div class="col-12">
+        <h3 class="titleBlue">Messages</h3>
+    </div>
+
+    <?php if (empty($messages)) : ?>
+        <div class="col-6">
+            No messages
+        </div>
+    <?php else : ?>
+        <?php foreach ($messages as $message) : ?>
+            <?php
+                if ($message->getSender() == $user) {
+                    $class = 'sender';
+                } else {
+                    $class = 'receiver';
+                }
+            ?>
+            <div class="col-12" style="">
+                <div class="msgInscription <?= $class ?>">
+                    <?= $message->getSender()->getDisplayName() ?>
+                    <?php
+                    $roles = $message->getSender()->getRoles();
+                    $isGestionnaire = false;
+                    foreach ($roles as $role) {
+                        if($role->getRoleId() === 'gestionnaire') {
+                            $isGestionnaire = true;
+                        }
+                    }
+                    if($isGestionnaire) {
+                        echo '(Gestionnaire)';
+                    }
+                    ?>
+                    :
+                    <?= $message->getContent() ?>
+                    <div class="time">
+                        <?= $message->getCreatedAt()->format('d-m-y h\Hi') ?>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    <?php
+    /**
+     * @see \Message\Controller\MessageController::addMessageAction()
+     */
+    ?>
+    <div class="col-12">
+        <div class="row">
+            <form action="/message/addMessage" method="POST">
+                <div class="col-12 mt-2">
+                    <div class="mb-3">
+                        <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="row pb-3">
+                    <div class="col-6">
+                        <input type="hidden" name="inscriptionUuid" value="<?= $inscription->getUuid() ?>">
+                        <input type="submit" value="Send" class="btn btn-success" style="">
+                    </div>
+                    <div class="col-5 form-check">
+                        <input class="form-check-input" type="checkbox" name="sendMail" value="" id="sendMail">
+                        <label class="form-check-label" for="sendMail">
+                            Send also by mail
+                        </label>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+
+</div>

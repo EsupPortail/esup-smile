@@ -758,11 +758,11 @@ class Formation implements ResourceInterface,
     /**
      * Set source.
      *
-     * @param Source|\UnicaenDbImport\Entity\Db\Source|null $source
+     * @param Source|null $source
      *
      * @return void
      */
-    public function setSource(\UnicaenDbImport\Entity\Db\Source $source = null): void
+    public function setSource(Source $source = null): void
     {
         $this->source = $source;
     }
@@ -770,9 +770,9 @@ class Formation implements ResourceInterface,
     /**
      * Get source.
      *
-     * @return ?\UnicaenDbImport\Entity\Db\Source
+     * @return ?Source
      */
-    public function getSource(): ?\UnicaenDbImport\Entity\Db\Source
+    public function getSource(): ?Source
     {
         return $this->source;
     }

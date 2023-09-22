@@ -37,19 +37,15 @@ $modules = [
     'UnicaenDbImport',
     'UnicaenEgracon',
     'Unicaen\Console',
+    'UnicaenParametre',
     'Fichier',
+    'Message',
     'Application',
 ];
-// Charge les variables d'environnements du .env
-// Si on est en production kubernetes
-//$deployK8s = getenv('DEPLOY_KUBERNETES') ?: 'no';
-//if( $deployK8s === 'yes' ) {
-$output = shell_exec('/bin/bash ' . __DIR__.'/../generate_env.sh');
 
+// Charge les variables d'environnements du .env
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/../');
 $dotenv->load();
-ob_start(); #fix session
-
 
 $applicationEnv = getenv('APPLICATION_ENV') ?: 'production';
 if ('development' === $applicationEnv) {

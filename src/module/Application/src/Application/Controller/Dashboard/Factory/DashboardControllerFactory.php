@@ -18,6 +18,8 @@ use Fichier\Service\Nature\NatureService;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
+use Message\Service\Message\MessageService;
+use UnicaenParametre\Service\Parametre\ParametreService;
 use UnicaenRenderer\Service\Rendu\RenduService;
 use UnicaenUtilisateur\Service\User\UserService;
 
@@ -69,6 +71,12 @@ class DashboardControllerFactory implements FactoryInterface
 
         $renduService = $container->get('ServiceManager')->get(RenduService::class);
         $controller->setRenduService($renduService);
+
+        $parametreService = $container->get('ServiceManager')->get(ParametreService::class);
+        $controller->setParametreService($parametreService);
+
+        $messageService = $container->get('ServiceManager')->get(MessageService::class);
+        $controller->setMessageService($messageService);
 
 //        $container->get('')
         $renderer = $container->get('ServiceManager')->get('ViewRenderer');

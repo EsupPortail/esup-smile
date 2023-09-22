@@ -1,0 +1,133 @@
+FROM php:8.0-fpm-bullseye
+
+
+ENV PHP_VERSION=8.0
+
+RUN if [ -f ./deploy_configuration/.env_proxy ]; then \
+    # Si le fichier source existe, copiez-le
+    COPY ./deploy_configuration/.env_proxy /; \
+fi
+COPY ./deploy_configuration/proxy.sh /
+RUN chmod +x /proxy.sh
+
+RUN sh /proxy.sh
+
+ARG HTTP_PROXY_CI 
+ENV http_proxy=$HTTP_PROXY_CI
+ENV https_proxy=$HTTP_PROXY_CI
+ENV HTTP_PROXY=$HTTP_PROXY_CI
+ENV HTTPS_PROXY=$HTTP_PROXY_CI
+
+# Vérifiez si la variable d'environnement http_proxy est définie
+RUN if [ -n "$http_proxy" ]; then \
+    # Si elle est définie, exécutez les commandes pour configurer le proxy
+    touch /etc/apt/apt.conf.d/05proxy; \
+    echo 'Acquire::HTTP::Proxy "'$http_proxy'";' >> /etc/apt/apt.conf.d/05proxy; \
+    echo 'Acquire::HTTPS::Prox "'$http_proxy'";' >> /etc/apt/apt.conf.d/05proxy; \
+    echo 'Acquire::ftp::Proxy "'$http_proxy'";' >> /etc/apt/apt.conf.d/05proxy; \
+    echo "Proxy configuré dans le système de packages avec la valeur $http_proxy" && true; \
+fi
+
+RUN apt-get update -y
+
+# Deploy configuration & sources
+RUN mkdir /var/www/html/smile
+WORKDIR /var/www/html/smile/
+COPY ./src /var/www/html/smile/
+
+# Répertoires de travail de Doctrine
+RUN mkdir -p data/cache
+RUN mkdir -p data/DoctrineModule/cache
+RUN mkdir -p data/DoctrineORMModule/Proxy
+
+RUN chmod -R 777 data
+
+# Prepare packages management
+RUN rm -f /etc/apt/preferences.d/no-debian-php
+RUN apt-get update -y
+RUN apt-get install -y git libc6 wget gnupg2 apt-transport-https lsb-release ca-certificates
+
+RUN apt-get -qq update
+RUN apt-get -y install apt-transport-https lsb-release ca-certificates curl
+RUN curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg
+RUN sh -c 'echo "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list'
+RUN wget -e use_proxy=on -e https_proxy=$HTTP_PROXY --no-check-certificate -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list
+
+RUN apt-get upgrade -y 
+RUN apt-get update -y
+
+# Install extensions & packages
+RUN docker-php-ext-install bcmath
+RUN apt-get update && \
+    apt-get install -y \
+        zlib1g-dev libpng-dev
+RUN docker-php-ext-install gd
+RUN docker-php-ext-install gettext
+RUN docker-php-ext-install iconv
+RUN apt-get install -y libicu-dev  && docker-php-ext-configure intl
+RUN docker-php-ext-install intl
+RUN apt-get install -y libldap2-dev
+RUN docker-php-ext-install ldap
+RUN docker-php-ext-install opcache
+RUN apt-get install -y libpq-dev
+RUN docker-php-ext-install pgsql
+RUN docker-php-ext-install pdo
+RUN docker-php-ext-install pdo_pgsql
+RUN docker-php-ext-enable pdo_pgsql
+RUN docker-php-ext-configure pgsql
+RUN apt-get install -y libxml2-dev
+RUN docker-php-ext-install soap
+RUN docker-php-ext-install xml
+RUN apt-get install -y libzip-dev
+RUN docker-php-ext-install zip
+
+# Prepare PHP
+RUN apt-get install -y libz-dev libmemcached-dev && \
+    apt-get install -y memcached libmemcached-tools
+
+# XDebug from source for dev
+# Clonez le dépôt Xdebug depuis GitHub
+RUN git clone https://github.com/xdebug/xdebug.git /tmp/xdebug
+
+# Compilez et installez Xdebug
+RUN cd /tmp/xdebug && \
+    phpize && \
+    ./configure --enable-xdebug && \
+    make && \
+    make install
+
+# Build smile-app
+# Install composer 
+RUN curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
+RUN HASH=`curl -sS https://composer.github.io/installer.sig`
+RUN echo $HASH
+RUN php -r "if (hash_file('SHA384', '/tmp/composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+
+# Build Smile
+WORKDIR /var/www/html/smile/
+RUN composer install --no-dev --no-suggest --optimize-autoloader 
+RUN composer install
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+
+RUN mkdir -p data/cache                   && chmod -R 777 data/cache
+RUN mkdir -p data/DoctrineModule/cache    && chmod -R 777 data/DoctrineModule/cache
+RUN mkdir -p data/DoctrineORMModule/Proxy && chmod -R 777 data/DoctrineORMModule/Proxy
+RUN rm -rf data/cache/*
+RUN rm -rf data/DoctrineModule/cache/*
+RUN rm -rf data/DoctrineORMModule/Proxy/*
+
+ENV HTTP_PROXY ""
+ENV HTTPS_PROXY ""
+RUN export http_proxy=""
+RUN export https_proxy=""
+RUN rm -f /etc/apt/apt.conf.d/05proxy
+
+RUN chown -R www-data:www-data /var/www/html/smile/
+ENV COMPOSER_ALLOW_SUPERUSER=0
+
+RUN chown www-data:www-data generate_env.sh
+

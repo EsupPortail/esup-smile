@@ -2,30 +2,60 @@
 
 /**
  * @var PhpRenderer $this
- * @var User[] $etudiants
- * @var User $etudiant
- * @var array $inscriptions
+ * @var Inscription[] $inscriptions
+ * @var Inscription $inscription
  * @var \Application\Entity\Inscription $i
  */
 
 use Application\Application\View\Renderer\PhpRenderer;
+use Application\Entity\Inscription;
 use UnicaenUtilisateur\Entity\Db\User;
 
+$year = $this->year;
 $inscriptions = $this->inscriptions;
-$etudiants = $this->etudiants;
 $steps = $this->steps;
+$headMsg = $this->headMsg;
+$page = $this->page;
 ?>
 <div class="row">
     <div class="col text-center headTitle">
         <h2>ADMINISTRATION</h2>
     </div>
 </div>
-
+<div class="row">
+    <?php
+        if($headMsg) :
+    ?>
+    <div class="col alert-info alert">
+        <p>
+            Lignes insérés : <?= count($headMsg['success']) ?>
+        </p>
+        <p>
+            Duplicata : <?= count($headMsg['duplicate']) ?>
+        </p>
+        <p>
+            Lignes en erreur : <?= count($headMsg['failed']) ?>
+        </p>
+    </div>
+    <?php endif; ?>
+</div>
 <div class="row">
     <div class="col-12">
         <h3 class="d-inline-block titleBlue">Students</h3>
-        <button class="btn btn-sm btn-dark float-end" title="Import list of students" disabled>Import by CSV</button>
+        <button class="btn btn-sm btn-dark float-end" data-bs-toggle="modal" data-bs-target="#modalImportNomination" title="Import list of students">Import by CSV</button>
         <button class="btn btn-sm btn-success float-end me-2" disabled>New</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h3 class="d-inline-block">
+            YEAR <a style="color:#0c65e8" href="<?= $this->url('gestion/indexInscription', ['year' => ($year-1)]) ?>">
+                <i class="fa-solid fa-xs fa-arrow-left"></i>
+            </a><?= $year ?>
+            <a style="color:#0c65e8" href="<?= $this->url('gestion/indexInscription', ['year' => ($year+1)]) ?>">
+                <i class="fa-solid fa-xs fa-arrow-right"></i>
+            </a>
+        </h3>
     </div>
 </div>
 <div class="row mb-2">
@@ -49,50 +79,124 @@ $steps = $this->steps;
                     <th class="fw-normal text-center fs-7">Actions</th>
             </thead>
             <tbody>
-                <?php foreach($etudiants as $etudiant) : ?>
-                    <?php if($inscriptions[$etudiant->getUsername()]): ?>
-                    <tr class="toSearch" data-name="<?= $etudiant->getDisplayName() ?>">
+            <?php foreach($inscriptions as $inscription) : ?>
+                <?php
+                    $abandon = false;
+                    if($inscription->getStatus() == Inscription::STATUS_ABANDON[0]) {
+                        $abandon = true;
+                    }
+                ?>
+                <?php
+                    $displayName = $inscription->getFirstname() . ' ' . $inscription->getLastname();
+                ?>
+                    <tr class="toSearch <?= ($abandon) ? 'abandon' : '' ?>" data-name="<?= $displayName ?>">
                         <td class="fw-bold">
-                            <?= $etudiant->getDisplayName() ?>
+                            <?= $displayName ?>
                         </td>
                         <?php foreach($steps as $step): ?>
-                            <td class="text-center">
+
                                 <?php
-                                    $stepOrder = $inscriptions[$etudiant->getUsername()]->getStep()->getOrder();
-                                    if( ($stepOrder > $step->getOrder()) || ($inscriptions[$etudiant->getUsername()]->getStep() === end($steps)) ) {
-                                        //echo '<i class="fa-solid fa-check" style="color: green;"></i>';
-										echo '<span class="smile-btn"><svg class="bi smile-svg svg-valide" width="16" height="16"><use xlink:href="#smile-valide"/></svg></span>';
-                                    }
-                                    else if ((intval($stepOrder)) === $step->getOrder()) {
-										echo '<span class="smile-btn"><svg class="bi smile-svg svg-sablier" width="16" height="16"><use xlink:href="#smile-sablier"/></svg></span>';
-                                        if ($step->getNeedValidation()) {
-                                            echo '
+                                if($inscription->getStep()){
+                                    $stepOrder = $inscription->getStep()->getOrder() ?? 1;
+                                }
+                                else {
+                                    $stepOrder = 1;
+                                }
+                                if($abandon && (intval($stepOrder)) === $step->getOrder()) {
+                                    echo '<td class="text-center" style="background: rgba(222,34,34,0.82)">';
+                                    echo '<i class="fa-solid fa-ban"></i>';
+                                }
+                                else if( ($stepOrder > $step->getOrder()) || ($inscription->getStep() === end($steps)) ) {
+                                    //echo '<i class="fa-solid fa-check" style="color: green;"></i>';
+                                    echo '<td class="text-center" style="background: rgba(105,174,126,0.88)">';
+                                    echo '<span class="smile-btn"><i class="fa-solid fa-check"></i></span>';
+                                }
+                                else if ((intval($stepOrder)) === $step->getOrder()) {
+                                    echo '<td class="text-center" style="background: rgba(211,136,113,0.94)">';
+                                    echo '<span class="smile-btn"><i class="fa-solid fa-hourglass"></i></span>';
+                                    if ($step->getNeedValidation()) {
+                                        echo '
 												<form method="POST" action="gestion/validate" class="d-inline">
-													<input name="data" type="hidden" value="'.$inscriptions[$etudiant->getUsername()]->getUuid().'"/>
+													<input name="data" type="hidden" value="'.$inscription->getUuid().'"/>
 													<button type="submit" class="btn btn-sm btn-success smile-btn" title="Validate"><svg class="bi smile-svg svg-valide" width="16" height="16"><use xlink:href="#smile-valide"/></svg></button>
 												</form>
 												<form method="POST" action="gestion/denied" class="d-inline">
-													<input name="data" type="hidden" value="'.$inscriptions[$etudiant->getUsername()]->getUuid().'"/>
+													<input name="data" type="hidden" value="'.$inscription->getUuid().'"/>
 													<button type="submit" class="btn btn-sm btn-danger smile-btn" title="Denied"><svg class="bi smile-svg svg-invalide" width="16" height="16"><use xlink:href="#smile-invalide"/></svg></button>
 												</form>
 											';
-                                        }
                                     }
+                                }else {
+                                    echo '<td class="text-center">';
+                                }
                                 ?>
                             </td>
                         <?php endforeach; ?>
                         <td class="text-center">
-                            <a href="/gestion/<?= $inscriptions[$etudiant->getUsername()]->getUuid() ?>" class="btn btn-sm btn-dark">Show</a>
+                            <a href="<?= $this->url('gestion/indexInscription/gestionInscription', ['year' => $inscription->getYear(), 'uuid' => $inscription->getUuid()]) ?>" class="btn btn-sm btn-dark">Show</a>
                         </td>
                     </tr>
 
-                    <?php endif; ?>
-                <?php endforeach; ?>
+            <?php endforeach; ?>
             </tbody>
         </table>
+        <?php if($page > 1) : ?>
+
+            <a href="<?= $this->url('gestion/indexInscription', ['year' => $year, 'page' => ($page-1)]) ?>" class="btn btn-sm btn-dark">
+                Previous
+            </a>
+        <?php endif; ?>
     </div>
 </div>
+<div class="modal fade" id="modalImportNomination" tabindex="-1" aria-labelledby="modalImportNomination" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Import d'étudiants</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            Vous pouvez voir un exemple de fichier d'importation <a href="/upload/nomination_example.csv" target="_blank">ici</a>
+                        </p>
+                        <p>Fichiers acceptés : .csv</p>
+                        <p>Champs obligatoires : </p>
+                        <ul>
+                            <li>Prénom</li>
+                            <li>Nom</li>
+                            <li>Email</li>
+                            <li>Année d'inscription</li>
+                        </ul>
+                    </div>
 
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <?php
+                        /**
+                         * @see \Application\Controller\Gestion\GestionController::importNominationAction()
+                         */
+                        ?>
+                        <form method="POST" action="/gestion/import-nomination" enctype="multipart/form-data">
+                            <div class="form-control">
+                                <label for="fileImportNomination" class="form-label">Choisir un fichier</label>
+                                <input class="form-control form-control-lg" name="fileImportNomination" id="fileImportNomination" type="file">
+                            </div>
+                            <div class="form-control">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Importer</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $( document ).ready(function() {
         let tableStudent = document.querySelector('#tableStudent');

@@ -28,3 +28,6 @@ button.btn-close {
 div.modal div.modal-footer {
     display: none;
 }
+div.modal.vanilla div.modal-footer {
+    display: block;
+}

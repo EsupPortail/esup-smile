@@ -3,27 +3,27 @@
 /**
  * !! Ce fichier de configuration doit être importé avant les autres
  */
+$LDAP_MASTER_HOST = $_ENV['LDAP_MASTER_HOST'];
+$LDAP_MASTER_PORT = $_ENV['LDAP_MASTER_PORT'];
+$LDAP_MASTER_USERNAME = $_ENV['LDAP_MASTER_USERNAME'];
+$LDAP_MASTER_PASSWORD = $_ENV['LDAP_MASTER_PASSWORD'];
 
-use Application\View\Helper\ShibConnectViewHelper;
-use Application\View\Helper\ShibConnectViewHelperFactory;
+$LDAP_REPLICA_HOST = $_ENV['LDAP_REPLICA_HOST'];
+//const LDAP_REPLICA_HOST         = 'lldapreplica5.unicaen.fr';
+$LDAP_REPLICA_PORT = $_ENV['LDAP_REPLICA_PORT'];
+$LDAP_REPLICA_USERNAME = $_ENV['LDAP_REPLICA_USERNAME'];
+$LDAP_REPLICA_PASSWORD = $_ENV['LDAP_REPLICA_PASSWORD'];
 
-//define("LDAP_MASTER_HOST", $_ENV['LDAP_MASTER_HOST']);
-//define("LDAP_MASTER_PORT", $_ENV['LDAP_MASTER_PORT']);
-//define("LDAP_MASTER_USERNAME", $_ENV['LDAP_MASTER_USERNAME']);
-//define("LDAP_MASTER_PASSWORD", $_ENV['LDAP_MASTER_PSWD']);
-//
-//define("LDAP_REPLICA_HOST", $_ENV['LDAP_REPLICA_HOST']);
-//define("LDAP_REPLICA_PORT", $_ENV['LDAP_REPLICA_PORT']);
-//define("LDAP_REPLICA_USERNAME", $_ENV['LDAP_REPLICA_USERNAME']);
-//define("LDAP_REPLICA_PASSWORD", $_ENV['LDAP_REPLICA_PSWD']);
-//
-//
-//const LDAP_BASE_DN = 'dc=unicaen,dc=fr';
-//const LDAP_BRANCH_PEOPLE = 'ou=people,dc=unicaen,dc=fr';
-//const LDAP_BRANCH_STRUCTURES = 'ou=structures,dc=unicaen,dc=fr';
-//const LDAP_BRANCH_GROUPS = 'ou=groups,dc=unicaen,dc=fr';
-//const LDAP_BRANCH_DEACTIVATED = 'ou=deactivated,dc=unicaen,dc=fr';
-//const LDAP_BRANCH_BLOCKED = 'ou=blocked,dc=unicaen,dc=fr';
+//const LDAP_REPLICA_USERNAME     = "uid=octo-read,ou=system,dc=unicaen,dc=fr";
+//const LDAP_REPLICA_PASSWORD     = "APEedBszB7Vm";
+
+const LDAP_BASE_DN = 'dc=unicaen,dc=fr';
+const LDAP_BRANCH_PEOPLE = 'ou=people,dc=unicaen,dc=fr';
+const LDAP_BRANCH_STRUCTURES = 'ou=structures,dc=unicaen,dc=fr';
+const LDAP_BRANCH_GROUPS = 'ou=groups,dc=unicaen,dc=fr';
+const LDAP_BRANCH_DEACTIVATED = 'ou=deactivated,dc=unicaen,dc=fr';
+const LDAP_BRANCH_BLOCKED = 'ou=blocked,dc=unicaen,dc=fr';
+
 
 define(
     "AUTH_SHIB_ACTIVE",
@@ -39,30 +39,30 @@ return [
             'connection' => [
                 'default' => [
                     'params' => [
-//                        'host' => LDAP_REPLICA_HOST,
-//                        'port' => LDAP_REPLICA_PORT,
-//                        'username' => LDAP_REPLICA_USERNAME,
-//                        'password' => LDAP_REPLICA_PASSWORD,
-//                        'baseDn' => LDAP_BRANCH_PEOPLE,
-//                        'bindRequiresDn' => true,
-//                        'accountFilterFormat' => "(&(objectClass=supannPerson)(supannAliasLogin=%s))",
+                        'host' => $LDAP_REPLICA_HOST,
+                        'port' => $LDAP_REPLICA_PORT,
+                        'username' => $LDAP_REPLICA_USERNAME,
+                        'password' => $LDAP_REPLICA_PASSWORD,
+                        'baseDn' => LDAP_BRANCH_PEOPLE,
+                        'bindRequiresDn' => true,
+                        'accountFilterFormat' => "(&(objectClass=supannPerson)(supannAliasLogin=%s))",
+                        //                        'accountFilterFormat'   => "(&(eduPersonAffiliation=member)(!(eduPersonAffiliation=student))(supannAliasLogin=%s))",
                     ]
                 ]
-            ]
+            ],
         ],
     ],
 
-    // Module [Unicaen]Ldap
-//    'unicaen-ldap' => [
-//        'host' => LDAP_REPLICA_HOST,
-//        'port' => LDAP_REPLICA_PORT,
-//        'version' => 3,
-//        'username' => LDAP_REPLICA_USERNAME,
-//        'password' => LDAP_REPLICA_PASSWORD,
-//        'baseDn' => LDAP_BASE_DN,
-//        'bindRequiresDn' => true,
-//        'accountFilterFormat' => "(&(objectClass=posixAccount)(supannAliasLogin=%s))",
-//    ],
+    'unicaen-ldap' => [
+        'host' => $LDAP_REPLICA_HOST,
+        'port' => $LDAP_REPLICA_PORT,
+        'version' => 3,
+        'username' => $LDAP_REPLICA_USERNAME,
+        'password' => $LDAP_REPLICA_PASSWORD,
+        'baseDn' => LDAP_BASE_DN,
+        'bindRequiresDn' => true,
+        'accountFilterFormat' => "(&(objectClass=posixAccount)(supannAliasLogin=%s))",
+    ],
 
     'unicaen-auth' => [
         'auth_types' => [
@@ -71,7 +71,7 @@ return [
         'local' => [
             'order' => 2,
 
-            'enabled' => AUTH_LOCAL_ACTIVE,
+            'enabled' => true,
 
             'title' => "Connectez-vous",
 
@@ -89,6 +89,7 @@ return [
              */
             'ldap' => [
                 'enabled' => false,
+                'username' => 'supannAliasLogin',
             ]
         ],
 
@@ -97,7 +98,7 @@ return [
          */
         'shib' => [
             'order' => 1,
-            'enabled' => true,
+            'enabled' => false,
             'description' =>
                 "Cliquez sur le bouton ci-dessous pour accéder à l'authentification via la fédération d'identité.",
             'adapter' => \UnicaenAuthentification\Authentication\Adapter\Shib::class,
@@ -138,7 +139,7 @@ return [
         'test' => [
             'order' => '4',
             'enabled' => false,
-            'description' => "Authentification de la fédération d'identité"
+            'description' => "Authentification de la fédération d'identité",
         ],
 
 

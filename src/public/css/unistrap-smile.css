@@ -49,11 +49,17 @@
 .unistrap.unistrap-tpl-light .navbar.navbar-main .nav-link:focus {
     border-bottom: 2px solid rgba(0,0,0,.5);
 }
+
 .unistrap .navbar.navbar-main .nav-link.active,
 .unistrap .navbar.navbar-main .nav-link.active:hover {
     background: rgba(255,255,255,.2);
     color: var(--smile-main-color);
 }
+.unistrap .navbar.navbar-main .dropdown-menu[data-bs-popper] {
+    margin-top: 0;
+    margin-left: -1px;
+}
+
 .unistrap.unistrap-th-smile-light {
     --unistrap-color-main: var(--smile-secondary-color);
     --unistrap-color-light: var(--bs-gray-200);
@@ -157,6 +163,7 @@ h2:not(.h2-hp):not(.modal-title) {
 .smile-btn {
 	display: inline-block;
 	padding: .1rem .2rem;
+
 }
 .smile-svg {
 	margin: -4px 0 -2px 0;

@@ -61,6 +61,9 @@ class StepService extends CommonEntityService
         $nextStep = $this->getNextStep($step);
         if ($nextStep) {
             $inscription->setStep($nextStep);
+            $status = $this->getStatusByStep($nextStep, $inscription);
+            $inscription->setStatus($status[0]);
+            $inscription->setStatusLibelle($status[1]);
             $etablissement = $inscription->getEtablissement();
             $stepMsg = new Stepmessage();
             $stepMsg->setInscription($inscription);
@@ -76,6 +79,17 @@ class StepService extends CommonEntityService
         }
 
         return $inscription;
+    }
+
+    private function getStatusByStep(Step $step, Inscription $inscription) {
+        $status = $step->getStatus();
+        if($step->getCode() === 'registered') {
+            return Inscription::STATUS_INSCRIT;
+        }elseif ($step->getCode() === 'contract') {
+            return Inscription::STATUS_TERMINE;
+        }
+
+        return [$inscription->getStatus(), $inscription->getStatusLibelle()];
     }
 
     protected function mailStudent($inscription, $user, $etablissement) {

@@ -11,6 +11,7 @@ use Laminas\Authentication\AuthenticationService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 use UnicaenAuthentification\Service\ShibService;
+use UnicaenParametre\Service\Parametre\ParametreService;
 use UnicaenUtilisateur\Service\User\UserService;
 
 class IndexControllerFactory implements FactoryInterface

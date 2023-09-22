@@ -64,6 +64,9 @@
         <option name="fixed"/>
       </options>
     </field>
+    <field name="email" type="string" column="email" length="255" nullable="true"/>
+    <field name="year" type="integer" column="year"/>
+    <field name="createdAt" type="datetime" column="created_at"/>
     <field name="status" type="string" column="status" length="255" nullable="true">
       <options>
         <option name="fixed"/>

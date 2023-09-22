@@ -12,6 +12,7 @@ use UnicaenEgracon\Controller\EgraconController;
 use UnicaenEgracon\Controller\NoteController;
 use UnicaenEgracon\Controller\PaysController;
 use UnicaenMail\Controller\MailController;
+use UnicaenParametre\Provider\Privilege\ParametrecategoriePrivileges;
 use UnicaenPrivilege\Guard\PrivilegeController;
 use UnicaenPrivilege\Provider\Privilege\PrivilegePrivileges;
 use UnicaenRenderer\Controller\IndexController;
@@ -76,7 +77,7 @@ return [
                                 'label' => 'Students',
                                 'title' => 'Managing students steps',
                                 'route' => 'gestion',
-                                'resource' => ConfigurationPrivileges::getResourceId(ConfigurationPrivileges::CONFIGURATION_INDEX),
+                                'resource' => GestionPrivileges::getResourceId(GestionPrivileges::GESTION_INDEX),
                                 'order' => 1,
                                 'icon' => 'fas fa-angle-right',
                             ],
@@ -215,6 +216,15 @@ return [
                         'resource' => UtilisateurPrivileges::getResourceId(UtilisateurPrivileges::UTILISATEUR_AFFICHER),
                         'order' => 100,
                         'pages' => [
+                            'parametre' => [
+                                'label' => 'Paramètres',
+                                'route' => 'parametre/index',
+                                //                            'resource' => PrivilegeController::getResourceId(CategorieController::class, 'index'),
+                                'resource' => ParametrecategoriePrivileges::getResourceId(ParametrecategoriePrivileges::PARAMETRECATEGORIE_INDEX),
+                                'order' => 7020,
+                                'pages' => [],
+                                'icon' => 'fas fa-angle-right',
+                            ],
                             'processus' => [
                                 'label' => 'Processus OLA',
                                 'title' => 'Configuration du processus de génération de OLA',

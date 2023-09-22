@@ -27,7 +27,8 @@ return [
                     'action' => [
                         DashboardController::ACTION_INDEX,
                         DashboardController::ACTION_SAVECOURSES,
-                        DashboardController::ACTION_GENERATE_PDF
+                        DashboardController::ACTION_GENERATE_PDF,
+                        DashboardController::ACTION_ABANDON,
                     ],
                     'privileges' => [
                         DashboardPrivileges::DASHBOARD_INDEX
@@ -107,6 +108,16 @@ return [
                             'defaults' => [
                                 'controller' => DashboardController::class,
                                 'action' => DashboardController::ACTION_VALIDATECOURSES
+                            ]
+                        ]
+                    ],
+                    'abandon' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/abandon',
+                            'defaults' => [
+                                'controller' => DashboardController::class,
+                                'action' => DashboardController::ACTION_ABANDON
                             ]
                         ]
                     ],

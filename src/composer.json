@@ -31,7 +31,8 @@
         "doctrine/doctrine-orm-module": "5.3.0",
         "unicaen/code": "6.0.8",
         "unicaen/db-import" : "dev-smile",
-        "vlucas/phpdotenv": "^5.5@dev"
+        "vlucas/phpdotenv": "^5.5@dev",
+        "unicaen/parametre": "6.0.1"
     },
     "minimum-stability": "dev",
     "require-dev": {

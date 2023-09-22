@@ -9,6 +9,12 @@ use UnicaenUtilisateur\Entity\Db\User;
  */
 class Inscription
 {
+
+    const STATUS_NOMINE = [1, 'Nomination'];
+    const STATUS_INSCRIT = [2, 'Inscrit'];
+    const STATUS_ABANDON = [3, 'Abandon'];
+    const STATUS_TERMINE = [4, 'Terminé'];
+
     /**
      * @var string|null
      */
@@ -68,6 +74,21 @@ class Inscription
      * @var string|null
      */
     private $mailreferent;
+
+    /**
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @var int|null
+     */
+    private $year;
+
+    /**
+     * @var \DateTime
+     */
+    private $createdAt;
 
     /**
      * @var string|null
@@ -420,6 +441,65 @@ class Inscription
     {
         return $this->mailreferent;
     }
+
+    /**
+     * Get Email
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set Email
+     * @param string $email
+     * @return Inscription
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * Set year
+     * @param int $year
+     * @return Inscription
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
+        return $this;
+    }
+
+    /**
+     * Get year
+     * @return int
+     */
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    /**
+     * Get createdAt
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set createdAt
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
 
     /**
      * Set status.
