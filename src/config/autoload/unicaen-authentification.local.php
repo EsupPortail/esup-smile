@@ -9,13 +9,9 @@ $LDAP_MASTER_USERNAME = $_ENV['LDAP_MASTER_USERNAME'];
 $LDAP_MASTER_PASSWORD = $_ENV['LDAP_MASTER_PASSWORD'];
 
 $LDAP_REPLICA_HOST = $_ENV['LDAP_REPLICA_HOST'];
-//const LDAP_REPLICA_HOST         = 'lldapreplica5.unicaen.fr';
 $LDAP_REPLICA_PORT = $_ENV['LDAP_REPLICA_PORT'];
 $LDAP_REPLICA_USERNAME = $_ENV['LDAP_REPLICA_USERNAME'];
 $LDAP_REPLICA_PASSWORD = $_ENV['LDAP_REPLICA_PASSWORD'];
-
-//const LDAP_REPLICA_USERNAME     = "uid=octo-read,ou=system,dc=unicaen,dc=fr";
-//const LDAP_REPLICA_PASSWORD     = "APEedBszB7Vm";
 
 const LDAP_BASE_DN = 'dc=unicaen,dc=fr';
 const LDAP_BRANCH_PEOPLE = 'ou=people,dc=unicaen,dc=fr';
