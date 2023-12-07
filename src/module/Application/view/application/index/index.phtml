@@ -17,10 +17,10 @@ $isShib = $this->isShib;
 <div class="container py-5 bg-white">
 	<div class="row">
 		<div class="col px-5">
-			<h1 class="fw-bold" style="padding-left:15px;border-left: 20px solid var(--smile-main-color)">SMILE</h1>
-			<p class="text-uppercase fs-3">Système de gestion en ligne des étudiants en mobilité internationale</p>
+			<h1 class="fw-bold" style="padding-left:15px;border-left: 20px solid var(--smile-main-color)"><?= $this->translate('SMILE') ?></h1>
+			<p class="text-uppercase fs-3"><?= $this->translate("homeTitle", null, 'en_GB')?></p>
 			<p>
-            	<?= $this->translate("This application allows students to consult the catalogue of courses offered by the host university. It also makes it possible to facilitate administrative procedures and to define one's study contract (OLA) before the start of the academic year.") ?>
+            	<?= $this->translate("homeTitle") ?>
 			</p>
         </div>
         <div class="smile-home-heroes"></div>
@@ -44,9 +44,9 @@ $isShib = $this->isShib;
                                 <H2>DEMO</H2>
                                 <div class="alert alert-info">
                                     <p>
-                                        Si vous ne pouvez pas vous connecter avec la fédération (formulaire de gauche), utiliser votre compte de demo ici :
+                                        <?= $this->translate('demoAccount'); ?> :
                                     </p>
-                                    <a class="btn btn-info" href="/auth/connexion/local">Se connecter avec mon compte de demo</a>
+                                    <a class="btn btn-info" href="/auth/connexion/local"><?= $this->translate('demoConnect'); ?></a>
                                 </div>
                             </div>
 
@@ -60,7 +60,7 @@ $isShib = $this->isShib;
 
 						<div class="row">
 							<div class="col">
-								<h2>Shibboleth disabled</h2>
+								<h2>Shibboleth <?= $this->translate('disabled') ?></h2>
 							</div>
 							<div class="col-md-6">
 								<!--                                           <h5 class="card-title">Déjà inscrit ?</h5>-->

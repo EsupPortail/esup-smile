@@ -29,12 +29,12 @@ $mTableId = "liste-formations-mobilite";
 ?>
 <div class="row mb-3">
     <div class="col">
-        <h2>MANAGE MOBILITY</h2>
+        <h2>GÉRER LA MOBILITÉ</h2>
     </div>
 </div>
 <div class="row">
     <div class="col">
-        <a class="btn btn-primary icon icon-ajouter pe-2 mb-2" href="<?= $this->url('mobilite') ?>"> Add mobility</a>
+        <a class="btn btn-primary icon icon-ajouter pe-2 mb-2" href="<?= $this->url('mobilite') ?>"> Ajouter une mobilité</a>
     </div>
     <div class="col">
         <?php
@@ -42,12 +42,12 @@ $mTableId = "liste-formations-mobilite";
          * @see \Application\Controller\Formation\FormationController::activeAllMobilityAction()
          */
         ?>
-        <a class="btn btn-info icon icon-ajouter pe-2 mb-2 right" href="<?= $this->url('formations/mobilite/activeAllMobility') ?>"> Active All Mobility</a>
+        <a class="btn btn-info icon icon-ajouter pe-2 mb-2 right" href="<?= $this->url('formations/mobilite/activeAllMobility') ?>"> Activer toutes les mobilités</a>
     </div>
 </div>
 <div class="row">
     <div class="col">
-        <a class="btn btn-primary icon icon-ajouter pe-2 mb-2" href="mobilite/ADD"> Add course</a>
+        <a class="btn btn-primary icon icon-ajouter pe-2 mb-2" href="mobilite/ADD"> Ajouter un cours</a>
     </div>
 </div>
 <div class="row mb-3">
@@ -62,9 +62,9 @@ $mTableId = "liste-formations-mobilite";
     <div class="col">
         <input type="text" name="searchIntituleCours" id="searchIntituleCours" class="form-control" placeholder="Intitulé des cours">
     </div>
-    <div class="col">
-        <input type="text" name="searchNiveau" id="searchNiveau" class="form-control" placeholder="Niveau" disabled>
-    </div>
+    <!--    <div class="col">-->
+    <!--        <input type="text" name="searchNiveau" id="searchNiveau" class="form-control" placeholder="Niveau" disabled>-->
+    <!--    </div>-->
     <div class="col">
         <select class="form-select" id="searchSemestre" aria-label="Composante">
             <option selected>Semestre</option>
@@ -129,8 +129,8 @@ $mTableId = "liste-formations-mobilite";
         let QTable = $('#<?=$mTableId ?>');
 
         let dTable = QTable.DataTable({
-            // "responsive": true,
-            "stateSave": true,
+            // "responsive" : true,
+            "stateSave": false,
             // "retrieve": true,
             // "autoWidth": true,
             "processing": true,
@@ -148,6 +148,27 @@ $mTableId = "liste-formations-mobilite";
                 <?php endforeach; ?>
                 { "data": "action" },
             ],
+            "columnDefs": [
+                {
+                    render: function (data, type, row) {
+                        let el = document.querySelector('#searchSemestre');
+                        // console.log(type)
+                        let str = `<div class="form-check form-switch"><input class="form-check-input checkS2" data-codeCours="${data[1]}" type="checkbox" role="switch" id="flexSwitchCheckChecked" ${data[0]}>
+                    <label class="form-check-label" for="flexSwitchCheckChecked"></label></div>`
+                        return str;
+                    },
+                    targets: [6],
+                    searchable: true,
+                }
+            ],
+            "rowCallback": function( row, data ) {
+                // console.log(data.S2)
+                // if ( data.S2[0] !== "checked" ) {
+                //     // $('td:eq(4)', row).html( '<b>A</b>' );
+                //     console.log("checked")
+                //     $(row).hide()
+                // }
+            },
             "ajax": {
                 "url": "",
                 "type": "POST",
@@ -174,7 +195,7 @@ $mTableId = "liste-formations-mobilite";
             let checkS1 = document.querySelectorAll('.checkS1');
             let checkS2 = document.querySelectorAll('.checkS2');
 
-            searchIntitule.addEventListener('keyup', (event) => {
+            searchIntitule.addEventListener('change', (event) => {
                 target = event.target
                 QTable.DataTable()
                     .column(2)
@@ -192,7 +213,7 @@ $mTableId = "liste-formations-mobilite";
                     )
                     .draw()
             })
-            searchEcts.addEventListener('keyup', (event) => {
+            searchEcts.addEventListener('change', (event) => {
                 target = event.target
                 QTable.DataTable()
                     .column(3)
@@ -211,17 +232,51 @@ $mTableId = "liste-formations-mobilite";
                     .draw()
             })
             searchSemestre.addEventListener('change', (event) => {
-                // target = event.target
-                // let col = 3
+                target = event.target
+
+                // let sear = col.search(regex)
+                // console.log(res)
                 // if(target.value === '2') {
-                //     col = 4
+                //     QTable.DataTable()
+                //         .column(6)
+                //         .search(
+                //             "\bchecked\b"
+                //         )
+                //         .draw()
+                //     QTable.DataTable()
+                //         .column(5)
+                //         .search(
+                //             ""
+                //         )
+                //         .draw()
+                // }else if(target.value === '1') {
+                //     QTable.DataTable()
+                //         .column(6)
+                //         .search(
+                //             ""
+                //         )
+                //         .draw()
+                //     QTable.DataTable()
+                //         .column(5)
+                //         .search(
+                //             "\bchecked\b"
+                //         )
+                //         .draw()
+                // }else {
+                //     QTable.DataTable()
+                //         .column(6)
+                //         .search(
+                //             ""
+                //         )
+                //         .draw()
+                //     QTable.DataTable()
+                //         .column(5)
+                //         .search(
+                //             ""
+                //         )
+                //         .draw()
                 // }
-                // QTable.DataTable()
-                //     .column(col)
-                //     .search(
-                //         true
-                //     )
-                //     .draw()
+
             })
             checkMobilite.forEach((elem) => {
                 elem.addEventListener('change', updateMobilite)

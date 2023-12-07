@@ -9,8 +9,10 @@ class LangueServiceFactory {
 
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $serviceProvider = new LangueService();
+        $sm = $container->get('ServiceManager');
+        $translator = $sm->get('translator');
 
+        $serviceProvider = new LangueService($translator);
         return $serviceProvider;
     }
 }

@@ -48,6 +48,12 @@
     <field name="histoModification" type="datetime" column="histo_modification" nullable="true"/>
     <field name="histoDestruction" type="datetime" column="histo_destruction" nullable="true"/>
 
+    <many-to-one field="groupe" target-entity="Application\Entity\ComposanteGroupe" fetch="LAZY">
+      <join-columns>
+        <join-column name="groupe_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+
     <many-to-one field="source" target-entity="Application\Entity\Source" fetch="LAZY">
       <join-columns>
         <join-column name="source_id" referenced-column-name="id"/>

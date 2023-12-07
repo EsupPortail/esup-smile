@@ -7,6 +7,7 @@ use Application\Controller\Dashboard\DashboardController;
 use Application\Controller\IndexController;
 use Application\Service\Dashboard\DashboardService;
 use Application\Service\Inscription\InscriptionService;
+use Application\Service\Langue\LangueService;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
@@ -26,20 +27,20 @@ class IndexControllerFactory implements FactoryInterface
         $authConf = $container->get('config')['unicaen-auth'];
         $controller->setAuthConfig($authConf);
 
-        $entityService = $container->get('ServiceManager')->get(UserService::class);
-        $controller->setUserService($entityService);
+        $userService = $container->get('ServiceManager')->get(UserService::class);
+        $controller->setUserService($userService);
 
-        $entityService = $container->get('ServiceManager')->get(ShibService::class);
-        $controller->setShibService($entityService);
+        $shibService = $container->get('ServiceManager')->get(ShibService::class);
+        $controller->setShibService($shibService);
 
-        $entityService = $container->get('ServiceManager')->get(InscriptionService::class);
-        $controller->setInscriptionService($entityService);
+        $inscriptionService = $container->get('ServiceManager')->get(InscriptionService::class);
+        $controller->setInscriptionService($inscriptionService);
 
-        $entityService = $container->get('ServiceManager')->get(AuthenticationService::class);
-        $controller->setAuthenticationService($entityService);
+        $authService = $container->get('ServiceManager')->get(AuthenticationService::class);
+        $controller->setAuthenticationService($authService);
 
-//        $translator = $container->get('ServiceManager')->get('translator');
-//        $controller->setTranslator($translator);
+        $languageService = $container->get('ServiceManager')->get(LangueService::class);
+        $controller->setLangueService($languageService);
 
         return $controller;
     }

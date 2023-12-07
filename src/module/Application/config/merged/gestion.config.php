@@ -46,7 +46,8 @@ return [
                 [
                     'controller' => GestionController::class,
                     'action' => [
-                        GestionController::ACTION_IMPORT_NOMINATION
+                        GestionController::ACTION_IMPORT_NOMINATION,
+                        GestionController::ACTION_ADD_STUDENT
                     ],
                     'privileges' => [
                         GestionPrivileges::GESTION_IMPORT_NOMINATION,
@@ -135,6 +136,16 @@ return [
                             'defaults' => [
                                 'controller' => GestionController::class,
                                 'action' => GestionController::ACTION_IMPORT_NOMINATION
+                            ]
+                        ]
+                    ],
+                    'addStudent' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/addStudent',
+                            'defaults' => [
+                                'controller' => GestionController::class,
+                                'action' => GestionController::ACTION_ADD_STUDENT
                             ]
                         ]
                     ],

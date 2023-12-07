@@ -150,32 +150,38 @@ $user = $this->user;
             </div>
         </div>
         <hr>
-        <div class="row mt-3">
-            <div class="col">
-                <form method="POST" action="<?= $this->url('gestion/denied') ?>">
-                <div class="row">
-                    <div class="col-9">
+        <?php
+            if ($user->hasRole($step->getRole()) && ($nextStep !== null)):
+        ?>
+            <div class="row mt-3">
+                <div class="col">
+                    <form method="POST" action="<?= $this->url('gestion/denied') ?>">
+                    <div class="row">
+                        <div class="col-9">
+                            <input name="data" type="hidden" value="<?= $inscription->getUuid()?>"/>
+                            <textarea class="form-control" name="msgDenied"  placeholder="Justify the rejection"></textarea>
+                        </div>
+                        <div class="col-3">
+                            <input type="submit" class="btn btn-danger right" value="Denied"/>
+                        </div>
+                    </div>
+
+
+    <!--                    <input name="msgDenied" class="form-control mb-2" type="text"  value=""/>-->
+
+
+                    </form>
+                </div>
+                <div class="col">
+                    <form method="POST" action="<?= $this->url('gestion/validate') ?>">
                         <input name="data" type="hidden" value="<?= $inscription->getUuid()?>"/>
-                        <textarea class="form-control" name="msgDenied"  placeholder="Justify the rejection"></textarea>
-                    </div>
-                    <div class="col-3">
-                        <input type="submit" class="btn btn-danger right" value="Denied"/>
-                    </div>
+                        <input type="submit" class="btn btn-success right" value="Validate"/>
+                    </form>
                 </div>
 
-
-<!--                    <input name="msgDenied" class="form-control mb-2" type="text"  value=""/>-->
-
-
-                </form>
             </div>
-            <div class="col">
-                <form method="POST" action="<?= $this->url('gestion/validate') ?>">
-                    <input name="data" type="hidden" value="<?= $inscription->getUuid()?>"/>
-                    <input type="submit" class="btn btn-success right" value="Validate"/>
-                </form>
-            </div>
-
-        </div>
+        <?php
+            endif;
+        ?>
     </div>
 </div>

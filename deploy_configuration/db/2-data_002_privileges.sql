@@ -28,6 +28,7 @@ VALUES
 ('documentcontenu', 'UnicaenRenderer - Gestion des contenue', 'UnicaenRenderer\Provider\Privilege', 110),
 -- Unicaen DB Import
 ('unicaen-db-import', 'Gestion de l''importation des données', 'UnicaenDbImport\Privilege', 111),
+('import', 'Gestion de l''importation des données', 'Import\Provider\Privilege', 112),
 ('authenticate', 'Authenticate Shibb', 'Application\Provider\Privilege', 2)
 ON CONFLICT (code) DO
 UPDATE SET
@@ -53,6 +54,7 @@ categorieDocumentMacro AS (SELECT id FROM unicaen_privilege_categorie WHERE code
 categorieDocumentTemplate AS (SELECT id FROM unicaen_privilege_categorie WHERE code = 'documenttemplate'),
 categorieDocumentContenue AS (SELECT id FROM unicaen_privilege_categorie WHERE code = 'documentcontenu'),
 categorieImport AS (SELECT id FROM unicaen_privilege_categorie WHERE code = 'unicaen-db-import'),
+categorieMyImport AS (SELECT id FROM unicaen_privilege_categorie WHERE code = 'import'),
 categorieAuthenticate AS (SELECT id FROM unicaen_privilege_categorie WHERE code = 'authenticate')
 INSERT INTO unicaen_privilege_privilege (categorie_id, code, libelle, ordre)
 VALUES
@@ -133,6 +135,8 @@ VALUES
 ((select c.id from categorieImport c), 'synchro-lancer', 'Executer une synchronisation', 13),
 ((select c.id from categorieImport c), 'log-lister', 'Lister les logs des imports', 21),
 ((select c.id from categorieImport c), 'log-consulter', 'Consulter un log d''import', 22),
+-- MyImport
+((select c.id from categorieMyImport c), 'import_index', 'Gérer', 1),
 -- authenticate
 ((select c.id from categorieAuthenticate c), 'authenticate_index', 'Authentication Shibb', 1),
 -- TODO : a revoir, le système d'observation, requis pour l'import

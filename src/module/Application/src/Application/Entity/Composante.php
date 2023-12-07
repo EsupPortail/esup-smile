@@ -71,6 +71,11 @@ class Composante implements ResourceInterface,
     private $id;
 
     /**
+     * @var ComposanteGroupe
+     */
+    private ComposanteGroupe $groupe;
+
+    /**
      * @var \Application\Entity\Source
      */
 //    private $source;

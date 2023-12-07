@@ -1,0 +1,221 @@
+<?php
+
+/**
+ * @var array $resultCsv
+ */
+
+
+
+?>
+<h2 class="row mb-3">
+    Import des données
+</h2>
+<?php if($resultCsv): ?>
+<div class="row">
+    <?php if(isset($resultCsv['success'])): ?>
+        <div class="col">
+            <p class="alert alert-success">
+                <span class="text-success"><?= $resultCsv['success'] ?></span>
+            </p>
+        </div>
+    <?php elseif (isset($resultCsv['error'])): ?>
+        <div class="col">
+            <p class="alert alert-danger">
+                <span class="text-danger"><?= $resultCsv['error'] ?></span>
+            </p>
+        </div>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
+<div class="row">
+    <div class="col-md-12">
+        <p class="alert alert-info">
+            <b>Status API</b> : <span class="text-danger">Disabled</span>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <table class="table table-responsive">
+            <thead>
+            <tr>
+                <th>Table</th>
+                <th>Row</th>
+                <th>Updated</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Composante</td>
+                <td><?= $this->nComposantes ?></td>
+                <td></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalImportComposante" title="Import des composantes">Import CSV</button></td>
+            </tr>
+            <tr>
+                <td>Formation</td>
+                <td><?= $this->nFormations ?></td>
+                <td></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalImportFormation" title="Import des formations">Import CSV</button></td>
+            </tr>
+            <tr>
+                <td>Cours</td>
+                <td><?= $this->nCourses ?></td>
+                <td></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalImportCours" title="Import des cours">Import CSV</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="modalImportCours" tabindex="-1" aria-labelledby="modalImportCours" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Import des cours</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            Vous pouvez voir un exemple de fichier d'importation <a href="/upload/cours_example.csv" target="_blank">ici</a>
+                        </p>
+                        <p>Fichiers acceptés : .csv</p>
+                        <p>Champs obligatoires : </p>
+                        <ul>
+                            <li>code_elp</li>
+                            <li>libelle</li>
+                            <li>langue_enseignement</li>
+                            <li>S1</li>
+                            <li>S2</li>
+                            <li>ects</li>
+                            <li>vol_elp</li>
+                            <li>formation_code</li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <?php
+                        /**
+                         * @see \Application\Controller\Gestion\GestionController::importNominationAction()
+                         */
+                        ?>
+                        <form method="POST" action="/import/cours" enctype="multipart/form-data">
+                            <div class="form-control">
+                                <label for="fileImportNomination" class="form-label">Choisir un fichier</label>
+                                <input class="form-control form-control-lg" name="fileImportCsv" id="fileImportNomination" type="file">
+                            </div>
+                            <div class="form-control">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Importer</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalImportFormation" tabindex="-1" aria-labelledby="modalImportFormation" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Import des formations</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            Vous pouvez voir un exemple de fichier d'importation <a href="/upload/formation_example.csv" target="_blank">ici</a>
+                        </p>
+                        <p>Fichiers acceptés : .csv</p>
+                        <p>Champs obligatoires : </p>
+                        <ul>
+                            <li>code</li>
+                            <li>libelle</li>
+                            <li>type_diplome</li>
+                            <li>niveau_etude</li>
+                            <li>code_composante</li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <?php
+                        /**
+                         * @see \Application\Controller\Gestion\GestionController::importNominationAction()
+                         */
+                        ?>
+                        <form method="POST" action="/import/formation" enctype="multipart/form-data">
+                            <div class="form-control">
+                                <label for="fileImportNomination" class="form-label">Choisir un fichier</label>
+                                <input class="form-control form-control-lg" name="fileImportCsv" id="fileImportNomination" type="file">
+                            </div>
+                            <div class="form-control">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Importer</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalImportComposante" tabindex="-1" aria-labelledby="modalImportComposante" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Import des composantes</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            Vous pouvez voir un exemple de fichier d'importation <a href="/upload/composante_example.csv" target="_blank">ici</a>
+                        </p>
+                        <p>Fichiers acceptés : .csv</p>
+                        <p>Champs obligatoires : </p>
+                        <ul>
+                            <li>code</li>
+                            <li>libelle</li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <?php
+                        /**
+                         * @see \Application\Controller\Gestion\GestionController::importNominationAction()
+                         */
+                        ?>
+                        <form method="POST" action="/import/composante" enctype="multipart/form-data">
+                            <div class="form-control">
+                                <label for="fileImportNomination" class="form-label">Choisir un fichier</label>
+                                <input class="form-control form-control-lg" name="fileImportCsv" id="fileImportNomination" type="file">
+                            </div>
+                            <div class="form-control">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Importer</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
