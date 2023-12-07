@@ -39,6 +39,7 @@ $modules = [
     'Unicaen\Console',
     'UnicaenParametre',
     'Fichier',
+    'Import',
     'Message',
     'Application',
 ];

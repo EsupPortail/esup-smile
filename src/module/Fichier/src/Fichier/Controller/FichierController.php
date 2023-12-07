@@ -4,7 +4,7 @@ namespace Fichier\Controller;
 
 use Fichier\Entity\Db\Fichier;
 use Fichier\Form\Upload\UploadFormAwareTrait;
-use Fichier\Service\Fichier\FichierServiceAwareTrait;
+use Fichier\Service\Fichier\ImportServiceAwareTrait;
 use Fichier\Service\Nature\NatureServiceAwareTrait;
 use Laminas\Form\Element\Select;
 use Laminas\Http\Request;
@@ -12,7 +12,7 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
 class FichierController extends AbstractActionController {
-    use FichierServiceAwareTrait;
+    use ImportServiceAwareTrait;
     use NatureServiceAwareTrait;
     use UploadFormAwareTrait;
 

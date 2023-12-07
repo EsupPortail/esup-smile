@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Application\Entity\ComposanteGroupe" table="composante_groupe">
+    <id name="id" type="bigint" column="id">
+      <generator strategy="SEQUENCE"/>
+      <sequence-generator sequence-name="composante_groupe_id_seq" allocation-size="1" initial-value="1"/>
+    </id>
+    <field name="libelle" type="string" column="libelle" length="120" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <one-to-many field="composantes" target-entity="Application\Entity\Composante" mapped-by="composante"/>
+<!--    <many-to-many field="roles" target-entity="UnicaenUtilisateur\Entity\Db\Role">-->
+<!--      <join-table name="composante_groupe_role_utilisateur">-->
+<!--        <join-columns>-->
+<!--          <join-column name="composante_groupe_id" referenced-column-name="id"/>-->
+<!--        </join-columns>-->
+<!--      </join-table>-->
+<!--    </many-to-many>-->
+  </entity>
+</doctrine-mapping>

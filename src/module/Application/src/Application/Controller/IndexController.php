@@ -10,8 +10,10 @@
 namespace Application\Controller;
 
 use Application\Application\Service\Inscription\InscriptionServiceAwareTrait;
+use Application\Application\Service\Langue\LangueServiceAwareTrait;
 use Doctrine\ORM\EntityManager;
 use Laminas\Config\Processor\Translator;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use Locale;
@@ -25,6 +27,7 @@ class IndexController extends AbstractActionController
     use ShibServiceAwareTrait;
     use UserServiceAwareTrait;
     use InscriptionServiceAwareTrait;
+    use LangueServiceAwareTrait;
 
     public $authConfig;
     public $translator;
@@ -48,12 +51,17 @@ class IndexController extends AbstractActionController
 
     public function languageAction() {
         $locale = $this->params('locale');
+        $request = $this->getRequest();
+        $referer = $request->getHeader('Referer');
 
-        Locale::setDefault('en_US');
-//        $translator = new \Laminas\I18n\Translator\Translator();
-//        $this->get
+        $this->getLangueService()->changeLangue($locale);
 
-        return $this->redirect()->toRoute('home');
+        if($referer) {
+            $uri = $referer->getUri();
+            return $this->redirect()->toUrl($uri);
+        }else {
+            return $this->redirect()->toRoute('home');
+        }
     }
 
     public function flashMessageAction()
@@ -65,6 +73,7 @@ class IndexController extends AbstractActionController
     {
         $this->authConfig = $authConfig;
     }
+
 
 //    public function setTranslator($translator) {
 //        $this->translator = $translator;
