@@ -16,11 +16,10 @@
       </options>
     </field>
     <field name="status" type="boolean" column="status" nullable="true"/>
-    <field name="order" type="integer" column="order" nullable="true">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
+    <field name="order" type="integer" column="`order`" nullable="true"/>
+    <field name="movable" type="boolean" column="movable" nullable="false"/>
+    <field name="fixed" type="boolean" column="fixed" nullable="false"/>
+    <field name="deletable" type="boolean" column="deletable" nullable="false"/>
     <field name="needValidation" type="boolean" column="needValidation" nullable="true">
       <options>
         <option name="fixed"/>

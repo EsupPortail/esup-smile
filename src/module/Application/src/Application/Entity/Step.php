@@ -37,6 +37,21 @@ class Step
     /**
      * @var bool
      */
+    private bool $movable;
+
+    /**
+     * @var bool
+     */
+    private bool $fixed;
+
+    /**
+     * @var bool
+     */
+    private bool $deletable;
+
+    /**
+     * @var bool
+     */
     private $needValidation;
 
     /**
@@ -124,9 +139,9 @@ class Step
      *
      * @return Step
      */
-    public function setOrder($order)
+    public function setOrder(int $order): Step
     {
-        $this->code = $order;
+        $this->order = $order;
 
         return $this;
     }
@@ -136,9 +151,83 @@ class Step
      *
      * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return $this->order;
+    }
+
+    // getter and setter for movable
+    /**
+     * Get movable
+     *
+     * @param bool $movable
+     *
+     * @return Step
+     */
+    public function setMovable(bool $movable): Step
+    {
+        $this->movable = $movable;
+
+        return $this;
+    }
+
+    /**
+     * Set order.
+     *
+     * @return bool
+     */
+    public function getMovable(): bool
+    {
+        return $this->movable;
+    }
+
+    /**
+     * Set fixed.
+     *
+     * @param bool $fixed
+     *
+     * @return Step
+     */
+    public function setFixed(bool $fixed): Step
+    {
+        $this->fixed = $fixed;
+
+        return $this;
+    }
+
+    /**
+     * Get fixed.
+     *
+     * @return bool
+     */
+    public function getFixed(): bool
+    {
+        return $this->fixed;
+    }
+
+    // getter and setter for deletable
+    /**
+     * Set deletable.
+     *
+     * @param bool $deletable
+     *
+     * @return Step
+     */
+    public function setDeletable(bool $deletable): Step
+    {
+        $this->deletable = $deletable;
+
+        return $this;
+    }
+
+    /**
+     * Get deletable.
+     *
+     * @return bool
+     */
+    public function getDeletable(): bool
+    {
+        return $this->deletable;
     }
 
     /**

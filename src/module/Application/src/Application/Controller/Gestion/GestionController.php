@@ -56,6 +56,8 @@ class GestionController extends AbstractActionController
     const ACTION_DENIED = "denied";
     const ACTION_IMPORT_NOMINATION = "import_nomination";
 
+    const ACTION_ADD_STUDENT = "add_student";
+
     private EntityManager $entityManager;
 
     public function __construct(EntityManager $entityManager)
@@ -65,7 +67,6 @@ class GestionController extends AbstractActionController
 
     public function indexAction()
     {
-        $this->changelangage('fr_FR');
         $resultCsv = null;
         $queryCsv = $this->params()->fromQuery('resultCsv');
         if($queryCsv) {
@@ -78,8 +79,8 @@ class GestionController extends AbstractActionController
         $elemByPage = $this->params('elemByPage') ?? 10;
 
 //        $etudiants = $this->getEtudiants($year);
-
-        $steps = $this->stepService->findAllOrdered();
+        $user = $this->getUserService()->getConnectedUser();
+        $steps = $this->getStepService()->findAllOrdered();
 
         // TODO: Modifier le mapping doctrine pour avoir un getInscription() dans User, quoique...
 //        $inscriptionBind = [];
@@ -90,7 +91,9 @@ class GestionController extends AbstractActionController
 //            ['year' => $year]
 //        );
         $inscriptions = $this->getInscriptionService()->getEntityRepository()->findBy(
-            ['year' => $year],
+            [
+                'year' => $year,
+            ],
             ['step' => 'DESC'],
             $elemByPage,
             ($page - 1) * $elemByPage
@@ -105,17 +108,43 @@ class GestionController extends AbstractActionController
             }
             return ($a->getStep()->getOrder() > $b->getStep()->getOrder()) ? -1 : 1;
         });
-
         return new ViewModel(
             [
 //                'etudiants' => $etudiants,
                 'inscriptions' => $inscriptions,
+                'user' => $this->getUserService()->getConnectedUser(),
 //                'inscriptions' => $inscriptionBind,
                 'steps' => $steps,
                 'year' => $year,
                 'headMsg' => $resultCsv,
             ]
         );
+    }
+
+    public function addStudent()
+    {
+        $request = $this->getRequest();
+        return 'Error: conflict with role';
+        if ($request->isPost()) {
+            $user = $this->getUserService()->getConnectedUser();
+            $inscriptionUuid = $request->getPost("data");
+            $inscription = $this->inscriptionService->findOneBy(
+                ['uuid' => $inscriptionUuid]
+            );
+
+            try {
+                $isValid = true;
+                $inscription = $this->stepService->validateStep(
+                    $inscription,
+                    $user,
+                    'Valid',
+                    true
+                );
+            } catch (\Exception $e) {
+                $isValid = false;
+                $msg = $e->getMessage();
+            }
+        }
     }
 
     public function viewAction()
@@ -163,11 +192,6 @@ class GestionController extends AbstractActionController
             $this->getResponse()->setStatusCode(404);
             return;
         }
-    }
-
-    private function changelangage($langage){
-        $sessionContainer = $this->getSessionContainer();
-
     }
 
     public function importNominationAction()

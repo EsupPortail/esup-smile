@@ -21,10 +21,6 @@ DB_PSWD=
 
 Suivant les variables que vous avez configuré dans le fichier descriptif ./docker-compose.yaml  
 
-Pour un déploiement de SMILE en local, renseigner le nom du conteneur de la base de données (smile-database) en tant que DB_HOST.  
-
-Veuillez également renseigner n'importe quelle valeur pour la variable UCN_LIVELOG_PORT=1400  
-
 # Si vous avez un proxy
 Générer le fichier ./deploy_configuration/.env_proxy
 ajouter les lignes :  

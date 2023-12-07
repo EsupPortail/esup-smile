@@ -23,7 +23,7 @@ return [
         'module' => [
             'default' => [
                 'redirect_to' => [$_ENV['UCN_LIVELOG_REDIRECT_TO']],
-                'do_not_send' => true,
+                'do_not_send' => [$_ENV['UCN_LIVELOG_DO_NOT_SEND']],
                 /**
                  * Configuration de l'expéditeur
                  */

@@ -19,6 +19,7 @@ use Laminas\Authentication\AuthenticationService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 use Message\Service\Message\MessageService;
+use UnicaenMail\Service\Mail\MailService;
 use UnicaenParametre\Service\Parametre\ParametreService;
 use UnicaenRenderer\Service\Rendu\RenduService;
 use UnicaenUtilisateur\Service\User\UserService;
@@ -77,6 +78,10 @@ class DashboardControllerFactory implements FactoryInterface
 
         $messageService = $container->get('ServiceManager')->get(MessageService::class);
         $controller->setMessageService($messageService);
+
+        $mailService = $container->get('ServiceManager')->get(MailService::class);
+        $controller->setMailService($mailService);
+
 
 //        $container->get('')
         $renderer = $container->get('ServiceManager')->get('ViewRenderer');
