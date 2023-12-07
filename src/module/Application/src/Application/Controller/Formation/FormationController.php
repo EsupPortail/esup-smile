@@ -168,8 +168,7 @@ class FormationController extends AbstractEntityController
                     'langage' => $c->getLangueEnseignement(),
                     'S1' => '<div class="form-check form-switch"><input class="form-check-input checkS1" data-codeCours="'. $c->getCodeElp() .'" type="checkbox" role="switch" id="flexSwitchCheckChecked" '. $checkedS1 .'>
                             <label class="form-check-label" for="flexSwitchCheckChecked"></label></div>',
-                    'S2' => '<div class="form-check form-switch"><input class="form-check-input checkS2" data-codeCours="'. $c->getCodeElp() .'" type="checkbox" role="switch" id="flexSwitchCheckChecked" '. $checkedS2 .'>
-                            <label class="form-check-label" for="flexSwitchCheckChecked"></label></div>',
+                    'S2' => [$checkedS2, $c->getCodeElp()],
                     'action' => '<a href="mobilite/'.$c->getCodeElp().'"><i class="fa-solid fa-pen"></i></a>'
                 ];
                 foreach ($mobilites as $mobilite) {

@@ -26,7 +26,7 @@ button.btn-close {
 }
 
 div.modal div.modal-footer {
-    display: none;
+    /*display: none;*/
 }
 div.modal.vanilla div.modal-footer {
     display: block;

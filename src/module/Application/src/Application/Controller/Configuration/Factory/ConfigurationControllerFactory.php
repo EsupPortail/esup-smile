@@ -6,6 +6,7 @@ namespace Application\Controller\Configuration\Factory;
 
 use Application\Controller\Configuration\ConfigurationController;
 use Application\Service\Inscription\InscriptionService;
+use Application\Service\Step\StepMessageService;
 use Application\Service\Step\StepService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
@@ -27,17 +28,20 @@ class ConfigurationControllerFactory implements FactoryInterface
 //        $entityService = $container->get('ServiceManager')->get(ConfigurationService::class);
 //        $controller->setConfigurationService($entityService);
 
-        $entityService = $container->get('ServiceManager')->get(UserService::class);
-        $controller->setUserService($entityService);
+        $userService = $container->get('ServiceManager')->get(UserService::class);
+        $controller->setUserService($userService);
 //
-        $entityService = $container->get('ServiceManager')->get(InscriptionService::class);
-        $controller->setInscriptionService($entityService);
+        $inscriptionService = $container->get('ServiceManager')->get(InscriptionService::class);
+        $controller->setInscriptionService($inscriptionService);
 //
-        $entityService = $container->get('ServiceManager')->get(RoleService::class);
-        $controller->setRoleService($entityService);
+        $roleService = $container->get('ServiceManager')->get(RoleService::class);
+        $controller->setRoleService($roleService);
 
-        $entityService = $container->get('ServiceManager')->get(StepService::class);
-        $controller->setStepService($entityService);
+        $stepService = $container->get('ServiceManager')->get(StepService::class);
+        $controller->setStepService($stepService);
+
+        $stepMessageService = $container->get('ServiceManager')->get(StepMessageService::class);
+        $controller->setStepMessageService($stepMessageService);
 
         return $controller;
     }

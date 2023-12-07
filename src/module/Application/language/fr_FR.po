@@ -155,6 +155,72 @@ msgstr "Exception"
 msgid "Name"
 msgstr "Nom"
 
+msgid "Main"
+msgstr "Principal"
+
+msgid "faculty"
+msgstr "composante"
+
+msgid "Faculty"
+msgstr "Composante"
+
+msgid "COURSES"
+msgstr "COURS"
+
+msgid "Choices"
+msgstr "Choix"
+
+msgid "Minimum"
+msgstr "Minimum"
+
+msgid "Select"
+msgstr "Sélectionner"
+
+msgid "Save courses"
+msgstr "Sauvegarder mes cours"
+
+msgid "of main component"
+msgstr "de composante principale"
+
+msgid "Your registration has been returned to previous step with the following message"
+msgstr "Votre inscription est retourné à l'étape précédente avec le message suivant"
+
+msgid "While waiting for validation, simulate your course choices"
+msgstr "En attendant votre validation, vous pouvez simuler vos choix de cours"
+
+msgid "My main faculty"
+msgstr "Ma composante principale"
+
+msgid "Semester"
+msgstr "Semestre"
+
+msgid "Level"
+msgstr "Niveau"
+
+msgid "Language"
+msgstr "Langue"
+
+msgid "View"
+msgstr "Voir"
+
+msgid "Select"
+msgstr "Sélectionner"
+
+msgid "disabled"
+msgstr "désactiver"
+
 #: ../view/gestion/index.phtml:51
 msgid "Register"
 msgstr "S'enregistrer"
+
+msgid "homeText"
+msgstr "This application allows students to consult the catalogue of courses offered by the host university. It also makes it possible to facilitate administrative procedures and to define one's study contract (OLA) before the start of the academic year."
+
+msgid "homeTitle"
+msgstr "Système de gestion en ligne des étudiants en mobilité internationale"
+
+msgid "demoAccount"
+msgstr "vous ne pouvez pas vous connecter avec la fédération (formulaire de gauche), utiliser votre compte de demo ici"
+
+msgid "demoConnect"
+msgstr "Se connecter avec mon compte de demo"
