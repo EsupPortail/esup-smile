@@ -22,6 +22,8 @@ return [
                         ConfigurationController::ACTION_GET_DATA,
                         ConfigurationController::ACTION_CHANGE_ORDER,
                         ConfigurationController::ACTION_SAVE,
+                        ConfigurationController::ACTION_DELETE,
+                        ConfigurationController::ACTION_ADD,
                     ],
                     'privileges' => [
                         ConfigurationPrivileges::CONFIGURATION_INDEX,
@@ -71,6 +73,26 @@ return [
                             'defaults' => [
                                 'controller' => ConfigurationController::class,
                                 'action' => ConfigurationController::ACTION_SAVE
+                            ]
+                        ]
+                    ],
+                    'delete' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/delete',
+                            'defaults' => [
+                                'controller' => ConfigurationController::class,
+                                'action' => ConfigurationController::ACTION_DELETE
+                            ]
+                        ]
+                    ],
+                    'add' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/add',
+                            'defaults' => [
+                                'controller' => ConfigurationController::class,
+                                'action' => ConfigurationController::ACTION_ADD
                             ]
                         ]
                     ]

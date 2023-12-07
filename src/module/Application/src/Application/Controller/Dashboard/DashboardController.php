@@ -38,6 +38,7 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Ramsey\Uuid\Uuid;
 use RuntimeException;
+use UnicaenMail\Service\Mail\MailServiceAwareTrait;
 use UnicaenParametre\Service\Parametre\ParametreServiceAwareTrait;
 use UnicaenPdf\Exporter\PdfExporter;
 use UnicaenRenderer\Service\Rendu\RenduServiceAwareTrait;
@@ -61,6 +62,7 @@ class DashboardController extends AbstractActionController
     use RenduServiceAwareTrait;
     use ParametreServiceAwareTrait;
     use MessageServiceAwareTrait;
+    use MailServiceAwareTrait;
 
     /** ACTION */
     const ACTION_INDEX = "index";
@@ -193,6 +195,16 @@ class DashboardController extends AbstractActionController
             $inscription->setStatus(Inscription::STATUS_ABANDON[0]);
             $inscription->setStatusLibelle(Inscription::STATUS_ABANDON[1]);
             $this->inscriptionService->update($inscription);
+
+            $rendu = $this->getRenduService()->generateRenduByTemplateCode("Gestionnaire_abandon", [
+                'inscription' => $inscription,
+                'user' => $user,
+                'etablissement' => $inscription->getEtablissement(),
+                'step' => $inscription->getStep()
+            ]);
+
+            $mail = $this->getMailService()->sendMail('anthony.gautreau@unicaen.fr', $rendu->getSujet(), $rendu->getCorps());
+            $this->getMailService()->update($mail);
         }
         return $this->redirect()->toRoute('dashboard');
     }
@@ -297,7 +309,7 @@ class DashboardController extends AbstractActionController
                         'role' => $this->userService->getConnectedRole(),
                         'ratioAlloc' => $ratioAlloc,
                         'minAlloc' => $minAlloc,
-                        'maxAlloc' => $maxAlloc
+                        'maxAlloc' => $maxAlloc,
                     ]
                 );
             }

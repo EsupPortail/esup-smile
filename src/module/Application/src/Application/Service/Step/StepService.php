@@ -41,19 +41,29 @@ class StepService extends CommonEntityService
     public function getNextStep(Step $step): ?Step {
         $order = $step->getOrder();
         $nextOrder = $order+1;
-        $nextStep = $this->findOneBy(['order' => $nextOrder]);
-        return $nextStep;
+        return $this->findOneBy(['order' => $nextOrder]);
     }
 
-    public function getPreviousStep(Step $step): Step {
+    public function getPreviousStep(Step $step): ?Step {
         $order = $step->getOrder();
-        $nextOrder = $order-1;
-        $nextStep = $this->findOneBy(['order' => $nextOrder]);
-        return $nextStep;
+        $previousOrder = $order-1;
+        return $this->findOneBy(['order' => $previousOrder]);
+    }
+
+    public function getMaxOrder(): int {
+        $maxOrder = $this->findOneBy([], ['order' => 'DESC']);
+        return $maxOrder->getOrder();
     }
 
     public function findAllOrdered(): array {
         return $this->findAllBy(array(), array('order' => 'ASC'));
+    }
+
+    public function findAllOrderedByValidator(User $user): array {
+        return $this->findAllBy([
+            'role' => $user->getRoles()->toArray()
+        ],
+            array('order' => 'ASC'));
     }
 
     public function validateStep(Inscription $inscription, User $user, string $msg, bool $isValid): Inscription {
@@ -75,7 +85,8 @@ class StepService extends CommonEntityService
             $this->getEntityManager()->persist($inscription);
             $this->getEntityManager()->persist($stepMsg);
             $this->getEntityManager()->flush();
-            $this->mailStudent($inscription, $user, $etablissement);
+            $this->mailStep($stepMsg);
+//            $this->mailStudent($inscription, $user, $etablissement);
         }
 
         return $inscription;
@@ -103,13 +114,60 @@ class StepService extends CommonEntityService
 //        $this->getMailService()->sendMail('anthony.gautreau@unicaen.fr', 'SMILE - Etape validé', 'Bonjour, Votre dossier SMILE a avancé, cliquez ici pour voir votre dossier.');
     }
 
+    public function mailStep(Stepmessage $stepmessage) {
+        $template = $this->getTemplateFromStepMessage($stepmessage);
+        $inscription = $stepmessage->getInscription();
+        $user = $inscription->getUser();
+        $renduEtudiant = $this->getRenduService()->generateRenduByTemplateCode($template, [
+            'inscription' => $inscription,
+            'user' => $user,
+            'etablissement' => $inscription->getEtablissement(),
+            'step' => $stepmessage->getStep()
+        ]);
+        $renduGestionnaire = $this->getRenduService()->generateRenduByTemplateCode("Gestionnaire_etape_suivante", [
+            'inscription' => $inscription,
+            'user' => $user,
+            'etablissement' => $inscription->getEtablissement(),
+            'step' => $stepmessage->getStep()
+        ]);
+
+        $mail = $this->getMailService()->sendMail($user->getEmail(), $renduEtudiant->getSujet(), $renduEtudiant->getCorps());
+        $this->getMailService()->update($mail);
+        $mail = $this->getMailService()->sendMail($user->getEmail(), $renduGestionnaire->getSujet(), $renduGestionnaire->getCorps());
+        $this->getMailService()->update($mail);
+    }
+
+    public function getTemplateFromStepMessage(Stepmessage $stepmessage) {
+        $stepCode = $stepmessage->getStep()->getCode();
+        switch ($stepCode) {
+//            case "pre-registration":
+//                break;
+//            case "registered":
+//                break;
+//            case "course":
+//                break;
+//            case "approval_educational":
+//                break;
+//            case "approval_host":
+//                break;
+//            case "approval_base":
+//                break;
+//            case "approval_student":
+//                break;
+//            case "contract":
+//                break;
+            default:
+                return "Etudiant_etape_suivante";
+        }
+    }
+
     public function deniedStep(Inscription $inscription, User $user, string $msg, bool $isValid): Inscription {
         $step = $inscription->getStep();
         $previousStep = $this->getPreviousStep($step);
 
         if($this->isCoursesDone($inscription)) {
             $inscription->setStep($this->findOneBy(['code' => 'course']));
-            $this->clearCourses($inscription);
+//            $this->clearCourses($inscription);
             $this->clearContract($user);
         }else {
             $inscription->setStep($previousStep);
@@ -127,6 +185,16 @@ class StepService extends CommonEntityService
         $this->getEntityManager()->persist($inscription);
         $this->getEntityManager()->persist($stepMsg);
         $this->getEntityManager()->flush();
+
+        $rendu = $this->getRenduService()->generateRenduByTemplateCode("Etudiant_refus", [
+            'inscription' => $inscription,
+            'user' => $user,
+            'etablissement' => $inscription->getEtablissement(),
+            'step' => $step
+        ]);
+
+        $mail = $this->getMailService()->sendMail($user->getEmail(), $rendu->getSujet(), $rendu->getCorps());
+        $this->getMailService()->update($mail);
 
         return $inscription;
     }

@@ -106,7 +106,7 @@ return [
                                 'icon' => 'fas fa-angle-right',
                             ],
                             'egracon' => [
-                                'label'    => "Gestion de notes (egracon)",
+                                'label'    => "Gestion de notes",
                                 'route'    => 'egracon',
                                 'resource' => PrivilegeController::getResourceId(EgraconController::class, 'index') ,
                                 'order'    => POSITION,
@@ -272,41 +272,41 @@ return [
                                 'icon' => 'fas fa-angle-right',
                                 'order' => 6
                             ],
-                            'import_synchro' => [
-                                'label' => "Import/Synchro",
-                                'route' => 'home',
-                                'resource' => ImportPrivilege::getResourceId(ImportPrivilege::LISTER),
+                            'import_data' => [
+                                'label' => "Import de données",
+                                'route' => 'import',
+                                'resource' => Import\Provider\Privilege\ImportPrivileges::getResourceId(Import\Provider\Privilege\ImportPrivileges::IMPORT_INDEX),
                                 'order' => 90000,
-                                'dropdown-header' => true,
-                            ],
-                            'import' => [
-                                'label' => "Imports",
-                                'route' => 'unicaen-db-import/import',
-                                'resource' => ImportPrivilege::getResourceId(ImportPrivilege::LISTER),
-                                'order' => 90010,
                                 'icon' => 'fas fa-angle-right',
                             ],
-                            'synchro' => [
-                                'label' => "Synchros",
-                                'route' => 'unicaen-db-import/synchro',
-                                'resource' => SynchroPrivilege::getResourceId(SynchroPrivilege::LISTER),
-                                'order' => 90020,
-                                'icon' => 'fas fa-angle-right',
-                            ],
-                            'log' => [
-                                'label' => "Logs",
-                                'route' => 'unicaen-db-import/log',
-                                'resource' => LogPrivilege::getResourceId(LogPrivilege::LISTER),
-                                'order' => 90030,
-                                'icon' => 'fas fa-angle-right',
-                            ],
-                            'observ' => [
-                                'label' => "Observations",
-                                'route' => 'unicaen-db-import/observ',
-                                'resource' => ObservationPrivilege::getResourceId(ObservationPrivilege::LISTER),
-                                'order' => 90040,
-                                'icon' => 'fas fa-angle-right',
-                            ],
+//                            'import' => [
+//                                'label' => "Imports",
+//                                'route' => 'unicaen-db-import/import',
+//                                'resource' => ImportPrivilege::getResourceId(ImportPrivilege::LISTER),
+//                                'order' => 90010,
+//                                'icon' => 'fas fa-angle-right',
+//                            ],
+//                            'synchro' => [
+//                                'label' => "Synchros",
+//                                'route' => 'unicaen-db-import/synchro',
+//                                'resource' => SynchroPrivilege::getResourceId(SynchroPrivilege::LISTER),
+//                                'order' => 90020,
+//                                'icon' => 'fas fa-angle-right',
+//                            ],
+//                            'log' => [
+//                                'label' => "Logs",
+//                                'route' => 'unicaen-db-import/log',
+//                                'resource' => LogPrivilege::getResourceId(LogPrivilege::LISTER),
+//                                'order' => 90030,
+//                                'icon' => 'fas fa-angle-right',
+//                            ],
+//                            'observ' => [
+//                                'label' => "Observations",
+//                                'route' => 'unicaen-db-import/observ',
+//                                'resource' => ObservationPrivilege::getResourceId(ObservationPrivilege::LISTER),
+//                                'order' => 90040,
+//                                'icon' => 'fas fa-angle-right',
+//                            ],
                             'egracon' => [
                                 'visible'    => FALSE
                             ],

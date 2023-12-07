@@ -101,9 +101,37 @@ uasort($pagesNiv1, $sorterByOrder);
             <?php endif; ?>
         <?php endif ?>
     <?php endforeach ?>
-    <li class="nav-item">
-        <a class="nav-link" href="/language/fr">
-            <i class="fa-solid fa-flag"></i>
+    <?php
+        function getFlag(string $codeLangue): string
+        {
+            switch ($codeLangue) {
+                case 'fr_FR':
+                    return 'fr.svg';
+                case 'en_GB':
+                    return 'gb.svg';
+                default:
+                    return 'gb.svg';
+            }
+
+        }
+    ?>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle"
+           href="#"
+           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="/flags/<?= getFlag(Locale::getDefault()) ?>" width="32" height="32" alt="uk flag" />
         </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a class="dropdown-item <?= (Locale::getDefault() == 'en_GB') ? 'active' : '' ?>" href="/language/en_GB">
+                    <img src="/flags/gb.svg" width="32" height="32" alt="uk flag" />
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item <?= (Locale::getDefault() == 'fr_FR') ? 'active' : '' ?>" href="/language/fr_FR">
+                    <img src="/flags/fr.svg" width="32" height="32" alt="fr flag" />
+                </a>
+            </li>
+        </ul>
     </li>
 </ul>

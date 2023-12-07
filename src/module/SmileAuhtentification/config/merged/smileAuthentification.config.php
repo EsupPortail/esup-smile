@@ -2,7 +2,7 @@
 
 namespace SmileAuthentification;
 
-use Fichier\Controller\FichierController;
+use Fichier\Controller\ImportController;
 use Fichier\Service\Fichier\FichierService;
 use SmileAuthentification\Controller\SmileAuthentificationController;
 use SmileAuthentification\Controller\SmileAuthentificationControllerFactory;

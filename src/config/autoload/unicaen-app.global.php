@@ -6,6 +6,7 @@
  * enlevez l'extension ".dist" et adaptez son contenu à vos besoins.
  */
 
+use Laminas\Session\Config\SessionConfig;
 use Laminas\Session\Storage\SessionArrayStorage;
 use Laminas\Session\Validator\HttpUserAgent;
 use Laminas\Session\Validator\RemoteAddr;
@@ -76,6 +77,13 @@ return [
     // Session manager configuration.
     //
     'session_manager' => [
+        'config' => [
+            'class' => SessionConfig::class,
+            'options' => [
+                'name' => 'smile',
+            ],
+        ],
+        'storage' => SessionArrayStorage::class,
         // Session validators (used for security).
         'validators' => [
             RemoteAddr::class,
