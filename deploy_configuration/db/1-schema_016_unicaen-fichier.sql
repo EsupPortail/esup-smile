@@ -60,20 +60,20 @@ create table typedocument
     id      serial
         constraint typedocument_pk
             primary key,
-    libelle int not null
+    libelle varchar not null
 );
 
 CREATE TABLE IF NOT EXISTS mobilite_typedocument_linker (
-                                                            mobilite_id integer not null
-                                                                constraint fk_mobilite_typedocument_linker_mobilite
-                                                                    references mobilite
-                                                                    on delete cascade
-                                                                    deferrable,
-                                                            typedocument_id integer not null
-                                                                constraint fk_mobilite_typedocument_linker_document
-                                                                    references typedocument
-                                                                    on delete cascade
-                                                                    deferrable,
-                                                            constraint pk_mobilite_typedocument_linker
-                                                                primary key (mobilite_id, typedocument_id)
+         mobilite_id integer not null
+             constraint fk_mobilite_typedocument_linker_mobilite
+                 references mobilite
+                 on delete cascade
+                 deferrable,
+         typedocument_id integer not null
+             constraint fk_mobilite_typedocument_linker_document
+                 references typedocument
+                 on delete cascade
+                 deferrable,
+         constraint pk_mobilite_typedocument_linker
+             primary key (mobilite_id, typedocument_id)
 );

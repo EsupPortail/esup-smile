@@ -216,99 +216,101 @@ $myComponentGroupes = $this->myComponentGroupes;
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="form-group">
-                            <label for="firstname">Prénom</label>
-                            <input required type="text" id="firstname" class="form-control" name="firstname"/>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="form-group">
-                            <label for="lastname">Nom*</label>
-                            <input required type="text" id="lastname" class="form-control" name="lastname"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="form-group">
-                            <label for="email">Email*</label>
-                            <input required type="email" id="email" class="form-control" name="email"/>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="form-group">
-                            <label for="birthdate">Date de naissance</label>
-                            <input type="text" id="birthdate" class="form-control" name="birthdate"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="form-group">
-                            <label for="birthdate">ESI</label>
-                            <input type="text" id="birthdate" class="form-control" name="birthdate"/>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="form-group">
-                            <label for="city">Ville</label>
-                            <input type="text" id="city" class="form-control" name="city"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="form-group">
-                            <label for="postcode">Code Postal</label>
-                            <input type="text" id="postcode" class="form-control" name="postcode"/>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="form-group">
-                            <label for="street">Rue</label>
-                            <input type="text" id="street" class="form-control" name="street"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="form-group">
-                            <label for="numstreet">N°</label>
-                            <input type="text" id="numstreet" class="form-control" name="numstreet"/>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="form-group">
-                            <label for="emailRef">Email référent</label>
-                            <input type="text" id="emailRef" class="form-control" name="emailRef"/>
-                        </div>
-                    </div>
-<!--                    <div class="col-auto">-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="hei">Etablissement</label>-->
-<!--                            <select name="hei" id="hei">-->
-<!---->
-<!--                            </select>-->
-<!--                        </div>-->
-<!--                    </div>-->
-                </div>
-                <div class="row mt-2">
-                    <div class="col">
-                        <?php
-                        /**
-                         * @see \Application\Controller\Gestion\GestionController::addStudentAction()
-                         */
-                        ?>
-                        <form method="POST" action="/gestion/addStudent">
-                            <div class="form-control">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Ajouter</button>
+                <form method="POST" action="/gestion/addStudent">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="form-group">
+                                <label for="firstname">Prénom*</label>
+                                <input required type="text" id="firstname" class="form-control" name="firstname"/>
                             </div>
-                        </form>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-group">
+                                <label for="lastname">Nom*</label>
+                                <input required type="text" id="lastname" class="form-control" name="lastname"/>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="form-group">
+                                <label for="email">Email*</label>
+                                <input required type="email" id="email" class="form-control" name="email"/>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-group">
+                                <label for="birthdate">Date de naissance</label>
+                                <input type="date" id="birthdate" class="form-control" name="birthdate"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="form-group">
+                                <label for="esi">ESI</label>
+                                <input type="text" id="esi" class="form-control" name="esi"/>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-group">
+                                <label for="city">Ville</label>
+                                <input type="text" id="city" class="form-control" name="city"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="form-group">
+                                <label for="postcode">Code Postal</label>
+                                <input type="text" id="postcode" class="form-control" name="postcode"/>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-group">
+                                <label for="street">Rue</label>
+                                <input type="text" id="street" class="form-control" name="street"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="form-group">
+                                <label for="numstreet">N°</label>
+                                <input type="text" id="numstreet" class="form-control" name="numstreet"/>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-group">
+                                <label for="emailRef">Email référent*</label>
+                                <input required type="email" id="emailRef" class="form-control" name="emailRef"/>
+                            </div>
+                        </div>
+    <!--                    <div class="col-auto">-->
+    <!--                        <div class="form-group">-->
+    <!--                            <label for="hei">Etablissement</label>-->
+    <!--                            <select name="hei" id="hei">-->
+    <!---->
+    <!--                            </select>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <?php
+                            /**
+                             * @see \Application\Controller\Gestion\GestionController::addStudentAction()
+                             */
+                            ?>
+
+                                <div class="form-control">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                                </div>
+
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
             </div>

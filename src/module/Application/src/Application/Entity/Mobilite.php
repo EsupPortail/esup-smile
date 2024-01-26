@@ -92,8 +92,9 @@ class Mobilite
     {
         $array = [];
         if($this->getTypedocuments()) {
+            /** @var Typedocument $td */
             foreach($this->getTypedocuments() as $td) {
-                $array[] = $td->toArray();
+                $array[] = $td->getId();
             }
         }
         return [

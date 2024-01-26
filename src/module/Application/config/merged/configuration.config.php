@@ -1,6 +1,8 @@
 <?php
 
 
+use Application\Application\Service\Calendar\CalendarService;
+use Application\Application\Service\Calendar\CalendarServiceFactory;
 use Application\Application\View\Helper\Parametre\Factory\ParametreViewHelperFactory;
 use Application\Application\View\Helper\Parametre\ParametreViewHelper;
 use Application\Controller\Configuration\ConfigurationController;
@@ -21,6 +23,9 @@ return [
                     'action' => [
                         ConfigurationController::ACTION_INDEX,
                         ConfigurationController::ACTION_CALENDAR,
+                        ConfigurationController::ACTION_CALENDAR_UPDATE,
+                        ConfigurationController::ACTION_CALENDAR_NEW,
+                        ConfigurationController::ACTION_CALENDAR_DELETE,
                         ConfigurationController::ACTION_GET_DATA,
                         ConfigurationController::ACTION_CHANGE_ORDER,
                         ConfigurationController::ACTION_SAVE,
@@ -195,6 +200,36 @@ return [
                                 'action' => ConfigurationController::ACTION_CALENDAR
                             ]
                         ]
+                    ],
+                    'calendarUpdate' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/calendarUpdate',
+                            'defaults' => [
+                                'controller' => ConfigurationController::class,
+                                'action' => ConfigurationController::ACTION_CALENDAR_UPDATE
+                            ]
+                        ]
+                    ],
+                    'calendarDelete' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/calendarDelete',
+                            'defaults' => [
+                                'controller' => ConfigurationController::class,
+                                'action' => ConfigurationController::ACTION_CALENDAR_DELETE
+                            ]
+                        ]
+                    ],
+                    'calendarNew' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/calendarNew',
+                            'defaults' => [
+                                'controller' => ConfigurationController::class,
+                                'action' => ConfigurationController::ACTION_CALENDAR_NEW
+                            ]
+                        ]
                     ]
                 ]
             ]
@@ -209,6 +244,7 @@ return [
 
     'service_manager' => [
         'factories' => [
+            CalendarService::class => CalendarServiceFactory::class,
         ],
     ],
 

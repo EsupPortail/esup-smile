@@ -3,6 +3,7 @@
 namespace Application\Controller\Dashboard\Factory;
 
 
+use Application\Application\Service\Calendar\CalendarService;
 use Application\Application\Service\Composante\ComposanteService;
 use Application\Application\Service\Cours\CoursService;
 use Application\Application\Service\Formation\FormationService;
@@ -81,6 +82,9 @@ class DashboardControllerFactory implements FactoryInterface
 
         $mailService = $container->get('ServiceManager')->get(MailService::class);
         $controller->setMailService($mailService);
+
+        $calendarService = $container->get('ServiceManager')->get(CalendarService::class);
+        $controller->setCalendarService($calendarService);
 
 
 //        $container->get('')

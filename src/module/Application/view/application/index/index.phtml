@@ -1,15 +1,18 @@
 <?php
 
 use Application\Application\View\Renderer\PhpRenderer;
+use Application\Entity\Period;
+
 /**
  * @see \Application\Controller\IndexController::indexAction()
  * @var PhpRenderer $this
  * @var \UnicaenUtilisateur\Entity\Db\Role $role
+ * @var Period $period
  */
 
 $role = $this->role;
 $isShib = $this->isShib;
-
+$period = $this->period;
 ?>
 
 
@@ -19,13 +22,20 @@ $isShib = $this->isShib;
 		<div class="col px-5">
 			<h1 class="fw-bold" style="padding-left:15px;border-left: 20px solid var(--smile-main-color)"><?= $this->translate('SMILE') ?></h1>
 			<p class="text-uppercase fs-3"><?= $this->translate("homeTitle", null, 'en_GB')?></p>
-			<p>
-            	<?= $this->translate("homeTitle") ?>
-			</p>
+            <?php
+            if($this->renduAccueil) {
+                echo $this->renduAccueil->getCorps();
+            }else {
+                echo '<i>Template Accueil not found</i>';
+            }
+            ?>
         </div>
         <div class="smile-home-heroes"></div>
     </div>
     <hr class="my-4">
+    <?=
+    $this->partial('partials/registration.phtml', ['period' => $period])
+    ?>
 			<div class="row my-4" style="padding-left:2rem;">
 
 				<?php if (!$this->identity()): ?>

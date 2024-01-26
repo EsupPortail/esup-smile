@@ -3,6 +3,7 @@
 namespace Application\Controller;
 
 
+use Application\Application\Service\Calendar\CalendarService;
 use Application\Controller\Dashboard\DashboardController;
 use Application\Controller\IndexController;
 use Application\Service\Dashboard\DashboardService;
@@ -13,6 +14,7 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 use UnicaenAuthentification\Service\ShibService;
 use UnicaenParametre\Service\Parametre\ParametreService;
+use UnicaenRenderer\Service\Rendu\RenduService;
 use UnicaenUtilisateur\Service\User\UserService;
 
 class IndexControllerFactory implements FactoryInterface
@@ -39,8 +41,14 @@ class IndexControllerFactory implements FactoryInterface
         $authService = $container->get('ServiceManager')->get(AuthenticationService::class);
         $controller->setAuthenticationService($authService);
 
+        $calendarService = $container->get('ServiceManager')->get(CalendarService::class);
+        $controller->setCalendarService($calendarService);
+
         $languageService = $container->get('ServiceManager')->get(LangueService::class);
         $controller->setLangueService($languageService);
+
+        $renduService = $container->get('ServiceManager')->get(RenduService::class);
+        $controller->setRenduService($renduService);
 
         return $controller;
     }

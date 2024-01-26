@@ -219,9 +219,10 @@ echo $this->form()->openTag($form->prepare());
 
         let mobilites = <?= $this->mobilitesJson; ?>;
         let files = <?= $this->files; ?>;
+        let typeDocuments = <?= $this->typedocumentsJson; ?>;
         let radioMobilites = document.querySelectorAll('.inputRadioMobilite');
         let tbodyFiles = document.querySelector('#tbodyFiles');
-
+        console.log(typeDocuments)
         radioMobilites.forEach((rm) => {
             rm.addEventListener('change',changeRadio)
             if(rm.checked) {
@@ -236,8 +237,9 @@ echo $this->form()->openTag($form->prepare());
                 if(m.id === parseInt(el.dataset['id'])){
                     m.typeDocuments.forEach((td) => {
                         let existFile = null
+                        let typeD = typeDocuments.find((t) => t.id === td)
                         files.forEach((f) => {
-                            if(f.tdId === td.id) {
+                            if(f.tdId === typeD.id) {
                                 existFile = f
                             }
                         })
@@ -245,7 +247,7 @@ echo $this->form()->openTag($form->prepare());
                         let tdName = document.createElement('td')
                         let tdFile = document.createElement('td')
                         let inputFile = document.createElement('input')
-                        inputFile.name = "file-"+td.id
+                        inputFile.name = "file-"+typeD.id
                         inputFile.type = "file"
                         if(existFile) {
                             let spanExistFile = document.createElement('span')
@@ -253,7 +255,7 @@ echo $this->form()->openTag($form->prepare());
                             tdFile.appendChild(spanExistFile)
                         }
                         tdFile.appendChild(inputFile)
-                        tdName.innerHTML = td.libelle
+                        tdName.innerHTML = typeD.libelle
                         tbodyFiles.appendChild(tr)
                         tr.appendChild(tdName)
                         tr.appendChild(tdFile)

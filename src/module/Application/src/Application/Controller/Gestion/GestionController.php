@@ -78,7 +78,7 @@ class GestionController extends AbstractActionController
 
         $year = $this->params('year') ?? 2023;
         $page = $this->params('page') ?? 1;
-        $elemByPage = $this->params('elemByPage') ?? 10;
+        $elemByPage = $this->params('elemByPage') ?? 50;
 
 //        $etudiants = $this->getEtudiants($year);
         $user = $this->getUserService()->getConnectedUser();
@@ -92,14 +92,7 @@ class GestionController extends AbstractActionController
 //        $inscriptions = $this->getInscriptionService()->findAllBy(
 //            ['year' => $year]
 //        );
-        $inscriptions = $this->getInscriptionService()->getEntityRepository()->findBy(
-            [
-                'year' => $year,
-            ],
-            ['step' => 'DESC'],
-            $elemByPage,
-            ($page - 1) * $elemByPage
-        );
+        $inscriptions = $this->getInscriptionService()->getByGestionnaire($user, $year, $page, $elemByPage);
 
         usort($inscriptions, function(Inscription $a, Inscription $b) {
             if ($a->getStep() == null || $b->getStep() == null) {
@@ -124,30 +117,55 @@ class GestionController extends AbstractActionController
         );
     }
 
-    public function addStudent()
+    public function addStudentAction()
     {
-        $request = $this->getRequest();
-        return 'Error: conflict with role';
-        if ($request->isPost()) {
-            $user = $this->getUserService()->getConnectedUser();
-            $inscriptionUuid = $request->getPost("data");
-            $inscription = $this->inscriptionService->findOneBy(
-                ['uuid' => $inscriptionUuid]
-            );
+        if ($this->getRequest()->isPost()) {
 
-            try {
-                $isValid = true;
-                $inscription = $this->stepService->validateStep(
-                    $inscription,
-                    $user,
-                    'Valid',
-                    true
-                );
-            } catch (\Exception $e) {
-                $isValid = false;
-                $msg = $e->getMessage();
-            }
+            $post = $this->getRequest()->getPost();
+
+            $firstname = $post['firstname'];
+            $lastname = $post['lastname'];
+            $email = $post['email'];
+            $birthdate = $post['birthdate'];
+            $esi = $post['esi'];
+            $city = $post['city'];
+            $postcode = $post['postcode'];
+            $street = $post['street'];
+            $numstreet = $post['numstreet'];
+            $emailRef = $post['emailRef'];
+
+            $nUser = new User();
+            $nUser->setEmail($email);
+            $nUser->setUsername($email);
+            $nUser->setDisplayName($firstname." ".$lastname);
+            $roleEtudiant = $this->getRoleService()->findByLibelle('Etudiant');
+            $nUser->addRole($roleEtudiant);
+
+            $nUser = $this->getUserService()->createLocal($nUser);
+            $inscription = new Inscription();
+            $inscription->setEmail($nUser->getEmail());
+            $inscription->setYear(intval(date("Y")));
+            $inscription->setStatus(1);
+            $inscription->setEsi($esi);
+            $inscription->setUser($nUser);
+            $inscription->setBirthdate(new DateTime($birthdate));
+            $inscription->setCity($city);
+            $inscription->setFirstname($firstname);
+            $inscription->setLastname($lastname);
+            $inscription->setMailreferent($emailRef);
+            $inscription->setNumstreet(intval($numstreet));
+            $inscription->setStreet($street);
+            $inscription->setPostalcode($postcode);
+
+            $inscription->setStep($this->getStepService()->getFirstStep());
+            $inscription->setStatus(Inscription::STATUS_INSCRIT[0]);
+            $inscription->setStatuslibelle(Inscription::STATUS_INSCRIT[1]);
+
+            $uuid = Uuid::uuid4();
+            $inscription->setUuid($uuid->toString());
+            $this->getInscriptionService()->add($inscription);
         }
+        return $this->redirect()->toRoute('gestion');
     }
 
     public function viewAction()

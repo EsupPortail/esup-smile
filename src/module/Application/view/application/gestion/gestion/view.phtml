@@ -180,8 +180,18 @@ $user = $this->user;
                 </div>
 
             </div>
-        <?php
-            endif;
-        ?>
+        <?php elseif ($_ENV['APPLICATION_ENV'] === 'development'): ?>
+                <form method="POST" action="<?= $this->url('gestion/denied') ?>">
+                    <div class="row">
+                        <div class="col-9">
+                            <input name="data" type="hidden" value="<?= $inscription->getUuid()?>"/>
+                            <textarea hidden class="form-control" name="msgDenied"  placeholder="Justify the rejection"></textarea>
+                        </div>
+                        <div class="col-3">
+                            <input type="submit" class="btn btn-danger right" value="[DEV] Denied"/>
+                        </div>
+                    </div>
+                </form>
+        <?php endif; ?>
     </div>
 </div>

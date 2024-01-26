@@ -85,16 +85,17 @@ class Typedocument
 
     public function toArray()
     {
-//        $mobiliteArray = [];
-//        if($this->mobilite) {
-//            foreach ($this->mobilite as $m) {
-//                $mobiliteArray[] = $m->toArray();
-//            }
-//        }
+        $mobiliteArray = [];
+        if($this->mobilite) {
+            foreach ($this->mobilite as $m) {
+                $mobiliteArray[] = $m->getId();
+            }
+        }
 
         return [
             'id' => $this->id,
-            'libelle' => $this->libelle
+            'libelle' => $this->libelle,
+            'mobilites' => $mobiliteArray
         ];
     }
 

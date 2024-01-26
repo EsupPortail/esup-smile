@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Controller\Configuration\Factory;
 
+use Application\Application\Service\Calendar\CalendarService;
 use Application\Application\Service\Composante\ComposanteService;
 use Application\Controller\Configuration\ConfigurationController;
 use Application\Service\Inscription\InscriptionService;
@@ -43,6 +44,9 @@ class ConfigurationControllerFactory implements FactoryInterface
 
         $composanteService = $container->get('ServiceManager')->get(ComposanteService::class);
         $controller->setComposanteService($composanteService);
+
+        $calendarService = $container->get('ServiceManager')->get(CalendarService::class);
+        $controller->setCalendarService($calendarService);
 
         $stepMessageService = $container->get('ServiceManager')->get(StepMessageService::class);
         $controller->setStepMessageService($stepMessageService);
