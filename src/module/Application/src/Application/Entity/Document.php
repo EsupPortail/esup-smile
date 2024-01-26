@@ -13,6 +13,8 @@ class Document {
 
     private ?User $user=null;
 
+    private ?Typedocument $typedocument=null;
+
     /**
      * @return int|null
      */
@@ -67,6 +69,25 @@ class Document {
     public function setUser(?User $user): Document
     {
         $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @return Typedocument|null
+     */
+    public function getTypedocument(): ?Typedocument
+    {
+        return $this->typedocument;
+    }
+
+    /**
+     * @param Typedocument|null $typedocument
+     *
+     * @return Document
+     */
+    public function setTypedocument(?Typedocument $typedocument): Document
+    {
+        $this->typedocument = $typedocument;
         return $this;
     }
 

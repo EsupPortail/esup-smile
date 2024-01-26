@@ -10,9 +10,13 @@ use Application\Application\Service\Etablissement\EtablissementServiceAwareTrait
 use Application\Application\Service\Inscription\InscriptionServiceAwareTrait;
 use Application\Application\Service\Mobilite\MobiliteServiceAwareTrait;
 use Application\Application\Service\Step\StepServiceAwareTrait;
+use Application\Entity\Document;
 use Application\Entity\Inscription;
 use Application\Entity\Mobilite;
+use Application\Service\Document\DocumentServiceAwareTrait;
 use Doctrine\ORM\EntityManager;
+use Fichier\Service\Fichier\FichierServiceAwareTrait;
+use Fichier\Service\Nature\NatureServiceAwareTrait;
 use Laminas\Db\Sql\Predicate\In;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -29,6 +33,8 @@ use UnicaenUtilisateur\Entity\Db\RoleInterface;
 use UnicaenUtilisateur\Entity\Db\User;
 use UnicaenUtilisateur\Entity\Db\UserInterface;
 use UnicaenUtilisateur\Service\User\UserServiceAwareTrait;
+use UnicaenVue\View\Model\AxiosModel;
+use UnicaenVue\View\Model\VueModel;
 use ZfcUser\Controller\Plugin\ZfcUserAuthentication;
 
 use function PHPUnit\Framework\isEmpty;
@@ -45,11 +51,16 @@ class InscriptionController extends AbstractActionController
     use StepServiceAwareTrait;
     use MobiliteServiceAwareTrait;
     use EtablissementServiceAwareTrait;
+    use DocumentServiceAwareTrait;
+    use FichierServiceAwareTrait;
+    use NatureServiceAwareTrait;
 
     /** ACTION */
     const ACTION_INDEX = "index";
     const ACTION_MOBILITE = "mobilite";
     const ACTION_INFORMATION = "information";
+    const ACTION_ETABLISSEMENT = "etablissements";
+    const ACTION_MOBILITES = "mobilites";
 
     private InscriptionForm $form;
     private InscriptionUserForm $formUser;
@@ -123,6 +134,32 @@ class InscriptionController extends AbstractActionController
         return ['form' => $this->form];
     }
 
+    public function informationOldAction() {
+        $vm = new VueModel(['defaultPrenom' => 'ttt', 'defaultNom' => 'tttt']);
+
+        // On lui donne un template, c'est-à-dire le chemin et le nom du composant à utiliser
+        // Le composant s'appelle MonTest se trouvera dans le fichier front/Exemple/MonTest.vue
+        // Notez qu'on utilise par convention une syntaxe kebab-case pour le template et CamelCase pour les répertoires, & noms de composants Vue.
+        $vm->setTemplate('inscription/information');
+
+        // On retourne le VueModel
+        return $vm;
+    }
+
+    public function etablissementsAction() {
+
+        $etablissements = $this->getEtablissementService()->findAll();
+
+        return new AxiosModel($etablissements);
+    }
+
+    public function mobilitesAction() {
+
+        $mobilites = $this->getMobiliteService()->findAll();
+
+        return new AxiosModel($mobilites);
+    }
+
     public function informationAction() {
         if (!$this->authenticationService->hasIdentity()) {
             return $this->redirect()->toRoute('');
@@ -133,10 +170,15 @@ class InscriptionController extends AbstractActionController
          */
         $inscription = $this->getInscriptionService()->findByUser($user);
 
+
+
         $this->form->bind($inscription);
         $this->formUser->bind($user);
         $stepMsg = $this->stepService->getLastStepMsg($inscription);
         $mobilite = $this->mobiliteService->findAllBy(['active' => true]);
+        $typeDocuments = $this->getDocumentService()->getTypeDocuments();
+        $mobilitesJson = json_encode($this->getMobiliteService()->getMobiliteTypeDocArray());
+        $files = json_encode($this->getDocumentService()->findAllByUserArray($user));
         $mobiliteSelected = $inscription->getMobilite();
         $listHei = $this->getEtablissementService()->findAll();
 
@@ -175,11 +217,15 @@ class InscriptionController extends AbstractActionController
                                       'stepMsg' => $stepMsg,
                                       'mobilite' => $mobilite,
                                       'mobiliteSelected' => $mobiliteSelected,
-                                      'listHei' => $listHei
+                                      'listHei' => $listHei,
+                                      'typedocuments' => $typeDocuments,
+                                      'mobilitesJson' => $mobilitesJson,
+                                      'files' => $files,
                 ]);
             }
 
             $this->getInscriptionService()->update($inscription);
+            $this->handleFileMobilite($this->getRequest()->getFiles()->toArray(), $user);
 
             $stepRegistration = $this->getStepService()->findOneBy(['code' => 'pre-registration']);
             $step = $inscription->getStep();
@@ -201,8 +247,29 @@ class InscriptionController extends AbstractActionController
                               'stepMsg' => $stepMsg,
                               'mobilite' => $mobilite,
                               'mobiliteSelected' => $mobiliteSelected,
-                              'listHei' => $listHei
+                              'listHei' => $listHei,
+                              'typedocuments' => $typeDocuments,
+                              'mobilitesJson' => $mobilitesJson,
+                              'files' => $files,
             ]);
+    }
+
+    public function handleFileMobilite($files, $user) {
+        foreach ($files as $key => $f) {
+            if($f["name"]) {
+                $idTd = explode('-', $key)[1];
+                $td = $this->getDocumentService()->getTypeDocumentById($idTd);
+                $n = $this->getNatureService()->getNatureByCode('doc');
+                $fichier = $this->getFichierService()->createFichierFromUpload($f, $n);
+
+                $this->getDocumentService()->removeDocumentWithTypeDocument($user, $td);
+                $document = new Document();
+                $document->setFichier($fichier);
+                $document->setUser($user);
+                $document->setTypedocument($td);
+                $this->getDocumentService()->create($document);
+            }
+        }
     }
 
     private function isFormValid($user) {

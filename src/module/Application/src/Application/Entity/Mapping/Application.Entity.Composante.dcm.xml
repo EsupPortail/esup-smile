@@ -48,9 +48,9 @@
     <field name="histoModification" type="datetime" column="histo_modification" nullable="true"/>
     <field name="histoDestruction" type="datetime" column="histo_destruction" nullable="true"/>
 
-    <many-to-one field="groupe" target-entity="Application\Entity\ComposanteGroupe" fetch="LAZY">
+    <many-to-one field="groupe" target-entity="Application\Entity\ComposanteGroupe" inversed-by="composantes" fetch="LAZY">
       <join-columns>
-        <join-column name="groupe_id" referenced-column-name="id"/>
+        <join-column name="groupe_id" referenced-column-name="id" on-delete="SET NULL"/>
       </join-columns>
     </many-to-one>
 

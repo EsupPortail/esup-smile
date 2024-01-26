@@ -45,9 +45,35 @@ create table document
         constraint contrat_pk
             primary key,
     user_id        int  not null,
-    fichier_id     varchar(13) not null
+    fichier_id     varchar(13) not null,
+    typedocument_id int null
 );
 create index document_user_id
     on document (user_id);
 create index document_fichier_id
     on document (fichier_id);
+create index document_typedocument_id
+    on document (typedocument_id);
+
+create table typedocument
+(
+    id      serial
+        constraint typedocument_pk
+            primary key,
+    libelle int not null
+);
+
+CREATE TABLE IF NOT EXISTS mobilite_typedocument_linker (
+         mobilite_id integer not null
+             constraint fk_mobilite_typedocument_linker_mobilite
+                 references mobilite
+                 on delete cascade
+                 deferrable,
+         typedocument_id integer not null
+             constraint fk_mobilite_typedocument_linker_document
+                 references typedocument
+                 on delete cascade
+                 deferrable,
+         constraint pk_mobilite_typedocument_linker
+             primary key (mobilite_id, typedocument_id)
+);

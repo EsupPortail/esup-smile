@@ -149,6 +149,8 @@ return [
                         FormationController::ACTION_SAVE_MOBILITE,
                         FormationController::ACTION_ACTIVE_ALLMOBILITY,
                         FormationController::ACTION_DESCRIPTIF,
+                        FormationController::ACTION_TEST,
+                        FormationController::ACTION_TEST_DATA,
                     ],
                     'privileges' => [
                         FormationPrivileges::FORMATION_MOBILITE
@@ -239,6 +241,28 @@ return [
                             'defaults' => [
                                 'controller' => FormationController::class,
                                 'action' => FormationController::ACTION_SAVE_MOBILITE,
+                            ],
+                        ],
+                        'may_terminate' => true,
+                    ],
+                    'test' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/test',
+                            'defaults' => [
+                                'controller' => FormationController::class,
+                                'action' => FormationController::ACTION_TEST,
+                            ],
+                        ],
+                        'may_terminate' => true,
+                    ],
+                    'test-data' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/test-data/:monId',
+                            'defaults' => [
+                                'controller' => FormationController::class,
+                                'action' => FormationController::ACTION_TEST_DATA,
                             ],
                         ],
                         'may_terminate' => true,

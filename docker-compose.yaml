@@ -20,15 +20,16 @@ services:
     entrypoint: ["/bin/sh", "-c"]
     command:
     - | 
-        composer install 
         php-fpm
     volumes:
       - ./src:/var/www/html/smile/
       - ./src/vendor:/var/www/html/smile/vendor
       - ./.env:/var/www/html/smile/.env
-      - ./deploy_configuration/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      #- ./deploy_configuration/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - ./deploy_configuration/php/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
       - ./deploy_configuration/php/90-dev.ini:/usr/local/etc/php/php.ini
+      - ./deploy_configuration/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      - ./deploy_configuration/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
     ports:
       - 9000:9000
     extra_hosts:
@@ -40,11 +41,15 @@ services:
       context: .
       dockerfile: DockerfileService
     working_dir: /var/www/html/smile/public
+    command: /run_nginx.sh
+    environment:
+      SMILE_INSTANCE_URL: localhost
+      SMILE_CORE_POD_NAME: smile-app
     networks:
       - smile-network
     volumes:
       - ./cache:/var/www/html/smile/cache
-      - ./deploy_configuration/nginx/default.conf:/etc/nginx/nginx.conf
+      - ./deploy_configuration/nginx/subst_and_run_nginx.sh:/run_nginx.sh
       - ./src:/var/www/html/smile
     ports:
       - 8080:80

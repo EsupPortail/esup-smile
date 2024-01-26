@@ -4,6 +4,7 @@ use Application\Application\View\Helper\Formation\FormationViewHelper;
 use Application\Application\View\Renderer\PhpRenderer;
 use Application\Controller\Formation\FormationController;
 use  Application\Entity\Composante;
+use Application\Entity\ComposanteGroupe;
 use  Application\Entity\Formation;
 use Application\Entity\Inscription;
 use Application\Entity\Step;
@@ -14,6 +15,7 @@ use UnicaenApp\Util;
  * @var PhpRenderer $this
  * @var Formation[] $formations
  * @var Composante[] $composantes
+ * @var ComposanteGroupe[] $groupeComposantes
  * @var Inscription $inscription
  */
 
@@ -50,7 +52,6 @@ $inscription = $this->inscription;
             <div class="row">
                 <div class="col">
                     <h3 class="titleBlue"><?= $this->translate('My main faculty') ?></h3>
-                    <!--            <label for="selectMainComposante"></label>-->
                     <select name="selectMainComposante" id="selectMainComposante" class='form-select'>
                         <option value=""><?= $this->translate('Select') ?>...</option>
                         <?php
@@ -136,10 +137,24 @@ $inscription = $this->inscription;
     </div>
     <div class="row mb-0 mt-4">
         <div class="col">
+<!--            <select class="form-select" name="selectSearchComposante" id="selectSearchComposante" aria-label="Composante">-->
+<!--                <option value="All" selected>All</option>-->
+<!--                --><?php //foreach($composantes as $composante): ?>
+<!--                    <option value="--><?php //= $composante->getCode() ?><!--">-->
+<!--                        --><?php
+//
+//                                echo $composante->getLibelle();
+//
+//                        ?>
+<!--                    </option>-->
+<!--                --><?php //endforeach; ?>
+<!--            </select>-->
             <select class="form-select" name="selectSearchComposante" id="selectSearchComposante" aria-label="Composante">
                 <option value="All" selected>All</option>
-                <?php foreach($composantes as $composante): ?>
-                    <option value="<?= $composante->getCode() ?>"><?= $composante->getLibelle() ?></option>
+                <?php foreach($this->groupeComposantes as $gc): ?>
+                    <option value="<?= $gc->getId() ?>">
+                        <?= $gc->getLibelle() ?>
+                    </option>
                 <?php endforeach; ?>
             </select>
         </div>

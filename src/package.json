@@ -1,0 +1,16 @@
+{
+  "name": "smile",
+  "version": "0.0.1",
+  "author": "Université de Caen Normandie",
+  "description": "Systeme de mobilite internationale",
+  "license": "ISC",
+  "private": true,
+  "scripts": {
+    "dev": "APP_ENV=development vite dev",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "unicaen-vue": "file:./vendor/unicaen/vue",
+    "vue": "^3.2.45"
+  }
+}

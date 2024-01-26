@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Controller\Gestion\Factory;
 
 
+use Application\Application\Service\Composante\ComposanteService;
 use Application\Controller\Gestion\GestionController;
 use Application\Entity\Step;
 use Application\Service\Dashboard\DashboardService;
@@ -47,6 +48,9 @@ class GestionControllerFactory implements FactoryInterface
 
         $entityService = $container->get('ServiceManager')->get(StepService::class);
         $controller->setStepService($entityService);
+
+        $composanteService = $container->get('ServiceManager')->get(ComposanteService::class);
+        $controller->setComposanteService($composanteService);
 
         $entityService = $container->get('ServiceManager')->get(FichierService::class);
         $controller->setFichierService($entityService);

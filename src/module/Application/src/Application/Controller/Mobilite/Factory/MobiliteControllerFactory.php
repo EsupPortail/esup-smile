@@ -7,6 +7,7 @@ use Application\Application\Service\Composante\ComposanteService;
 use Application\Application\Service\Cours\CoursService;
 use Application\Application\Service\Formation\FormationService;
 use Application\Controller\Mobilite\MobiliteController;
+use Application\Service\Document\DocumentService;
 use Application\Service\Inscription\InscriptionService;
 use Application\Service\Mobilite\MobiliteService;
 use Laminas\Authentication\AuthenticationService;
@@ -35,6 +36,9 @@ class MobiliteControllerFactory implements FactoryInterface
 
         $entityService = $container->get('ServiceManager')->get(FormationService::class);
         $controller->setFormationService($entityService);
+
+        $documentService = $container->get('ServiceManager')->get(DocumentService::class);
+        $controller->setDocumentService($documentService);
 
         $entityService = $container->get('ServiceManager')->get(CoursService::class);
         $controller->setCoursService($entityService);

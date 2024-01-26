@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS composante_groupe_role_utilisateur
     id BIGSERIAL PRIMARY KEY,
     composante_groupe_id BIGINT NOT NULL,
     utilisateur_id BIGINT NOT NULL,
-    role_id BIGINT NOT NULL,
+    role_id BIGINT,
     FOREIGN KEY (composante_groupe_id) REFERENCES composante_groupe (id) on delete cascade,
     FOREIGN KEY (utilisateur_id) REFERENCES unicaen_utilisateur_user (id) on delete cascade,
     FOREIGN KEY (role_id) REFERENCES unicaen_utilisateur_role (id) on delete cascade

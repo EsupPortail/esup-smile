@@ -28,6 +28,11 @@ class Mobilite
     private $cours;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $typedocuments;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -83,6 +88,22 @@ class Mobilite
         return $this->active;
     }
 
+    public function toArray()
+    {
+        $array = [];
+        if($this->getTypedocuments()) {
+            foreach($this->getTypedocuments() as $td) {
+                $array[] = $td->toArray();
+            }
+        }
+        return [
+            'id' => $this->id,
+            'libelle' => $this->libelle,
+            'active' => $this->active,
+            'typeDocuments' => $array
+        ];
+    }
+
     /**
      * Get id.
      *
@@ -127,5 +148,41 @@ class Mobilite
     public function getCours()
     {
         return $this->cours;
+    }
+
+    /**
+     * Add cours.
+     *
+     * @param \Application\Entity\TypeDocument $typedocument
+     *
+     * @return Mobilite
+     */
+    public function addTypeDocument(\Application\Entity\TypeDocument $typedocument)
+    {
+        $this->typedocuments[] = $typedocument;
+
+        return $this;
+    }
+
+    /**
+     * Remove cours.
+     *
+     * @param \Application\Entity\TypeDocument $typedocument
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeTypedocument(\Application\Entity\TypeDocument $typedocument)
+    {
+        return $this->typedocuments->removeElement($typedocument);
+    }
+
+    /**
+     * Get cours.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTypedocuments()
+    {
+        return $this->typedocuments;
     }
 }

@@ -7,10 +7,13 @@ namespace Application\Controller\Inscription\Factory;
 
 use Application\Controller\Inscription\InscriptionController;
 use Application\Service\Dashboard\DashboardService;
+use Application\Service\Document\DocumentService;
 use Application\Service\Etablissement\EtablissementService;
 use Application\Service\Inscription\InscriptionService;
 use Application\Service\Mobilite\MobiliteService;
 use Application\Service\Step\StepService;
+use Fichier\Service\Fichier\FichierService;
+use Fichier\Service\Nature\NatureService;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
@@ -48,8 +51,17 @@ class InscriptionControllerFactory implements FactoryInterface
         $stepService = $container->get('ServiceManager')->get(StepService::class);
         $controller->setStepService($stepService);
 
+        $documentService = $container->get('ServiceManager')->get(DocumentService::class);
+        $controller->setDocumentService($documentService);
+
         $mobiliteService = $container->get('ServiceManager')->get(MobiliteService::class);
         $controller->setMobiliteService($mobiliteService);
+
+        $fichierService = $container->get('ServiceManager')->get(FichierService::class);
+        $controller->setFichierService($fichierService);
+
+        $natureService = $container->get('ServiceManager')->get(NatureService::class);
+        $controller->setNatureService($natureService);
 
         $etablissementService = $container->get('ServiceManager')->get(EtablissementService::class);
         $controller->setEtablissementService($etablissementService);

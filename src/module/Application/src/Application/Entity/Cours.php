@@ -85,21 +85,6 @@ class Cours implements ResourceInterface,
     private $sourceCode;
 
     /**
-     * @var DateTime
-     */
-    protected $histoCreation;
-
-    /**
-     * @var DateTime|null
-     */
-    protected $histoModification;
-
-    /**
-     * @var DateTime|null
-     */
-    protected $histoDestruction;
-
-    /**
      * @var int
      */
     private $id;
@@ -118,21 +103,6 @@ class Cours implements ResourceInterface,
      * @var \UnicaenDbImport\Entity\Db\Source
      */
     protected $source;
-
-    /**
-     * @var User
-     */
-    protected $histoCreateur;
-
-    /**
-     * @var User
-     */
-    protected $histoModificateur;
-
-    /**
-     * @var User
-     */
-    protected $histoDestructeur;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -440,78 +410,6 @@ class Cours implements ResourceInterface,
     }
 
     /**
-     * Set histoCreation.
-     *
-     * @param \DateTime $histoCreation
-     *
-     * @return Cours
-     */
-    public function setHistoCreation($histoCreation)
-    {
-        $this->histoCreation = $histoCreation;
-
-        return $this;
-    }
-
-    /**
-     * Get histoCreation.
-     *
-     * @return DateTime
-     */
-    public function getHistoCreation()
-    {
-        return $this->histoCreation;
-    }
-
-    /**
-     * Set histoModification.
-     *
-     * @param DateTime|null $histoModification
-     *
-     * @return Cours
-     */
-    public function setHistoModification($histoModification = null)
-    {
-        $this->histoModification = $histoModification;
-
-        return $this;
-    }
-
-    /**
-     * Get histoModification.
-     *
-     * @return DateTime|null
-     */
-    public function getHistoModification()
-    {
-        return $this->histoModification;
-    }
-
-    /**
-     * Set histoDestruction.
-     *
-     * @param DateTime|null $histoDestruction
-     *
-     * @return Cours
-     */
-    public function setHistoDestruction($histoDestruction = null)
-    {
-        $this->histoDestruction = $histoDestruction;
-
-        return $this;
-    }
-
-    /**
-     * Get histoDestruction.
-     *
-     * @return DateTime|null
-     */
-    public function getHistoDestruction()
-    {
-        return $this->histoDestruction;
-    }
-
-    /**
      * Get id.
      *
      * @return int
@@ -592,74 +490,6 @@ class Cours implements ResourceInterface,
     }
 
     /**
-     * Set histoCreateur.
-     *
-     * @param Userinterface|null $histoCreateur
-     *
-     * @return Cours
-     */
-    public function setHistoCreateur(Userinterface $histoCreateur = null)
-    {
-        $this->histoCreateur = $histoCreateur;
-
-        return $this;
-    }
-
-    /**
-     * Get histoCreateur.
-     *
-     * @return User|null
-     */
-    public function getHistoCreateur()
-    {
-        return $this->histoCreateur;
-    }
-
-    /**
-     * Set histoModificateur.
-     *
-     * @param UserInterface|null $histoModificateur
-     *
-     * @return void
-     */
-    public function setHistoModificateur(UserInterface $histoModificateur = null): void
-    {
-        $this->histoModificateur = $histoModificateur;
-    }
-
-    /**
-     * Get histoModificateur.
-     *
-     * @return ?User
-     */
-    public function getHistoModificateur(): ?User
-    {
-        return $this->histoModificateur;
-    }
-
-    /**
-     * Set histoDestructeur.
-     *
-     * @param UserInterface|null $histoDestructeur
-     *
-     * @return void
-     */
-    public function setHistoDestructeur(UserInterface $histoDestructeur = null): void
-    {
-        $this->histoDestructeur = $histoDestructeur;
-    }
-
-    /**
-     * Get histoDestructeur.
-     *
-     * @return User|null
-     */
-    public function getHistoDestructeur()
-    {
-        return $this->histoDestructeur;
-    }
-
-    /**
      * Add inscription.
      *
      * @param \Application\Entity\Inscription $inscription
@@ -702,7 +532,7 @@ class Cours implements ResourceInterface,
      *
      * @return Cours
      */
-    public function addMobilite(\Application\Entity\Inscription $mobilite)
+    public function addMobilite(\Application\Entity\Mobilite $mobilite)
     {
         $this->mobilite[] = $mobilite;
 
@@ -745,61 +575,6 @@ class Cours implements ResourceInterface,
         }
         return false;
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function estArchivee(DateTime $dateObs = null): bool
-    {
-        // TODO: Implement estArchivee() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function archiver(
-        UserInterface $histoDestructeur,
-        DateTime $histoDestruction = null
-    ): HistoriqueAwareInterface {
-        // TODO: Implement archiver() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function restraurer(
-        UserInterface $histoDestructeur,
-        DateTime $histoDestruction = null
-    ): HistoriqueAwareInterface {
-        // TODO: Implement restraurer() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function estNonHistorise(DateTime $dateObs = null)
-    {
-        // TODO: Implement estNonHistorise() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function historiser(
-        UserInterface $histoDestructeur,
-        DateTime $histoDestruction = null
-    ) {
-        // TODO: Implement historiser() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function dehistoriser()
-    {
-        // TODO: Implement dehistoriser() method.
-    }
-
     /**
      * @inheritDoc
      */

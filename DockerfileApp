@@ -1,7 +1,7 @@
-FROM php:8.0-fpm-bullseye
+FROM php:8.2-fpm-bullseye
 
 
-ENV PHP_VERSION=8.0
+ENV PHP_VERSION=8.2
 
 RUN if [ -f ./deploy_configuration/.env_proxy ]; then \
     # Si le fichier source existe, copiez-le
@@ -34,6 +34,9 @@ RUN apt-get update -y
 RUN mkdir /var/www/html/smile
 WORKDIR /var/www/html/smile/
 COPY ./src /var/www/html/smile/
+
+# Préparation des variables d'environnement
+COPY ./.env_example /var/www/html/smile
 
 # Répertoires de travail de Doctrine
 RUN mkdir -p data/cache
@@ -88,14 +91,20 @@ RUN apt-get install -y libz-dev libmemcached-dev && \
 
 # XDebug from source for dev
 # Clonez le dépôt Xdebug depuis GitHub
-RUN git clone https://github.com/xdebug/xdebug.git /tmp/xdebug
+#RUN git clone https://github.com/xdebug/xdebug.git /tmp/xdebug
+#RUN docker-php-ext-install xdebug
+RUN apt-get install php${PHP_VERSION}-xdebug -y
+#RUN docker-php-ext-enable php-xdebug
 
 # Compilez et installez Xdebug
-RUN cd /tmp/xdebug && \
-    phpize && \
-    ./configure --enable-xdebug && \
-    make && \
-    make install
+#RUN cd /tmp/xdebug && \
+#    phpize && \
+#    ./configure --enable-xdebug && \
+#    make && \
+#    make install
+
+RUN rm /usr/local/etc/php-fpm.conf
+RUN rm /usr/local/etc/php-fpm.d/www.conf
 
 # Build smile-app
 # Install composer 
@@ -103,11 +112,11 @@ RUN curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
 RUN HASH=`curl -sS https://composer.github.io/installer.sig`
 RUN echo $HASH
 RUN php -r "if (hash_file('SHA384', '/tmp/composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer --version=2.2.22
 
 # Build Smile
 WORKDIR /var/www/html/smile/
-RUN composer install --no-dev --no-suggest --optimize-autoloader 
+RUN composer install --no-dev --no-suggest --optimize-autoloader
 RUN composer install
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -122,8 +131,8 @@ RUN rm -rf data/DoctrineORMModule/Proxy/*
 
 ENV HTTP_PROXY ""
 ENV HTTPS_PROXY ""
-RUN export http_proxy=""
-RUN export https_proxy=""
+ENV http_proxy ""
+ENV https_proxy ""
 RUN rm -f /etc/apt/apt.conf.d/05proxy
 
 RUN chown -R www-data:www-data /var/www/html/smile/

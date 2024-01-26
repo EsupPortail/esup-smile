@@ -3,9 +3,11 @@
 namespace Application\Controller\Configuration;
 
 
+use Application\Application\Service\Composante\ComposanteServiceAwareTrait;
 use Application\Application\Service\Inscription\InscriptionServiceAwareTrait;
 use Application\Application\Service\Step\StepMessageServiceAwareTrait;
 use Application\Application\Service\Step\StepServiceAwareTrait;
+use Application\Entity\ComposanteGroupe;
 use Application\Entity\Step;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
@@ -15,7 +17,10 @@ use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use UnicaenUtilisateur\Entity\Db\Role;
+use UnicaenUtilisateur\Entity\Db\User;
 use UnicaenUtilisateur\Service\User\UserServiceAwareTrait;
+use UnicaenVue\View\Model\AxiosModel;
+use UnicaenVue\View\Model\VueModel;
 
 class ConfigurationController extends AbstractActionController
 {
@@ -23,9 +28,11 @@ class ConfigurationController extends AbstractActionController
     use InscriptionServiceAwareTrait;
     use StepServiceAwareTrait;
     use StepMessageServiceAwareTrait;
+    use ComposanteServiceAwareTrait;
 
     /** ACTION */
     const ACTION_INDEX = "index";
+    const ACTION_CALENDAR = "calendar";
     const ACTION_GET_DATA = "get_data";
     const ACTION_CHANGE_ORDER_API = "change_order_api";
     const ACTION_CHANGE_ORDER = "change_order";
@@ -34,6 +41,14 @@ class ConfigurationController extends AbstractActionController
     const ACTION_DELETE = "delete";
 
     const ACTION_ADD = "add";
+    const ACTION_ADD_ATTRIBUTION = "add_attribution";
+    const ACTION_REMOVE_ATTRIBUTION = "remove_attribution";
+    const ACTION_ADD_COMPOSANTE_TO_GROUP = "add_composante_to_group";
+    const ACTION_REMOVE_COMPOSANTE_TO_GROUP = "remove_composante_to_group";
+    const ACTION_ADD_GROUP = "add_group";
+    const ACTION_DELETE_GROUP = "delete_group";
+    const ACTION_GET_DATA_COMPOSANTE_GROUP = "get_data_composante_group";
+    const ACTION_GESTIONNAIRE_COMPOSANTE = "gestionnaire_composante";
 
     private EntityManager $entityManager;
 
@@ -54,6 +69,212 @@ class ConfigurationController extends AbstractActionController
         );
     }
 
+    public function calendarAction() {
+
+        $vm = new VueModel(
+            [
+            ]
+        );
+        $vm->setTemplate('configuration/calendar');
+        return $vm;
+    }
+
+    public function gestionnaireComposanteAction () {
+        $composanteGroupes = $this->getComposanteService()->getComposanteGroupes();
+
+        $role = $this->getRoleService()->findByRoleId('gestionnaire');
+        $users = $this->getUserService()->findByRole($role);
+        $gestionnaires = [];
+        $composanteGroupesArray = [];
+        $composantes = $this->getComposanteService()->findAll();
+        $composantesArray = [];
+        foreach ($composantes as $c) {
+            $composantesArray[$c->getId()] = $c->toArray();
+        }
+
+        foreach ($users as $u) {
+            $gestionnaires[$u->getId()] = [
+                'id' => $u->getId(),
+                'displayName' => $u->getDisplayName(),
+                'email' => $u->getEmail(),
+                'username' => $u->getUsername(),
+                'composanteGroupes' => []
+            ];
+            foreach ($composanteGroupes as $cg) {
+                $composanteGroupesArray[$cg->getId()] = $cg->toArray();
+                $composanteGroupesArray[$cg->getId()]['composantes'] = [];
+                $users = $cg->getUsers();
+                if(!$users) {
+                    continue;
+                }
+                if ($users->contains($u)){
+                    $gestionnaires[$u->getId()]['composanteGroupe'][] = $cg;
+                }
+            }
+        }
+
+        $vm = new VueModel(
+            [
+                'gestionnaires' => $gestionnaires,
+                'composanteGroupesDefault' => $composanteGroupesArray,
+                'composantesDefault' => $composantesArray
+            ]
+        );
+        $vm->setTemplate('configuration/gestionnaire-composante');
+        return $vm;
+    }
+
+    public function addAttributionAction(): AxiosModel
+    {
+        if($this->getRequest()->isPost()) {
+            $jsonData = $this->getRequest()->getContent();
+            $data = json_decode($jsonData, true);
+            $user = $data['user'];
+            $user = $this->getUserService()->findByUsername($user['username']);
+            $cg = $data['cg'];
+            $cg = $this->getComposanteService()->getComposanteGroupe($cg['id']);
+            $cg->addUser($user);
+            $this->getComposanteService()->updateGroup($cg);
+            return new AxiosModel($data);
+        }
+        return new AxiosModel;
+    }
+
+    public function removeAttributionAction(): AxiosModel
+    {
+        if($this->getRequest()->isPost()) {
+            $jsonData = $this->getRequest()->getContent();
+            $data = json_decode($jsonData, true);
+            $user = $data['user'];
+            $user = $this->getUserService()->findByUsername($user['username']);
+            $cg = $data['cg'];
+            $cg = $this->getComposanteService()->getComposanteGroupe($cg['id']);
+            $cg->getUsers()->removeElement($user);
+            $this->getComposanteService()->updateGroup($cg);
+            return new AxiosModel($data);
+        }
+        return new AxiosModel;
+    }
+
+    public function addGroupAction(): AxiosModel
+    {
+        if($this->getRequest()->isPost()) {
+            $jsonData = $this->getRequest()->getContent();
+            $data = json_decode($jsonData, true);
+            $groupName = $data['name'];
+            $group = new ComposanteGroupe();
+            $group->setLibelle($groupName);
+            $this->getComposanteService()->addGroup($group);
+            return new AxiosModel();
+        }
+        return new AxiosModel;
+    }
+
+    public function deleteGroupAction(): AxiosModel
+    {
+        if($this->getRequest()->isDelete()) {
+            $id = $this->params()->fromRoute('id');
+            if($id) {
+                $this->getComposanteService()->deleteGroup($id);
+            }
+            return new AxiosModel();
+        }
+        return new AxiosModel;
+    }
+
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     */
+    public function addComposanteToGroupAction(): AxiosModel
+    {
+        if($this->getRequest()->isPost()) {
+            $jsonData = $this->getRequest()->getContent();
+            $data = json_decode($jsonData, true);
+            $composanteGroup = $data['composanteGroup'];
+            $composanteGroup = $this->getComposanteService()->getComposanteGroupe($composanteGroup['id']);
+            $composante = $data['composante'];
+            $composante = $this->getComposanteService()->find($composante['id']);
+
+            $composante->setGroupe($composanteGroup);
+            $test = $this->getComposanteService()->update($composante);
+            $cg = $this->getComposanteService()->getComposanteGroupe($data['composanteGroup']['id']);
+            return new AxiosModel();
+        }
+        return new AxiosModel;
+    }
+
+    public function removeComposanteToGroupAction(): AxiosModel
+    {
+        if($this->getRequest()->isPost()) {
+            $jsonData = $this->getRequest()->getContent();
+            $data = json_decode($jsonData, true);
+            $composanteGroup = $data['composanteGroup'];
+            $composanteGroup = $this->getComposanteService()->getComposanteGroupe($composanteGroup['id']);
+            $composante = $data['composante'];
+            $composante = $this->getComposanteService()->find($composante['id']);
+
+            $composante->setGroupe(null);
+            $test = $this->getComposanteService()->update($composante);
+            $cg = $this->getComposanteService()->getComposanteGroupe($data['composanteGroup']['id']);
+            return new AxiosModel();
+        }
+        return new AxiosModel;
+    }
+
+    public function getDataComposanteGroupAction(): AxiosModel
+    {
+        if($this->getRequest()->isGet()) {
+            $composanteGroupes = $this->getComposanteService()->getComposanteGroupes();
+
+            $role = $this->getRoleService()->findByRoleId('gestionnaire');
+            $users = $this->getUserService()->findByRole($role);
+            $gestionnaires = [];
+            $composanteGroupesArray = [];
+            $composantes = $this->getComposanteService()->findAll();
+            $composantesArray = [];
+            foreach ($composantes as $c) {
+                $composantesArray[$c->getId()] = $c->toArray();
+            }
+
+            foreach ($users as $u) {
+                $gestionnaires[$u->getId()] = [
+                    'id' => $u->getId(),
+                    'displayName' => $u->getDisplayName(),
+                    'email' => $u->getEmail(),
+                    'username' => $u->getUsername(),
+                    'composanteGroupes' => []
+                ];
+                foreach ($composanteGroupes as $cg) {
+                    $composanteGroupesArray[$cg->getId()] = $cg->toArray();
+//                    $composanteGroupesArray[$cg->getId()]['composantes'] = ;
+                    $users = $cg->getUsers();
+                    if(!$users) {
+                        continue;
+                    }
+                    if ($users->contains($u)){
+                        $gestionnaires[$u->getId()]['composanteGroupes'][] = $cg->toArray();
+                    }
+                }
+            }
+
+            return new AxiosModel(
+                [
+                    'gestionnaires' => $gestionnaires,
+                    'composanteGroupesDefault' => $composanteGroupesArray,
+                    'composantesDefault' => $composantesArray
+                ]
+            );
+        }
+        return new AxiosModel;
+    }
+
+//    public function etablissementsAction() {
+//
+//        $etablissements = $this->getEtablissementService()->findAll();
+//
+//        return new AxiosModel($etablissements);
+//    }
     /**
      * @throws OptimisticLockException
      * @throws ORMException

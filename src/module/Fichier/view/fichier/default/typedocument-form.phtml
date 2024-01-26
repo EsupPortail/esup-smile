@@ -1,0 +1,58 @@
+<?php
+
+/** @var \Application\Entity\Typedocument[] $typeDocuments */
+
+?>
+<form method="POST" action="<?= $this->url('dashboard/uploadFichier') ?>">
+<div class="row mb-2">
+    <div class="col">
+        <label for="fileToUpload">Fichier à téléverser :</label>
+        <input class="form-control" type="file" name="fileToUpload" id="fileToUpload" required>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col">
+        <label for="fileType">Type du fichier* :</label>
+        <select class="form-select" name="fileType" id="fileType">
+            <?php foreach ($typeDocuments as $td): ?>
+                <option value="<?= $td->getId() ?>"><?= $td->getLibelle() ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <button class="btn btn-primary"><i class="fa fa-save"></i>Téléverser le fichier</button>
+    </div>
+</div>
+</form>
+<script>
+    $(document).ready(function() {
+        // tinymce.remove();
+        tinymce.init({
+            selector: '.type2',
+            toolbar: 'newdocument undo redo | bold italic underline | bullist',
+            resize: true,
+            language: 'fr_FR',
+            plugins: 'lists',
+            statusbar: true,
+            browser_spellcheck : true,
+            branding: false,
+            menu: {},
+            body_id: 'description',
+            setup: function (editor) {
+                editor.on("focusout", function () {
+                    console.log(tinymce.get('description').getContent());
+                    $('textarea').val(tinymce.get('description').getContent());
+                });
+            }
+        });
+    });
+
+</script>
+
+<style>
+    .form-control {
+        height:auto;
+    }
+</style>

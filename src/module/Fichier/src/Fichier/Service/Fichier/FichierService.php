@@ -179,9 +179,9 @@ class FichierService {
             $typeFichier = $file['type'];
             $tailleFichier = $file['size'];
 
-            if (! is_uploaded_file($path)) {
-                throw new RuntimeException("Possible file upload attack: " . $path);
-            }
+//            if (! is_uploaded_file($path)) {
+//                throw new RuntimeException("Possible file upload attack: " . $path);
+//            }
 
             $uid = uniqid();
 
