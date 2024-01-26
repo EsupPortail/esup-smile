@@ -18,9 +18,10 @@ La [`liste des changements`](CHANGELOG.md) vous permettra de savoir :
 
 Une [`procédure d'installation`](INSTALL.md) est à votre disposition pour mettre en place une nouvelle instance de SMILE, que ce soit en test ou en production.
 
-La [`procédure de mise à jour`](UPDATE.md) vous indiquera comment mettre à niveau votre instance.
+La [`procédure de mise à jour`](UPDATE.md) vous indiquera comment mettre à niveau votre instance.  
 
-# Mode SAAS
+
+# Mode SAAS  
 
 Nous proposons l'application en mode SAAS hébergée chez nous.
 

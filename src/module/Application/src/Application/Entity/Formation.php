@@ -103,21 +103,6 @@ class Formation implements ResourceInterface,
     private $sourceCode;
 
     /**
-     * @var DateTime
-     */
-    protected $histoCreation;
-
-    /**
-     * @var DateTime|null
-     */
-    protected $histoModification;
-
-    /**
-     * @var DateTime|null
-     */
-    protected $histoDestruction;
-
-    /**
      * @var int
      */
     private $id;
@@ -146,21 +131,6 @@ class Formation implements ResourceInterface,
      * @var \UnicaenDbImport\Entity\Db\Source
      */
     protected $source;
-
-    /**
-     * @var User
-     */
-    protected $histoCreateur;
-
-    /**
-     * @var User
-     */
-    protected $histoModificateur;
-
-    /**
-     * @var User
-     */
-    protected $histoDestructeur;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -578,78 +548,6 @@ class Formation implements ResourceInterface,
     }
 
     /**
-     * Set histoCreation.
-     *
-     * @param DateTime $histoCreation
-     *
-     * @return Formation
-     */
-    public function setHistoCreation($histoCreation)
-    {
-        $this->histoCreation = $histoCreation;
-
-        return $this;
-    }
-
-    /**
-     * Get histoCreation.
-     *
-     * @return DateTime
-     */
-    public function getHistoCreation()
-    {
-        return $this->histoCreation;
-    }
-
-    /**
-     * Set histoModification.
-     *
-     * @param DateTime|null $histoModification
-     *
-     * @return Formation
-     */
-    public function setHistoModification($histoModification = null)
-    {
-        $this->histoModification = $histoModification;
-
-        return $this;
-    }
-
-    /**
-     * Get histoModification.
-     *
-     * @return DateTime|null
-     */
-    public function getHistoModification()
-    {
-        return $this->histoModification;
-    }
-
-    /**
-     * Set histoDestruction.
-     *
-     * @param DateTime|null $histoDestruction
-     *
-     * @return Formation
-     */
-    public function setHistoDestruction($histoDestruction = null)
-    {
-        $this->histoDestruction = $histoDestruction;
-
-        return $this;
-    }
-
-    /**
-     * Get histoDestruction.
-     *
-     * @return DateTime|null
-     */
-    public function getHistoDestruction()
-    {
-        return $this->histoDestruction;
-    }
-
-    /**
      * Get id.
      *
      * @return int|null
@@ -775,74 +673,6 @@ class Formation implements ResourceInterface,
     public function getSource(): ?Source
     {
         return $this->source;
-    }
-
-    /**
-     * Set histoCreateur.
-     *
-     * @param UserInterface|null $histoCreateur
-     *
-     * @return Formation
-     */
-    public function setHistoCreateur(UserInterface $histoCreateur = null)
-    {
-        $this->histoCreateur = $histoCreateur;
-
-        return $this;
-    }
-
-    /**
-     * Get histoCreateur.
-     *
-     * @return User
-     */
-    public function getHistoCreateur(): User
-    {
-        return $this->histoCreateur;
-    }
-
-    /**
-     * Set histoModificateur.
-     *
-     * @param UserInterface|null $histoModificateur
-     *
-     * @return void
-     */
-    public function setHistoModificateur(UserInterface $histoModificateur = null): void
-    {
-        $this->histoModificateur = $histoModificateur;
-    }
-
-    /**
-     * Get histoModificateur.
-     *
-     * @return ?User
-     */
-    public function getHistoModificateur(): ?User
-    {
-        return $this->histoModificateur;
-    }
-
-    /**
-     * Set histoDestructeur.
-     *
-     * @param UserInterface|null $histoDestructeur
-     *
-     * @return void
-     */
-    public function setHistoDestructeur(UserInterface $histoDestructeur = null): void
-    {
-        $this->histoDestructeur = $histoDestructeur;
-    }
-
-    /**
-     * Get histoDestructeur.
-     *
-     * @return User|null
-     */
-    public function getHistoDestructeur()
-    {
-        return $this->histoDestructeur;
     }
 
     /**

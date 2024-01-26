@@ -59,6 +59,13 @@ return [
                         'resource' => DashboardPrivileges::getResourceId(DashboardPrivileges::DASHBOARD_INDEX),
                         'order' => 0,
                     ],
+                    'gestionEtudiant' => [
+                        'label' => 'Students',
+                        'title' => 'Managing students steps',
+                        'route' => 'gestion',
+                        'resource' => GestionPrivileges::getResourceId(GestionPrivileges::GESTION_INDEX),
+                        'order' => 1,
+                    ],
                     'courses' => [
                         'label' => 'Courses',
                         'title' => 'Courses',
@@ -67,17 +74,17 @@ return [
                         'order' => 1,
                     ],
                     'gestion' => [
-                        'label' => 'Manager space',
-                        'title' => 'Gestion',
+                        'label' => 'Configuration',
+                        'title' => 'Configuration',
                         'route' => 'gestion',
                         'resource' => GestionPrivileges::getResourceId(GestionPrivileges::GESTION_INDEX),
                         'order' => 2,
                         'pages' => [
                             'processus' => [
-                                'label' => 'Students',
-                                'title' => 'Managing students steps',
-                                'route' => 'gestion',
-                                'resource' => GestionPrivileges::getResourceId(GestionPrivileges::GESTION_INDEX),
+                                'label' => 'Processus OLA',
+                                'title' => 'Configuration du processus de génération de OLA',
+                                'route' => 'Configuration',
+                                'resource' => ConfigurationPrivileges::getResourceId(ConfigurationPrivileges::CONFIGURATION_INDEX),
                                 'order' => 1,
                                 'icon' => 'fas fa-angle-right',
                             ],
@@ -89,20 +96,12 @@ return [
                                 'order' => 2,
                                 'icon' => 'fas fa-angle-right',
                             ],
-                            'formations' => [
-                                'label' => 'Les formations',
-                                'title' => 'Liste des offres de formations',
-                                'route' => 'formations',
-                                'resource' => FormationPrivileges::getResourceId(FormationPrivileges::FORMATION_INDEX),
+                            'calendrier' => [
+                                'label' => 'Calendar',
+                                'title' => 'Calendar',
+                                'route' => 'Configuration/calendar',
+                                'resource' => ConfigurationPrivileges::getResourceId(ConfigurationPrivileges::CONFIGURATION_INDEX),
                                 'order' => 3,
-                                'icon' => 'fas fa-angle-right',
-                            ],
-                            'composantes' => [
-                                'label' => 'Les composantes',
-                                'title' => 'Gestion des composantes',
-                                'route' => 'composantes',
-                                'resource' => FormationPrivileges::getResourceId(FormationPrivileges::COMPOSANTE_AFFICHER),
-                                'order' => 4,
                                 'icon' => 'fas fa-angle-right',
                             ],
                             'egracon' => [
@@ -221,30 +220,46 @@ return [
                                 'route' => 'parametre/index',
                                 //                            'resource' => PrivilegeController::getResourceId(CategorieController::class, 'index'),
                                 'resource' => ParametrecategoriePrivileges::getResourceId(ParametrecategoriePrivileges::PARAMETRECATEGORIE_INDEX),
-                                'order' => 7020,
+                                'order' => 1,
                                 'pages' => [],
                                 'icon' => 'fas fa-angle-right',
                             ],
-                            'processus' => [
-                                'label' => 'Processus OLA',
-                                'title' => 'Configuration du processus de génération de OLA',
-                                'route' => 'Configuration',
+                            'gestionnairecomposante' => [
+                                'label' => 'Gestionnaire/Composante',
+                                'title' => 'Configuration gestionnaire/composante',
+                                'route' => 'Configuration/gestionnairecomposante',
                                 'resource' => ConfigurationPrivileges::getResourceId(ConfigurationPrivileges::CONFIGURATION_INDEX),
-                                'order' => 1,
+                                'order' => 2,
+                                'icon' => 'fas fa-angle-right',
+                            ],
+                            'formations' => [
+                                'label' => 'Les formations',
+                                'title' => 'Liste des offres de formations',
+                                'route' => 'formations',
+                                'resource' => FormationPrivileges::getResourceId(FormationPrivileges::FORMATION_INDEX),
+                                'order' => 3,
+                                'icon' => 'fas fa-angle-right',
+                            ],
+                            'composantes' => [
+                                'label' => 'Les composantes',
+                                'title' => 'Gestion des composantes',
+                                'route' => 'composantes',
+                                'resource' => FormationPrivileges::getResourceId(FormationPrivileges::COMPOSANTE_AFFICHER),
+                                'order' => 4,
                                 'icon' => 'fas fa-angle-right',
                             ],
                             'contenu' => [
                                 'label' => 'Templates et macros',
                                 'route' => 'contenu/template',
                                 'resource' => PrivilegeController::getResourceId(IndexController::class, 'index'),
-                                'order'    => 2,
+                                'order'    => 5,
                                 'icon' => 'fas fa-angle-right',
                             ],
                             'mail' => [
                                 'label' => 'Mail',
                                 'route' => 'mail',
                                 'resource' => PrivilegeController::getResourceId(MailController::class, 'index'),
-                                'order'    => 3,
+                                'order'    => 6,
                                 'icon' => 'fas fa-angle-right',
                             ],
                             //Priviléges et utilisateurs
@@ -254,7 +269,7 @@ return [
                                 'route' => 'unicaen-utilisateur',
                                 'resource' => UtilisateurPrivileges::getResourceId(UtilisateurPrivileges::UTILISATEUR_AFFICHER),
                                 'icon' => 'fas fa-angle-right',
-                                'order' => 4
+                                'order' => 7
                             ],
                             'unicaen-role' => [
                                 'label' => 'Gérer les rôles',
@@ -262,7 +277,7 @@ return [
                                 'route' => 'unicaen-role',
                                 'resource' => RolePrivileges::getResourceId(RolePrivileges::ROLE_AFFICHER),
                                 'icon' => 'fas fa-angle-right',
-                                'order' => 5
+                                'order' => 8
                             ],
                             'unicaen-privilege' => [
                                 'label' => "Gérer les privilèges",
@@ -270,13 +285,13 @@ return [
                                 'route' => 'unicaen-privilege',
                                 'resource' => PrivilegePrivileges::getResourceId(PrivilegePrivileges::PRIVILEGE_VOIR),
                                 'icon' => 'fas fa-angle-right',
-                                'order' => 6
+                                'order' => 9
                             ],
                             'import_data' => [
                                 'label' => "Import de données",
                                 'route' => 'import',
                                 'resource' => Import\Provider\Privilege\ImportPrivileges::getResourceId(Import\Provider\Privilege\ImportPrivileges::IMPORT_INDEX),
-                                'order' => 90000,
+                                'order' => 10,
                                 'icon' => 'fas fa-angle-right',
                             ],
 //                            'import' => [

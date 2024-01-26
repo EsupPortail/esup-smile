@@ -35,6 +35,20 @@ class UploadForm extends Form {
                 'data-live-search'  => 'true',
             ],
         ]);
+        //type de document
+        $this->add([
+            'type' => Select::class,
+            'name' => 'nature',
+            'options' => [
+                'label' => "Type du fichier* :",
+                'value_options' => $this->getNatureService()->getNaturesAsOptions(),
+            ],
+            'attributes' => [
+                'id'                => 'nature',
+                'class'             => 'bootstrap-selectpicker show-tick',
+                'data-live-search'  => 'true',
+            ],
+        ]);
         //button
         $this->add([
             'type' => Button::class,

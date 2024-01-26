@@ -10,13 +10,17 @@
         <option name="fixed"/>
       </options>
     </field>
-    <one-to-many field="composantes" target-entity="Application\Entity\Composante" mapped-by="composante"/>
-<!--    <many-to-many field="roles" target-entity="UnicaenUtilisateur\Entity\Db\Role">-->
-<!--      <join-table name="composante_groupe_role_utilisateur">-->
-<!--        <join-columns>-->
-<!--          <join-column name="composante_groupe_id" referenced-column-name="id"/>-->
-<!--        </join-columns>-->
-<!--      </join-table>-->
-<!--    </many-to-many>-->
+    <one-to-many field="composantes" target-entity="Application\Entity\Composante" mapped-by="groupe"/>
+<!--    <one-to-many field="users" target-entity="UnicaenUtilisateur\Entity\Db\User" mapped-by="user"/>-->
+    <many-to-many field="users" target-entity="UnicaenUtilisateur\Entity\Db\User" inversed-by="composanteGroupe" fetch="LAZY">
+      <join-table name="composante_groupe_role_utilisateur">
+        <join-columns>
+          <join-column name="composante_groupe_id" referenced-column-name="id"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="utilisateur_id" referenced-column-name="ID"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
   </entity>
 </doctrine-mapping>

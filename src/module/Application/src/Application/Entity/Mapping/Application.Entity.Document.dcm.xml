@@ -13,5 +13,9 @@
         <one-to-one field="fichier" target-entity="Fichier\Entity\Db\Fichier">
             <join-column name="fichier_id" referenced-column-name="id" />
         </one-to-one>
+
+        <one-to-one field="typedocument" target-entity="Application\Entity\Typedocument">
+            <join-column name="typedocument_id" referenced-column-name="id" />
+        </one-to-one>
     </entity>
 </doctrine-mapping>

@@ -1,11 +1,27 @@
 <?php
 
 use Application\Entity\Document;
+use Application\Entity\Inscription;
 use UnicaenApp\Filter\BytesFormatter;
 
 /**
  * @var Document[] $documents
+ * @var Inscription $inscription
+ * @var \Application\Entity\Mobilite $mobilite
  */
+
+$mobilite = $inscription->getMobilite();
+$typeDocsToAdd = $mobilite->getTypedocuments();
+
+foreach ($documents as $doc) {
+    foreach ($typeDocsToAdd as $key => $td) {
+        if($doc->getTypedocument()) {
+            if($doc->getTypedocument()->getId() === $td->getId()) {
+                $typeDocsToAdd->remove($key);
+            }
+        }
+    }
+}
 ?>
 <table class="table">
     <thead>
@@ -25,8 +41,19 @@ use UnicaenApp\Filter\BytesFormatter;
 
     if($documents): ?>
         <?php foreach ($documents as $doc): ?>
+            <?php
+                if($doc->getFichier()->getNature()->getLibelle() === 'Documents') {
+                    if($doc->getTypedocument()) {
+                        $typeDoc = $doc->getTypedocument()->getLibelle();
+                    }else {
+                        $typeDoc = 'Documents';
+                    }
+                }else {
+                    $typeDoc = $doc->getFichier()->getNature()->getLibelle();
+                }
+            ?>
             <tr>
-                <td><?= $doc->getFichier()->getNature()->getLibelle() ?></td>
+                <td><?= $typeDoc ?></td>
                 <td><?= $doc->getFichier()->getNomOriginal() ?></td>
                 <td><?= (new BytesFormatter())->filter($doc->getFichier()->getTaille()) ?></td>
                 <td>
@@ -36,5 +63,15 @@ use UnicaenApp\Filter\BytesFormatter;
             </tr>
         <?php endforeach; ?>
     <?php endif; ?>
+    <?php foreach($typeDocsToAdd as $td): ?>
+        <tr>
+            <td><?= $td->getLibelle() ?></td>
+            <td>
+            </td>
+            <td></td>
+            <td>
+            </td>
+        </tr>
+    <?php endforeach; ?>
     </tbody>
 </table>

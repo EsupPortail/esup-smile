@@ -29,6 +29,8 @@ use Application\Entity\Source;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\Query\Expr\Join;
 use Exception;
 use Laminas\Http\Response;
 use Laminas\Http\Request;
@@ -37,6 +39,8 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use UnicaenDbImport\Entity\Db\Service\Source\SourceServiceAwareTrait;
 use UnicaenUtilisateur\Service\User\UserServiceAwareTrait;
+use UnicaenVue\View\Model\AxiosModel;
+use UnicaenVue\View\Model\VueModel;
 
 class FormationController extends AbstractEntityController
 {
@@ -61,6 +65,8 @@ class FormationController extends AbstractEntityController
     const ACTION_SAVE_MOBILITE = "saveMobilite";
     const ACTION_ACTIVE_ALLMOBILITY = "activeAllMobility";
     const ACTION_DESCRIPTIF = "descriptif";
+    const ACTION_TEST = "test";
+    const ACTION_TEST_DATA = "testData";
 
     use FormationAwareTrait;
     use ComposanteAwareTrait;
@@ -135,6 +141,112 @@ class FormationController extends AbstractEntityController
     {
         return 'application/formation/formation/fragment/actions-menu';
     }
+
+    // Action qui va charger le composant MonTest
+    // route exemple/test à ajouter à votre config
+    public function testAction()
+    {
+        $data = [
+            'monId' => 50,
+        ];
+
+        // On crée un VueModel et on lui transmet des données par défaut
+        $vm = new VueModel($data);
+
+        // On lui donne un template, c'est-à-dire le chemin et le nom du composant à utiliser
+        // Le composant s'appelle MonTest se trouvera dans le fichier front/Exemple/MonTest.vue
+        // Notez qu'on utilise par convention une syntaxe kebab-case pour le template et CamelCase pour les répertoires, & noms de composants Vue.
+        $vm->setTemplate('exemple/mon-test');
+
+        // On retourne le VueModel
+        return $vm;
+    }
+
+    // Action qui envoie des données au composant
+    // route exemple/test-data/:monId à ajouter à votre config
+    public function testDataAction(): AxiosModel
+    {
+        $monId = $this->params()->fromRoute('monId');
+
+//        $courses = $this->getCoursService()->getEntityRepository()->findBy([], [], 100);
+        $er = $this->getCoursService()->getEntityRepository();
+        $emC = $this->getCoursService()->getEntityManager();
+        $emM = $this->getMobiliteService()->getEntityManager();
+        $qb = $er->createQueryBuilder('c');
+//        $qb->setMaxResults(50000);
+//        $qb->select('c.codeElp, c.libelle, c.ects, c.langueEnseignement, c.s1, c.s2');
+//        $qb->addSelect('com.libelle as composanteLibelle, com.id as composanteId');
+//        $qb->setMaxResults(100);
+//        $qb->join('c.formation', 'f');
+//        $qb->join('f.composante', 'com');
+//        $qb->join('c.mobilite', 'm')
+//            ->where(
+//                $qb->expr()->in(
+//                    'm',
+//                    $emM->createQueryBuilder()
+//                    ->select('m2')
+//                    ->from('Application\Entity\Mobilite', 'm2')
+//                    ->join('Application\Entity\Cours',
+//                        'c2',
+//                            Expr\Join::WITH,
+//                        $qb->expr()->andX(
+//                            $qb->expr()->eq('c2.mobilite', 'm2')
+//                        )
+//                    )
+//                    ->getDQL()
+//                )
+//            );
+
+        $qb = $er->createQueryBuilder('c')
+            ->select('c. langueEnseignement, c.libelle', 'm.libelle AS mobilite_libelle', 'com.id AS composanteId', 'com.libelle AS composanteLibelle')
+            ->join('c.mobilite', 'm', Join::WITH)
+            ->join('c.formation', 'f', )
+            ->join('f.composante', 'com', );
+
+        $query = $qb->getQuery();
+
+        try {
+            $arrayRes["courses"] = $query->getArrayResult();
+        } catch (Exception $e) {
+            return new AxiosModel([
+                "error" => [
+                    "message" => $e->getMessage(),
+                    "DQL" => $query->getDQL()
+                    ]
+            ]);
+        }
+
+        $arrayRes["composantes"] = [];
+        foreach ($arrayRes["courses"] as $course) {
+            $arrayRes["composantes"][$course["composanteId"]] = [
+                "id" => $course["composanteId"],
+                "libelle" => $course["composanteLibelle"]
+            ];
+        }
+
+        $arrayRes["langues"] = [];
+        foreach ($arrayRes["courses"] as $course) {
+            $arrayRes["langues"][$course["langueEnseignement"]] = $course["langueEnseignement"];
+        }
+
+        $qb = $this->getMobiliteService()->getEntityRepository()->createQueryBuilder('m');
+        $qb->select('m');
+        $qb->where('m.active = true');
+        $query = $qb->getQuery();
+
+        try {
+            $arrayRes["mobilites"] = $query->getArrayResult();
+        } catch (Exception $e) {
+            $arrayRes = [$e->getMessage()];
+        }
+
+        // Petit msg d'info
+        $this->flashMessenger()->addSuccessMessage('Tout va bien!');
+
+        // Et on retourne un AxiosModel qui présente le tout au client
+        return new AxiosModel($arrayRes);
+    }
+
 
     public function mobiliteAction()
     {

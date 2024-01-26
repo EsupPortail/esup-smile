@@ -2,6 +2,7 @@
 
 namespace Application\Controller\Gestion;
 
+use Application\Application\Service\Composante\ComposanteServiceAwareTrait;
 use Application\Application\Service\Etablissement\EtablissementServiceAwareTrait;
 use Application\Application\Service\Inscription\InscriptionServiceAwareTrait;
 use Application\Application\Service\Step\StepServiceAwareTrait;
@@ -45,6 +46,7 @@ class GestionController extends AbstractActionController
     use MessageServiceAwareTrait;
     use EtablissementServiceAwareTrait;
     use SessionContainerTrait;
+    use ComposanteServiceAwareTrait;
 
     /** ACTION
      * @see GestionPrivileges
@@ -113,6 +115,7 @@ class GestionController extends AbstractActionController
 //                'etudiants' => $etudiants,
                 'inscriptions' => $inscriptions,
                 'user' => $this->getUserService()->getConnectedUser(),
+                'myComponentGroupes' => $this->getComposanteService()->getComposanteGroupesByUser($user),
 //                'inscriptions' => $inscriptionBind,
                 'steps' => $steps,
                 'year' => $year,

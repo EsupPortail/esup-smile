@@ -11,6 +11,8 @@ http {
     }
     include mime.types;
 
+    keepalive_requests 500;
+
     proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=cache_smile:100m;
     proxy_cache_key "$scheme$request_method$host$request_uri";
     proxy_cache_valid 200 302 10m;
@@ -30,8 +32,8 @@ http {
 
         error_log  /var/log/nginx/error.log;
         access_log /var/log/nginx/access.log;
-        
-        server_name localhost;
+       
+        server_name ${SMILE_INSTANCE_URL};
 
         root /var/www/html/smile/public;
         index           index.php;
@@ -46,7 +48,7 @@ http {
         location ~ \.php$ {
             try_files $uri =404;
             fastcgi_split_path_info ^(.+\.php)(/.+)$;
-            fastcgi_pass smile-app:9000;
+            fastcgi_pass ${SMILE_CORE_POD_NAME}:9000;
             fastcgi_read_timeout 300; 
             fastcgi_index index.php;
             include fastcgi_params;
@@ -54,37 +56,6 @@ http {
             fastcgi_param PATH_INFO $fastcgi_path_info;
             fastcgi_param   APPLICATION_ENV  development;
 
-        }
-
-        location /auth/shibboleth {
-            auth_request /shib-auth;
-            error_page 401 = @shib_auth;
-        }
-
-        location = @shib_auth {
-            internal;
-            proxy_set_header Host $host;
-            proxy_pass http://shibd;
-        }
-
-        location /Shibboleth.sso {
-            alias /etc/shibboleth/www;
-        }
-
-        location /shibboleth-sp {
-            alias /usr/share/shibboleth;
-        }
-
-        location /secure {
-            alias /var/www/html/secure;
-            auth_request /shib-secure;
-            error_page 401 = @shib_auth;
-        }
-
-        location = @shib-secure {
-            internal;
-            proxy_set_header Host $host;
-            proxy_pass http://shibd;
         }
 
         location ~ /\.ht {

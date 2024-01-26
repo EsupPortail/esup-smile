@@ -1,5 +1,3 @@
-composer i
-
 ENV_FILE=/var/www/html/smile/.env
 ENV_FILE_EXAMPLE=/var/www/html/smile/.env_example
 
@@ -10,4 +8,4 @@ ENV_FILE_EXAMPLE=/var/www/html/smile/.env_example
 cat $ENV_FILE_EXAMPLE | while read ligne ; do
   echo ${ligne}=$(eval "echo \$$ligne") >> $ENV_FILE
 done
-php-fpm
+/usr/local/bin/docker-php-entrypoint php-fpm

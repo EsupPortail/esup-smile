@@ -39,6 +39,8 @@ return [
                         InscriptionController::ACTION_INDEX,
                         InscriptionController::ACTION_MOBILITE,
                         InscriptionController::ACTION_INFORMATION,
+                        InscriptionController::ACTION_ETABLISSEMENT,
+                        InscriptionController::ACTION_MOBILITES,
                     ],
                     'privileges' => [
                         InscriptionPrivileges::INSCRIPTION_INDEX
@@ -78,6 +80,26 @@ return [
                             'defaults' => [
                                 'controller' => InscriptionController::class,
                                 'action' => InscriptionController::ACTION_INFORMATION
+                            ]
+                        ]
+                    ],
+                    'etablissements' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/etablissements',
+                            'defaults' => [
+                                'controller' => InscriptionController::class,
+                                'action' => InscriptionController::ACTION_ETABLISSEMENT
+                            ]
+                        ]
+                    ],
+                    'mobilites' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/mobilites',
+                            'defaults' => [
+                                'controller' => InscriptionController::class,
+                                'action' => InscriptionController::ACTION_MOBILITES
                             ]
                         ]
                     ]

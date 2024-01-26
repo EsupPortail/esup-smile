@@ -71,9 +71,9 @@ class Composante implements ResourceInterface,
     private $id;
 
     /**
-     * @var ComposanteGroupe
+     * @var ComposanteGroupe|null
      */
-    private ComposanteGroupe $groupe;
+    private ?ComposanteGroupe $groupe;
 
     /**
      * @var \Application\Entity\Source
@@ -139,8 +139,16 @@ class Composante implements ResourceInterface,
      *
      * @return string|null
      */
-    public function getLibelle()
+    public function getLibelle(): ?string
     {
+        return $this->libelle;
+    }
+
+    public function getGroupeLibelle(): ?string
+    {
+        if($this->getGroupe()) {
+            return $this->getGroupe()->getLibelle();
+        }
         return $this->libelle;
     }
 
@@ -166,6 +174,30 @@ class Composante implements ResourceInterface,
     public function getLibelleLong()
     {
         return $this->libelleLong;
+    }
+
+    /**
+     * Set acronyme.
+     *
+     * @param ComposanteGroupe|null $groupe
+     *
+     * @return Composante
+     */
+    public function setGroupe(ComposanteGroupe $groupe = null)
+    {
+        $this->groupe = $groupe;
+
+        return $this;
+    }
+
+    /**
+     * Get acronyme.
+     *
+     * @return ComposanteGroupe|null
+     */
+    public function getGroupe(): ?ComposanteGroupe
+    {
+        return $this->groupe;
     }
 
     /**
@@ -215,78 +247,6 @@ class Composante implements ResourceInterface,
     }
 
     /**
-     * Set histoCreation.
-     *
-     * @param \DateTime $histoCreation
-     *
-     * @return Composante
-     */
-    public function setHistoCreation($histoCreation)
-    {
-        $this->histoCreation = $histoCreation;
-
-        return $this;
-    }
-
-    /**
-     * Get histoCreation.
-     *
-     * @return \DateTime
-     */
-    public function getHistoCreation()
-    {
-        return $this->histoCreation;
-    }
-
-    /**
-     * Set histoModification.
-     *
-     * @param \DateTime|null $histoModification
-     *
-     * @return Composante
-     */
-    public function setHistoModification($histoModification = null)
-    {
-        $this->histoModification = $histoModification;
-
-        return $this;
-    }
-
-    /**
-     * Get histoModification.
-     *
-     * @return \DateTime|null
-     */
-    public function getHistoModification()
-    {
-        return $this->histoModification;
-    }
-
-    /**
-     * Set histoDestruction.
-     *
-     * @param \DateTime|null $histoDestruction
-     *
-     * @return Composante
-     */
-    public function setHistoDestruction($histoDestruction = null)
-    {
-        $this->histoDestruction = $histoDestruction;
-
-        return $this;
-    }
-
-    /**
-     * Get histoDestruction.
-     *
-     * @return \DateTime|null
-     */
-    public function getHistoDestruction()
-    {
-        return $this->histoDestruction;
-    }
-
-    /**
      * Get id.
      *
      * @return int
@@ -317,79 +277,6 @@ class Composante implements ResourceInterface,
     {
         return $this->source;
     }
-
-    /**
-     * Set histoCreateur.
-     *
-     * @param UserInterface|null $histoCreateur
-     *
-     * @return Composante
-     */
-    public function setHistoCreateur(UserInterface $histoCreateur = null)
-    {
-        $this->histoCreateur = $histoCreateur;
-
-        return $this;
-    }
-
-    /**
-     * Get histoCreateur.
-     *
-     * @return User|null
-     */
-    public function getHistoCreateur()
-    {
-        return $this->histoCreateur;
-    }
-
-    /**
-     * Set histoModificateur.
-     *
-     * @param UserInterface|null $histoModificateur
-     *
-     * @return Composante
-     */
-    public function setHistoModificateur(UserInterface $histoModificateur = null)
-    {
-        $this->histoModificateur = $histoModificateur;
-
-        return $this;
-    }
-
-    /**
-     * Get histoModificateur.
-     *
-     * @return UserInterface|null
-     */
-    public function getHistoModificateur()
-    {
-        return $this->histoModificateur;
-    }
-
-    /**
-     * Set histoDestructeur.
-     *
-     * @param UserInterface|null $histoDestructeur
-     *
-     * @return Composante
-     */
-    public function setHistoDestructeur(UserInterface $histoDestructeur = null)
-    {
-        $this->histoDestructeur = $histoDestructeur;
-
-        return $this;
-    }
-
-    /**
-     * Get histoDestructeur.
-     *
-     * @return UserInterface|null
-     */
-    public function getHistoDestructeur()
-    {
-        return $this->histoDestructeur;
-    }
-
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -447,4 +334,14 @@ class Composante implements ResourceInterface,
     {
         return self::RESOURCE_ID;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'libelle' => $this->libelle,
+            'code' => $this->getCode()
+        ];
+    }
+
 }

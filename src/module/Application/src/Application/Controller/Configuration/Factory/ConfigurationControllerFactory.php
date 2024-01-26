@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Controller\Configuration\Factory;
 
+use Application\Application\Service\Composante\ComposanteService;
 use Application\Controller\Configuration\ConfigurationController;
 use Application\Service\Inscription\InscriptionService;
 use Application\Service\Step\StepMessageService;
@@ -39,6 +40,9 @@ class ConfigurationControllerFactory implements FactoryInterface
 
         $stepService = $container->get('ServiceManager')->get(StepService::class);
         $controller->setStepService($stepService);
+
+        $composanteService = $container->get('ServiceManager')->get(ComposanteService::class);
+        $controller->setComposanteService($composanteService);
 
         $stepMessageService = $container->get('ServiceManager')->get(StepMessageService::class);
         $controller->setStepMessageService($stepMessageService);

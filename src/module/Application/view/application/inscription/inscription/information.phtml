@@ -7,6 +7,7 @@ use Application\Entity\Etablissement;
 use Application\Entity\Inscription;
 use Application\Entity\Mobilite;
 use Application\Entity\Stepmessage;
+use Application\Entity\Typedocument;
 
 /**
  * @var InscriptionForm $form
@@ -17,6 +18,7 @@ use Application\Entity\Stepmessage;
  * @var Mobilite $mobiliteSelected
  * @var Etablissement[] $listHei
  * @var Inscription $inscription
+ * @var Typedocument[] $typedocuments
  */
 
 $form = $this->form;
@@ -24,6 +26,7 @@ $formUser = $this->formUser;
 
 $stepMsg = $this->stepMsg;
 $mobilite = $this->mobilite;
+$typedocuments = $this->typedocuments;
 $mobiliteSelected = $this->mobiliteSelected;
 
 $fe = $this->formErrors();
@@ -59,6 +62,7 @@ endif;
 $fieldset = $form->getBaseFieldset();
 $fieldsetUser = $formUser->getBaseFieldset();
 $formUser->prepare();
+$form->setAttribute('enctype', "multipart/form-data");
 echo $this->form()->openTag($form->prepare());
 ?>
 <div class="row">
@@ -70,7 +74,7 @@ echo $this->form()->openTag($form->prepare());
                 <?php foreach($mobilite as $m): ?>
 
                     <div class="form-check radioMobilite">
-                        <input class="form-check-input" type="radio" name="mobiliteRadioChoice"
+                        <input class="form-check-input inputRadioMobilite" data-id="<?= $m->getId() ?>" type="radio" name="mobiliteRadioChoice"
                                id="mobilite<?= $m->getId() ?>"
                                value="<?= $m->getId() ?>"
                                <?php if($mobiliteSelected): ?>
@@ -83,6 +87,21 @@ echo $this->form()->openTag($form->prepare());
                     </div>
 
                 <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3 class="mb-3 mt-3 titleBlue">3. Files to upload</h3>
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <th>Name</th>
+                            <th>File</th>
+                        </thead>
+                        <tbody id="tbodyFiles">
+
+                        </tbody>
+                    </table>
             </div>
         </div>
     </div>
@@ -194,3 +213,65 @@ echo $this->form()->openTag($form->prepare());
     </div>
 </div>
 <?= $this->form()->closeTag(); ?>
+
+<script>
+    jQuery(document).ready(function($) {
+
+        let mobilites = <?= $this->mobilitesJson; ?>;
+        let files = <?= $this->files; ?>;
+        let radioMobilites = document.querySelectorAll('.inputRadioMobilite');
+        let tbodyFiles = document.querySelector('#tbodyFiles');
+
+        radioMobilites.forEach((rm) => {
+            rm.addEventListener('change',changeRadio)
+            if(rm.checked) {
+                changeRadio({target: rm})
+            }
+        })
+
+        function changeRadio(e) {
+            let el = e.target
+            tbodyFiles.innerHTML = ""
+            mobilites.forEach((m) => {
+                if(m.id === parseInt(el.dataset['id'])){
+                    m.typeDocuments.forEach((td) => {
+                        let existFile = null
+                        files.forEach((f) => {
+                            if(f.tdId === td.id) {
+                                existFile = f
+                            }
+                        })
+                        let tr = document.createElement('tr')
+                        let tdName = document.createElement('td')
+                        let tdFile = document.createElement('td')
+                        let inputFile = document.createElement('input')
+                        inputFile.name = "file-"+td.id
+                        inputFile.type = "file"
+                        if(existFile) {
+                            let spanExistFile = document.createElement('span')
+                            spanExistFile.innerHTML = existFile.file+" "
+                            tdFile.appendChild(spanExistFile)
+                        }
+                        tdFile.appendChild(inputFile)
+                        tdName.innerHTML = td.libelle
+                        tbodyFiles.appendChild(tr)
+                        tr.appendChild(tdName)
+                        tr.appendChild(tdFile)
+                    })
+                }
+            })
+        }
+
+        async function postMobilite(url = '', data = {}) {
+            // Default options are marked with *
+            const response = await fetch(url, {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data) // body data type must match "Content-Type" header
+            });
+            return response.json(); // parses JSON response into native JavaScript objects
+        }
+    })
+</script>

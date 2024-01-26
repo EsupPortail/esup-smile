@@ -15,7 +15,10 @@ use Application\Entity\Composante;
 use Application\Entity\Cours;
 use Application\Entity\Formation;
 use Application\Entity\Inscription;
+use Application\Entity\Mobilite;
 use Application\Entity\Step;
+use Application\Entity\Typedocument;
+use Application\Service\Document\DocumentServiceAwareTrait;
 use Interop\Container\Containerinterface;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -36,10 +39,15 @@ class MobiliteController extends AbstractActionController
     use ComposanteServiceAwareTrait;
     use InscriptionServiceAwareTrait;
     use MobiliteServiceAwareTrait;
+    use DocumentServiceAwareTrait;
 
     /** ACTION */
     const ACTION_INDEX = "index";
     const ACTION_ADD = "add_mobilite";
+    const ACTION_ADD_TYPE_DOCUMENT = "add_type_document";
+    const ACTION_REMOVE_TYPE_DOCUMENT = "remove_type_document";
+    const ACTION_UPDATE = "update_mobilite";
+    const ACTION_SHOW = "show";
     const ACTION_DELETE = "delete_mobilite";
     const ACTION_ACTIVE = "active_mobilite";
 
@@ -58,22 +66,93 @@ class MobiliteController extends AbstractActionController
         return new ViewModel(['mobilite' => $mobilite]);
     }
 
+    public function showAction()
+    {
+        if (!$this->authenticationService->hasIdentity()) {
+            return $this->redirect()->toRoute('/');
+        }
+        $id = $this->params('id');
+
+        $mobilite = $this->getMobiliteService()->find($id);
+
+        return new ViewModel(['mobilite' => $mobilite]);
+    }
+
     public function addMobiliteAction() {
         if(!$this->getRequest()->isPost()) {
-           $str = 'not post';
+            return $this->redirect()->toRoute('mobilite');
         }else {
 
             $post = $this->getRequest()->getPost();
             $str = $post;
             $mobiliteLibelle = $post['mobiliteLibelle'];
             $mobiliteActive = $post['mobiliteActive'] === 'active';
+            $mobiliteActiveAllCourses = $post['mobiliteActiveAllCourses'] === 'active';
 
-            $this->mobiliteService->create($mobiliteLibelle, $mobiliteActive);
+            $this->getMobiliteService()->create($mobiliteLibelle, $mobiliteActive, $mobiliteActiveAllCourses);
 
             return $this->redirect()->toRoute('mobilite');
         }
-        var_dump($str);
-        die();
+    }
+
+    public function addTypeDocumentAction() {
+        if(!$this->getRequest()->isPost()) {
+            return $this->redirect()->toRoute('mobilite');
+        }else {
+            $post = $this->getRequest()->getPost();
+            $typeDocumentLibelle = $post['typeDocumentLibelle'];
+            $mobiliteId = $post['typeDocumentId'];
+
+            if($mobiliteId) {
+                $mobilite = $this->getMobiliteService()->find($mobiliteId);
+                if($mobilite) {
+                    $typeDocument = $this->getDocumentService()->getTypeDocumentsByLibelle($typeDocumentLibelle);
+                    if(!$typeDocument) {
+                        $typeDocument = new Typedocument();
+                        $typeDocument->setLibelle($typeDocumentLibelle);
+                        $this->getDocumentService()->addTypeDocument($typeDocument);
+                        $typeDocument = $this->getDocumentService()->getTypeDocumentsByLibelle($typeDocumentLibelle);
+                    }
+                    $mobilite->addTypeDocument($typeDocument);
+                    $this->getMobiliteService()->update($mobilite);
+                }
+            }
+
+            return $this->redirect()->toUrl('/mobilite/'.$mobiliteId);
+        }
+    }
+
+    public function removeTypeDocumentAction() {
+        if(!$this->getRequest()->isPost()) {
+            return $this->redirect()->toRoute('mobilite');
+        }else {
+            $post = $this->getRequest()->getPost();
+            $typeDocumentId = $post['typeDocumentId'];
+            $mobiliteId = $post['mobiliteId'];
+            $typeDocument = $this->getDocumentService()->getTypeDocumentById($typeDocumentId);
+
+            $this->getDocumentService()->removeTypeDocument($typeDocument);
+            return $this->redirect()->toUrl('/mobilite/'.$mobiliteId);
+        }
+    }
+
+    public function updateMobiliteAction() {
+        if(!$this->getRequest()->isPost()) {
+            return $this->redirect()->toRoute('mobilite');
+        }else {
+
+            $post = $this->getRequest()->getPost();
+            $mobiliteLibelle = $post['mobiliteLibelle'];
+            $mobiliteActive = $post['mobiliteActive'] === 'on';
+            $mobiliteId = $post['mobiliteId'];
+
+            $mobilite = $this->getMobiliteService()->find($mobiliteId);
+            $mobilite->setActive($mobiliteActive);
+            $mobilite->setLibelle($mobiliteLibelle);
+            $this->getMobiliteService()->update($mobilite);
+
+            return $this->redirect()->toUrl('/mobilite/'.$mobiliteId);
+        }
     }
 
     public function deleteMobiliteAction() {

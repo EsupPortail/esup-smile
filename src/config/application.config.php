@@ -24,7 +24,6 @@ $modules = [
     'ZfcUser',
     'BjyAuthorize',
     'UnicaenApp',
-    'UnicaenLdap',
     'UnicaenPrivilege',
     'UnicaenMail',
     'UnicaenPdf',
@@ -36,8 +35,8 @@ $modules = [
     'UnicaenLivelog',
     'UnicaenDbImport',
     'UnicaenEgracon',
-    'Unicaen\Console',
     'UnicaenParametre',
+    'UnicaenVue',
     'Fichier',
     'Import',
     'Message',
@@ -50,8 +49,14 @@ $dotenv->load();
 
 $applicationEnv = getenv('APPLICATION_ENV') ?: 'production';
 if ('development' === $applicationEnv) {
+    /** Enleve les erreurs Deprecated (8.2) en attendant la mise à jour des librairies
+     * TODO: A enlever
+     */
+    error_reporting(E_ALL & ~E_DEPRECATED);
     $modules[] = 'Laminas\DeveloperTools';
     $modules[] = 'UnicaenCode';
+}else {
+    error_reporting(E_ERROR);
 }
 
 $moduleListenerOptions = [

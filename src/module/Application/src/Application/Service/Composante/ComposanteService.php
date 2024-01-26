@@ -9,9 +9,11 @@ use Application\Application\Service\API\HistoServiceInterface;
 use Application\Application\Service\API\SourceAwareEntityServiceInterface;
 use Application\Application\Service\API\SourceEntityServiceTrait;
 use  Application\Entity\Composante;
+use Application\Entity\ComposanteGroupe;
 use Application\Entity\Formation;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use UnicaenUtilisateur\Entity\Db\User;
 use UnicaenUtilisateur\Entity\Db\UserInterface;
 
 /**
@@ -66,6 +68,23 @@ class ComposanteService extends CommonEntityService
         return new ArrayCollection($result);
     }
 
+    public function findAllComposanteGroupeWithFormations(): ArrayCollection
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+        $qb->select("cg")
+            ->from("Application\Entity\ComposanteGroupe", "cg")
+            ->join("cg.composantes", 'c')
+            ->join("c.formations", 'f')
+//            ->addSelect("COUNT(f.id) as nbFormation")
+//            ->orderBy('nbFormation', 'DESC')
+            ->groupBy('cg.id')
+            ->having("COUNT(f.id) > 0");
+
+        $query = $qb->getQuery();
+        $result = $query->execute();
+
+        return new ArrayCollection($result);
+    }
 
     /**
      * Ajoute une entité
@@ -131,6 +150,49 @@ class ComposanteService extends CommonEntityService
     {
         /** @var  Composante[] $composante */
         return $this->getEntityRepository()->findBy(['code' => $code]);
+    }
+
+    public function getComposanteGroupes(): array
+    {
+        return $this->getEntityManager()->getRepository(ComposanteGroupe::class)->findAll();
+    }
+
+    public function getComposanteGroupe(int $id): mixed
+    {
+        return $this->getEntityManager()->getRepository(ComposanteGroupe::class)->find($id);
+    }
+
+    public function addGroup(ComposanteGroupe $group): void {
+        $this->getEntityManager()->persist($group);
+        $this->getEntityManager()->flush();
+    }
+
+    public function deleteGroup(int $id)
+    {
+        $cg = $this->getEntityManager()->getRepository(ComposanteGroupe::class)->find($id);
+        $this->getEntityManager()->remove($cg);
+        $this->getEntityManager()->flush();
+    }
+
+    public function updateGroup(ComposanteGroupe $composanteGroup)
+    {
+        $this->getEntityManager()->persist($composanteGroup);
+        $this->getEntityManager()->flush();
+    }
+
+    public function getComposanteGroupesByUser(?User $user)
+    {
+//        return $this->getEntityManager()->getRepository(ComposanteGroupe::class)->findBy(['users' => [$user]]);
+        $cgList = $this->getComposanteGroupes();
+        $cgToSend = [];
+        /** @var ComposanteGroupe $cg */
+        foreach ($cgList as $cg) {
+            $cgUsers = $cg->getUsers();
+            if($cg->getUsers()->contains($user)){
+                $cgToSend[] = $cg;
+            }
+        }
+        return $cgToSend;
     }
 
 }

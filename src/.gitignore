@@ -4,3 +4,4 @@ data/
 public/css/.sass-cache
 public/upload
 upload/
+node_modules

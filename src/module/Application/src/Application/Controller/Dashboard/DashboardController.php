@@ -148,41 +148,42 @@ class DashboardController extends AbstractActionController
     {
         $user = $this->userService->getConnectedUser();
 
-        $document = new Document();
-        $form = $this->uploadForm;
-        $form->setAttribute('action', $this->url()->fromRoute('dashboard/uploadFichier', [], [], true));
+        /** @var ?Inscription $inscription */
+        $inscription = $this->getInscriptionService()->findByUser($user);
+        $typeDocuments = $inscription->getMobilite()->getTypedocuments();
 
+        $document = new Document();
         $fichier = new Fichier();
-        $form->bind($fichier);
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $file = $request->getFiles()['fichier'];
-            $natureId = $request->getPost('nature');
-            if(!$natureId) {
-                $natureId = 1;
-            }
+            $file = $request->getFiles()['fileToUpload'];
+            $typeId = $request->getPost('fileType');
+            $natureId = 1;
             $nature = $this->getNatureService()->getNature($natureId);
-
+            $typeDocument = $this->getDocumentService()->getTypeDocumentById($typeId);
 
             if ($file['name'] != '') {
                 $this->getFichierService()->setPath('public/upload/');
                 $fichier = $this->getFichierService()->createFichierFromUpload($file, $nature);
             }
 
+            $this->getDocumentService()->removeDocumentWithTypeDocument($user, $typeDocument);
             $document = new Document();
             $document->setUser($user);
             $document->setFichier($fichier);
-            $this->documentService->create($document);
+            $document->setTypedocument($typeDocument);
+            $this->getDocumentService()->create($document);
+
 
         }
 
         $vm = new ViewModel();
-        $vm->setTemplate('fichier/default/default-form');
+        $vm->setTemplate('fichier/default/typedocument-form');
         $vm->setVariables([
             'title' => 'Téléversement d\'un fichier',
             'warning' => "<p class='lead'><span class='icon icon-attention'></span> La taille des fichiers est limitée à 2 Mo.</p>",
-            'form' => $form,
+            'typeDocuments' => $typeDocuments,
         ]);
         return $vm;
     }
@@ -251,8 +252,8 @@ class DashboardController extends AbstractActionController
                     "truc" => $cours->getCodeElp()
                 ];
                 $jsonTxt.="{";
-
-                $jsonTxt.='"component": "'.htmlentities($cours->getFormation()->getComposante()->getLibelle(), ENT_QUOTES).'",';
+                $nameComponent = ($cours->getFormation()->getComposante()->getGroupe()) ? $cours->getFormation()->getComposante()->getGroupe()->getLibelle() : $cours->getFormation()->getComposante()->getLibelle();
+                $jsonTxt.='"component": "'.htmlentities($nameComponent, ENT_QUOTES).'",';
                 $jsonTxt.='"name": "'.htmlentities($cours->getLibelle(), ENT_QUOTES).'",';
                 $jsonTxt.='"level": "'.htmlentities($formation->getNiveauEtude()).'",';
                 $semester = ($cours->getS1()) ? 'S1' : '';
@@ -295,7 +296,8 @@ class DashboardController extends AbstractActionController
 //            $response->setContent(json_encode('[{"name": "Michel","truc": "machin"},{"name": "bonjour", "truc": "chose"}]'));
             return $response;
         }else{
-            $composantes = $this->composanteService->findAllWithFormations();
+            $composantes = $this->getComposanteService()->findAllWithFormations();
+            $groupeComposantes = $this->getComposanteService()->findAllComposanteGroupeWithFormations();
             $ratioAlloc = $this->getParametreService()->getValeurForParametre('ects','ratio');
             $minAlloc = $this->getParametreService()->getValeurForParametre('ects','min');
             $maxAlloc = $this->getParametreService()->getValeurForParametre('ects','max');
@@ -306,6 +308,7 @@ class DashboardController extends AbstractActionController
                 return new ViewModel(
                     [
                         'composantes' => $composantes,
+                        'groupeComposantes' => $groupeComposantes,
                         'role' => $this->userService->getConnectedRole(),
                         'ratioAlloc' => $ratioAlloc,
                         'minAlloc' => $minAlloc,
@@ -320,9 +323,11 @@ class DashboardController extends AbstractActionController
 
             $stepMsg = $this->stepService->getLastStepMsg($inscription);
 
+            $groupeComposantes = $this->getComposanteService()->getComposanteGroupes();
             $vm = new ViewModel(
                 [
                     'composantes' => $composantes,
+                    'groupeComposantes' => $groupeComposantes,
                     'role' => $this->userService->getConnectedRole(),
                     'stepMsg' => $stepMsg,
                     'inscription' => $inscription,

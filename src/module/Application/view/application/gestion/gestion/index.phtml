@@ -20,6 +20,7 @@ $steps = $this->steps;
 $headMsg = $this->headMsg;
 $page = $this->page;
 $user = $this->user;
+$myComponentGroupes = $this->myComponentGroupes;
 ?>
 <div class="row">
     <div class="col text-center headTitle">
@@ -68,6 +69,12 @@ $user = $this->user;
             <label for="labelSearchName">Search name</label>
             <input type="text" class="form-control" id="searchName" aria-describedby="searchName" placeholder="Name">
         </div>
+    </div>
+    <div class=" offset-6 col-4">
+        Mes composantes : <ul>
+        <?php foreach($myComponentGroupes as $cg): ?>
+            <li><?= $cg->getLibelle() ?></li>
+        <?php endforeach; ?></ul>
     </div>
 </div>
 <div class="row">

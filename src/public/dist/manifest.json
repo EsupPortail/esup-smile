@@ -1,0 +1,20 @@
+{
+  "_vendor-9dbc7bce.js": {
+    "file": "assets/vendor-9dbc7bce.js"
+  },
+  "main.css": {
+    "file": "assets/main-d22aaead.css",
+    "src": "main.css"
+  },
+  "main.js": {
+    "css": [
+      "assets/main-d22aaead.css"
+    ],
+    "file": "assets/main-7f3f43f0.js",
+    "imports": [
+      "_vendor-9dbc7bce.js"
+    ],
+    "isEntry": true,
+    "src": "main.js"
+  }
+}
