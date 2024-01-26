@@ -42,6 +42,9 @@ $isAtApprovalStudent = ($step->getOrder() === ($stepApprovalStudent->getOrder())
             <h2>MY SPACE</h2>
         </div>
     </div>
+    <?=
+    $this->partial('application/index/partials/registration.phtml', ['period' => $this->period])
+    ?>
     <?php
     if($inscription->getStatus() != Inscription::STATUS_ABANDON[0]) :
         if($stepMsg):

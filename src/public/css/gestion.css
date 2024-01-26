@@ -2,12 +2,22 @@
 
 }
 #messagerie .msgInscription {
-    border-radius: 5px;
-    padding: 5px;
+    padding: 3px;
 }
 #messagerie .msgInscription.receiver {
-    background: #0882c3;
+    background: #FFFFFF;
+    border-radius: 5px 5px 0 5px;
+    /*text-align: right;*/
 }
 #messagerie .msgInscription.sender {
-    background: rgba(105,174,126,0.88);
+    color: white;
+    background: #0362c1;
+    border-radius: 0 5px 5px 5px;
+    /*text-align: left;*/
+}
+#msgBox{
+    background: #F5F5F5;
+    padding-top: 3px;
+    padding-left:0;
+    padding-right:0;
 }

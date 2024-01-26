@@ -60,7 +60,7 @@ create table typedocument
     id      serial
         constraint typedocument_pk
             primary key,
-    libelle int not null
+    libelle varchar not null
 );
 
 CREATE TABLE IF NOT EXISTS mobilite_typedocument_linker (

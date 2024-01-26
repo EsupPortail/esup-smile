@@ -56,7 +56,9 @@ services:
       - 8443:443
  
   smile-database:
-    image: postgres:13.7
+    build:
+      context: .
+      dockerfile: DockerfileDatabase
     container_name: smile-database
     restart: always
     networks:

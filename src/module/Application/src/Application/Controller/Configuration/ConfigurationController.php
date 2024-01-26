@@ -3,11 +3,14 @@
 namespace Application\Controller\Configuration;
 
 
+use Application\Application\Service\Calendar\CalendarServiceAwareTrait;
 use Application\Application\Service\Composante\ComposanteServiceAwareTrait;
 use Application\Application\Service\Inscription\InscriptionServiceAwareTrait;
 use Application\Application\Service\Step\StepMessageServiceAwareTrait;
 use Application\Application\Service\Step\StepServiceAwareTrait;
+use Application\Entity\Calendar;
 use Application\Entity\ComposanteGroupe;
+use Application\Entity\Period;
 use Application\Entity\Step;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
@@ -29,10 +32,14 @@ class ConfigurationController extends AbstractActionController
     use StepServiceAwareTrait;
     use StepMessageServiceAwareTrait;
     use ComposanteServiceAwareTrait;
+    use CalendarServiceAwareTrait;
 
     /** ACTION */
     const ACTION_INDEX = "index";
     const ACTION_CALENDAR = "calendar";
+    const ACTION_CALENDAR_UPDATE = "calendar_update";
+    const ACTION_CALENDAR_NEW = "calendar_new";
+    const ACTION_CALENDAR_DELETE = "calendar_delete";
     const ACTION_GET_DATA = "get_data";
     const ACTION_CHANGE_ORDER_API = "change_order_api";
     const ACTION_CHANGE_ORDER = "change_order";
@@ -71,12 +78,84 @@ class ConfigurationController extends AbstractActionController
 
     public function calendarAction() {
 
+        $calendars = $this->getCalendarService()->findAllToArray();
+
         $vm = new VueModel(
             [
+                'calendars' => $calendars
             ]
         );
         $vm->setTemplate('configuration/calendar');
         return $vm;
+    }
+
+    public function calendarUpdateAction() {
+
+        if($this->getRequest()->isPost()) {
+
+            $post = $this->getRequest()->getPost();
+
+            $startDate = $post['startDateUpdate'];
+            $endDate = $post['endDateUpdate'];
+            $periodId = $post['periodId'];
+
+            /**
+             * @var Period $period
+             */
+            $period = $this->getCalendarService()->getEntityManager()->find(Period::class, $periodId);
+            $period->setStartDate(new \DateTime($startDate));
+            $period->setEndDate(new \DateTime($endDate));
+
+            $this->getCalendarService()->update($period, Period::class);
+        }
+        return $this->redirect()->toRoute('Configuration/calendar');
+    }
+
+    public function calendarNewAction() {
+        if($this->getRequest()->isPost()) {
+
+            $post = $this->getRequest()->getPost();
+
+            $startDate = $post['startDateNew'];
+            $endDate = $post['endDateNew'];
+            $periodId = $post['periodId'];
+            $calendarId = $post['calendarId'];
+            $calendarYear = $post['calendarYear'];
+
+            $calendar = $this->getCalendarService()->find($calendarId);
+
+            if(!$calendar) {
+                $calendar = new Calendar();
+                $calendar->setYear($calendarYear);
+                $calendar->setLibelle($calendarYear);
+                $calendar = $this->getCalendarService()->add($calendar);
+            }
+
+            $period = new Period();
+            $period->setStartDate(new \DateTime($startDate));
+            $period->setEndDate(new \DateTime($endDate));
+            $period->setDisabledInscription(true);
+            $period->setCalendar($calendar);
+
+            $this->getCalendarService()->add($period, Period::class);
+        }
+        return $this->redirect()->toRoute('Configuration/calendar');
+    }
+    public function calendarDeleteAction() {
+        if($this->getRequest()->isPost()) {
+
+            $post = $this->getRequest()->getPost();
+
+            $periodId = $post['periodId'];
+
+            /**
+             * @var Period $period
+             */
+            $period = $this->getCalendarService()->getEntityManager()->find(Period::class, $periodId);
+
+            $this->getCalendarService()->delete($period, Period::class);
+        }
+        return $this->redirect()->toRoute('Configuration/calendar');
     }
 
     public function gestionnaireComposanteAction () {

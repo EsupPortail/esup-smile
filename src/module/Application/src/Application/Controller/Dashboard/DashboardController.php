@@ -4,6 +4,7 @@ namespace Application\Controller\Dashboard;
 
 
 use Application\Application\Entity\Traits\Entities\ComposanteAwareTrait;
+use Application\Application\Service\Calendar\CalendarServiceAwareTrait;
 use Application\Application\Service\Composante\ComposanteServiceAwareTrait;
 use Application\Application\Service\Cours\CoursServiceAwareTrait;
 use Application\Application\Service\Dashboard\DashboardServiceAwareTrait;
@@ -63,6 +64,7 @@ class DashboardController extends AbstractActionController
     use ParametreServiceAwareTrait;
     use MessageServiceAwareTrait;
     use MailServiceAwareTrait;
+    use CalendarServiceAwareTrait;
 
     /** ACTION */
     const ACTION_INDEX = "index";
@@ -77,7 +79,7 @@ class DashboardController extends AbstractActionController
     const ACTION_ABANDON = "abandon";
 
     protected Containerinterface $container;
-    private $renderer;
+    private PhpRenderer $renderer;
 
     public function __construct()
     {
@@ -85,10 +87,14 @@ class DashboardController extends AbstractActionController
 
     public function indexAction()
     {
+
+        $user = $this->userService->getConnectedUser();
+        $period = $this->getCalendarService()->getCurrentPeriod();
+
         if (!$this->authenticationService->hasIdentity()) {
             return $this->redirect()->toRoute('/');
         }
-        $user = $this->userService->getConnectedUser();
+
         $inscription = $this->inscriptionService->findByUser($user);
         $stepCourses = $this->stepService->findOneBy(['code' => 'course']);
         $stepRegistration = $this->stepService->findOneBy(['code' => 'registered']);
@@ -140,7 +146,8 @@ class DashboardController extends AbstractActionController
                               'stepMsg' => $stepMsg,
                               'steps' => $steps,
                               'documents' => $documents,
-                              'messages' => $messages
+                              'messages' => $messages,
+                              'period' => $period
         ]);
     }
 

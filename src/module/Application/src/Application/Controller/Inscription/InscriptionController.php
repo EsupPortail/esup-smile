@@ -171,12 +171,12 @@ class InscriptionController extends AbstractActionController
         $inscription = $this->getInscriptionService()->findByUser($user);
 
 
-
         $this->form->bind($inscription);
         $this->formUser->bind($user);
         $stepMsg = $this->stepService->getLastStepMsg($inscription);
         $mobilite = $this->mobiliteService->findAllBy(['active' => true]);
         $typeDocuments = $this->getDocumentService()->getTypeDocuments();
+        $typeDocumentsJson = json_encode($this->getDocumentService()->getTypeDocumentsArray());
         $mobilitesJson = json_encode($this->getMobiliteService()->getMobiliteTypeDocArray());
         $files = json_encode($this->getDocumentService()->findAllByUserArray($user));
         $mobiliteSelected = $inscription->getMobilite();
@@ -218,7 +218,7 @@ class InscriptionController extends AbstractActionController
                                       'mobilite' => $mobilite,
                                       'mobiliteSelected' => $mobiliteSelected,
                                       'listHei' => $listHei,
-                                      'typedocuments' => $typeDocuments,
+                                      'typedocumentsJson' => $typeDocumentsJson,
                                       'mobilitesJson' => $mobilitesJson,
                                       'files' => $files,
                 ]);
@@ -249,6 +249,7 @@ class InscriptionController extends AbstractActionController
                               'mobiliteSelected' => $mobiliteSelected,
                               'listHei' => $listHei,
                               'typedocuments' => $typeDocuments,
+                              'typedocumentsJson' => $typeDocumentsJson,
                               'mobilitesJson' => $mobilitesJson,
                               'files' => $files,
             ]);

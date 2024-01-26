@@ -62,6 +62,7 @@ class MobiliteService extends CommonEntityService
     {
         $mobilite = $this->findAllBy(['active' => true]);
         $mobiliteArray = [];
+        /** @var Mobilite $m */
         foreach ($mobilite as $m) {
             $mobiliteArray[] = $m->toArray();
         }

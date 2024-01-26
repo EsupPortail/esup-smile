@@ -11,17 +11,19 @@ use UnicaenApp\Filter\BytesFormatter;
  */
 
 $mobilite = $inscription->getMobilite();
-$typeDocsToAdd = $mobilite->getTypedocuments();
+if($mobilite):
+    $typeDocsToAdd = $mobilite->getTypedocuments();
 
-foreach ($documents as $doc) {
-    foreach ($typeDocsToAdd as $key => $td) {
-        if($doc->getTypedocument()) {
-            if($doc->getTypedocument()->getId() === $td->getId()) {
-                $typeDocsToAdd->remove($key);
+    foreach ($documents as $doc) {
+        foreach ($typeDocsToAdd as $key => $td) {
+            if($doc->getTypedocument()) {
+                if($doc->getTypedocument()->getId() === $td->getId()) {
+                    $typeDocsToAdd->remove($key);
+                }
             }
         }
     }
-}
+
 ?>
 <table class="table">
     <thead>
@@ -75,3 +77,6 @@ foreach ($documents as $doc) {
     <?php endforeach; ?>
     </tbody>
 </table>
+<?php
+  endif;
+  ?>

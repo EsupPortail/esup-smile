@@ -9,6 +9,7 @@
 
 namespace Application\Controller;
 
+use Application\Application\Service\Calendar\CalendarServiceAwareTrait;
 use Application\Application\Service\Inscription\InscriptionServiceAwareTrait;
 use Application\Application\Service\Langue\LangueServiceAwareTrait;
 use Doctrine\ORM\EntityManager;
@@ -19,6 +20,7 @@ use Laminas\View\Model\ViewModel;
 use Locale;
 use UnicaenAuthentification\Service\Traits\ShibServiceAwareTrait;
 use UnicaenParametre\Service\Parametre\ParametreServiceAwareTrait;
+use UnicaenRenderer\Service\Rendu\RenduServiceAwareTrait;
 use UnicaenUtilisateur\Entity\Db\User;
 use UnicaenUtilisateur\Service\User\UserServiceAwareTrait;
 
@@ -28,6 +30,8 @@ class IndexController extends AbstractActionController
     use UserServiceAwareTrait;
     use InscriptionServiceAwareTrait;
     use LangueServiceAwareTrait;
+    use CalendarServiceAwareTrait;
+    use RenduServiceAwareTrait;
 
     public $authConfig;
     public $translator;
@@ -35,16 +39,21 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
         $user = $this->userService->getConnectedUser();
-        
+        $period = $this->getCalendarService()->getCurrentPeriod();
+
         $isShib = $this->authConfig['shib']['enabled'];
         $role = null;
         if ($this->authenticationService->hasIdentity() && $this->userService->getConnectedRole()) {
             $role = $this->userService->getConnectedRole()->getRoleId();
         }
 
+        $renduAccueil = $this->getRenduService()->generateRenduByTemplateCode('Accueil');
+
         return new ViewModel([
             'isShib' => $isShib,
             'role' => $role,
+            'period' => $period,
+            'renduAccueil' => $renduAccueil
         ]);
 //        return new ViewModel(['user' => $user, 'env' => $_SERVER]);
     }

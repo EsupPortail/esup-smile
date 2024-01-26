@@ -20,10 +20,11 @@ Une [`procédure d'installation`](INSTALL.md) est à votre disposition pour mett
 
 La [`procédure de mise à jour`](UPDATE.md) vous indiquera comment mettre à niveau votre instance.  
 
-
-# Mode SAAS  
+# Mode SaaS
 
 Nous proposons l'application en mode SAAS hébergée chez nous.
+
+[Voir SAAS.md`](SAAS.md)
 
 # Nous contacter
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Application\Entity\Period" table="period">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="startDate" type="date" column="start_date"/>
+        <field name="endDate" type="date" column="end_date"/>
+        <field name="disabledInscription" type="boolean" column="disabled_inscription"/>
+        <many-to-one field="calendar" target-entity="Application\Entity\Calendar" inversed-by="periods">
+            <join-column name="year_id" referenced-column-name="id"/>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

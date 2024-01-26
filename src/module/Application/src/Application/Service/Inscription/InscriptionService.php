@@ -83,6 +83,25 @@ class InscriptionService extends CommonEntityService
         return $nominations;
     }
 
+    public function getByGestionnaire($user, $year) {
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('i')
+            ->from(Inscription::class, 'i')
+            ->leftJoin('i.composante', 'c')
+            ->leftJoin('c.groupe', 'g')
+            ->leftJoin('g.users', 'u')
+            ->where('i.year = :year AND u.id = :user')
+            ->orWhere('i.year = :year AND c.groupe is null')
+            ->setParameter('year', $year)
+            ->setParameter('user', $user);
+
+        $inscriptions = $qb->getQuery()->getResult();
+
+        return $inscriptions;
+
+    }
+
     protected UserContext $userContext;
 
     /**

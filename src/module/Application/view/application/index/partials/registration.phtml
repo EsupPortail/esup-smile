@@ -1,0 +1,23 @@
+<?php
+use Application\Entity\Period;
+
+/**
+ * @var Period $period
+ */
+// $period->getEndDate()->format('d/m/Y')
+// $period->getEndDate()->format('d F Y')
+$period = $this->period;
+
+if(!$period) :
+    ?>
+    <div class="row">
+        <div class="col">
+            <p class="alert alert-warning">
+                Les inscriptions sont actuellement fermées<br>
+                Registration are currently closed
+            </p>
+        </div>
+    </div>
+<?php
+endif;
+?>

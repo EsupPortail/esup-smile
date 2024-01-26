@@ -20,48 +20,54 @@ use UnicaenUtilisateur\Entity\Db\User;
         <h3 class="titleBlue">Messages</h3>
     </div>
 
-    <?php if (empty($messages)) : ?>
-        <div class="col-6">
-            No messages
-        </div>
-    <?php else : ?>
-        <?php foreach ($messages as $message) : ?>
-            <?php
+    <div class="row" id="msgBox">
+        <?php if (empty($messages)) : ?>
+            <div class="col-6">
+                No messages
+            </div>
+        <?php else : ?>
+            <?php foreach ($messages as $message) : ?>
+                <?php
                 if ($message->getSender() == $user) {
-                    $class = 'sender';
+                    $class = 'sender col-8';
                 } else {
-                    $class = 'receiver';
+                    $class = 'receiver col-8 offset-4';
                 }
-            ?>
-            <div class="col-12" style="">
-                <div class="msgInscription <?= $class ?>">
-                    <?= $message->getSender()->getDisplayName() ?>
-                    <?php
-                    $roles = $message->getSender()->getRoles();
-                    $isGestionnaire = false;
-                    foreach ($roles as $role) {
-                        if($role->getRoleId() === 'gestionnaire') {
-                            $isGestionnaire = true;
+                ?>
+                <div class="col-12 mb-3" style="">
+                    <div class="msgInscription <?= $class ?>">
+                        <b>
+                        <?= $message->getSender()->getDisplayName() ?>
+                        <?php
+                        $roles = $message->getSender()->getRoles();
+                        $isGestionnaire = false;
+                        foreach ($roles as $role) {
+                            if($role->getRoleId() === 'gestionnaire') {
+                                $isGestionnaire = true;
+                            }
                         }
-                    }
-                    if($isGestionnaire) {
-                        echo '(Gestionnaire)';
-                    }
-                    ?>
-                    :
-                    <?= $message->getContent() ?>
-                    <div class="time">
-                        <?= $message->getCreatedAt()->format('d-m-y h\Hi') ?>
+                        if($isGestionnaire) {
+                            echo '(Gestionnaire)';
+                        }
+                        ?>
+                        </b><br>
+                        <?= $message->getContent() ?>
+                        <div class="time">
+                            <small>
+                                <?= $message->getCreatedAt()->format('d/m/y') ?>
+                            </small>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
-    <?php
-    /**
-     * @see \Message\Controller\MessageController::addMessageAction()
-     */
-    ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        <?php
+        /**
+         * @see \Message\Controller\MessageController::addMessageAction()
+         */
+        ?>
+    </div>
+
     <div class="col-12">
         <div class="row">
             <form action="/message/addMessage" method="POST">
