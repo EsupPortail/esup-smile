@@ -1,4 +1,3 @@
-
 <?php
 
 use Laminas\Navigation\AbstractContainer;
@@ -102,17 +101,19 @@ uasort($pagesNiv1, $sorterByOrder);
         <?php endif ?>
     <?php endforeach ?>
     <?php
-        function getFlag(string $codeLangue): string
-        {
-            switch ($codeLangue) {
-                case 'fr_FR':
-                    return 'fr.svg';
-                case 'en_GB':
-                    return 'gb.svg';
-                default:
-                    return 'gb.svg';
-            }
+        if (!function_exists('getFlag')) {
+            function getFlag(string $codeLangue): string
+            {
+                switch ($codeLangue) {
+                    case 'fr_FR':
+                        return 'fr.svg';
+                    case 'en_GB':
+                        return 'gb.svg';
+                    default:
+                        return 'gb.svg';
+                }
 
+            }
         }
     ?>
     <li class="nav-item dropdown">
