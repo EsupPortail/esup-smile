@@ -20,6 +20,7 @@ services:
     entrypoint: ["/bin/sh", "-c"]
     command:
     - | 
+        composer install
         php-fpm
     volumes:
       - ./src:/var/www/html/smile/
