@@ -19,6 +19,7 @@ use Fichier\Service\Fichier\FichierServiceAwareTrait;
 use Fichier\Service\Nature\NatureServiceAwareTrait;
 use Laminas\Db\Sql\Predicate\In;
 use Laminas\Http\Response;
+use Laminas\I18n\Translator\TranslatorAwareTrait;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Stdlib\Parameters;
 use Laminas\Stdlib\ParametersInterface;
@@ -54,11 +55,13 @@ class InscriptionController extends AbstractActionController
     use DocumentServiceAwareTrait;
     use FichierServiceAwareTrait;
     use NatureServiceAwareTrait;
+    use TranslatorAwareTrait;
 
     /** ACTION */
     const ACTION_INDEX = "index";
     const ACTION_MOBILITE = "mobilite";
     const ACTION_INFORMATION = "information";
+    const ACTION_INFORMATION_VUE = "information-vue";
     const ACTION_ETABLISSEMENT = "etablissements";
     const ACTION_MOBILITES = "mobilites";
 
@@ -72,7 +75,6 @@ class InscriptionController extends AbstractActionController
         $this->form = new InscriptionForm($this->entityManager);
         $this->formUser = new InscriptionUserForm($this->entityManager);
     }
-
 
     public function indexAction()
     {
@@ -134,18 +136,6 @@ class InscriptionController extends AbstractActionController
         return ['form' => $this->form];
     }
 
-    public function informationOldAction() {
-        $vm = new VueModel(['defaultPrenom' => 'ttt', 'defaultNom' => 'tttt']);
-
-        // On lui donne un template, c'est-à-dire le chemin et le nom du composant à utiliser
-        // Le composant s'appelle MonTest se trouvera dans le fichier front/Exemple/MonTest.vue
-        // Notez qu'on utilise par convention une syntaxe kebab-case pour le template et CamelCase pour les répertoires, & noms de composants Vue.
-        $vm->setTemplate('inscription/information');
-
-        // On retourne le VueModel
-        return $vm;
-    }
-
     public function etablissementsAction() {
 
         $etablissements = $this->getEtablissementService()->findAll();
@@ -158,6 +148,59 @@ class InscriptionController extends AbstractActionController
         $mobilites = $this->getMobiliteService()->findAll();
 
         return new AxiosModel($mobilites);
+    }
+
+    public function informationVueAction()
+    {
+        if (!$this->authenticationService->hasIdentity()) {
+            return $this->redirect()->toRoute('');
+        }
+        $user = $this->userService->getConnectedUser();
+        /**
+         * @var Inscription $inscription
+         */
+        $inscription = $this->getInscriptionService()->findByUser($user);
+        $etablissements = $this->getEtablissementService()->findAll();
+        $mobilites = $this->mobiliteService->findAllBy(['active' => true]);
+        $typeDocuments = $this->getDocumentService()->getTypeDocumentsArray();
+        $translator = $this->getTranslator();
+
+        $stringTranslation = [
+            'inscription' => $translator->translate('REGISTRATION'),
+            'mobilite' => $translator->translate('ChooseMobility'),
+            'MonthArrival' => $translator->translate('MonthArrival'),
+            'checkInformation' => $translator->translate('Check your information'),
+            'Firstname' => $translator->translate('Firstname'),
+            'Lastname' => $translator->translate('Lastname'),
+            'Birthdate' => $translator->translate('Birthdate'),
+            'Username' => $translator->translate('Username'),
+            'City' => $translator->translate('City'),
+            'Postcode' => $translator->translate('Postcode'),
+            'Street' => $translator->translate('Street'),
+            'Etablissement' => $translator->translate('Etablissement'),
+            'emailReferent' => $translator->translate('Email of your university referent'),
+            'filesToUpload' => $translator->translate('Files to upload'),
+            'firstMobility' => $translator->translate('This is my first mobility'),
+        ];
+
+        $vm = new VueModel([
+            'inscription' => $inscription->toArray(),
+            'user' => $user,
+            'mobilites' => $this->arrayEntitiesToArray($mobilites),
+            'stringTranslation' => $stringTranslation,
+            'etablissements' => $this->arrayEntitiesToArray($etablissements),
+            'typeDocuments' => $typeDocuments
+        ]);
+        $vm->setTemplate('inscription/information');
+        return $vm;
+    }
+
+    protected function arrayEntitiesToArray($entities) {
+        $array = [];
+        foreach ($entities as $entity) {
+            $array[] = $entity->toArray();
+        }
+        return $array;
     }
 
     public function informationAction() {
@@ -174,7 +217,7 @@ class InscriptionController extends AbstractActionController
         $this->form->bind($inscription);
         $this->formUser->bind($user);
         $stepMsg = $this->stepService->getLastStepMsg($inscription);
-        $mobilite = $this->mobiliteService->findAllBy(['active' => true]);
+        $mobilite = $this->mobiliteService->findAllBy(['active' => true, 'histoDestruction' => null]);
         $typeDocuments = $this->getDocumentService()->getTypeDocuments();
         $typeDocumentsJson = json_encode($this->getDocumentService()->getTypeDocumentsArray());
         $mobilitesJson = json_encode($this->getMobiliteService()->getMobiliteTypeDocArray());
@@ -191,6 +234,7 @@ class InscriptionController extends AbstractActionController
             $this->form->setData($request->getPost());
             $mobiliteId = $request->getPost('mobiliteRadioChoice');
             $heiCode = explode('.', $request->getPost('heiDatalist'))[0];
+            $monthArrival = $request->getPost('montharrival');
 
             /**
              * @var Mobilite $mobilite
@@ -207,6 +251,11 @@ class InscriptionController extends AbstractActionController
                     $inscription->setEtablissement($hei);
                     $this->getEtablissementService()->associateCountry($hei);
                 }
+            }
+            if($monthArrival) {
+                $inscription->setMonthArrival($monthArrival);
+                $year = $this->getInscriptionService()->getUniversityYear(intval($monthArrival));
+                $inscription->setYear($year);
             }
 
             if(!$this->form->isValid()) {

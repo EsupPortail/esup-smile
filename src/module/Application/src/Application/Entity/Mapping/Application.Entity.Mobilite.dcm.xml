@@ -11,6 +11,23 @@
       </options>
     </field>
     <field name="active" type="boolean" column="active" nullable="true"/>
+    <field name="histoCreation" type="datetime" column="histo_creation" nullable="true">
+      <options>
+        <option name="default">now()</option>
+      </options>
+    </field>
+    <field name="histoModification" type="datetime" column="histo_modification" nullable="true"/>
+    <field name="histoDestruction" type="datetime" column="histo_destruction" nullable="true"/>
+    <many-to-one field="histoModificateur" target-entity="UnicaenUtilisateur\Entity\Db\User" fetch="LAZY">
+      <join-columns>
+        <join-column name="histo_modificateur_id" referenced-column-name="ID"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="histoDestructeur" target-entity="UnicaenUtilisateur\Entity\Db\User" fetch="LAZY">
+      <join-columns>
+        <join-column name="histo_destructeur_id" referenced-column-name="ID"/>
+      </join-columns>
+    </many-to-one>
     <many-to-many field="cours" target-entity="Application\Entity\Cours" inversed-by="cours" fetch="LAZY">
       <join-table name="mobilite_cours_linker">
         <join-columns>

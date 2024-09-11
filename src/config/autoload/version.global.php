@@ -1,11 +1,10 @@
 <?php
-
 return [
     'unicaen-app' => [
         'app_infos' => [
-            'version' => '0.8.0',
-            'date' => '28/07/2023',
+            'version' => '1.2',
+            'date' => '17/05/2024',
         ],
     ],
-    'comment' => 'Fichier généré le 21/03/2022',
+    'comment' => 'Fichier généré le 17/05/2024 à 17:50:24 avec /var/www/html/smile/bin/bump-version',
 ];

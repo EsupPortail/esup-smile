@@ -8,7 +8,7 @@ use Application\Entity\Period;
 // $period->getEndDate()->format('d F Y')
 $period = $this->period;
 
-if(!$period) :
+if(!$period || !$period->getDisabledInscription()) :
     ?>
     <div class="row">
         <div class="col">

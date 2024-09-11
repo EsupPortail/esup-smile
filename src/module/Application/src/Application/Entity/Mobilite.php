@@ -2,11 +2,16 @@
 
 namespace Application\Entity;
 
+use Application\Application\Entity\Interfaces\HistoriqueAwareInterface;
+use Application\Application\Entity\Traits\InterfacesImplementation\HistoriqueAwareTrait;
+
 /**
  * Mobilite
  */
-class Mobilite
+class Mobilite implements HistoriqueAwareInterface
 {
+    use HistoriqueAwareTrait;
+
     /**
      * @var string
      */
@@ -21,6 +26,8 @@ class Mobilite
      * @var bool
      */
     private $active;
+
+    private \DateTime $deletedOn;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

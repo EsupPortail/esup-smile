@@ -64,6 +64,7 @@ class FormationController extends AbstractEntityController
     const ACTION_MOBILITE = "mobilite";
     const ACTION_SAVE_MOBILITE = "saveMobilite";
     const ACTION_ACTIVE_ALLMOBILITY = "activeAllMobility";
+    const ACTION_ACTIVE_ALL_BY_MOBILITE = "activeAllByMobilite";
     const ACTION_DESCRIPTIF = "descriptif";
     const ACTION_TEST = "test";
     const ACTION_TEST_DATA = "testData";
@@ -256,7 +257,7 @@ class FormationController extends AbstractEntityController
 //        $formations = $this->formationService->findAll();
         $cours = $this->coursService->getEntityRepository()->findBy(array(), array('codeElp' => 'ASC'), 5000);
 //        $cours = $this->coursService->findAllOpenMobilite();
-        $mobilites = $this->mobiliteService->findAllBy(['active' => true]);
+        $mobilites = $this->mobiliteService->findAllBy(['active' => true, 'histoDestruction' => null]);
         $composantes = $this->composanteService->findAll();
         $langues = $this->langueService->findAll();
 //        $cours = $this->formationService->;
@@ -278,8 +279,7 @@ class FormationController extends AbstractEntityController
                     'title' => htmlspecialchars($c->getLibelle(), ENT_QUOTES),
                     'ects' => floatval($c->getEcts()),
                     'langage' => $c->getLangueEnseignement(),
-                    'S1' => '<div class="form-check form-switch"><input class="form-check-input checkS1" data-codeCours="'. $c->getCodeElp() .'" type="checkbox" role="switch" id="flexSwitchCheckChecked" '. $checkedS1 .'>
-                            <label class="form-check-label" for="flexSwitchCheckChecked"></label></div>',
+                    'S1' => [$checkedS1, $c->getCodeElp()],
                     'S2' => [$checkedS2, $c->getCodeElp()],
                     'action' => '<a href="mobilite/'.$c->getCodeElp().'"><i class="fa-solid fa-pen"></i></a>'
                 ];
@@ -328,6 +328,7 @@ class FormationController extends AbstractEntityController
                 $formationCode = $request->getPost('formation');
                 $code = $request->getPost('code');
                 $libelle = $request->getPost('libelle');
+                $langueE = $request->getPost('langueE') || '';
                 $ects = $request->getPost('ects');
                 $semester = $request->getPost('semester');
                 $vH = $request->getPost('vH');
@@ -344,7 +345,7 @@ class FormationController extends AbstractEntityController
                 $cours->setSourceCode($code);
                 $cours->setHistoCreateur($this->getUserService()->getConnectedUser());
                 $cours->setLibelle($libelle);
-                $cours->setLangueEnseignement('Français');
+                $cours->setLangueEnseignement($langueE);
                 $cours->setEcts($ects);
                 $cours->setVolElp($vH);
                 $cours->setCodeElp($code);
@@ -398,6 +399,7 @@ class FormationController extends AbstractEntityController
                     $code = $request->getPost('code');
                     $libelle = $request->getPost('libelle');
                     $ects = $request->getPost('ects');
+                    $langueE = $request->getPost('langueE') || '';
                     $semester = $request->getPost('semester');
                     $vH = $request->getPost('vH');
                     $s1 = ($semester === '1' || $semester === '3') ? '1' : '';
@@ -416,6 +418,7 @@ class FormationController extends AbstractEntityController
                     $cours->setFormation($formation);
                     $cours->setTypeCours($typeCours);
                     $cours->setDescription($description);
+                    $cours->setLangueEnseignement($langueE);
                     $cours->setObjectif($objectif);
 
                     $this->getCoursService()->update($cours);
@@ -442,6 +445,44 @@ class FormationController extends AbstractEntityController
         }else {
             return '';
         }
+    }
+
+    public function activeAllByMobiliteAction() {
+
+        $mobiliteId = $this->params('id');
+        if(!$mobiliteId) {
+            return $this->redirect()->toRoute('formations/mobilite');
+        }
+
+        $mobilite = $this->getMobiliteService()->find($mobiliteId);
+        if(!$mobilite) {
+            return $this->redirect()->toRoute('formations/mobilite');
+        }
+
+        /** @var Cours $cours */
+        $cours = $this->getCoursService()->findAll();
+        $sql = 'INSERT INTO mobilite_cours_linker (mobilite_id, cours_id, active) VALUES ';
+        foreach($cours as $c) {
+            $cMobilites = $c->getMobilite();
+            if($cMobilites->contains($mobilite)) {
+                continue;
+            }
+            $sql.= '('.$mobilite->getId().','.$c->getId().', true)';
+            if($c === end($cours)) {
+                $sql.= ';';
+            }else {
+                $sql.= ',';
+            }
+        }
+
+        if($sql === 'INSERT INTO mobilite_cours_linker (mobilite_id, cours_id, active) VALUES ') {
+            return $this->redirect()->toRoute('formations/mobilite');
+        }
+        $conn = $this->getCoursService()->getEntityManager()->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->executeQuery();
+
+        return $this->redirect()->toRoute('formations/mobilite');
     }
 
     public function activeAllMobilityAction() {
@@ -481,46 +522,50 @@ class FormationController extends AbstractEntityController
              * @var Mobilite $mobilite
              * @var Cours $cours
              */
+            try {
+                $cours = $this->coursService->findOneBy(['codeElp' => $data->codeCours]);
+                if(isset($data->mobiliteId)) {
+                    $mobilite = $this->mobiliteService->find($data->mobiliteId);
 
-            $cours = $this->coursService->findOneBy(['codeElp' => $data->codeCours]);
-            if($data->mobiliteId) {
-                $mobilite = $this->mobiliteService->find($data->mobiliteId);
+                    if($data->active) {
+                        $mobilite->addCours($cours);
+                    }else {
+                        $mobilite->removeCours($cours);
+                    }
+                    try {
+                        $this->mobiliteService->update($mobilite);
+                    } catch (OptimisticLockException|ORMException $e) {
+                        $error = $e->getMessage();
+                    }
+                }else if(isset($data->S1)) {
+                    if($data->active) {
+                        $cours->setS1('1');
+                    }else {
+                        $cours->setS1('');
+                    }
+                    $this->coursService->update($cours);
+                }else if(isset($data->S2)) {
+                    if($data->active) {
+                        $cours->setS2('1');
+                    }else {
+                        $cours->setS2('');
+                    }
+                    $this->coursService->update($cours);
+                }
 
-                if($data->active) {
-                    $mobilite->addCours($cours);
-                }else {
-                    $mobilite->removeCours($cours);
-                }
-                try {
-                    $this->mobiliteService->update($mobilite);
-                } catch (OptimisticLockException|ORMException $e) {
-                    $error = $e->getMessage();
-                }
-            }else if($data->S1) {
-                if($data->active) {
-                    $cours->setS1('1');
-                }else {
-                    $cours->setS1('');
-                }
-                $this->coursService->update($cours);
-            }else if($data->S2) {
-                if($data->active) {
-                    $cours->setS2('1');
-                }else {
-                    $cours->setS2('');
-                }
-                $this->coursService->update($cours);
+                $res = array(['error' => $error]);
+                $coursTable = json_encode(array_values($res));
+
+                $response = new Response();
+                $response->setContent($coursTable);
+                return $response;
+            }catch (Exception $e) {
+                $response = new Response();
+                $response->setStatusCode(500);
+                $response->setContent($e);
+                return $response;
             }
 
-
-
-
-            $res = array(['error' => $error]);
-            $coursTable = json_encode(array_values($res));
-
-            $response = new Response();
-            $response->setContent($coursTable);
-            return $response;
         }
 
         return $this->redirect()->toRoute('home');

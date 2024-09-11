@@ -38,7 +38,7 @@ $isAtApprovalStudent = ($step->getOrder() === ($stepApprovalStudent->getOrder())
 ?>
 <div class="container" id="dashboard">
     <div class="row">
-        <div class="col text-center headTitle">
+        <div class="col headTitle">
             <h2>MY SPACE</h2>
         </div>
     </div>
@@ -78,6 +78,14 @@ $isAtApprovalStudent = ($step->getOrder() === ($stepApprovalStudent->getOrder())
                         'inscription' => $inscription
                     ]); ?>
                 </div>
+                <div class="row">
+                    <div class="col mb-2 text-center">
+                        <hr>
+                        <a href="" class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#abandonModal">
+                            <?= $this->translate('Abandonner mon inscription') ?>
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="col-8 text-center inscriptionStatus">
                 <?php
@@ -99,17 +107,10 @@ $isAtApprovalStudent = ($step->getOrder() === ($stepApprovalStudent->getOrder())
                 endif;
                 ?>
                 <div class="row">
-                    <div class="offset-8 col-4">
-                        <a href="" class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#abandonModal">
-                            <?= $this->translate('Abandonner mon inscription') ?>
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col">
                         <h3 class="titleBlue">Courses - <?php if($mobilite) { echo $mobilite->getLibelle(); } ?></h3>
                         <?php if(!$isBeforeCourses): ?>
-                            <?= $this->render('application/index/partials/tableCourses.phtml', ['courses' => $this->courses, 'mainComponent' => $this->mainComponent]); ?>
+                            <?= $this->render('application/index/partials/tableCourses.phtml', ['role' => $this->role,'courses' => $this->courses, 'mainComponent' => $this->mainComponent, 'inscription' => $this->inscription]); ?>
                             <?php
                                 if(!$isAfterCourses) :
                             ?>

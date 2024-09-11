@@ -1,0 +1,4 @@
+.dropdown-item:hover {
+    background-color: rgba(216, 216, 216, 0.97) !important; /* Couleur de fond au survol */
+    color: #007bff; /* Couleur du texte au survol */
+}

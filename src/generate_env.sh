@@ -8,4 +8,7 @@ ENV_FILE_EXAMPLE=/var/www/html/smile/.env_example
 cat $ENV_FILE_EXAMPLE | while read ligne ; do
   echo ${ligne}=$(eval "echo \$$ligne") >> $ENV_FILE
 done
-/usr/local/bin/docker-php-entrypoint php-fpm
+#/usr/local/bin/docker-php-entrypoint php-fpm
+#Remplace par supervisord pour le refresh odf
+
+/usr/bin/supervisord -n -c /supervisord.conf

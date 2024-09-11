@@ -164,11 +164,77 @@ msgstr "composante"
 msgid "Faculty"
 msgstr "Composante"
 
+msgid "Group"
+msgstr "Groupe"
+
 msgid "COURSES"
 msgstr "COURS"
 
 msgid "Choices"
 msgstr "Choix"
+
+msgid "REGISTRATION"
+msgstr "INSCRIPTION"
+
+msgid "ChooseMobility"
+msgstr "Choix de votre mobilité"
+
+msgid "Files to upload"
+msgstr "Fichier à fournir"
+
+msgid "Check your information"
+msgstr "Vérifiez et complétez vos informations"
+
+msgid "Firstname"
+msgstr "Prénom"
+
+msgid "Lastname"
+msgstr "Nom"
+
+msgid "Birthdate"
+msgstr "Date de naissance"
+
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+msgid "City"
+msgstr "Ville"
+
+msgid "Postcode"
+msgstr "Code postal"
+
+msgid "Street"
+msgstr "Rue"
+
+msgid "Etablissement"
+msgstr "Etablissement"
+
+msgid "Email of your university referent"
+msgstr "Email de votre référent universitaire"
+
+msgid "registrationMessagePrevious"
+msgstr "Votre inscription est revenu à l'étape antérieur avec le message"
+
+msgid "MonthArrival"
+msgstr "Mois d'arrivée"
+
+msgid "This is my first mobility"
+msgstr "C'est ma première mobilité"
+
+msgid "Courses"
+msgstr "Cours"
+
+msgid "No messages"
+msgstr "Aucun messages"
+
+msgid "Send also by mail"
+msgstr "Envoyer aussi par mail"
+
+msgid "Send"
+msgstr "Envoyer"
+
+msgid "Steps"
+msgstr "Etapes"
 
 msgid "Minimum"
 msgstr "Minimum"
@@ -203,11 +269,8 @@ msgstr "Langue"
 msgid "View"
 msgstr "Voir"
 
-msgid "Select"
-msgstr "Sélectionner"
-
 msgid "disabled"
-msgstr "désactiver"
+msgstr "désactivé"
 
 #: ../view/gestion/index.phtml:51
 msgid "Register"
@@ -224,3 +287,40 @@ msgstr "vous ne pouvez pas vous connecter avec la fédération (formulaire de ga
 
 msgid "demoConnect"
 msgstr "Se connecter avec mon compte de demo"
+
+# Mois
+msgid "January"
+msgstr "Janvier"
+
+msgid "February"
+msgstr "Février"
+
+msgid "March"
+msgstr "Mars"
+
+msgid "April"
+msgstr "Avril"
+
+msgid "May"
+msgstr "Mai"
+
+msgid "June"
+msgstr "Juin"
+
+msgid "July"
+msgstr "Juillet"
+
+msgid "August"
+msgstr "Août"
+
+msgid "September"
+msgstr "Septembre"
+
+msgid "October"
+msgstr "Octobre"
+
+msgid "November"
+msgstr "Novembre"
+
+msgid "December"
+msgstr "Décembre"

@@ -31,6 +31,12 @@ Trait SourceEntityServiceTrait
         return $this->findSourceByCode(CodeSourceProvider::SMILE_SOURCE_CODE);
     }
 
+    /** @return Source */
+    public function getCsvSource() : ?Source
+    {
+        return $this->findSourceByCode(CodeSourceProvider::CSV_SOURCE_CODE);
+    }
+
     protected function setDefaultSource(SourceAwareInterface $entity, $sourceCode=CodeSourceProvider::SMILE_SOURCE_CODE) : SourceAwareInterface
     {
         $source = $entity->getSource();

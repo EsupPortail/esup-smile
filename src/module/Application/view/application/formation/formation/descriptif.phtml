@@ -32,7 +32,7 @@ if($cours):
 ?>
 <div class="row mb-2">
     <div class="col">
-        <a class="btn btn-info" href="<?= $this->url('formations/mobilite') ?>"><i class="fas fa-arrow-left"></i> Back</a>
+        <a class="btn btn-info" href="<?= $this->url('formations/mobilite') ?>"><i class="fas fa-arrow-left"></i> Retour</a>
     </div>
 </div>
 <div class="row" id="descriptifCours">
@@ -95,19 +95,19 @@ if($cours):
 </div>
 <div class="row mt-3">
     <div class="col">
+        <label for="niveau" class="form-label">Langue Enseignement</label>
+        <?php if($editable): ?>
+            <input class="form-control" type="text" name="langueE" id="langueE" value="<?= $cours->getLangueEnseignement() ?>" required>
+        <?php else: ?>
+            <input class="form-control" type="text" name="langueE" id="langueE" value="<?= $cours->getLangueEnseignement() ?>" disabled>
+        <?php endif; ?>
+    </div>
+    <div class="col">
         <label for="ects" class="form-label">ECTS</label>
         <?php if($editable): ?>
             <input class="form-control" type="number" name="ects" id="ects" value="<?= $cours->getEcts() ?>" required>
         <?php else: ?>
             <input class="form-control" type="number" name="ects" id="ects" value="<?= $cours->getEcts() ?>" disabled>
-        <?php endif; ?>
-    </div>
-    <div class="col">
-        <label for="niveau" class="form-label">Niveau</label>
-        <?php if($editable): ?>
-            <input class="form-control" type="text" name="niveau" id="niveau" value="" disabled>
-        <?php else: ?>
-            <input class="form-control" type="text" name="niveau" id="niveau" value="<?= $cours->getFormation()->getNiveauEtude() ?>" disabled>
         <?php endif; ?>
     </div>
     <div class="col">
@@ -126,12 +126,9 @@ if($cours):
         <label for="vH" class="form-label">Volume horaire</label>
         <?php if($editable): ?>
             <input class="form-control" style="display: inline-block; width: 90%;" type="number" name="vH" id="vH" value="<?= $cours->getVolElp() ?>" required>
-            <span style="display: inline-block">H</span>
         <?php else: ?>
             <input class="form-control" type="number" name="vH" id="vH" value="<?= $cours->getVolElp() ?>" disabled>
         <?php endif; ?>
-    </div>
-    <div class="col">
     </div>
 </div>
 <div class="row mt-5">
@@ -153,9 +150,9 @@ if($cours):
 <div class="row mt-3">
     <div class="col">
         <?php if(!$cours->getLibelle()): ?>
-            <input type="submit" class="btn btn-success right" value="Add">
+            <input type="submit" class="btn btn-success right" value="Ajouter">
         <?php else: ?>
-            <input type="submit" class="btn btn-success right" value="Update">
+            <input type="submit" class="btn btn-success right" value="Enregistrer">
         <?php endif; ?>
     </div>
 </div>

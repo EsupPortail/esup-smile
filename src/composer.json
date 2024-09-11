@@ -8,45 +8,45 @@
         }
     ],
     "require": {
-        "unicaen/app": "6.1.1",
-        "unicaen/utilisateur": "6.0.9",
+        "php": ">=8.2",
+        "unicaen/app": "^6.1",
+        "unicaen/utilisateur": "6.2.1",
         "unicaen/privilege": "6.0.4",
-        "unicaen/authentification": "dev-php82",
-        "unicaen/mail":       "6.0.7",
-        "unicaen/evenement":       "6.0.2",
-        "unicaen/renderer":       "6.0.3",
-        "unicaen/pdf":          "6.1.0",
-        "unicaen/vue":       "6.0.0",
-        "unicaen/egracon":      "0.1.1",
+        "unicaen/authentification": "6.2.1",
+        "unicaen/mail": "6.1.5",
+        "unicaen/renderer": "6.0.3",
+        "unicaen/pdf": "6.1.0",
+        "unicaen/vue": "6.2.3",
+        "unicaen/egracon": "0.1.2",
         "laminas/laminas-dependency-plugin": "2.5.0",
         "doctrine/doctrine-laminas-hydrator": "3.4.0",
-        "laminas/laminas-cli": "1.8.0",
-        "laminas/laminas-config-aggregator" : "1.13.0",
+        "laminas/laminas-config-aggregator": "1.13.0",
         "laminas/laminas-development-mode": "3.10.0",
-        "ext-intl": "*",
-        "ext-json": "*",
-        "ext-gettext": "*",
-        "php": "^8.2",
-        "doctrine/doctrine-orm-module": "5.3.0",
-        "unicaen/code": "6.0.10",
-        "unicaen/db-import" : "dev-smile",
-        "vlucas/phpdotenv": "^5.5@dev",
-        "unicaen/parametre": "6.0.1"
+        "doctrine/doctrine-orm-module": "^5.3",
+        "unicaen/parametre": "^6.0",
+        "unicaen/bddadmin": "^0.9.8",
+        "aws/aws-sdk-php": "^3.305",
+        "unicaen/synchro": "^6.0",
+        "symfony/console": "6.4.7",
+        "laminas/laminas-cli": "^1.10",
+        "symfony/dotenv": "^7.0"
     },
+
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "require-dev": {
         "laminas/laminas-test": "*",
         "laminas/laminas-developer-tools": "^2"
     },
     "scripts": {
         "post-install-cmd": [
-            "mkdir -p data/DoctrineORMModule/Proxy ; chmod -R 777 data/DoctrineORMModule/Proxy",
-            "mkdir -p public/unicaen ; cp -r vendor/unicaen/db-import/public/unicaen public/"
+            "mkdir -p data/DoctrineORMModule/Proxy ; chmod -R 777 data/DoctrineORMModule/Proxy"
         ]
     },
     "autoload": {
         "psr-4": {
-            "Application\\": "module/Application/src"
+            "Application\\": "module/Application/src",
+            "Import\\": "module/Import/src"
         },
         "files": [
             "module/Application/Module.php"

@@ -23,15 +23,5 @@
     </field>
     <field name="startedOn" type="datetime" column="started_on" nullable="false"/>
     <field name="endedOn" type="datetime" column="ended_on" nullable="false"/>
-    <field name="importHash" type="string" column="import_hash" length="64" nullable="true">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <field name="hasProblems" type="boolean" column="has_problems" nullable="false">
-      <options>
-        <option name="default"/>
-      </options>
-    </field>
   </entity>
 </doctrine-mapping>

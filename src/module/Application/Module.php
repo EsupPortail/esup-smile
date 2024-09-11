@@ -2,7 +2,6 @@
 
 namespace Application;
 
-use Laminas\Cache\StorageFactory;
 use Laminas\Config\Factory as ConfigFactory;
 use Laminas\EventManager\EventInterface;
 use Laminas\Http\Request as HttpRequest;
@@ -10,7 +9,6 @@ use Laminas\I18n\Translator\Translator;
 use Laminas\Mvc\ModuleRouteListener;
 use Laminas\Mvc\MvcEvent;
 use Laminas\Session\Container;
-use Laminas\Session\SaveHandler\Cache;
 use Laminas\Session\SessionManager;
 use Laminas\Session\Validator\HttpUserAgent;
 use Laminas\Session\Validator\RemoteAddr;

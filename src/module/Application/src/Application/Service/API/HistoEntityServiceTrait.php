@@ -79,7 +79,7 @@ Trait HistoEntityServiceTrait
         $entity->setHistoDestruction(new \DateTime());
     }
 
-    public function archiverEntity(HistoriqueAwareInterface $entity, UserInterface $user = null)
+    public function archiverEntity(HistoriqueAwareInterface $entity, UserInterface $user = null): void
     {
         if(!isset($user)){
             $user = $this->getCurrentUser();
@@ -89,7 +89,7 @@ Trait HistoEntityServiceTrait
         $this->getEntityManager()->flush();
     }
 
-    public function restaurerEntity(HistoriqueAwareInterface $entity, UserInterface $user = null)
+    public function restaurerEntity(HistoriqueAwareInterface $entity, UserInterface $user = null): void
     {
         if(!isset($user)){
             $user = $this->getCurrentUser();

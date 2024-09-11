@@ -53,6 +53,3 @@ SELECT 6, p.id FROM privilegeInscriptionIndex AS p;
 WITH privilegeInscriptionIndex AS (SELECT id FROM unicaen_privilege_privilege WHERE code = 'dashboard_courses')
 INSERT INTO unicaen_privilege_privilege_role_linker (role_id, privilege_id)
 SELECT 7, p.id FROM privilegeInscriptionIndex AS p;
-WITH privilegeInscriptionIndex AS (SELECT id FROM unicaen_privilege_privilege WHERE code = 'dashboard_courses')
-INSERT INTO unicaen_privilege_privilege_role_linker (role_id, privilege_id)
-SELECT 8, p.id FROM privilegeInscriptionIndex AS p;

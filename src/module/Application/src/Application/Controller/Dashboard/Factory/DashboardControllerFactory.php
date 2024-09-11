@@ -16,6 +16,7 @@ use Application\Service\Step\StepService;
 use Fichier\Form\Upload\UploadForm;
 use Fichier\Service\Fichier\FichierService;
 use Fichier\Service\Nature\NatureService;
+use Fichier\Service\S3\S3Service;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
@@ -85,6 +86,9 @@ class DashboardControllerFactory implements FactoryInterface
 
         $calendarService = $container->get('ServiceManager')->get(CalendarService::class);
         $controller->setCalendarService($calendarService);
+
+        $s3Service = $container->get('ServiceManager')->get(S3Service::class);
+        $controller->setS3Service($s3Service);
 
 
 //        $container->get('')

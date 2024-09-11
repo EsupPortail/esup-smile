@@ -187,9 +187,11 @@ class ComposanteService extends CommonEntityService
         $cgToSend = [];
         /** @var ComposanteGroupe $cg */
         foreach ($cgList as $cg) {
-            $cgUsers = $cg->getUsers();
-            if($cg->getUsers()->contains($user)){
-                $cgToSend[] = $cg;
+            $cgUsers = $cg->getUsers()->toArray();
+            foreach ($cgUsers as $cgUser) {
+                if ($cgUser->getId() === $user->getId()) {
+                    $cgToSend[] = $cg;
+                }
             }
         }
         return $cgToSend;

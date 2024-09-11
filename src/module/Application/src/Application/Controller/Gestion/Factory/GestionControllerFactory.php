@@ -6,6 +6,7 @@ namespace Application\Controller\Gestion\Factory;
 
 
 use Application\Application\Service\Composante\ComposanteService;
+use Application\Application\Service\Cours\CoursService;
 use Application\Controller\Gestion\GestionController;
 use Application\Entity\Step;
 use Application\Service\Dashboard\DashboardService;
@@ -63,6 +64,9 @@ class GestionControllerFactory implements FactoryInterface
 
         $etablissementService = $container->get('ServiceManager')->get(EtablissementService::class);
         $controller->setEtablissementService($etablissementService);
+
+        $coursService = $container->get('ServiceManager')->get(CoursService::class);
+        $controller->setCoursService($coursService);
 
 //        $entityManager = $container->get('EntityService')->get(Step::class);
 //        $controller->entityManagerStep = $entityManager;

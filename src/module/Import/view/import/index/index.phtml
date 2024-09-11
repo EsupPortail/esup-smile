@@ -1,10 +1,12 @@
 <?php
+use Application\Entity\ImportLog;
 
 /**
  * @var array $resultCsv
+ * @var ImportLog[] $importLogs;
  */
 
-
+$importLogs = $this->importLogs;
 
 ?>
 <h2 class="row mb-3">
@@ -12,13 +14,25 @@
 </h2>
 <?php if($resultCsv): ?>
 <div class="row">
-    <?php if(isset($resultCsv['success'])): ?>
+    <?php if(isset($resultCsv['success']) || isset($resultCsv['duplicate'])): ?>
         <div class="col">
             <p class="alert alert-success">
-                <span class="text-success"><?= $resultCsv['success'] ?></span>
+                <span class="text-success">
+                    <?= $resultCsv['success']+$resultCsv['duplicate'] ?> lignes ajoutées/modifiés <br>
+                </span>
             </p>
         </div>
-    <?php elseif (isset($resultCsv['error'])): ?>
+    <?php endif; ?>
+    <?php if (isset($resultCsv['failed'])): ?>
+        <div class="col">
+            <p class="alert alert-danger">
+                <span class="text-danger">
+                    <?= $resultCsv['failed'] ?> erreurs
+                </span>
+            </p>
+        </div>
+    <?php endif; ?>
+    <?php if (isset($resultCsv['error'])): ?>
         <div class="col">
             <p class="alert alert-danger">
                 <span class="text-danger"><?= $resultCsv['error'] ?></span>
@@ -29,8 +43,9 @@
 <?php endif; ?>
 <div class="row">
     <div class="col-md-12">
-        <p class="alert alert-info">
-            <b>Status API</b> : <span class="text-danger">Disabled</span>
+        <p class="alert alert-warning">
+            <b>Attention</b> : Si vous avez un import de données automatisé par API ou autre, il est découragé de passer par l'import de fichier CSV en même temps.<br>
+            Pour mettre en place un import de données automatisé, vous pouvez contacter le support technique.
         </p>
     </div>
 </div>
@@ -41,7 +56,6 @@
             <tr>
                 <th>Table</th>
                 <th>Row</th>
-                <th>Updated</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -49,21 +63,47 @@
             <tr>
                 <td>Composante</td>
                 <td><?= $this->nComposantes ?></td>
-                <td></td>
                 <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalImportComposante" title="Import des composantes">Import CSV</button></td>
             </tr>
             <tr>
                 <td>Formation</td>
                 <td><?= $this->nFormations ?></td>
-                <td></td>
                 <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalImportFormation" title="Import des formations">Import CSV</button></td>
             </tr>
             <tr>
                 <td>Cours</td>
                 <td><?= $this->nCourses ?></td>
-                <td></td>
                 <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalImportCours" title="Import des cours">Import CSV</button></td>
             </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <h3>Dernier logs</h3>
+        <table class="table table-responsive">
+            <thead>
+            <tr>
+                <th>Status</th>
+                <th>Nom</th>
+                <th>Type</th>
+                <th>Logs</th>
+                <th>Created</th>
+                <th>Ended</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($importLogs as $importLog): ?>
+                <tr>
+                    <td><?= $importLog->getSuccess() ?></td>
+                    <td><?= $importLog->getName() ?></td>
+                    <td><?= $importLog->getType() ?></td>
+                    <td><?= nl2br(str_replace('\n', '<br>', $importLog->getLog())) ?></td>
+                    <td><?= ($importLog->getStartedOn()) ? $importLog->getStartedOn()->format('Y-m-d H:i:s') : '' ?></td>
+                    <td><?= ($importLog->getEndedOn()) ? $importLog->getEndedOn()->format('Y-m-d H:i:s') : '' ?></td>
+                </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
     </div>

@@ -8,6 +8,7 @@ use Application\Entity\Inscription;
 use Laminas\Form\Element\DateTime;
 use Laminas\Mvc\Application;
 use UnicaenAuthentification\Service\UserContext;
+use UnicaenUtilisateur\Entity\Db\Role;
 use UnicaenUtilisateur\Entity\Db\User;
 use UnicaenUtilisateur\Entity\Db\UserInterface;
 
@@ -83,25 +84,68 @@ class InscriptionService extends CommonEntityService
         return $nominations;
     }
 
-    public function getByGestionnaire($user, $year) {
+    public function getByGestionnaire(UserInterface $user, string $year): array
+    {
+        $inscriptionsToReturn = [];
+        $roleGestionnaire = $this->getEntityManager()->getRepository(Role::class)->findOneBy(['roleId' => 'gestionnaire']);
+        $isGestionnaire = $user->hasRole($roleGestionnaire);
+        $inscriptions = $this->findAllBy(['year' => $year]);
 
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('i')
-            ->from(Inscription::class, 'i')
-            ->leftJoin('i.composante', 'c')
-            ->leftJoin('c.groupe', 'g')
-            ->leftJoin('g.users', 'u')
-            ->where('i.year = :year AND u.id = :user')
-            ->orWhere('i.year = :year AND c.groupe is null')
-            ->setParameter('year', $year)
-            ->setParameter('user', $user);
+        foreach ($inscriptions as $i) {
+            if($isGestionnaire) {
+                if($i->getComposante() === null) {
+                    $inscriptionsToReturn[] = $i;
+                }else {
+                    $group = $i->getComposante()->getGroupe();
+                    if($group !== null) {
+                        $users = $group->getUsers();
+                        if ($users !== null) {
+                            foreach ($users as $u) {
+                                if ($u->getId() === $user->getId()) {
+                                    $inscriptionsToReturn[] = $i;
+                                }
+                            }
+                        }
+                    }
+                }
+            }else if (!in_array($i, $inscriptionsToReturn)) {
+                if ($i->getMailreferent() === $user->getEmail()) {
+                    $inscriptionsToReturn[] = $i;
+                }
+            }
+        }
 
-        $inscriptions = $qb->getQuery()->getResult();
-
-        return $inscriptions;
+        return $inscriptionsToReturn;
 
     }
 
+    public function getUniversityYear(int $inscriptionMonth): int
+    {
+        $currentYear = intval(date('Y'));
+        $currentMonth = intval(date('m'));
+
+        if ($currentMonth < 9) {
+            if ($inscriptionMonth < 9 && $inscriptionMonth > $currentMonth) {
+                return $currentYear;
+            }else if ($inscriptionMonth < 9 && $inscriptionMonth < $currentMonth) {
+                return $currentYear + 1;
+            }else if ($inscriptionMonth >= 9) {
+                return $currentYear + 1;
+            }
+        }else {
+            if ($inscriptionMonth < 9) {
+                return $currentYear;
+            }else if ($inscriptionMonth > 9 && $inscriptionMonth > $currentMonth) {
+                return $currentYear;
+            }else if ($inscriptionMonth > 9 && $inscriptionMonth < $currentMonth) {
+                return $currentYear + 1;
+            }else {
+                return $currentYear + 1;
+            }
+        }
+
+        return $currentYear;
+    }
     protected UserContext $userContext;
 
     /**
@@ -117,6 +161,12 @@ class InscriptionService extends CommonEntityService
     public function setUserContext(UserContext $userContext): void
     {
         $this->userContext = $userContext;
+    }
+
+    public function isReferent(UserInterface $user): bool
+    {
+        $inscription = $this->findOneBy(['mailreferent' => $user->getEmail()]);
+        return ($inscription !== null);
     }
 
 

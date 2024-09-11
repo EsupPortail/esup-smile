@@ -38,6 +38,7 @@ return [
                         GestionController::ACTION_VIEW,
                         GestionController::ACTION_VALIDATE,
                         GestionController::ACTION_DENIED,
+                        GestionController::ACTION_SAVE_NOTE,
                     ],
                     'privileges' => [
                         GestionPrivileges::GESTION_VIEW,
@@ -146,6 +147,16 @@ return [
                             'defaults' => [
                                 'controller' => GestionController::class,
                                 'action' => GestionController::ACTION_ADD_STUDENT
+                            ]
+                        ]
+                    ],
+                    'saveNote' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/saveNote',
+                            'defaults' => [
+                                'controller' => GestionController::class,
+                                'action' => GestionController::ACTION_SAVE_NOTE
                             ]
                         ]
                     ],

@@ -94,7 +94,7 @@
 h2:not(.h2-hp):not(.modal-title) {
 	border-left: 20px solid var(--smile-main-color);
 	padding-left: .5em;
-	display: inline-block;
+	/*display: inline-block;*/
 }
 .alert .fa-solid,
 .alert .fas {

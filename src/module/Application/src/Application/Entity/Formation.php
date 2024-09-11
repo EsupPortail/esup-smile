@@ -4,8 +4,10 @@ namespace Application\Entity;
 
 use Application\Application\Entity\Interfaces\GenderAwareInterface;
 use Application\Application\Entity\Interfaces\HistoriqueAwareInterface;
+use Application\Application\Entity\Interfaces\ImportInterface;
 use Application\Application\Entity\Interfaces\SourceAwareInterface;
 use Application\Application\Entity\Traits\InterfacesImplementation\HistoriqueAwareTrait;
+use Application\Application\Entity\Traits\InterfacesImplementation\ImportAwareTrait;
 use Application\Application\Entity\Traits\InterfacesImplementation\SourceAwareTrait;
 use DateTime;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
@@ -18,11 +20,13 @@ use UnicaenUtilisateur\Entity\Db\UserInterface;
 class Formation implements ResourceInterface,
                            HistoriqueAwareInterface,
                            SourceAwareInterface,
-                           GenderAwareInterface
+                           GenderAwareInterface,
+                           ImportInterface
 
 {
     use HistoriqueAwareTrait;
     use SourceAwareTrait;
+    use ImportAwareTrait;
 
 
     const RESOURCE_ID = 'Formation';
@@ -544,7 +548,7 @@ class Formation implements ResourceInterface,
      */
     public function getSourceCode(): string
     {
-        return $this->sourceCode;
+        return $this->sourceCode ?? '';
     }
 
     /**

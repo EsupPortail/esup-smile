@@ -21,10 +21,10 @@
 ?>
     <script type="text/javascript">
         //////////////////// ESSENTIAL SETTINGS ////////////////////
-
+        
         // EntityID of the Service Provider that protects this Resource
         // [Mandatory]
-        wayf_sp_entityID = "<?= $_ENV['WAYF_SP_ENTITYID']; ?>";
+        wayf_sp_entityID = "<?= $_ENV['SHIB_SP_ENTITYID']; ?>";
 
         // Shibboleth Service Provider handler URL
         // Examples: "https://point.switch.ch/Shibboleth.sso", "https://rr.aai.switch.ch/aaitest/Shibboleth.sso"
@@ -36,7 +36,7 @@
 
         // URL of the WAYF to use
         // [Mandatory]
-        wayf_URL = "<?= $baseUri  ?>/wayf/WAYF";
+        wayf_URL = "<?= $_ENV['WAYF_SP_URL'] ?>wayf/WAYF";
 
         // URL on this resource that the user shall be returned to after authentication
         // [Mandatory]
@@ -71,7 +71,7 @@
         // Whether to hide the WAYF after the user was logged in
         // If you want to hide the embedded WAYF completely, uncomment
         // the property and set it to "". This then won't draw anything
-        var wayf_logged_in_messsage = "Vous êtes authentifié";
+        var wayf_logged_in_messsage = "";
 
 
         // Overwites the text of the checkbox if
@@ -109,12 +109,12 @@
         // The SP must have configured the discovery feed handler that generates a
         // JSON object. Otherwise it won't generate the JSON data containing the IdPs.
         // [Optional, commented out by default]
+        var wayf_discofeed_url = "<?= $_ENV['WAYF_SP_URL']; ?>Shibboleth.sso/DiscoFeed";
         var wayf_use_disco_feed = true;
-
         //-->
     </script>
 
-    <script type="text/javascript" src="https://smile-pp.unicaen.fr/wayf/WAYF/embedded-wayf.js"></script>
+    <script type="text/javascript" src="<?= $_ENV['WAYF_SP_URL']; ?>wayf/WAYF/embedded-wayf.js"></script>
 
     <noscript>
         <!--
@@ -129,11 +129,11 @@
     </noscript>
 
     <script>
-        // let logo = document.querySelector('#wayf_logo')
-        // logo.src = "https://smile-pp.unicaen.fr/img/logo_smile_RVB.jpg"
         let btnLogin = document.querySelector('#wayf_submit_button')
-        btnLogin.classList.add('btn')
-        btnLogin.classList.add('btn-success')
+        if(btnLogin) {
+            btnLogin.classList.add('btn')
+            btnLogin.classList.add('btn-success')
+        }
     </script>
 
     <!-- EMBEDDED-WAYF-END -->

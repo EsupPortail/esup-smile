@@ -8,6 +8,6 @@ return [
         'host'        => 'http://localhost:5133',
 
         // Activation du hot-loading ou non TRUE en mode développement, FALSE pour du test ou de la prod
-        'hot-loading' => true,
+        'hot-loading' => false,
     ],
 ];

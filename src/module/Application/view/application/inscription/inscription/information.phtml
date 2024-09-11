@@ -38,8 +38,8 @@ $fcd = $this->formdate();
 
 ?>
 <div class="row">
-    <div class="col text-center headTitle">
-        <h2>REGISTRATION</h2>
+    <div class="col headTitle">
+        <h2><?= $this->translate("REGISTRATION") ?></h2>
     </div>
 </div>
 <?php
@@ -49,7 +49,7 @@ if($stepMsg):
         <div class="col text-center">
             <div class="alert alert-warning" role="alert">
                 <p>
-                    Your registration has been returned to previous step with the following message :<br>
+                    <?= $this->translate("registrationMessagePrevious"); ?> :<br>
                     <b><?= $stepMsg->getLibelle() ?></b>
                 </p>
             </div>
@@ -69,7 +69,7 @@ echo $this->form()->openTag($form->prepare());
     <div class="col-6">
         <div class="row">
             <div class="col">
-                <h3 class="mb-3 mt-3 titleBlue">1. Choose your mobility</h3>
+                <h3 class="mb-3 mt-3 titleBlue">1. <?= $this->translate("ChooseMobility"); ?></h3>
 
                 <?php foreach($mobilite as $m): ?>
 
@@ -87,11 +87,44 @@ echo $this->form()->openTag($form->prepare());
                     </div>
 
                 <?php endforeach; ?>
+                        <label for="montharrival"><?= $this->translate("MonthArrival") ?></label>
+                        <select class="form-select" id="montharrival" name="montharrival"
+                            <?php
+                            $monthArrival = "";
+                            if ($inscription) {
+                                if($inscription->getMontharrival()) {
+                                    $monthArrival = $inscription->getMontharrival();
+                                }
+                            }
+
+                            ?>
+                                required>
+                            <?php
+                            $mois = [
+                                'January',
+                                'February',
+                                'March',
+                                'April',
+                                'May',
+                                'June',
+                                'July',
+                                'August',
+                                'September',
+                                'October',
+                                'November',
+                                'December',
+                            ];
+                            foreach($mois as $m) {
+                                $selected = ($m === $monthArrival) ? 'selected' : '';
+                                echo '<option value="'.$m.'" '.$selected.'>'.$m.'</option>';
+                            }
+                            ?>
+                        </select>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <h3 class="mb-3 mt-3 titleBlue">3. Files to upload</h3>
+                <h3 class="mb-3 mt-3 titleBlue">3. <?= $this->translate("Files to upload") ?></h3>
 
                     <table class="table table-bordered">
                         <thead>
@@ -106,7 +139,7 @@ echo $this->form()->openTag($form->prepare());
         </div>
     </div>
     <div class="col-6">
-        <h3 class="mb-3 mt-3 titleBlue">2. Check your information</h3>
+        <h3 class="mb-3 mt-3 titleBlue">2. <?= $this->translate("Check your information"); ?></h3>
         <fieldset>
             <div class="row justify-content-md-center">
                 <div class="col">

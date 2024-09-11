@@ -101,6 +101,11 @@ class Inscription
     private $statuslibelle;
 
     /**
+     * @var string|null
+     */
+    private $montharrival;
+
+    /**
      * @var int
      */
     private $id;
@@ -144,6 +149,11 @@ class Inscription
      * @var \Doctrine\Common\Collections\Collection
      */
     private $cours;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $inscriptionCours;
 
     /**
      * Constructor
@@ -550,6 +560,30 @@ class Inscription
     }
 
     /**
+     * Set montharrival.
+     *
+     * @param string|null $montharrival
+     *
+     * @return Inscription
+     */
+    public function setMontharrival($montharrival = null)
+    {
+        $this->montharrival = $montharrival;
+
+        return $this;
+    }
+
+    /**
+     * Get montharrival.
+     *
+     * @return string|null
+     */
+    public function getMontharrival(): ?string
+    {
+        return $this->montharrival;
+    }
+
+    /**
      * Get id.
      *
      * @return int
@@ -781,5 +815,65 @@ class Inscription
     public function getFormation()
     {
         return $this->formation;
+    }
+
+    public function getInscriptionCours(
+    ): \Doctrine\Common\Collections\Collection
+    {
+        return $this->inscriptionCours;
+    }
+
+    public function setInscriptionCours(
+        \Doctrine\Common\Collections\Collection $inscriptionCours
+    ): void {
+        $this->inscriptionCours = $inscriptionCours;
+    }
+
+    public function getNote(Cours $cours)
+    {
+        foreach ($this->inscriptionCours as $inscriptionCours) {
+            if ($inscriptionCours->getCours() == $cours) {
+                return $inscriptionCours->getNote();
+            }
+        }
+        return null;
+    }
+
+    public function setNote(Cours $cours, $note): void
+    {
+        $coursTest = $this->getCours();
+        $Inscriptioncours = $this->getInscriptionCours();
+
+        foreach ($Inscriptioncours as $ic) {
+            if ($ic->getCours() == $cours) {
+                $ic->setNote($note);
+            }
+        }
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'uuid' => $this->getUuid(),
+            'firstname' => $this->getFirstname(),
+            'lastname' => $this->getLastname(),
+            'birthdate' => $this->getBirthdate(),
+            'esi' => $this->getEsi(),
+            'city' => $this->getCity(),
+            'postalcode' => $this->getPostalcode(),
+            'street' => $this->getStreet(),
+            'numstreet' => $this->getNumstreet(),
+            'firstmobilite' => $this->getFirstmobilite(),
+            'handicap' => $this->getHandicap(),
+            'mailreferent' => $this->getMailreferent(),
+            'email' => $this->getEmail(),
+            'year' => $this->getYear(),
+            'createdAt' => $this->getCreatedAt(),
+            'status' => $this->getStatus(),
+            'statuslibelle' => $this->getStatuslibelle(),
+            'montharrival' => $this->getMontharrival(),
+            'mobilite' => ($this->getMobilite()) ? $this->getMobilite()->getId() : null,
+            'etablissement' => ($this->getEtablissement()) ? $this->getEtablissement()->getId() : null,
+        ];
     }
 }

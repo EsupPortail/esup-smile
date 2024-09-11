@@ -40,6 +40,13 @@
       </options>
     </field>
     <one-to-many field="formations" target-entity="Application\Entity\Formation" mapped-by="composante"/>
+    <field name="createdOn" type="datetime" column="created_on" nullable="false">
+      <options>
+        <option name="default">now()</option>
+      </options>
+    </field>
+    <field name="updatedOn" type="datetime" column="updated_on" nullable="true"/>
+    <field name="deletedOn" type="datetime" column="deleted_on" nullable="true"/>
     <field name="histoCreation" type="datetime" column="histo_creation" nullable="false">
       <options>
         <option name="default">now()</option>

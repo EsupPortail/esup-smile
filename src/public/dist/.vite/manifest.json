@@ -1,0 +1,25 @@
+{
+  "_vendor-!~{002}~.js": {
+    "file": "assets/vendor-BKklgPg6.css",
+    "src": "_vendor-!~{002}~.js"
+  },
+  "_vendor-DPaeBaJy.js": {
+    "file": "assets/vendor-DPaeBaJy.js",
+    "name": "vendor",
+    "css": [
+      "assets/vendor-BKklgPg6.css"
+    ]
+  },
+  "main.js": {
+    "file": "assets/main-CVnxsWGx.js",
+    "name": "main",
+    "src": "main.js",
+    "isEntry": true,
+    "imports": [
+      "_vendor-DPaeBaJy.js"
+    ],
+    "css": [
+      "assets/main-BLSUmjY3.css"
+    ]
+  }
+}

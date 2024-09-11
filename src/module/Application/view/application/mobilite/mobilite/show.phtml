@@ -38,30 +38,43 @@ $mobilite = $this->mobilite;
     </div>
 </div>
 
+<div class="row mb-2">
+    <div class="col-4">
+        <a href="/mobilite" class="btn btn-primary">Retour</a>
+    </div>
+</div>
 <div class="row">
     <h2><?= $mobilite->getLibelle() ?></h2>
 </div>
 <div class="row">
-    <form method="POST" action="<?= $this->url('mobilite/update') ?>">
-        <div class="row">
-            <div class="col-4">
-                <label for="mobiliteLibelle">Nom :</label>
-                <input type="text" name="mobiliteLibelle" id="mobiliteLibelle" class="form-control" value="<?= $mobilite->getLibelle() ?>">
-            </div>
-            <div class="col-4 mt-4">
-                <input type="hidden" name="mobiliteId" value="<?= $mobilite->getId() ?>">
-                <button type="submit" class="btn btn-success">Sauvegarder</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-4">
-                <div class="form-check form-switch">
-                    <label class="form-check-label" for="flexSwitchCheckChecked">Actif</label>
-                    <input class="form-check-input" type="checkbox" role="switch" name="mobiliteActive" id="mobiliteActive" <?= $mobilite->getActive() ? 'checked' : '' ?>>
+    <div class="col">
+        <form method="POST" action="<?= $this->url('mobilite/update') ?>">
+            <div class="row">
+                <div class="col-4">
+                    <label for="mobiliteLibelle">Nom :</label>
+                    <input type="text" name="mobiliteLibelle" id="mobiliteLibelle" class="form-control" value="<?= $mobilite->getLibelle() ?>">
+                </div>
+                <div class="col-4 mt-4">
+                    <input type="hidden" name="mobiliteId" value="<?= $mobilite->getId() ?>">
+                    <button type="submit" class="btn btn-success">Sauvegarder</button>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-check form-switch">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Actif</label>
+                        <input class="form-check-input" type="checkbox" role="switch" name="mobiliteActive" id="mobiliteActive" <?= $mobilite->getActive() ? 'checked' : '' ?>>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col">
+        <a href="<?= $this->url('formations/activeAllByMobilite').$mobilite->getId() ?>" class="btn btn-primary">Activer tous les cours pour cette mobilité</a>
+        <div class="m-2 alert alert-warning">
+            Cela peut prendre quelques minutes
         </div>
-    </form>
+    </div>
 </div>
 
 <div class="row mt-4">

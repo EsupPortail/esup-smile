@@ -3,13 +3,8 @@
 ------------------------------------
 -- Probablement une table temporaire, les données seront surement fournis par APOGEE/PEGASE
 INSERT INTO mobilite (libelle)
-VALUES  ('Ecoles d''été'),
-        ('Programme d''échange'),
-        ('Erasmus'),
-        ('Etude en alliance transfrontalière'),
-        ('Double diplôme'),
-        ('Etude et stage combinés');
-
+VALUES  ('Ecoles d''été | Summer Schools'),
+        ('Erasmus');
 
 INSERT INTO unicaen_privilege_categorie (code, libelle, namespace, ordre)
 VALUES ('mobilite', 'Mobilite', 'Application\Provider\Privilege', 12)

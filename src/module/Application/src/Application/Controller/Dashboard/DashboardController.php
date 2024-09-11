@@ -19,6 +19,7 @@ use Application\Entity\Formation;
 use Application\Entity\Inscription;
 use Application\Entity\Mobilite;
 use Application\Entity\Step;
+use Application\Entity\Typedocument;
 use Application\Provider\Template\PdfTemplate;
 use Application\Service\Document\DocumentServiceAwareTrait;
 use Doctrine\ORM\ORMException;
@@ -27,6 +28,7 @@ use Fichier\Entity\Db\Fichier;
 use Fichier\Form\Upload\UploadFormAwareTrait;
 use Fichier\Service\Fichier\FichierServiceAwareTrait;
 use Fichier\Service\Nature\NatureServiceAwareTrait;
+use Fichier\Service\S3\S3ServiceAwareTrait;
 use http\Client\Request;
 use Interop\Container\Containerinterface;
 use Laminas\Http\Response;
@@ -65,6 +67,8 @@ class DashboardController extends AbstractActionController
     use MessageServiceAwareTrait;
     use MailServiceAwareTrait;
     use CalendarServiceAwareTrait;
+    use S3ServiceAwareTrait;
+
 
     /** ACTION */
     const ACTION_INDEX = "index";
@@ -87,7 +91,6 @@ class DashboardController extends AbstractActionController
 
     public function indexAction()
     {
-
         $user = $this->userService->getConnectedUser();
         $period = $this->getCalendarService()->getCurrentPeriod();
 
@@ -138,6 +141,7 @@ class DashboardController extends AbstractActionController
 
         return new ViewModel(['inscription' => $inscription,
                               'user' => $user,
+                              'role' => $this->getUserService()->getConnectedRole(),
                               'courses' => $courses,
                               'mainComponent' => $mainComponent,
                               'stepCourses' => $stepCourses,
@@ -151,7 +155,7 @@ class DashboardController extends AbstractActionController
         ]);
     }
 
-    public function uploadFichierAction()
+    public function uploadFichierAction(): ViewModel
     {
         $user = $this->userService->getConnectedUser();
 
@@ -168,10 +172,18 @@ class DashboardController extends AbstractActionController
             $typeId = $request->getPost('fileType');
             $natureId = 1;
             $nature = $this->getNatureService()->getNature($natureId);
-            $typeDocument = $this->getDocumentService()->getTypeDocumentById($typeId);
+            if($typeId === null || $typeId === '0') {
+                $typeDocument = new Typedocument();
+                $typeDocument->setLibelle('Autre');
+                $this->getDocumentService()->getEntityManager()->persist($typeDocument);
+                $this->getDocumentService()->getEntityManager()->flush();
+            }else {
+                $typeDocument = $this->getDocumentService()->getTypeDocumentById($typeId);
+            }
+
 
             if ($file['name'] != '') {
-                $this->getFichierService()->setPath('public/upload/');
+                $this->getFichierService()->setPath('public/upload');
                 $fichier = $this->getFichierService()->createFichierFromUpload($file, $nature);
             }
 
@@ -230,7 +242,10 @@ class DashboardController extends AbstractActionController
 
             if($user) {
                 $inscription = $this->inscriptionService->findByUser($user);
-                if($inscription && $inscription->getMobilite()) {
+                $roleGestionnaire = $this->getUserService()->getRoleService()->findByLibelle('Gestionnaire');
+                if($user->hasRole($roleGestionnaire)) {
+                    $listCours = $this->coursService->findAllOpenMobilite();
+                }else if($inscription && $inscription->getMobilite()) {
                     $coursSelected = $inscription->getCours();
                     $mobilite = $inscription->getMobilite();
                     $listCours = $mobilite->getCours()->toArray();
@@ -259,7 +274,9 @@ class DashboardController extends AbstractActionController
                     "truc" => $cours->getCodeElp()
                 ];
                 $jsonTxt.="{";
-                $nameComponent = ($cours->getFormation()->getComposante()->getGroupe()) ? $cours->getFormation()->getComposante()->getGroupe()->getLibelle() : $cours->getFormation()->getComposante()->getLibelle();
+                $nameGroup = ($cours->getFormation()->getComposante()->getGroupe()) ? $cours->getFormation()->getComposante()->getGroupe()->getLibelle() : '';
+                $jsonTxt.='"group": "'.htmlentities($nameGroup, ENT_QUOTES).'",';;
+                $nameComponent = $cours->getFormation()->getComposante()->getLibelle();
                 $jsonTxt.='"component": "'.htmlentities($nameComponent, ENT_QUOTES).'",';
                 $jsonTxt.='"name": "'.htmlentities($cours->getLibelle(), ENT_QUOTES).'",';
                 $jsonTxt.='"level": "'.htmlentities($formation->getNiveauEtude()).'",';
@@ -309,6 +326,7 @@ class DashboardController extends AbstractActionController
             $minAlloc = $this->getParametreService()->getValeurForParametre('ects','min');
             $maxAlloc = $this->getParametreService()->getValeurForParametre('ects','max');
 
+            $renduCoursAide = $this->getRenduService()->generateRenduByTemplateCode("cours_aide");
 //            $composantes = $this->composanteService->findAllBy(['formations']);
             if (!$this->userService->getConnectedUser()) {
 
@@ -320,6 +338,7 @@ class DashboardController extends AbstractActionController
                         'ratioAlloc' => $ratioAlloc,
                         'minAlloc' => $minAlloc,
                         'maxAlloc' => $maxAlloc,
+                        'renduCoursAide' => $renduCoursAide,
                     ]
                 );
             }
@@ -331,6 +350,7 @@ class DashboardController extends AbstractActionController
             $stepMsg = $this->stepService->getLastStepMsg($inscription);
 
             $groupeComposantes = $this->getComposanteService()->getComposanteGroupes();
+
             $vm = new ViewModel(
                 [
                     'composantes' => $composantes,
@@ -342,6 +362,7 @@ class DashboardController extends AbstractActionController
                     'ratioAlloc' => $ratioAlloc,
                     'minAlloc' => $minAlloc,
                     'maxAlloc' => $maxAlloc,
+                    'renduCoursAide' => $renduCoursAide,
                 ]
             );
             $vm->setTemplate('application/dashboard/dashboard/courses');

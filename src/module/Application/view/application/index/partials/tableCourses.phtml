@@ -1,11 +1,15 @@
 <p><?= $this->translate('Faculty');?>:
-    <?= ($this->mainComponent) ? $this->mainComponent->getGroupeLibelle() : '' ?></p>
+    <?= ($this->mainComponent) ? $this->mainComponent->getGroupeLibelle() : '' ?>
+</p>
 <table id="tableChoices" class="table table-striped">
     <thead>
     <tr>
         <th scope="col"><?= $this->translate('Name')?></th>
         <th scope="col"><?= $this->translate('ECTS')?></th>
         <th scope="col"><?= $this->translate('Main')?></th>
+        <?php if($this->inscription && $this->role) : ?>
+            <th scope="col" class="th-sm"><?= $this->translate('Note')?></th>
+        <?php endif; ?>
     </tr>
     </thead>
     <tbody id="choices">
@@ -23,12 +27,62 @@
                     echo '<i class="fa-solid fa-check"></i>';
                 }
                 ?></td>
+            <?php if($this->inscription && $this->role) : ?>
+                <td style="width: 15%;">
+                    <?php if($this->role->getLibelle() === 'Etudiant'): ?>
+                        <?= $c->getNote($this->inscription) ?>
+                    <?php else: ?>
+                        <input class="noteCours form-control" type="number" name="noteC" data-cours="<?= $c->getId() ?>" id="notC<?= $c->getId() ?>"
+                               value="<?= $c->getNote($this->inscription) ?>">
+                    <?php endif; ?>
+                </td>
+            <?php endif; ?>
         </tr>
     <?php endforeach; ?>
         <tr>
             <td></td>
             <td>Total : <?= $nEcts ?></td>
             <td></td>
+            <?php if($this->inscription && $this->role) : ?>
+                <td>
+                    <?php if($this->role->getLibelle() === 'Etudiant'): ?>
+                    <?php else: ?>
+                        <input type="button" value="<?= $this->translate('Save'); ?>" id="saveChoice"/>
+                    <?php endif; ?>
+                </td>
+            <?php endif; ?>
         </tr>
     </tbody>
 </table>
+<script>
+    <?php if($this->inscription) : ?>
+    $(document).ready(function () {
+        let saveChoice = document.querySelector('#saveChoice');
+        saveChoice.addEventListener('click', function () {
+            let notes = document.querySelectorAll('.noteCours');
+            let notesArray = [];
+            notes.forEach(function (note) {
+                let cours = note.dataset.cours;
+                let noteC = note.value;
+                notesArray.push({cours, noteC})
+            });
+            let data = {
+                notes: notesArray,
+                inscription: "<?= $this->inscription->getUuid() ?>",
+            }
+            saveChoice.style.display = 'none';
+            fetch('/gestion/saveNote', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(function (response) {
+                saveChoice.style.display = 'block';
+                console.log(response)
+            })
+        })
+    })
+    <?php endif; ?>
+
+</script>

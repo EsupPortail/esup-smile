@@ -90,6 +90,13 @@
         <join-column name="source_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
+    <field name="createdOn" type="datetime" column="created_on" nullable="false">
+      <options>
+        <option name="default">now()</option>
+      </options>
+    </field>
+    <field name="updatedOn" type="datetime" column="updated_on" nullable="true"/>
+    <field name="deletedOn" type="datetime" column="deleted_on" nullable="true"/>
     <many-to-one field="histoCreateur" target-entity="UnicaenUtilisateur\Entity\Db\User" fetch="LAZY">
       <join-columns>
         <join-column name="histo_createur_id" referenced-column-name="ID"/>
@@ -107,5 +114,6 @@
     </many-to-one>
     <many-to-many field="inscription" target-entity="Application\Entity\Inscription" mapped-by="cours" fetch="LAZY"/>
     <many-to-many field="mobilite" target-entity="Application\Entity\Mobilite" mapped-by="cours" fetch="LAZY"/>
+    <one-to-many field="inscriptionCours" target-entity="Application\Entity\InscriptionCours" mapped-by="cours" fetch="LAZY"/>
   </entity>
 </doctrine-mapping>

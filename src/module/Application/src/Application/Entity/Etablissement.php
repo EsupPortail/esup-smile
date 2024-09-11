@@ -283,4 +283,19 @@ class Etablissement
     {
         return $this->pays;
     }
+
+    public function toArray()
+    {
+        return [
+            'code' => $this->getCode(),
+            'pic' => $this->getPic(),
+            'oid' => $this->getOid(),
+            'libelle' => $this->getLibelle(),
+            'postCode' => $this->getPostCode(),
+            'street' => $this->getStreet(),
+            'city' => $this->getCity(),
+            'paysCode' => $this->getPaysCode(),
+            'id' => $this->getId(),
+        ];
+    }
 }

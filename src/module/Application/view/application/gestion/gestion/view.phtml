@@ -21,7 +21,7 @@ $messages = $this->messages;
 $user = $this->user;
 ?>
 <div class="row">
-    <div class="col text-center headTitle">
+    <div class="col headTitle">
         <h2>VALIDATION</h2>
     </div>
 </div>
@@ -30,7 +30,7 @@ $user = $this->user;
     <div class="col-5">
         <div class="row">
             <div class="col">
-                <h3 class="titleBlue">Steps</h3>
+                <h3 class="titleBlue"><?= $this->translate("Steps") ?></h3>
                 <?= $this->render('application/dashboard/dashboard/partials/step.phtml', ['steps' => $steps, 'step' => $step]); ?>
             </div>
         </div>
@@ -48,23 +48,23 @@ $user = $this->user;
         <h3 class="titleBlue">Informations</h3>
         <div class="row">
             <div class="col-6">
-                Name : <span style="font-weight: bold"><?= $inscription->getFirstname().' '.$inscription->getLastname() ?></span>
+                Nom : <span style="font-weight: bold"><?= $inscription->getFirstname().' '.$inscription->getLastname() ?></span>
             </div>
             <div class="col-6">
-                Birthdate : <span style="font-weight: bold"><?php if($inscription->getBirthdate()) { echo $inscription->getBirthdate()->format('d/m/y'); } ?></span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                Postal code : <span style="font-weight: bold"><?= $inscription->getPostalcode() ?></span>
-            </div>
-            <div class="col-6">
-                City : <span style="font-weight: bold"><?= $inscription->getCity() ?></span>
+                Date de naissance : <span style="font-weight: bold"><?php if($inscription->getBirthdate()) { echo $inscription->getBirthdate()->format('d/m/y'); } ?></span>
             </div>
         </div>
         <div class="row">
             <div class="col-6">
-                Address : <span style="font-weight: bold"><?= $inscription->getNumstreet() ?> <?= $inscription->getStreet() ?></span>
+                Code postal : <span style="font-weight: bold"><?= $inscription->getPostalcode() ?></span>
+            </div>
+            <div class="col-6">
+                Ville : <span style="font-weight: bold"><?= $inscription->getCity() ?></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                Adresse : <span style="font-weight: bold"><?= $inscription->getNumstreet() ?> <?= $inscription->getStreet() ?></span>
             </div>
             <div class="col-6">
                 Status : <span style="font-weight: bold"><?= $inscription->getStatuslibelle() ?></span>
@@ -79,18 +79,15 @@ $user = $this->user;
             <div class="col-6">
                 Référent : <span style="font-weight: bold"><?= $inscription->getMailreferent() ?></span>
             </div>
-            <div class="col-6">
-                Mobility : <span style="font-weight: bold">Dev</span>
-            </div>
         </div>
         <hr>
-        <h4>University</h4>
+        <h4>Université</h4>
         <div class="row">
             <div class="col-6">
-                Name : <span style="font-weight: bold"><?php if($inscription->getEtablissement()) { echo $inscription->getEtablissement()->getLibelle(); } ?></span>
+                Nom : <span style="font-weight: bold"><?php if($inscription->getEtablissement()) { echo $inscription->getEtablissement()->getLibelle(); } ?></span>
             </div>
             <div class="col-6">
-                Country : <span style="font-weight: bold">
+                Pays : <span style="font-weight: bold">
                     <?php
                         if($inscription->getEtablissement()) {
                             if($inscription->getEtablissement()->getPays()) {
@@ -104,10 +101,10 @@ $user = $this->user;
                 </span>
             </div>
             <div class="col-6">
-                City : <span style="font-weight: bold"><?php if($inscription->getEtablissement()) { echo $inscription->getEtablissement()->getCity(); } ?></span>
+                Ville : <span style="font-weight: bold"><?php if($inscription->getEtablissement()) { echo $inscription->getEtablissement()->getCity(); } ?></span>
             </div>
             <div class="col-6">
-                Street : <span style="font-weight: bold"><?php if($inscription->getEtablissement()) { echo $inscription->getEtablissement()->getStreet(); } ?></span>
+                Rue : <span style="font-weight: bold"><?php if($inscription->getEtablissement()) { echo $inscription->getEtablissement()->getStreet(); } ?></span>
             </div>
             <div class="col-6">
                 Erasmus Code : <span style="font-weight: bold"><?php if($inscription->getEtablissement()) { $inscription->getEtablissement()->getCode(); } ?></span>
@@ -116,9 +113,20 @@ $user = $this->user;
         <hr>
         <div class="row">
             <div class="col">
-                <h3 class="titleBlue">Courses</h3>
+                <div>
+                    Mobilité : <span style="font-weight: bold"><?= $inscription->getMobilite()->getLibelle() ?></span>
+                </div>
+                <div>
+                    Mois d'arrivé : <span style="font-weight: bold"><?= $this->translate($inscription->getMontharrival()) ?></span>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <h3 class="titleBlue"><?= $this->translate("Courses") ?></h3>
                 <?php if($isCoursesDone): ?>
-                    <?= $this->render('application/index/partials/tableCourses.phtml', ['courses' => $courses, 'mainComponent' => $mainComponent]); ?>
+                    <?= $this->render('application/index/partials/tableCourses.phtml', ['role' => $this->role,'courses' => $courses, 'mainComponent' => $mainComponent, 'inscription' => $inscription]); ?>
                     <!--                    <div class="row">-->
                     <!--                        <div class="col-md-12">-->
                     <!--                            <label for="nStreet">Institution</label>-->

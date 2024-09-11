@@ -1,5 +1,9 @@
 FROM postgres:13.7
 
+# Set timezone
+ENV TZ=Europe/Paris
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 RUN if [ -f ./deploy_configuration/.env_proxy ]; then \
     # Si le fichier source existe, copiez-le
     COPY ./deploy_configuration/.env_proxy /; \
@@ -25,6 +29,13 @@ RUN if [ -n "$http_proxy" ]; then \
     echo 'Acquire::ftp::Proxy "'$http_proxy'";' >> /etc/apt/apt.conf.d/05proxy; \
     echo "Proxy configuré dans le système de packages avec la valeur $http_proxy" && true; \
 fi
+
+RUN apt-get update
+RUN apt-get install -y python3-full python3-pip
+RUN apt-get install -y python3-boto3
+
+COPY ./deploy_configuration/download-dump-instance-s3.py /
+RUN chmod u+x /download-dump-instance-s3.py
 
 RUN mkdir /scripts_to_init
 COPY ./deploy_configuration/db /scripts_to_init

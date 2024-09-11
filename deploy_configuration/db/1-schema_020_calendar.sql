@@ -10,6 +10,7 @@ CREATE TABLE period
     id serial NOT NULL PRIMARY KEY,
     start_date date NOT NULL,
     end_date date NOT NULL,
+    libelle varchar(255),
     year_id int NOT NULL,
     disabled_inscription boolean NOT NULL DEFAULT false,
     CONSTRAINT check_dates CHECK (start_date <= end_date),
