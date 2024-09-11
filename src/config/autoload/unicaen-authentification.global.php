@@ -15,7 +15,7 @@ return [
          * Flag indiquant si l'utilisateur authenitifié avec succès via l'annuaire LDAP doit
          * être enregistré/mis à jour dans la table des utilisateurs de l'appli.
          */
-//        'save_ldap_user_in_database' => true,
+        'save_ldap_user_in_database' => true,
 
         'entity_manager_name' => 'doctrine.entitymanager.orm_default', // nom du gestionnaire d'entités à utiliser
 
@@ -29,20 +29,14 @@ return [
         'auth_types' => [
             'local', // càd 'ldap' et 'db'
             'shib',
-            'test',
-        ],
-        'test' => [
-            'enabled' => false,
-            'form' => LoginForm::class,
         ],
     ],
     'view_helpers' => [
         'aliases' => [
-            'testConnect' => ShibConnectViewHelper::class,
-            'shibConnect' => ShibConnectViewHelper::class
+//            'shibConnect' => ShibConnectViewHelper::class
         ],
         'factories' => [
-            ShibConnectViewHelper::class => ShibConnectViewHelperFactory::class
+//            ShibConnectViewHelper::class => ShibConnectViewHelperFactory::class
         ]
     ],
 ];

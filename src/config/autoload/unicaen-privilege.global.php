@@ -39,24 +39,6 @@ if ($settings['unicaen-auth']['enable_privileges']) {
             ],
         ],
 
-//        'navigation' => [
-//            'default' => [
-//                'home' => [
-//                    'pages' => [
-//                        'droits' => [
-//                            'pages' => [
-//                                [
-//                                    'label' => "Gérer les privilèges",
-//                                    'title' => "Gérer les privilèges",
-//                                    'route' => 'unicaen-privilege',
-//                                    'resource' => RolePrivileges::getResourceId(PrivilegePrivileges::PRIVILEGE_VOIR),
-//                                ],
-//                            ],
-//                        ],
-//                    ],
-//                ],
-//            ],
-//        ],
     ];
 } else {
     $privileges = [];

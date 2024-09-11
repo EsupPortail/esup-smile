@@ -46,7 +46,11 @@ if($mobilite):
             <?php
                 if($doc->getFichier()->getNature()->getLibelle() === 'Documents') {
                     if($doc->getTypedocument()) {
-                        $typeDoc = $doc->getTypedocument()->getLibelle();
+                        if($doc->getTypedocument()->getLibelle() !== 'Documents') {
+                            $typeDoc = $doc->getTypedocument()->getLibelle();
+                        }else {
+                            $typeDoc = 'Documents';
+                        }
                     }else {
                         $typeDoc = 'Documents';
                     }
@@ -59,7 +63,7 @@ if($mobilite):
                 <td><?= $doc->getFichier()->getNomOriginal() ?></td>
                 <td><?= (new BytesFormatter())->filter($doc->getFichier()->getTaille()) ?></td>
                 <td>
-                    <a target="_blank" href="/upload/<?= $doc->getFichier()->getNomStockage() ?>"><i class="fa-solid fa-eye"></i></a>
+                    <a target="_blank" href="<?= $this->url('download-fichier', ['fichier' => $doc->getFichier()->getId()]) ?>"><i class="fa-solid fa-eye"></i></a>
                     <a href="<?= $this->url('dashboard/removeDocument').'/'.$doc->getFichier()->getNomOriginal() ?>"><i class="fa-solid fa-trash" style="color: red;"></i></a>
                 </td>
             </tr>

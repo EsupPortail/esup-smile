@@ -20,9 +20,16 @@ Une [`procédure d'installation`](INSTALL.md) est à votre disposition pour mett
 
 La [`procédure de mise à jour`](UPDATE.md) vous indiquera comment mettre à niveau votre instance.  
 
-# Mode SaaS
+# Documentation
 
-Nous proposons l'application en mode SAAS hébergée chez nous.
+Une [`documentation utilisateur`](DOCUTIL.md) est à votre disposition.
+
+La [`documentation technique`](DOCTECH.md) est à votre disposition.
+
+
+# Mode SAAS
+
+Nous proposons l'application en mode SAAS via l'association ESUP-Portail.
 
 [Voir SAAS.md`](SAAS.md)
 

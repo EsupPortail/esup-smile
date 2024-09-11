@@ -118,88 +118,6 @@ CREATE TABLE IF NOT EXISTS formation
 );
 CREATE UNIQUE INDEX IF NOT EXISTS formation_code_source_unique ON formation (source_id, source_code);
 
---------------------
--- Tables pour des imports de sources externe
---------------------
-CREATE TABLE IF NOT EXISTS import_formation
-(
-    id BIGSERIAL PRIMARY KEY,
-    source_id BIGINT not null,
-    code VARCHAR (64) NOT NULL,
-    libelle VARCHAR(120),
-    acronyme VARCHAR(10),
-    niveau_etude int NOT NULL default 0,
-    type_diplome_code VARCHAR (64) default null,
-    type_formation_code VARCHAR (64) default null,
-    composante_code VARCHAR (64) default null,
-    histo_creation TIMESTAMP NOT NULL DEFAULT now(),
-    histo_createur_id BIGINT NOT NULL,
-    histo_modification TIMESTAMP,
-    histo_modificateur_id BIGINT,
-    histo_destruction TIMESTAMP,
-    histo_destructeur_id BIGINT
-);
-
-drop view src_formation cascade;
-CREATE OR REPLACE VIEW src_formation AS
-SELECT
-    import.source_id as source_id,
-    import.code as code,
-    import.code as source_code,
-    import.libelle  as libelle,
-    import.acronyme  as acronyme,
-    tf.type_formation_id as type_formation_id,
-    null::integer as domaine_formation_id, -- non géré pour le momment
-    import.niveau_etude as niveau_etude,
-    td.type_diplome_id as type_diplome_id,
-    c.id as composante_id
-FROM
-    import_formation import
-        LEFT JOIN type_formation_mapping tf ON (import.source_id = tf.source_id and tf.code_src= import.type_formation_code)
-        LEFT JOIN type_diplome_mapping td ON (import.source_id = td.source_id and td.code_src= import.type_diplome_code)
-        INNER JOIN composante c ON (import.composante_code = c.code and  import.source_id=c.source_id);
-
--- TODO : a intégrer dans les formations :
--- !!! Type de formations = diplomante / certifiante
--- actuellement dans PYC : Licence/Master
--- Liste des descripteurs identifiés pour décrire la Formation :
---
--- •        Type formation (diplômante, certifiante…)
--- •        Domaine formation
--- •        Type diplôme
--- •        Niveau diplôme
--- •        Mention
--- •        Objectifs
--- •        Programme
--- •        Description
--- •        Ouverture à la mobilité entrante ( O/N)
--- •        Langue(s) d’enseignement
--- •        Prérequis pédagogiques
--- •        Modalité d'enseignement
--- •        Bibliographie
--- •        Contacts
--- •        Autres informations
---
--- Liste des descripteurs identifiés pour décrire les objets de formations :
---
--- •        Code objet
--- •        Libellé long
--- •        ECTS
--- •        Nature (fondamental, transversal, UE d’ouverture,)
--- •        Description
--- •        Objectifs
--- •        Prérequis pédagogiques
--- •        Langue(s) d’enseignement
--- •        Modalité d’enseignement (présentiel, hybride, …)
--- •        Bibliographie
--- •        Programme
--- •        Volume horaire / Type de cours
--- •        Modalités d’évaluation
--- •        Coefficient
--- •        Contexte(s) comprenant l’objet (pour les objets mutualisés)
--- •        Contacts
--- •        Autres informations
-
 CREATE TABLE IF NOT EXISTS inscription_formation_linker (
     inscription_id integer not null
         constraint fk_inscription_formation_linker_inscription
@@ -209,7 +127,7 @@ CREATE TABLE IF NOT EXISTS inscription_formation_linker (
         constraint fk_inscription_formation_linker_formation
             references formation
             deferrable,
-    constraint pk_mobilite_formation_linker
+    constraint pk_inscription_formation_linker
         primary key (inscription_id, formation_id)
 );
 

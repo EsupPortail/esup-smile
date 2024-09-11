@@ -6,6 +6,7 @@
         </id>
         <field name="startDate" type="date" column="start_date"/>
         <field name="endDate" type="date" column="end_date"/>
+        <field name="libelle" type="string" column="libelle"/>
         <field name="disabledInscription" type="boolean" column="disabled_inscription"/>
         <many-to-one field="calendar" target-entity="Application\Entity\Calendar" inversed-by="periods">
             <join-column name="year_id" referenced-column-name="id"/>

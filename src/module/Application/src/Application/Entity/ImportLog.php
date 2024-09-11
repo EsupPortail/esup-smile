@@ -198,54 +198,6 @@ class ImportLog
     }
 
     /**
-     * Set importHash.
-     *
-     * @param string|null $importHash
-     *
-     * @return ImportLog
-     */
-    public function setImportHash($importHash = null)
-    {
-        $this->importHash = $importHash;
-
-        return $this;
-    }
-
-    /**
-     * Get importHash.
-     *
-     * @return string|null
-     */
-    public function getImportHash()
-    {
-        return $this->importHash;
-    }
-
-    /**
-     * Set hasProblems.
-     *
-     * @param bool $hasProblems
-     *
-     * @return ImportLog
-     */
-    public function setHasProblems($hasProblems)
-    {
-        $this->hasProblems = $hasProblems;
-
-        return $this;
-    }
-
-    /**
-     * Get hasProblems.
-     *
-     * @return bool
-     */
-    public function getHasProblems()
-    {
-        return $this->hasProblems;
-    }
-
-    /**
      * Get id.
      *
      * @return int

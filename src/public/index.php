@@ -10,5 +10,6 @@ chdir(dirname(__DIR__));
 // Setup autoloading
 require 'init_autoloader.php';
 
-// Run the application!
-Laminas\Mvc\Application::init(require 'config/application.config.php')->run();
+$app = Laminas\Mvc\Application::init(require 'config/application.config.php');
+
+$app->run();

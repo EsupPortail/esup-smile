@@ -23,7 +23,7 @@ use UnicaenUtilisateur\Entity\Db\User;
     <div class="row" id="msgBox">
         <?php if (empty($messages)) : ?>
             <div class="col-6">
-                No messages
+                <?= $this->translate("No messages") ?>
             </div>
         <?php else : ?>
             <?php foreach ($messages as $message) : ?>
@@ -79,12 +79,12 @@ use UnicaenUtilisateur\Entity\Db\User;
                 <div class="row pb-3">
                     <div class="col-6">
                         <input type="hidden" name="inscriptionUuid" value="<?= $inscription->getUuid() ?>">
-                        <input type="submit" value="Send" class="btn btn-success" style="">
+                        <input type="submit" value="<?= $this->translate("Send") ?>" class="btn btn-success" style="">
                     </div>
                     <div class="col-5 form-check">
                         <input class="form-check-input" type="checkbox" name="sendMail" value="" id="sendMail">
                         <label class="form-check-label" for="sendMail">
-                            Send also by mail
+                            <?= $this->translate("Send also by mail") ?>
                         </label>
                     </div>
                 </div>

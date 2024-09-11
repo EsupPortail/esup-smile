@@ -74,18 +74,16 @@ uasort($pagesNiv1, $sorterByOrder);
                             endif;
                             ?>
                             <li>
+                                <?php
+                                $pagesNiv3 = $child->getPages();
+                                uasort($pagesNiv3, $sorterByOrder);
+                                ?>
                                 <a class="dropdown-item <?= ($child->isActive(true)) ? ' active' : '' ?>"
                                     <?= ($child->isActive()) ? 'aria-current="page"' : ''?>
                                    href="<?php echo $child->getHref() ?>"
                                     <?php if ($child->getTarget() != ""): ?>
                                         target="<?php echo $child->getTarget(); ?>"
                                     <?php endif; ?>>
-
-                                    <?php
-                                    $pagesNiv3 = $child->getPages();
-                                    uasort($pagesNiv3, $sorterByOrder);
-                                    ?>
-
                                     <?php if ($child->get("icon") != ""): ?>
                                         <span class="icon">
                                             <i class="<?php echo $child->get("icon"); ?>"></i>

@@ -39,6 +39,7 @@ return [
                         InscriptionController::ACTION_INDEX,
                         InscriptionController::ACTION_MOBILITE,
                         InscriptionController::ACTION_INFORMATION,
+                        InscriptionController::ACTION_INFORMATION_VUE,
                         InscriptionController::ACTION_ETABLISSEMENT,
                         InscriptionController::ACTION_MOBILITES,
                     ],
@@ -80,6 +81,16 @@ return [
                             'defaults' => [
                                 'controller' => InscriptionController::class,
                                 'action' => InscriptionController::ACTION_INFORMATION
+                            ]
+                        ]
+                    ],
+                    'informationVue' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/informationVue',
+                            'defaults' => [
+                                'controller' => InscriptionController::class,
+                                'action' => InscriptionController::ACTION_INFORMATION_VUE
                             ]
                         ]
                     ],

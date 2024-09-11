@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS inscription
 (
     id                    serial                  primary key,
-    uuid                  uuid                       DEFAULT uuid_generate_v4(),
+    uuid                  uuid                       DEFAULT public.uuid_generate_v4(),
     firstname             varchar(64)                null,
     lastname              varchar(64)                null,
     birthDate             date                       null,
@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS inscription
     mailReferent          varchar(255)               null,
     status                varchar(255)               null,
     statusLibelle         varchar(255)               null,
+    montharrival          varchar(255)               null,
     created_at             timestamp     default now(),
     year                  integer                    null,
     user_id               integer                    null

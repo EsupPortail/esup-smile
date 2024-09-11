@@ -9,31 +9,6 @@ create table IF NOT EXISTS SOURCE
     IMPORTABLE boolean not null
 );
 
---
--- Tables nécessaires pour l'observation de la synchro.
---
-create table IF NOT EXISTS IMPORT_OBSERV (
-    ID serial not null constraint IMPORT_OBSERV_PK primary key,
-    CODE VARCHAR(50) not null constraint IMPORT_OBSERV_CODE_UN unique,
-    TABLE_NAME VARCHAR(50) not null,
-    COLUMN_NAME VARCHAR(50) not null,
-    OPERATION VARCHAR(50) default 'UPDATE' not null,
-    TO_VALUE VARCHAR(1000),
-    DESCRIPTION VARCHAR(200),
-    ENABLED boolean default false not null,
-    FILTER text,
-    constraint IMPORT_OBSERV_UN unique (TABLE_NAME, COLUMN_NAME, OPERATION, TO_VALUE)
-);
-create table IF NOT EXISTS IMPORT_OBSERV_RESULT (
-    ID serial not null constraint IMPORT_OBSERV_RESULT_PK primary key,
-    IMPORT_OBSERV_ID integer not null constraint IMPORT_OBSERV_RESULT_IOE_FK references IMPORT_OBSERV on delete cascade,
-    DATE_CREATION DATE default now() not null,
-    SOURCE_CODE VARCHAR(64) not null,
-    RESULTAT text not null
-);
-create sequence IMPORT_OBSERV_ID_SEQ;
-create sequence IMPORT_OBSERV_RESULT_ID_SEQ;
-
 create table if not exists import_log
 (
     id bigserial primary key,
@@ -42,10 +17,58 @@ create table if not exists import_log
     success boolean not null,
     log text not null,
     started_on timestamp not null,
-    ended_on timestamp not null,
-    import_hash varchar(64),
-    has_problems boolean not null default false
+    ended_on timestamp not null
 );
+
+create table import_composante
+(
+    id                    bigserial primary key,
+    code                  varchar(64)             not null,
+    libelle               varchar(120),
+    libelle_long          varchar(256),
+    acronyme              varchar(50)
+);
+
+create table import_cours
+(
+    id                     bigserial primary key,
+    code_elp               varchar(64),
+    libelle                varchar(255),
+    langue_enseignement    varchar(20),
+    s1                     varchar(1),
+    s2                     varchar(1),
+    ects                   numeric(6, 2),
+    vol_elp                numeric(6, 2),
+    code_formation         varchar(64),
+    objectif               text,
+    description            text,
+    formation_id           bigint
+);
+
+create table import_formation
+(
+    id                           bigserial primary key,
+    code                         varchar(64)             not null,
+    libelle                      varchar(120),
+    acronyme                     varchar(10),
+    niveau_etude                 integer,
+    cod_cmp                      varchar,
+    type_formation               varchar,
+    libelle_type_formation       varchar,
+    composante_id                bigint,
+    type_formation_id            bigint,
+    langue_enseignement_id       bigint,
+    ouvert_mobilite              boolean   default true
+);
+
+alter table import_composante
+    owner to admin;
+
+alter table import_formation
+    owner to admin;
+
+alter table import_cours
+    owner to admin;
 
 -------------------------------------
 -- Pour chaque table xxx à importer/synchroniser depuis une base source :

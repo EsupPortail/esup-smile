@@ -26,6 +26,8 @@
             <tr>
               <th scope="col">Date de début</th>
               <th scope="col">Date de fin</th>
+              <th scope="col">Libelle</th>
+              <th scope="col">Inscription ouverte</th>
               <th scope="col"></th>
             </tr>
           </thead>
@@ -33,6 +35,8 @@
             <tr v-for="period in currentPeriods" :key="period.id">
               <td>{{formatDate(period.startDate)}}</td>
               <td>{{formatDate(period.endDate)}}</td>
+              <td>{{period.libelle}}</td>
+              <td>{{ (period.disabledInscription) ? 'Oui' : 'Non' }}</td>
               <td>
                 <span @click="selectPeriod(period)" class="pointer" data-bs-toggle="modal" data-bs-target="#modalUpdatePeriod">
                   <i class="fa-2x fa-solid fa-pen-to-square"></i>
@@ -66,6 +70,16 @@
                     <input v-model="selectedPeriod.endDate" class="form-control form-control-lg" name="endDateUpdate" id="endDateUpdate" type="date">
                   </div>
                   <div class="form-control">
+                    <label for="libelle" class="form-label">Libelle</label>
+                    <input v-model="selectedPeriod.libelle" class="form-control form-control-lg" name="libelle" id="libelle" type="text">
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" v-model="selectedPeriod.disabledInscription" name="disabledInscription" id="disabledInscription" checked>
+                    <label class="form-check-label" for="disabledInscription">
+                      Inscription ouverte
+                    </label>
+                  </div>
+                  <div class="form-control">
                     <input type="hidden" name="periodId" :value="selectedPeriod.id">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="m-1 btn btn-primary">Modifier</button>
@@ -97,6 +111,16 @@
                   <div class="form-control">
                     <label for="endDateNew" class="form-label">Date de fin</label>
                     <input class="form-control form-control-lg" name="endDateNew" id="endDateNew" type="date">
+                  </div>
+                  <div class="form-control">
+                    <label for="label" class="form-label">Libelle</label>
+                    <input class="form-control form-control-lg" name="libelle" id="libelle" type="text">
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="disabledInscription" id="disabledInscription" checked>
+                    <label class="form-check-label" for="disabledInscription">
+                      Inscription ouverte
+                    </label>
                   </div>
                   <div class="form-control" v-if="currentCalendar">
                     <input type="hidden" name="calendarId" :value="currentCalendar.id">

@@ -3,8 +3,10 @@
 namespace Application\Entity;
 
 use Application\Application\Entity\Interfaces\HistoriqueAwareInterface;
+use Application\Application\Entity\Interfaces\ImportInterface;
 use Application\Application\Entity\Interfaces\SourceAwareInterface;
 use Application\Application\Entity\Traits\InterfacesImplementation\HistoriqueAwareTrait;
+use Application\Application\Entity\Traits\InterfacesImplementation\ImportAwareTrait;
 use Application\Application\Entity\Traits\InterfacesImplementation\SourceAwareTrait;
 use DateTime;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
@@ -16,10 +18,13 @@ use UnicaenUtilisateur\Entity\Db\UserInterface;
  */
 class Cours implements ResourceInterface,
                            HistoriqueAwareInterface,
-                           SourceAwareInterface
+                           SourceAwareInterface,
+                           ImportInterface
+
 {
     use HistoriqueAwareTrait;
     use SourceAwareTrait;
+    use ImportAwareTrait;
 
 
     const RESOURCE_ID = 'Cours';
@@ -108,6 +113,11 @@ class Cours implements ResourceInterface,
      * @var \Doctrine\Common\Collections\Collection
      */
     private $inscription;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $inscriptionCours;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -406,7 +416,7 @@ class Cours implements ResourceInterface,
      */
     public function getSourceCode(): string
     {
-        return $this->sourceCode;
+        return $this->sourceCode ?? '';
     }
 
     /**
@@ -591,5 +601,16 @@ class Cours implements ResourceInterface,
     public function getCode(): ?string
     {
         return $this->codeElp;
+    }
+
+    public function getNote(Inscription $inscription)
+    {
+        $note = null;
+        foreach ($this->inscriptionCours as $ic) {
+            if($ic->getInscription()->getId() === $inscription->getId()) {
+                return $ic->getNote();
+            }
+        }
+        return null;
     }
 }

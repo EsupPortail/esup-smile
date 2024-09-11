@@ -18,6 +18,8 @@ return [
                     'action' => [
                         'index',
                         'import',
+                        'parse-catalogue',
+                        'smile-connect',
                     ],
                     'privileges' => [
                         ImportPrivileges::IMPORT_INDEX,
@@ -47,6 +49,26 @@ return [
                             'defaults' => [
                                 'controller' => IndexController::class,
                                 'action'     => 'import',
+                            ],
+                        ],
+                    ],
+                    'parseCatalogue' => [
+                        'type'    => Literal::class,
+                        'options' => [
+                            'route'    => '/parseCatalogue',
+                            'defaults' => [
+                                'controller' => IndexController::class,
+                                'action'     => 'parse-catalogue',
+                            ],
+                        ],
+                    ],
+                    'smileConnect' => [
+                        'type'    => Literal::class,
+                        'options' => [
+                            'route'    => '/smileConnect',
+                            'defaults' => [
+                                'controller' => IndexController::class,
+                                'action'     => 'smile-connect',
                             ],
                         ],
                     ],

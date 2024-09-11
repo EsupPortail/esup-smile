@@ -1,5 +1,8 @@
 FROM php:8.2-fpm-bullseye
 
+#Timezone
+ENV TZ=Europe/Paris
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 ENV PHP_VERSION=8.2
 
@@ -37,6 +40,19 @@ COPY ./src /var/www/html/smile/
 
 # Préparation des variables d'environnement
 COPY ./.env_example /var/www/html/smile
+
+# AWS configuration
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
+ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+RUN mkdir -p /var/www/.aws
+RUN echo "[default]" >> /var/www/.aws/credentials
+RUN echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> /var/www/.aws/credentials
+RUN echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> /var/www/.aws/credentials
+RUN echo "[smile-backup]" >> /var/www/.aws/credentials
+RUN echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> /var/www/.aws/credentials
+RUN echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> /var/www/.aws/credentials
 
 # Répertoires de travail de Doctrine
 RUN mkdir -p data/cache
@@ -137,6 +153,11 @@ RUN rm -f /etc/apt/apt.conf.d/05proxy
 
 RUN chown -R www-data:www-data /var/www/html/smile/
 ENV COMPOSER_ALLOW_SUPERUSER=0
+
+# Execution de la synchro offre de formation tous les jours à 23H avec une redirection des longs de la task dans /var/log/crontab.logs
+# Peut être s'assuré que le script cible à les bons droits (chmod u+x)
+RUN echo "0 23 * * * root cd /var/www/html/smile && php bin/console app:import-data >> /var/log/crontab.logs" >> /etc/crontab
+COPY ./deploy_configuration/php/supervisord.conf /supervisord.conf
 
 RUN chown www-data:www-data generate_env.sh
 

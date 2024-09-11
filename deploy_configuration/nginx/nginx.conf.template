@@ -5,10 +5,8 @@ events {
     worker_connections 1024;
 }
 
+
 http {
-    upstream shibd {
-        server localhost:8080;
-    }
     include mime.types;
 
     keepalive_requests 500;
@@ -42,6 +40,9 @@ http {
             # URLs to attempt, including pretty ones.
             try_files $uri $uri/ /index.php?$query_string;
             proxy_cache cache_smile;
+            proxy_pass "https://shibglobal";
+            proxy_set_header Host $proxy_host;
+            proxy_set_header X-Found-Cluster "smile-shibboleth";
 
         }
 
@@ -54,7 +55,7 @@ http {
             include fastcgi_params;
             fastcgi_param SCRIPT_FILENAME /var/www/html/smile/public/index.php;
             fastcgi_param PATH_INFO $fastcgi_path_info;
-            fastcgi_param   APPLICATION_ENV  development;
+            fastcgi_param   APPLICATION_ENV ${MODE};
 
         }
 

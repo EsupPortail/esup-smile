@@ -2,6 +2,7 @@
 
 namespace Import\Controller;
 
+use GuzzleHttp\Client;
 use Import\Service\Import\ImportServiceAwareTrait;
 use Laminas\Form\Element\Select;
 use Laminas\Http\Request;
@@ -13,6 +14,6 @@ class ImportController extends AbstractActionController {
 
     public function indexAction()
     {
-        return "hey";
+        return 'yo';
     }
 }

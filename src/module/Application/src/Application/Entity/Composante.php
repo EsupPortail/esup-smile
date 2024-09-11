@@ -3,9 +3,11 @@
 namespace Application\Entity;
 
 use Application\Application\Entity\Interfaces\HistoriqueAwareInterface;
+use Application\Application\Entity\Interfaces\ImportInterface;
 use Application\Application\Entity\Interfaces\SourceAwareInterface;
 use Application\Application\Entity\Interfaces\GenderAwareInterface;
 use Application\Application\Entity\Traits\InterfacesImplementation\HistoriqueAwareTrait;
+use Application\Application\Entity\Traits\InterfacesImplementation\ImportAwareTrait;
 use Application\Application\Entity\Traits\InterfacesImplementation\SourceAwareTrait;
 use DateTime;
 use UnicaenUtilisateur\Entity\Db\User;
@@ -18,10 +20,12 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 class Composante implements ResourceInterface,
                             HistoriqueAwareInterface,
                             SourceAwareInterface,
-                            GenderAwareInterface
+                            GenderAwareInterface,
+                            ImportInterface
 {
     use HistoriqueAwareTrait;
     use SourceAwareTrait;
+    use ImportAwareTrait;
 
     const RESOURCE_ID = 'Composante';
 
@@ -243,7 +247,7 @@ class Composante implements ResourceInterface,
      */
     public function getSourceCode(): string
     {
-        return $this->sourceCode;
+        return $this->sourceCode ?? '';
     }
 
     /**
@@ -343,5 +347,4 @@ class Composante implements ResourceInterface,
             'code' => $this->getCode()
         ];
     }
-
 }

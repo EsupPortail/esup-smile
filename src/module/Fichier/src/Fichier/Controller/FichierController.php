@@ -4,17 +4,19 @@ namespace Fichier\Controller;
 
 use Fichier\Entity\Db\Fichier;
 use Fichier\Form\Upload\UploadFormAwareTrait;
-use Fichier\Service\Fichier\ImportServiceAwareTrait;
+use Fichier\Service\Fichier\FichierServiceAwareTrait;
 use Fichier\Service\Nature\NatureServiceAwareTrait;
+use Fichier\Service\S3\S3ServiceAwareTrait;
 use Laminas\Form\Element\Select;
 use Laminas\Http\Request;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
 class FichierController extends AbstractActionController {
-    use ImportServiceAwareTrait;
     use NatureServiceAwareTrait;
     use UploadFormAwareTrait;
+    use FichierServiceAwareTrait;
+    use S3ServiceAwareTrait;
 
     public function uploadAction()
     {
@@ -59,7 +61,14 @@ class FichierController extends AbstractActionController {
     public function downloadAction()
     {
         $fichier = $this->getFichierService()->getRequestedFichier($this, 'fichier');
+        if (!$fichier) {
+            return $this->notFoundAction();
+        }
 
+        $url = $this->getS3Service()->getFileDownloadUrl($fichier->getNomStockage());
+        if ($url) {
+            return $this->redirect()->toUrl($url);
+        }
         $contentType = $fichier->getTypeMime() ?: 'application/octet-stream';
         $contenuFichier = $this->getFichierService()->fetchContenuFichier($fichier);
 

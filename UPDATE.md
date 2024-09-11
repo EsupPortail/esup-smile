@@ -1,5 +1,5 @@
 # Documentation de mise à jour : procédure
 
-# Migration base de données
+# Mise à jour base de données
 
-à définir
+```docker exec smile-app php BddAdmin/majBdd.php```

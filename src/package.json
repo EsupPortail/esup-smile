@@ -7,10 +7,26 @@
   "private": true,
   "scripts": {
     "dev": "APP_ENV=development vite dev",
-    "build": "vite build"
+    "buildts": "vue-tsc --noEmit && vite build",
+    "build": "vite build",
+    "unicaen-install": "npm install --registry https://registry.npmjs.org/"
   },
   "dependencies": {
+    "moment": "^2.30.1",
+    "pinia": "^2.1.7",
     "unicaen-vue": "file:./vendor/unicaen/vue",
-    "vue": "^3.2.45"
+    "vue": "^3.4.23",
+    "vuetify": "^3.6.9"
+  },
+  "devDependencies": {
+    "@babel/types": "^7.24.0",
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-regular-svg-icons": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/vue-fontawesome": "^3.0.6",
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5",
+    "vite-plugin-vuetify": "^2.0.3",
+    "vue-tsc": "^2.0.13"
   }
 }

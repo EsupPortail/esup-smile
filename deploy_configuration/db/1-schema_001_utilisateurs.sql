@@ -13,7 +13,8 @@ create table if not exists unicaen_utilisateur_role
     deferrable,
     ldap_filter          varchar(255) default NULL::character varying,
     accessible_exterieur boolean      default true  not null,
-    description          character varying
+    description          character varying,
+    DISPLAYED  BOOLEAN       DEFAULT true NOT NULL
     );
 
 alter table unicaen_utilisateur_role

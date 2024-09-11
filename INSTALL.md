@@ -58,7 +58,13 @@ docker-compose -f docker-compose.yaml up
 
 Attendez la génération de la base de données (un message LOG:  database system is ready to accept connections ).
 
-# Acéder à l'application via un navigateur 
+Vérifier l'intégrité de la Base de données et mettre à jour en conséquence en fonction des DLL avec la commande : 
+
+```
+docker exec smile-php php BddAdmin/majBdd.php
+```
+
+# Accéder à l'application via un navigateur 
 
 ## Local  
 http://localhost:8080

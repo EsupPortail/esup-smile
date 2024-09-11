@@ -50,6 +50,8 @@ class InscriptionFieldset extends Fieldset implements InputFilterProviderInterfa
     const INPUT_HANDICAP = 'handicap';
     const INPUT_EMAIL_REFERENT = 'mailreferent';
     const INPUT_ETABLISSEMENT = 'etablissement';
+    const INPUT_MOIS_ARRIVEE = 'montharrival';
+
     const CSRF = 'csrf';
     private Container $session;
 
@@ -179,6 +181,15 @@ class InscriptionFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'Etablissement',
             ],
         ]);
+
+        $this->add([
+            'type' => Select::class,
+            'name' => self::INPUT_MOIS_ARRIVEE,
+            'options' => [
+                'label' => 'Mois d\'arrivée',
+            ],
+        ]);
+
 //        $this->add([
 //            'type' => Collection::class,
 //            'name' => 'categories',
@@ -291,6 +302,11 @@ class InscriptionFieldset extends Fieldset implements InputFilterProviderInterfa
 
         $filterSpecification[self::INPUT_ETABLISSEMENT] = [
             'name' => 'etablissement',
+            'required' => false
+        ];
+
+        $filterSpecification[self::INPUT_MOIS_ARRIVEE] = [
+            'name' => 'moisarrivee',
             'required' => false
         ];
 

@@ -81,6 +81,7 @@ VALUES
 ((select c.id from categorieUtilisateur c), 'utilisateur_ajouter', 'Ajouter un utilisateur', 2),
 ((select c.id from categorieUtilisateur c), 'utilisateur_changerstatus', 'Changer le statut d''un utilisateur', 3),
 ((select c.id from categorieUtilisateur c), 'utilisateur_modifierrole', 'Modifier les rôles attribués à un utilisateur', 4),
+((select c.id from categorieUtilisateur c), 'utilisateur_rechercher', 'Chercher un utilisateur', 5),
 --
 ((select c.id from categorieRole c), 'role_afficher', 'Consulter les rôles', 11),
 ((select c.id from categorieRole c), 'role_modifier', 'Modifier un rôle', 12),

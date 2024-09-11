@@ -67,6 +67,7 @@
     <field name="email" type="string" column="email" length="255" nullable="true"/>
     <field name="year" type="integer" column="year"/>
     <field name="createdAt" type="datetime" column="created_at"/>
+    <field name="montharrival" type="string" column="montharrival" length="255" nullable="true"/>
     <field name="status" type="string" column="status" length="255" nullable="true">
       <options>
         <option name="fixed"/>
@@ -127,5 +128,6 @@
         </inverse-join-columns>
       </join-table>
     </many-to-many>
+    <one-to-many field="inscriptionCours" target-entity="Application\Entity\InscriptionCours" mapped-by="inscription"/>
   </entity>
 </doctrine-mapping>

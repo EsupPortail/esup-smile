@@ -1,19 +1,19 @@
 <template>
   <div>
+    <h2>Gestion gestionnaires/composantes</h2>
     <!-- Onglets de navigation -->
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" data-bs-toggle="tab" href="#gestionnaires">Gestionnaires</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#composantes">Composantes</a>
-      </li>
-    </ul>
+    <nav class="mt-4">
+      <div id="nav-tab" class="nav nav-tabs" role="tablist">
+        <button class="nav-link active" data-bs-toggle="tab" href="#gestionnaires">Gestionnaires</button>
+        <button class="nav-link" data-bs-toggle="tab" href="#composantes">Composantes</button>
+      </div>
+    </nav>
+
 
     <!-- Contenu des onglets -->
     <div class="tab-content">
       <div class="tab-pane fade show active" id="gestionnaires">
-        <h2>Liste des Gestionnaires</h2>
+        <h2>Attribution des gestionnaires</h2>
         <div class="row">
           <div class="col-3">
             <table class="table table-hover">
@@ -151,6 +151,7 @@
         computed: {
           cgToAdd() {
             if (this.gestionnaireSelected) {
+              console.log(this.composanteGroupesDefault)
               return this.composanteGroupesDefault.filter(cg =>
                   !this.gestionnaireSelected.composanteGroupes.some((gCg) => {
                     return gCg.id === cg.id
@@ -238,9 +239,15 @@
             ).then(response => {
               if(!response.data.error) {
                 let data = response.data
+                console.log(data)
                 this.gestionnaires = data.gestionnaires
-                this.composanteGroupesDefault = data.composanteGroupesDefault
-                this.composantesDefault = data.composantesDefault
+                // this.composanteGroupesDefault = data.composanteGroupesDefault
+                this.composanteGroupesDefault = Array.isArray(data.composanteGroupesDefault)
+                    ? data.composanteGroupesDefault
+                    : Object.values(data.composanteGroupesDefault);
+                this.composantesDefault = Array.isArray(data.composantesDefault)
+                    ? data.composantesDefault
+                    : Object.values(data.composantesDefault);
               }else {
                 throw response.data
               }
@@ -275,7 +282,7 @@
 </script>
 
 
-<style>
+<style scoped>
 table tr {
   cursor: pointer;
 }

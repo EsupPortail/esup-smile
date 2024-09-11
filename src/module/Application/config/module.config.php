@@ -55,6 +55,8 @@ use UnicaenApp\View\Helper\UserProfileSelect;
 use UnicaenApp\View\Helper\UserProfileSelectFactory;
 #use Laminas\Mvc\Console\Router\Simple; ## Fix Romain A
 use UnicaenPrivilege\Guard\PrivilegeController;
+use UnicaenSynchro\Service\Synchronisation\SynchronisationService;
+use UnicaenSynchro\Service\Synchronisation\SynchronisationServiceFactory;
 
 return [
     'bjyauthorize' => [
@@ -630,6 +632,7 @@ return [
             '086_gestion'        => 'css/gestion.css',
             /** Smile styles */
             '501_dashboard' => 'css/dashboard.css',
+            'navigation' => 'css/navigation.css',
         ],
         'printable_stylesheets' => [
         ],

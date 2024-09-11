@@ -15,8 +15,9 @@ use UnicaenUtilisateur\Entity\Db\UserInterface;
 
 class MobiliteService extends CommonEntityService
 {
-//    use HistoEntityServiceTrait;
+    use HistoEntityServiceTrait;
     use CoursServiceAwareTrait;
+
     /**
      * @inheritDoc
      */
@@ -31,11 +32,13 @@ class MobiliteService extends CommonEntityService
         $mobilite->setLibelle($libelle);
         $mobilite->setActive($active);
 
-
         $isExist = $this->findOneBy(['libelle' => $libelle]);
         if(!$isExist) {
             $mobilite = $this->add($mobilite);
-            $this->activeAllCourses($mobilite);
+
+            if($activeAllCourses) {
+                $this->activeAllCourses($mobilite);
+            }
         }
     }
 

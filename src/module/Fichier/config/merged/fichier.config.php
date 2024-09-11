@@ -11,6 +11,8 @@ use Fichier\Service\Fichier\FichierService;
 use Fichier\Service\Fichier\FichierServiceFactory;
 use Fichier\Service\Nature\NatureService;
 use Fichier\Service\Nature\NatureServiceFactory;
+use Fichier\Service\S3\S3Service;
+use Fichier\Service\S3\S3ServiceFactory;
 use Fichier\View\Helper\FichierViewHelper;
 use UnicaenPrivilege\Guard\PrivilegeController;
 use Laminas\Router\Http\Literal;
@@ -123,6 +125,7 @@ return [
         'factories' => [
             FichierService::class => FichierServiceFactory::class,
             NatureService::class => NatureServiceFactory::class,
+            S3Service::class => S3ServiceFactory::class,
         ],
     ],
     'controllers'     => [

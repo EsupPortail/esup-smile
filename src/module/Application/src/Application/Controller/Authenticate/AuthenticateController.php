@@ -48,6 +48,7 @@ class AuthenticateController extends AbstractActionController
         }
 
 //        $shibData = $this->parseServer($_SERVER);
+//        $this->createUser($shibData);
 
         $user = $this->getUserService()->getConnectedUser();
         $roleLibelle = ($this->getUserService()->getConnectedRole()) ? $this->getUserService()->getConnectedRole()->getLibelle() : null;
@@ -60,7 +61,6 @@ class AuthenticateController extends AbstractActionController
         $roleLibelle = ($this->getUserService()->getConnectedRole()) ? $this->getUserService()->getConnectedRole()->getLibelle() : null;
         $redirectUrl = $this->getRedirectUrl($roleLibelle);
 
-
         return $this->redirect()->toRoute($redirectUrl);
     }
 
@@ -68,26 +68,21 @@ class AuthenticateController extends AbstractActionController
     {
         $priorityList = [
             'anthony.gautreau@unicaen.fr',
-            'fanny.houillier@unicaen.fr',
-            'duprej@unistra.fr',
-            'christophe.turbout@unicaen.fr',
-            'thibaut.vallee@unicaen.fr',
-            'christophe.turbout@unicaen.fr',
-            'lobstein@unicaen.fr',
-            'lea.burel@unicaen.fr'
         ];
 
         if(in_array($user->getEmail(), $priorityList)){
             $adminRole = $this->getRoleService()->findByRoleId('administrateur');
             $adminFRole = $this->getRoleService()->findByRoleId('admin_fonctionnel');
             $gestionnaireRole = $this->getRoleService()->findByRoleId('gestionnaire');
-            $etudiantRole = $this->getRoleService()->findByRoleId('Etudiant');
-            $inviteRole = $this->getRoleService()->findByRoleId('guest');
-            $user->addRole($adminRole);
-            $user->addRole($adminFRole);
-            $user->addRole($gestionnaireRole);
-            $user->addRole($etudiantRole);
-            $user->addRole($inviteRole);
+            if ($adminRole !== null) {
+                $user->addRole($adminRole);
+            }
+            if ($adminFRole !== null) {
+                $user->addRole($adminFRole);
+            }
+            if ($gestionnaireRole !== null) {
+                $user->addRole($gestionnaireRole);
+            }
             $this->getUserService()->update($user);
         }
         return $user;

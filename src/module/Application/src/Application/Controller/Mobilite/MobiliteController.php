@@ -57,11 +57,11 @@ class MobiliteController extends AbstractActionController
 
     public function indexAction()
     {
-        if (!$this->authenticationService->hasIdentity()) {
+        if (!$this->getAuthenticationService()->hasIdentity()) {
             return $this->redirect()->toRoute('/');
         }
 
-        $mobilite = $this->mobiliteService->findAll();
+        $mobilite = $this->getMobiliteService()->findAllBy(['histoDestruction' => null]);
 
         return new ViewModel(['mobilite' => $mobilite]);
     }
@@ -158,9 +158,10 @@ class MobiliteController extends AbstractActionController
     public function deleteMobiliteAction() {
         $id = $this->params('id');
 
-        $mToDlete = $this->mobiliteService->findOneBy(['id' => $id]);
+        $mToDlete = $this->getMobiliteService()->findOneBy(['id' => $id]);
+
         if ($mToDlete) {
-            $this->mobiliteService->delete($mToDlete);
+            $this->getMobiliteService()->archiverEntity($mToDlete);
         }
 
         return $this->redirect()->toRoute('mobilite');
@@ -171,10 +172,10 @@ class MobiliteController extends AbstractActionController
             $content = $this->getRequest()->getContent();
             $data = json_decode($content);
 
-            $mobilite = $this->mobiliteService->find($data->mobiliteId);
+            $mobilite = $this->getMobiliteService()->find($data->mobiliteId);
             if($mobilite) {
                 $mobilite->setActive($data->active);
-                $this->mobiliteService->update($mobilite);
+                $this->getMobiliteService()->update($mobilite);
             }
 
             $response = new Response();

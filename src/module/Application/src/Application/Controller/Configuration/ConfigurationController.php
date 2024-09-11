@@ -98,6 +98,8 @@ class ConfigurationController extends AbstractActionController
             $startDate = $post['startDateUpdate'];
             $endDate = $post['endDateUpdate'];
             $periodId = $post['periodId'];
+            $libelle = $post['libelle'];
+            $disabledInscription = $post['disabledInscription'];
 
             /**
              * @var Period $period
@@ -105,6 +107,8 @@ class ConfigurationController extends AbstractActionController
             $period = $this->getCalendarService()->getEntityManager()->find(Period::class, $periodId);
             $period->setStartDate(new \DateTime($startDate));
             $period->setEndDate(new \DateTime($endDate));
+            $period->setDisabledInscription((bool)$disabledInscription);
+            $period->setLibelle($libelle);
 
             $this->getCalendarService()->update($period, Period::class);
         }
@@ -118,6 +122,7 @@ class ConfigurationController extends AbstractActionController
 
             $startDate = $post['startDateNew'];
             $endDate = $post['endDateNew'];
+            $libelle = $post['libelle'];
             $periodId = $post['periodId'];
             $calendarId = $post['calendarId'];
             $calendarYear = $post['calendarYear'];
@@ -134,6 +139,7 @@ class ConfigurationController extends AbstractActionController
             $period = new Period();
             $period->setStartDate(new \DateTime($startDate));
             $period->setEndDate(new \DateTime($endDate));
+            $period->setLibelle($libelle);
             $period->setDisabledInscription(true);
             $period->setCalendar($calendar);
 
@@ -209,7 +215,7 @@ class ConfigurationController extends AbstractActionController
             $jsonData = $this->getRequest()->getContent();
             $data = json_decode($jsonData, true);
             $user = $data['user'];
-            $user = $this->getUserService()->findByUsername($user['username']);
+            $user = $this->getUserService()->find($user['id']);
             $cg = $data['cg'];
             $cg = $this->getComposanteService()->getComposanteGroupe($cg['id']);
             $cg->addUser($user);

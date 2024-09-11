@@ -148,6 +148,7 @@ return [
                         FormationController::ACTION_MOBILITE,
                         FormationController::ACTION_SAVE_MOBILITE,
                         FormationController::ACTION_ACTIVE_ALLMOBILITY,
+                        FormationController::ACTION_ACTIVE_ALL_BY_MOBILITE,
                         FormationController::ACTION_DESCRIPTIF,
                         FormationController::ACTION_TEST,
                         FormationController::ACTION_TEST_DATA,
@@ -222,16 +223,6 @@ return [
                                     ],
                                 ]
                             ],
-                            'activeAllMobility' => [
-                                'type' => Literal::class,
-                                'options' => [
-                                    'route' => '/activeAllMobility',
-                                    'defaults' => [
-                                        'controller' => FormationController::class,
-                                        'action' => FormationController::ACTION_ACTIVE_ALLMOBILITY,
-                                    ],
-                                ]
-                            ],
                         ]
                     ],
                     'saveMobilite' => [
@@ -252,6 +243,17 @@ return [
                             'defaults' => [
                                 'controller' => FormationController::class,
                                 'action' => FormationController::ACTION_TEST,
+                            ],
+                        ],
+                        'may_terminate' => true,
+                    ],
+                    'activeAllByMobilite' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/activeAllByMobilite/[:id]',
+                            'defaults' => [
+                                'controller' => FormationController::class,
+                                'action' => FormationController::ACTION_ACTIVE_ALL_BY_MOBILITE,
                             ],
                         ],
                         'may_terminate' => true,

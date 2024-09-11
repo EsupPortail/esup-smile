@@ -8,6 +8,7 @@ use Doctrine\ORM\ORMException;
 use Exception;
 use Fichier\Entity\Db\Fichier;
 use Fichier\Entity\Db\Nature;
+use Fichier\Service\S3\S3ServiceAwareTrait;
 use UnicaenApp\Exception\RuntimeException;
 use UnicaenApp\Service\EntityManagerAwareTrait;
 use UnicaenUtilisateur\Service\User\UserServiceAwareTrait;
@@ -16,9 +17,10 @@ use Laminas\Mvc\Controller\AbstractActionController;
 class FichierService {
     use EntityManagerAwareTrait;
     use UserServiceAwareTrait;
+    use S3ServiceAwareTrait;
 
-    private $path;
-
+    private string $path;
+    private bool $s3;
     /**
      * @param string $path
      * @return FichierService
@@ -26,6 +28,12 @@ class FichierService {
     public function setPath($path)
     {
         $this->path = $path;
+        return $this;
+    }
+
+    public function setS3($s3): static
+    {
+        $this->s3 = $s3;
         return $this;
     }
 
@@ -161,7 +169,7 @@ class FichierService {
      * @param Nature          $nature       Version de fichier
      * @return Fichier fichier
      */
-    public function createFichierFromUpload($file, $nature)
+    public function createFichierFromUpload(array $file, Nature $nature)
     {
         /** @var DateTime $date */
         try {
@@ -179,10 +187,6 @@ class FichierService {
             $typeFichier = $file['type'];
             $tailleFichier = $file['size'];
 
-//            if (! is_uploaded_file($path)) {
-//                throw new RuntimeException("Possible file upload attack: " . $path);
-//            }
-
             $uid = uniqid();
 
             $fichier = new Fichier();
@@ -193,13 +197,23 @@ class FichierService {
                 ->setNomOriginal($nomFichier)
                 ->setTaille($tailleFichier)
             ;
-            $fichier->setNomStockage($date->format('Ymd-His')."-".$uid."-".$nature->getCode()."-".$nomFichier);
 
-            $newPath = $this->path . $fichier->getNomStockage();
-            $res = move_uploaded_file($path, $newPath);
+            if($this->s3) {
+                $pathS3 = '/fichiers/'.$this->getUserService()->getConnectedUser()->getUsername();
+                $fichier->setNomStockage($pathS3.'-'.$date->format('Ymd-His')."-".$uid."-".$nature->getCode()."-".$nomFichier);
+                try {
+                    $this->getS3Service()->addFileToBucket($fichier->getNomStockage(), $path);
+                } catch (Exception $e) {
+                    throw new RuntimeException("Une erreur est survenu pendant l'upload", $e);
+                }
+            }else {
+                $fichier->setNomStockage($date->format('Ymd-His')."-".$uid."-".$nature->getCode()."-".$nomFichier);
 
-            if ($res === false) {
-                throw new RuntimeException("Impossible de déplacer le fichier temporaire uploadé de $path vers $newPath");
+                $newPath = $this->path . $fichier->getNomStockage();
+                $res = move_uploaded_file($path, $newPath);
+                if ($res === false) {
+                    throw new RuntimeException("Impossible de déplacer le fichier temporaire uploadé de $path vers $newPath");
+                }
             }
 
             $this->create($fichier);
@@ -229,10 +243,14 @@ class FichierService {
 
     public function removeFichier(Fichier $fichier)
     {
-        $path = $this->path . $fichier->getNomStockage();
-        $res = unlink($path);
-        if ($res === false) {
-            throw new RuntimeException("Un problème est survenue lors de l'effacement du fichier");
+        if ($this->s3) {
+            $this->getS3Service()->removeFileFromBucket($fichier->getNomStockage());
+        } else {
+            $path = $this->path . $fichier->getNomStockage();
+            $res = unlink($path);
+            if ($res === false) {
+                throw new RuntimeException("Un problème est survenue lors de l'effacement du fichier");
+            }
         }
         $this->delete($fichier);
     }

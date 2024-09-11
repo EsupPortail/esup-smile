@@ -27,7 +27,7 @@ $inscription = $this->inscription;
 ?>
 <div class="container" id="courses">
     <div class="row">
-        <div class="col text-center headTitle">
+        <div class="col headTitle">
             <h2><?= $this->translate('COURSES') ?></h2>
         </div>
     </div>
@@ -47,6 +47,21 @@ $inscription = $this->inscription;
     <?php
     endif;
     ?>
+    <div class="row">
+        <div class="col">
+            <?php
+                if($this->renduCoursAide) {
+                    if($this->renduCoursAide->getCorps()) {
+                        ?>
+                        <div class="alert alert-warning">
+                            <?= $this->renduCoursAide->getCorps() ?>
+                        </div>
+                        <?php
+                    }
+                }
+            ?>
+        </div>
+    </div>
     <div class="row mt-4">
         <div class="col-4">
             <div class="row">
@@ -137,6 +152,16 @@ $inscription = $this->inscription;
     </div>
     <div class="row mb-0 mt-4">
         <div class="col">
+            <select class="form-select" name="selectSearchGroupComposante" id="selectSearchGroupComposante" aria-label="GroupeComposante">
+                <option value="All" selected>All</option>
+                <?php foreach($this->groupeComposantes as $gc): ?>
+                    <option value="<?= $gc->getId() ?>">
+                        <?= $gc->getLibelle() ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col">
 <!--            <select class="form-select" name="selectSearchComposante" id="selectSearchComposante" aria-label="Composante">-->
 <!--                <option value="All" selected>All</option>-->
 <!--                --><?php //foreach($composantes as $composante): ?>
@@ -151,7 +176,7 @@ $inscription = $this->inscription;
 <!--            </select>-->
             <select class="form-select" name="selectSearchComposante" id="selectSearchComposante" aria-label="Composante">
                 <option value="All" selected>All</option>
-                <?php foreach($this->groupeComposantes as $gc): ?>
+                <?php foreach($this->composantes as $gc): ?>
                     <option value="<?= $gc->getId() ?>">
                         <?= $gc->getLibelle() ?>
                     </option>
@@ -188,6 +213,7 @@ $inscription = $this->inscription;
             <table id="<?= $tableId ?>" class="table table-condensed table-hover">
                 <thead>
                     <tr>
+                        <th><?= $this->translate('Group') ?></th>
                         <th><?= $this->translate('Faculty') ?></th>
                         <th><?= $this->translate('Name') ?></th>
                         <th><?= $this->translate('Level') ?></th>
@@ -219,6 +245,7 @@ $inscription = $this->inscription;
     $(function (){
 
         let selectSearchComposante = document.querySelector('#selectSearchComposante');
+        let selectSearchGroupComposante = document.querySelector('#selectSearchGroupComposante');
         let selectMainComposante = document.querySelector('#selectMainComposante');
 
         let QTable = $('#<?=$tableId ?>');
@@ -232,6 +259,7 @@ $inscription = $this->inscription;
                 "processing": true,
                 "paging": true,
                 "columns": [
+                    { "data": "group" },
                     { "data": "component" },
                     { "data": "name" },
                     { "data": "level" },
@@ -246,7 +274,6 @@ $inscription = $this->inscription;
                     "type": "POST",
                     "dataSrc": function(json) {
                         let parsed = JSON.parse(json)
-                        console.log(parsed)
                         parsed.forEach((j) => {
                             if (j.selected === 'true') {
                                 allChecked.push({
@@ -475,10 +502,9 @@ $inscription = $this->inscription;
                 calcRatio()
             })
 
-            selectSearchComposante.addEventListener('change', e => {
-                let libelle = selectSearchComposante.options[selectSearchComposante.selectedIndex].text
-                let optionId = selectSearchComposante.options[selectSearchComposante.selectedIndex].value
-                console.log(optionId)
+            selectSearchGroupComposante.addEventListener('change', e => {
+                let libelle = selectSearchGroupComposante.options[selectSearchGroupComposante.selectedIndex].text
+                let optionId = selectSearchGroupComposante.options[selectSearchGroupComposante.selectedIndex].value
                 if(optionId === 'All') {
                     libelle = ''
                 }
@@ -490,10 +516,24 @@ $inscription = $this->inscription;
                     .draw()
             })
 
+            selectSearchComposante.addEventListener('change', e => {
+                let libelle = selectSearchComposante.options[selectSearchComposante.selectedIndex].text
+                let optionId = selectSearchComposante.options[selectSearchComposante.selectedIndex].value
+                if(optionId === 'All') {
+                    libelle = ''
+                }
+                QTable.DataTable()
+                    .column(1)
+                    .search(
+                        libelle
+                    )
+                    .draw()
+            })
+
             searchIntitule.addEventListener('keyup', (event) => {
                 target = event.target
                 QTable.DataTable()
-                    .column(1)
+                    .column(2)
                     .search(
                         target.value
                     )
@@ -503,7 +543,7 @@ $inscription = $this->inscription;
             searchEcts.addEventListener('keyup', (event) => {
                 target = event.target
                 QTable.DataTable()
-                    .column(5)
+                    .column(6)
                     .search(
                         target.value
                     )
@@ -512,7 +552,7 @@ $inscription = $this->inscription;
             searchLangue.addEventListener('change', (event) => {
                 target = event.target
                 QTable.DataTable()
-                    .column(4)
+                    .column(5)
                     .search(
                         target.value
                     )
@@ -525,7 +565,7 @@ $inscription = $this->inscription;
                     searchLibelle = ''
                 }
                 QTable.DataTable()
-                    .column(3)
+                    .column(4)
                     .search(
                         searchLibelle
                     )
@@ -538,7 +578,7 @@ $inscription = $this->inscription;
                     searchLibelle = ''
                 }
                 QTable.DataTable()
-                    .column(2)
+                    .column(3)
                     .search(
                         searchLibelle
                     )

@@ -3,6 +3,7 @@
 namespace Application\Controller\Gestion;
 
 use Application\Application\Service\Composante\ComposanteServiceAwareTrait;
+use Application\Application\Service\Cours\CoursServiceAwareTrait;
 use Application\Application\Service\Etablissement\EtablissementServiceAwareTrait;
 use Application\Application\Service\Inscription\InscriptionServiceAwareTrait;
 use Application\Application\Service\Step\StepServiceAwareTrait;
@@ -47,6 +48,7 @@ class GestionController extends AbstractActionController
     use EtablissementServiceAwareTrait;
     use SessionContainerTrait;
     use ComposanteServiceAwareTrait;
+    use CoursServiceAwareTrait;
 
     /** ACTION
      * @see GestionPrivileges
@@ -59,6 +61,7 @@ class GestionController extends AbstractActionController
     const ACTION_IMPORT_NOMINATION = "import_nomination";
 
     const ACTION_ADD_STUDENT = "add_student";
+    const ACTION_SAVE_NOTE = "save_note";
 
     private EntityManager $entityManager;
 
@@ -76,7 +79,7 @@ class GestionController extends AbstractActionController
             $resultCsv = unserialize($queryDecoded);
         }
 
-        $year = $this->params('year') ?? 2023;
+        $year = $this->params('year') ?? $this->getInscriptionService()->getUniversityYear(intval(date('m'))+1);
         $page = $this->params('page') ?? 1;
         $elemByPage = $this->params('elemByPage') ?? 50;
 
@@ -84,14 +87,6 @@ class GestionController extends AbstractActionController
         $user = $this->getUserService()->getConnectedUser();
         $steps = $this->getStepService()->findAllOrdered();
 
-        // TODO: Modifier le mapping doctrine pour avoir un getInscription() dans User, quoique...
-//        $inscriptionBind = [];
-//        foreach ($etudiants as $e) {
-//            $inscriptionBind[$e->getUsername()] = $this->inscriptionService->findByUser($e);
-//        }
-//        $inscriptions = $this->getInscriptionService()->findAllBy(
-//            ['year' => $year]
-//        );
         $inscriptions = $this->getInscriptionService()->getByGestionnaire($user, $year, $page, $elemByPage);
 
         usort($inscriptions, function(Inscription $a, Inscription $b) {
@@ -168,6 +163,27 @@ class GestionController extends AbstractActionController
         return $this->redirect()->toRoute('gestion');
     }
 
+    public function saveNoteAction()
+    {
+        if ($this->getRequest()->isPost()){
+            $content = $this->getRequest()->getContent();
+            $data = json_decode($content, true);
+            $notes = $data["notes"];
+            $inscriptionUUid = $data["inscription"];
+            $inscription = $this->getInscriptionService()->findOneBy(['uuid' => $inscriptionUUid]);
+            if($inscription) {
+                foreach ($notes as $note) {
+                    $cours = $this->getCoursService()->findOneBy(['id' => $note["cours"]]);
+                    $note = $note["noteC"];
+
+                    $inscription->setNote($cours, $note);
+                    $this->getInscriptionService()->update($inscription);
+                }
+            }
+        }
+        return new Response();
+    }
+
     public function viewAction()
     {
         $uuid = $this->params('uuid');
@@ -207,6 +223,7 @@ class GestionController extends AbstractActionController
                     'documents' => $documents,
                     'messages' => $messages,
                     'user' => $user,
+                    'role' => $this->getUserService()->getConnectedRole()
                 ]
             );
         }else {

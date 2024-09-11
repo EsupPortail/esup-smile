@@ -2,11 +2,11 @@
 INSERT INTO UNICAEN_UTILISATEUR_ROLE (id, role_id, libelle, is_default, parent_id)
 VALUES (1, 'Standard', 'Standard', true, NULL),
        (2, 'gestionnaire', 'Gestionnaire', false, 1),
+       (8, 'Référent', 'Référent', false, 1),
        (3, 'admin_fonctionnel', 'Administrateur fonctionnel', false, 2),
        (4, 'administrateur', 'Administrateur technique', false, 3),
        (5, 'guest', 'Invité', false, NULL),
-       (6, 'Etudiant', 'Etudiant', false, 1),
-       (7, 'Stagiaire', 'Stagiaire', false, 1)
+       (6, 'Etudiant', 'Etudiant', false, 1)
 ON CONFLICT (id) DO UPDATE SET
                                role_id=excluded.role_id,
                                libelle=excluded.libelle,
@@ -25,10 +25,8 @@ SELECT setval('unicaen_privilege_privilege_id_seq', (
 
 -- Devellopeur(s) (choix fait de garder les plages d'id de 1 à 50 pour les dev et autres personnes devant fréquement intervenir sur l'application
 INSERT INTO UNICAEN_UTILISATEUR_USER (username, email, display_name, password, state)
-VALUES -- utilisateur demo/azerty
-       ('SMILE', '', 'SMILE', 'application', true),
-       ('valleet01', 'thibaut.vallee@unicaen.fr', 'Thibaut Vallée', 'ldap', true),
-       ('gautrea221', 'anthony.gautreau@unicaen.fr', 'Anthony Gautreau', 'ldap', true)
+VALUES
+       ('SMILE', '', 'SMILE', '$2y$10$PxXnVLYnGEzEnfqPqRKJSe9AabocES2H4bBK5VzzJlzuj1rVt7Lwu', true)
 ON CONFLICT (username) DO UPDATE SET
                                username=excluded.username,
                                email=excluded.email,
@@ -41,16 +39,7 @@ INSERT INTO UNICAEN_UTILISATEUR_ROLE_LINKER(user_id, role_id)
      from UNICAEN_UTILISATEUR_USER utilisateur,
           unicaen_utilisateur_role role
      where utilisateur.username in (
-        'valleet01',
-        'gautrea221',
-        'lobstein',
-        'burel222',
-        'houillier',
-        'thibaut.vallee@unicaen.fr',
-        'anthony.gautreau@unicaen.fr',
-        'lobstein@unicaen.fr',
-        'lea.burel@unicaen.fr',
-        'fanny.houillier@unicaen.fr'
+        'SMILE'
    )
 --     and role.role_id not in ('Etudiant', 'Stagiaire', 'Doctorant')
 )

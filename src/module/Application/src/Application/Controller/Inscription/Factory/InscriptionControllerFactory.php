@@ -15,6 +15,7 @@ use Application\Service\Step\StepService;
 use Fichier\Service\Fichier\FichierService;
 use Fichier\Service\Nature\NatureService;
 use Laminas\Authentication\AuthenticationService;
+use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
 use UnicaenAuthentification\Service\ShibService;
@@ -62,6 +63,9 @@ class InscriptionControllerFactory implements FactoryInterface
 
         $natureService = $container->get('ServiceManager')->get(NatureService::class);
         $controller->setNatureService($natureService);
+
+        $translator = $container->get(TranslatorInterface::class);
+        $controller->setTranslator($translator);
 
         $etablissementService = $container->get('ServiceManager')->get(EtablissementService::class);
         $controller->setEtablissementService($etablissementService);

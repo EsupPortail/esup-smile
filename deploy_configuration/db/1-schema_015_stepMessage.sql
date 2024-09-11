@@ -21,7 +21,7 @@ ALTER TABLE stepMessage
 
 CREATE INDEX step_id
     ON stepMessage (step_id);
-CREATE INDEX user_id
+CREATE INDEX stepmessage_inscription_user_id
     ON stepMessage (inscription_id);
-CREATE INDEX user_id
+CREATE INDEX stepmessage_validator_user_id
     ON stepMessage (validator_id);

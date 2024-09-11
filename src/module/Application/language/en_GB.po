@@ -150,8 +150,56 @@ msgstr "Name"
 msgid "faculty"
 msgstr "faculty"
 
+msgid "REGISTRATION"
+msgstr "REGISTRATION"
+
+msgid "ChooseMobility"
+msgstr "Choose your mobility"
+
+msgid "Files to upload"
+msgstr "Files to upload"
+
+msgid "Check your information"
+msgstr "Check your information"
+
+msgid "Firstname"
+msgstr "Firstname"
+
+msgid "Lastname"
+msgstr "Lastname"
+
+msgid "Birthdate"
+msgstr "Birthdate"
+
+msgid "Username"
+msgstr "Username"
+
+msgid "City"
+msgstr "City"
+
+msgid "Postcode"
+msgstr "Postcode"
+
+msgid "Street"
+msgstr "Street"
+
+msgid "Etablissement"
+msgstr "University/Institution"
+
+msgid "Email of your university referent"
+msgstr "Email of your university referent"
+
+msgid "This is my first mobility"
+msgstr "This is my first mobility"
+
+msgid "registrationMessagePrevious"
+msgstr "Your registration has been returned to previous step with the following message"
+
+msgid "MonthArrival"
+msgstr "Month of arrival"
+
 msgid "disabled"
-msgstr "désactiver"
+msgstr "désactivé"
 
 msgid "homeText"
 msgstr "This application allows students to consult the catalogue of courses offered by the host university. It also makes it possible to facilitate administrative procedures and to define one's study contract (OLA) before the start of the academic year."

@@ -10,9 +10,7 @@ $modules = [
     'Laminas\Log',
     'Laminas\Mail',
     'Laminas\Mvc\I18n',
-//    'Laminas\Mvc\Plugin\FilePrg',
     'Laminas\Mvc\Plugin\FlashMessenger',
-//    'Laminas\Mvc\Plugin\Identity',
     'Laminas\Mvc\Plugin\Prg',
     'Laminas\Navigation',
     'Laminas\Paginator',
@@ -28,33 +26,29 @@ $modules = [
     'UnicaenMail',
     'UnicaenPdf',
     'UnicaenRenderer',
-    'UnicaenEvenement',
     'UnicaenAuthentification',
     'UnicaenUtilisateur',
-    'UnicaenUtilisateurLdapAdapter',
-    'UnicaenLivelog',
-    'UnicaenDbImport',
     'UnicaenEgracon',
     'UnicaenParametre',
+    'UnicaenSynchro',
     'UnicaenVue',
     'Fichier',
     'Import',
     'Message',
+    'Api',
     'Application',
 ];
-
 // Charge les variables d'environnements du .env
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/../');
-$dotenv->load();
+$dotenv = new Symfony\Component\Dotenv\Dotenv();
+$dotenv->load(__DIR__.'/../.env');
 
-$applicationEnv = getenv('APPLICATION_ENV') ?: 'production';
+$applicationEnv = $_ENV['APPLICATION_ENV'] ?: 'production';
 if ('development' === $applicationEnv) {
     /** Enleve les erreurs Deprecated (8.2) en attendant la mise à jour des librairies
      * TODO: A enlever
      */
-    error_reporting(E_ALL & ~E_DEPRECATED);
+    error_reporting(E_ALL ^ E_DEPRECATED);
     $modules[] = 'Laminas\DeveloperTools';
-    $modules[] = 'UnicaenCode';
 }else {
     error_reporting(E_ERROR);
 }

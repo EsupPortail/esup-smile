@@ -34,7 +34,7 @@ $mTableId = "liste-formations-mobilite";
 </div>
 <div class="row">
     <div class="col">
-        <a class="btn btn-primary icon icon-ajouter pe-2 mb-2" href="<?= $this->url('mobilite') ?>"> Ajouter une mobilité</a>
+        <a class="btn btn-primary icon icon-ajouter pe-2 mb-2" href="<?= $this->url('mobilite') ?>"> Ajouter un programme</a>
     </div>
     <div class="col">
         <?php
@@ -42,7 +42,7 @@ $mTableId = "liste-formations-mobilite";
          * @see \Application\Controller\Formation\FormationController::activeAllMobilityAction()
          */
         ?>
-        <a class="btn btn-info icon icon-ajouter pe-2 mb-2 right" href="<?= $this->url('formations/mobilite/activeAllMobility') ?>"> Activer toutes les mobilités</a>
+<!--        <a class="btn btn-info icon icon-ajouter pe-2 mb-2 right" href="--><?php //= $this->url('formations/mobilite/activeAllMobility') ?><!--"> Activer toutes les mobilités</a>-->
     </div>
 </div>
 <div class="row">
@@ -70,6 +70,7 @@ $mTableId = "liste-formations-mobilite";
             <option selected>Semestre</option>
             <option value="1">S1</option>
             <option value="2">S2</option>
+            <option value="3">S1 & S2</option>
         </select>
     </div>
     <div class="col">
@@ -151,13 +152,20 @@ $mTableId = "liste-formations-mobilite";
             "columnDefs": [
                 {
                     render: function (data, type, row) {
-                        let el = document.querySelector('#searchSemestre');
-                        // console.log(type)
-                        let str = `<div class="form-check form-switch"><input class="form-check-input checkS2" data-codeCours="${data[1]}" type="checkbox" role="switch" id="flexSwitchCheckChecked" ${data[0]}>
+                        let str = `<div class="form-check form-switch"><input class="form-check-input checkS2" data-codeCours="${data[1]}" type="checkbox" role="switch" id="flexSwitchCheckChecked" ${data[0]} disabled>
                     <label class="form-check-label" for="flexSwitchCheckChecked"></label></div>`
                         return str;
                     },
                     targets: [6],
+                    searchable: true,
+                },
+                {
+                    render: function (data, type, row) {
+                        let str = `<div class="form-check form-switch"><input class="form-check-input checkS1" data-codeCours="${data[1]}" type="checkbox" role="switch" id="flexSwitchCheckChecked" ${data[0]} disabled>
+                    <label class="form-check-label" for="flexSwitchCheckChecked"></label></div>`
+                        return str;
+                    },
+                    targets: [5],
                     searchable: true,
                 }
             ],
@@ -170,7 +178,7 @@ $mTableId = "liste-formations-mobilite";
                 // }
             },
             "ajax": {
-                "url": "",
+                "url": "/formations/mobilite",
                 "type": "POST",
                 "dataSrc": function(json) {
                     // console.log(json)
@@ -178,7 +186,6 @@ $mTableId = "liste-formations-mobilite";
                 }
             },
         });
-
         let dataTable = document.querySelector('#liste-formations-mobilite_wrapper');
         dataTable.firstChild.remove()
 
@@ -234,48 +241,23 @@ $mTableId = "liste-formations-mobilite";
             searchSemestre.addEventListener('change', (event) => {
                 target = event.target
 
-                // let sear = col.search(regex)
-                // console.log(res)
-                // if(target.value === '2') {
-                //     QTable.DataTable()
-                //         .column(6)
-                //         .search(
-                //             "\bchecked\b"
-                //         )
-                //         .draw()
-                //     QTable.DataTable()
-                //         .column(5)
-                //         .search(
-                //             ""
-                //         )
-                //         .draw()
-                // }else if(target.value === '1') {
-                //     QTable.DataTable()
-                //         .column(6)
-                //         .search(
-                //             ""
-                //         )
-                //         .draw()
-                //     QTable.DataTable()
-                //         .column(5)
-                //         .search(
-                //             "\bchecked\b"
-                //         )
-                //         .draw()
-                // }else {
-                //     QTable.DataTable()
-                //         .column(6)
-                //         .search(
-                //             ""
-                //         )
-                //         .draw()
-                //     QTable.DataTable()
-                //         .column(5)
-                //         .search(
-                //             ""
-                //         )
-                //         .draw()
-                // }
+                console.log(target.value)
+
+                QTable.DataTable()
+                    .column(5)
+                    .search((a, b , c, d) => {
+                        if(target.value === '1') {
+                            return b.S1[0] === 'checked'
+                        }else if (target.value === '2') {
+                            return b.S2[0] === 'checked'
+                        }else if (target.value === '3') {
+                            return (b.S1[0] === 'checked' && b.S2[0] === 'checked')
+                        }else {
+                            return true
+                        }
+                    })
+                    .draw()
+
 
             })
             checkMobilite.forEach((elem) => {
@@ -316,6 +298,7 @@ $mTableId = "liste-formations-mobilite";
         }
         function updateS2 (event) {
             let target = event.target
+
             let codeCours = target.dataset.codecours
             let active = target.checked
 

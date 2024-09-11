@@ -1,29 +1,11 @@
+
 <?php
 
 /**
  * !! Ce fichier de configuration doit être importé avant les autres
  */
-$LDAP_MASTER_HOST = $_ENV['LDAP_MASTER_HOST'];
-$LDAP_MASTER_PORT = $_ENV['LDAP_MASTER_PORT'];
-$LDAP_MASTER_USERNAME = $_ENV['LDAP_MASTER_USERNAME'];
-$LDAP_MASTER_PASSWORD = $_ENV['LDAP_MASTER_PASSWORD'];
 
-$LDAP_REPLICA_HOST = $_ENV['LDAP_REPLICA_HOST'];
-//const LDAP_REPLICA_HOST         = 'lldapreplica5.unicaen.fr';
-$LDAP_REPLICA_PORT = $_ENV['LDAP_REPLICA_PORT'];
-$LDAP_REPLICA_USERNAME = $_ENV['LDAP_REPLICA_USERNAME'];
-$LDAP_REPLICA_PASSWORD = $_ENV['LDAP_REPLICA_PASSWORD'];
-
-//const LDAP_REPLICA_USERNAME     = "uid=octo-read,ou=system,dc=unicaen,dc=fr";
-//const LDAP_REPLICA_PASSWORD     = "APEedBszB7Vm";
-
-const LDAP_BASE_DN = 'dc=unicaen,dc=fr';
-const LDAP_BRANCH_PEOPLE = 'ou=people,dc=unicaen,dc=fr';
-const LDAP_BRANCH_STRUCTURES = 'ou=structures,dc=unicaen,dc=fr';
-const LDAP_BRANCH_GROUPS = 'ou=groups,dc=unicaen,dc=fr';
-const LDAP_BRANCH_DEACTIVATED = 'ou=deactivated,dc=unicaen,dc=fr';
-const LDAP_BRANCH_BLOCKED = 'ou=blocked,dc=unicaen,dc=fr';
-
+$WAYF_SP_URL = $_ENV['WAYF_SP_URL'];
 
 define(
     "AUTH_SHIB_ACTIVE",
@@ -39,31 +21,11 @@ return [
             'connection' => [
                 'default' => [
                     'params' => [
-                        'host' => $LDAP_REPLICA_HOST,
-                        'port' => $LDAP_REPLICA_PORT,
-                        'username' => $LDAP_REPLICA_USERNAME,
-                        'password' => $LDAP_REPLICA_PASSWORD,
-                        'baseDn' => LDAP_BRANCH_PEOPLE,
-                        'bindRequiresDn' => true,
-                        'accountFilterFormat' => "(&(objectClass=supannPerson)(supannAliasLogin=%s))",
-                        //                        'accountFilterFormat'   => "(&(eduPersonAffiliation=member)(!(eduPersonAffiliation=student))(supannAliasLogin=%s))",
-                    ]
+                   ]
                 ]
             ],
         ],
     ],
-
-    'unicaen-ldap' => [
-        'host' => $LDAP_REPLICA_HOST,
-        'port' => $LDAP_REPLICA_PORT,
-        'version' => 3,
-        'username' => $LDAP_REPLICA_USERNAME,
-        'password' => $LDAP_REPLICA_PASSWORD,
-        'baseDn' => LDAP_BASE_DN,
-        'bindRequiresDn' => true,
-        'accountFilterFormat' => "(&(objectClass=posixAccount)(supannAliasLogin=%s))",
-    ],
-
     'unicaen-auth' => [
         'auth_types' => [
             'shib',
@@ -98,7 +60,7 @@ return [
          */
         'shib' => [
             'order' => 1,
-            'enabled' => false,
+            'enabled' => true,
             'description' =>
                 "Cliquez sur le bouton ci-dessous pour accéder à l'authentification via la fédération d'identité.",
             'adapter' => \UnicaenAuthentification\Authentication\Adapter\Shib::class,
@@ -107,7 +69,39 @@ return [
             /**
              * URL de déconnexion.
              */
-            'logout_url' => '/Shibboleth.sso/Logout?return=', // NB: '?return=' semble obligatoire!
+            'logout_url' => $WAYF_SP_URL.'Shibboleth.sso/Logout?return=', // NB: '?return=' semble obligatoire!
+            'idp_logout' => true,
+//            'aliases' => [
+//                'displayName'            => 'HTTP_DISPLAYNAME',
+//                'eduPersonPrincipalName' => 'HTTP_EPPN',
+//                'eppn'                   => 'eppn',
+//                'eduOrgLegalName' => 'HTTP_ORG_NAME',
+//                'mail'                   => 'HTTP_MAIL',
+//                'o' => 'HTTP_O',
+//                'shacDateOfBirth' => 'HTTP_BIRTHDATE',
+//                'givenName'              => 'HTTP_GIVENNAME',
+//                'sn'                     => 'HTTP_SN',
+//                'homePostalAddress'            => 'HTTP_POSTALADDRESS',
+//                'shacHomeOrganization'            => 'HTTP_SHACORG',
+//            ],
+            /**
+             * Clés dont la présence sera requise par l'application dans la variable superglobale $_SERVER
+             * une fois l'authentification réussie.
+             */
+            'required_attributes' => [
+                'displayName',
+                'eppn',
+//                'eduPersonPrincipalName',
+//                'eduOrgLegalName',
+                'mail',
+//                'o',
+//                'shacDateOfBirth',
+//                'gn|givenName',
+//                'sn|surname', // i.e. 'sn' ou 'surname'
+//                'homePostalAddress',
+//                'shacHomeOrganization',
+            ],
+
             'shib_user_id_extractor' => [
                 'default' => [
                     'supannEmpId' => [
@@ -118,6 +112,25 @@ return [
                     ],
                 ],
             ],
+            /**
+             * Identifiants de connexion autorisés à faire de l'usurpation d'identité.
+             * (NB: à réserver exclusivement aux tests.)
+             */
+            //'usurpation_allowed_usernames' => [
+                //'username', // format LDAP
+                //'e.mail@domain.fr', // format BDD
+                //'eppn@domain.fr', // format Shibboleth
+            //],
+//            'simulate' => [
+//                'eppn'           => $eppn = 'premierf@univ.fr',
+//                'supannEmpId'    => '00012345',
+//                'displayName'    => $eppn,
+//                'mail'           => $eppn,
+//                'givenName'      => 'François',
+//                'sn'             => 'Premier',
+//                'supannCivilite' => 'M.'
+//            ],
+
         ],
 
         'cas' => [
@@ -153,5 +166,4 @@ return [
         ],
     ],
 ];
-
 

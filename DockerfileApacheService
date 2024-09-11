@@ -1,0 +1,102 @@
+# Utilisation de l'image Ubuntu 20.04
+FROM ubuntu:20.04
+
+# Set timezone
+ENV TZ=Europe/Paris
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN if [ -f ./deploy_configuration/.env_proxy ]; then \
+    # Si le fichier source existe, copiez-le
+    COPY ./deploy_configuration/.env_proxy /; \
+fi
+COPY ./deploy_configuration/proxy.sh /
+RUN chmod +x /proxy.sh
+
+RUN sh /proxy.sh
+
+ARG HTTP_PROXY_CI 
+ENV http_proxy=$HTTP_PROXY_CI
+ENV https_proxy=$HTTP_PROXY_CI
+ENV HTTP_PROXY=$HTTP_PROXY_CI
+ENV HTTPS_PROXY=$HTTP_PROXY_CI
+
+
+# Vérifiez si la variable d'environnement http_proxy est définie
+RUN if [ -n "$http_proxy" ]; then \
+    # Si elle est définie, exécutez les commandes pour configurer le proxy
+    touch /etc/apt/apt.conf.d/05proxy; \
+    echo 'Acquire::HTTP::Proxy "'$http_proxy'";' >> /etc/apt/apt.conf.d/05proxy; \
+    echo 'Acquire::HTTPS::Prox "'$http_proxy'";' >> /etc/apt/apt.conf.d/05proxy; \
+    echo 'Acquire::ftp::Proxy "'$http_proxy'";' >> /etc/apt/apt.conf.d/05proxy; \
+    echo "Proxy configuré dans le système de packages avec la valeur $http_proxy" && true; \
+fi
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    apache2 apache2-bin libapache2-mod-fcgid
+
+COPY ./deploy_configuration/shibconf/shibboleth/packages.sh /
+RUN chmod u+x /packages.sh
+RUN apt-get install -y expect
+
+RUN sh /packages.sh
+RUN apt-get install -y apache2
+RUN apt-get install -y libapache2-mod-shib2
+RUN apt-get install -y supervisor
+
+
+COPY ./deploy_configuration/apache/template-000-default.conf /
+COPY ./deploy_configuration/apache/template-default-ssl.conf /
+
+COPY ./deploy_configuration/apache/replace_env.sh /
+### Configuration WayF
+RUN apt-get install -y php7.4-fpm php7.4-common php7.4-xml php7.4-mbstring libapache2-mod-php
+RUN a2enmod proxy_fcgi setenvif
+
+RUN mkdir /wayf
+WORKDIR /wayf
+RUN apt-get install -y wget
+RUN wget https://gitlab.switch.ch/gip-renater/SWITCHwayf/-/archive/1.22-0001/SWITCHwayf-1.22-0001.tar.gz
+RUN tar xvzf SWITCHwayf-1.22-0001.tar.gz -C /opt/
+RUN ln -s /opt/SWITCHwayf-1.22-0001 /opt/switchwayf
+RUN chmod -R go=u-w /opt/switchwayf
+
+WORKDIR /
+### Fin Config WayF
+
+
+
+COPY ./deploy_configuration/shibconf/shibboleth/supervisord.conf /
+
+
+RUN a2enmod shib
+RUN a2enmod rewrite actions proxy proxy_fcgi setenvif
+
+COPY ./deploy_configuration/shibconf/files_conf/security.conf /etc/apache2/conf-available
+COPY ./deploy_configuration/shibconf/files_conf/shib.conf /etc/apache2/conf-available
+COPY ./deploy_configuration/shibconf/files_conf/wayf.conf /etc/apache2/conf-available
+COPY ./deploy_configuration/shibconf/files_conf/ports.conf /etc/apache2
+
+RUN a2enconf security
+RUN a2enconf wayf
+
+RUN apt-get install -y supervisor
+RUN apt-get install -y gettext-base
+
+RUN a2ensite 000-default
+RUN a2ensite default-ssl
+
+RUN mkdir /var/www/html/smile
+WORKDIR /var/www/html/smile/
+COPY ./src /var/www/html/smile/
+WORKDIR /var/www/html/smile/public
+
+
+ENV HTTP_PROXY ""
+ENV HTTPS_PROXY ""
+ENV http_proxy ""
+ENV https_proxy ""
+RUN rm -f /etc/apt/apt.conf.d/05proxy
+
+EXPOSE 80
+EXPOSE 443
