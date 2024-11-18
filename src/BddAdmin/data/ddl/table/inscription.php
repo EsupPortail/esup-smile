@@ -6,7 +6,7 @@ return [
     'schema'      => 'public',
     'name'        => 'inscription',
     'temporary'   => FALSE,
-    'logging'     => FALSE,
+    'logging'     => TRUE,
     'commentaire' => NULL,
     'sequence'    => 'inscription_id_seq',
     'columns'     => [

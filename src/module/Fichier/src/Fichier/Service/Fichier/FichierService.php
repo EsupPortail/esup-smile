@@ -204,7 +204,7 @@ class FichierService {
                 try {
                     $this->getS3Service()->addFileToBucket($fichier->getNomStockage(), $path);
                 } catch (Exception $e) {
-                    throw new RuntimeException("Une erreur est survenu pendant l'upload", $e);
+                    throw new RuntimeException($e->getMessage(), $e->getCode());
                 }
             }else {
                 $fichier->setNomStockage($date->format('Ymd-His')."-".$uid."-".$nature->getCode()."-".$nomFichier);

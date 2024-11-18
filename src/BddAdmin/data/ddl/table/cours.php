@@ -6,7 +6,7 @@ return [
     'schema'      => 'public',
     'name'        => 'cours',
     'temporary'   => FALSE,
-    'logging'     => FALSE,
+    'logging'     => TRUE,
     'commentaire' => NULL,
     'sequence'    => 'cours_id_seq',
     'columns'     => [

@@ -214,7 +214,7 @@ class DashboardController extends AbstractActionController
             $inscription = $this->inscriptionService->findByUser($user);
             $inscription->setStatus(Inscription::STATUS_ABANDON[0]);
             $inscription->setStatusLibelle(Inscription::STATUS_ABANDON[1]);
-            $this->inscriptionService->update($inscription);
+            $this->getInscriptionService()->update($inscription);
 
             $rendu = $this->getRenduService()->generateRenduByTemplateCode("Gestionnaire_abandon", [
                 'inscription' => $inscription,
@@ -223,8 +223,12 @@ class DashboardController extends AbstractActionController
                 'step' => $inscription->getStep()
             ]);
 
-            $mail = $this->getMailService()->sendMail('anthony.gautreau@unicaen.fr', $rendu->getSujet(), $rendu->getCorps());
-            $this->getMailService()->update($mail);
+            // TODO : Send mail to gestionnaire
+            $users = $this->getUserService()->getUtilisateursByRoleIdAsOptions('gestionnaire');
+            foreach ($users as $gestionnaire) {
+                $mail = $this->getMailService()->sendMail($gestionnaire['email'], $rendu->getSujet(), $rendu->getCorps());
+                $this->getMailService()->update($mail);
+            }
         }
         return $this->redirect()->toRoute('dashboard');
     }
@@ -239,6 +243,7 @@ class DashboardController extends AbstractActionController
 
             $user = $this->userService->getConnectedUser();
             $coursSelected = [];
+
 
             if($user) {
                 $inscription = $this->inscriptionService->findByUser($user);
@@ -329,12 +334,14 @@ class DashboardController extends AbstractActionController
             $renduCoursAide = $this->getRenduService()->generateRenduByTemplateCode("cours_aide");
 //            $composantes = $this->composanteService->findAllBy(['formations']);
             if (!$this->userService->getConnectedUser()) {
+                $langues = $this->getLangueService()->findAll();
 
                 return new ViewModel(
                     [
                         'composantes' => $composantes,
                         'groupeComposantes' => $groupeComposantes,
                         'role' => $this->userService->getConnectedRole(),
+                        'langues' => $langues,
                         'ratioAlloc' => $ratioAlloc,
                         'minAlloc' => $minAlloc,
                         'maxAlloc' => $maxAlloc,

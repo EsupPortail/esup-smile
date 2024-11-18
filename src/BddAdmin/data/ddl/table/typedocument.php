@@ -6,7 +6,7 @@ return [
     'schema'      => 'public',
     'name'        => 'typedocument',
     'temporary'   => FALSE,
-    'logging'     => FALSE,
+    'logging'     => TRUE,
     'commentaire' => NULL,
     'sequence'    => 'typedocument_id_seq',
     'columns'     => [

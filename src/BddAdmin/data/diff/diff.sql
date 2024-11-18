@@ -1,10 +1,1 @@
---------------------------------------------------
--- table.alter
---------------------------------------------------
-
-ALTER TABLE mobilite ALTER COLUMN histo_creation DROP NOT NULL;
-
-
-
-
-
+-- Aucune requête à exécuter.

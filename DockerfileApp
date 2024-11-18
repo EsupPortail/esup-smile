@@ -137,6 +137,11 @@ RUN composer install
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
+# For cron
+RUN apt-get install -y cron
+# For run cron + php
+RUN apt-get install -y supervisor
+
 
 RUN mkdir -p data/cache                   && chmod -R 777 data/cache
 RUN mkdir -p data/DoctrineModule/cache    && chmod -R 777 data/DoctrineModule/cache

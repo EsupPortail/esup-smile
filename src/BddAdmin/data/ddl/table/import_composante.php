@@ -6,7 +6,7 @@ return [
     'schema'      => 'public',
     'name'        => 'import_composante',
     'temporary'   => FALSE,
-    'logging'     => FALSE,
+    'logging'     => TRUE,
     'commentaire' => NULL,
     'sequence'    => 'import_composante_id_seq',
     'columns'     => [

@@ -6,7 +6,7 @@ return [
     'schema'      => 'public',
     'name'        => 'step',
     'temporary'   => FALSE,
-    'logging'     => FALSE,
+    'logging'     => TRUE,
     'commentaire' => NULL,
     'sequence'    => 'step_id_seq',
     'columns'     => [

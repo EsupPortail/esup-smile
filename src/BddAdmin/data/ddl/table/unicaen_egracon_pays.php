@@ -6,7 +6,7 @@ return [
     'schema'      => 'public',
     'name'        => 'unicaen_egracon_pays',
     'temporary'   => FALSE,
-    'logging'     => FALSE,
+    'logging'     => TRUE,
     'commentaire' => NULL,
     'sequence'    => 'unicaen_egracon_pays_id_seq',
     'columns'     => [

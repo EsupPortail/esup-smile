@@ -255,7 +255,7 @@ class FormationController extends AbstractEntityController
          * @var Cours[] $cours
          */
 //        $formations = $this->formationService->findAll();
-        $cours = $this->coursService->getEntityRepository()->findBy(array(), array('codeElp' => 'ASC'), 5000);
+        $cours = $this->coursService->getEntityRepository()->findBy(array('deletedOn' => null), array('codeElp' => 'ASC'), 5000);
 //        $cours = $this->coursService->findAllOpenMobilite();
         $mobilites = $this->mobiliteService->findAllBy(['active' => true, 'histoDestruction' => null]);
         $composantes = $this->composanteService->findAll();

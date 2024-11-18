@@ -111,7 +111,6 @@ class StepService extends CommonEntityService
         ]);
         $mail = $this->getMailService()->sendMail($user->getEmail(), $rendu->getSujet(), $rendu->getCorps());
         $this->getMailService()->update($mail);
-//        $this->getMailService()->sendMail('anthony.gautreau@unicaen.fr', 'SMILE - Etape validé', 'Bonjour, Votre dossier SMILE a avancé, cliquez ici pour voir votre dossier.');
     }
 
     public function mailStep(Stepmessage $stepmessage) {

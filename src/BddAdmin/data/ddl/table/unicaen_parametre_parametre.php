@@ -6,7 +6,7 @@ return [
     'schema'      => 'public',
     'name'        => 'unicaen_parametre_parametre',
     'temporary'   => FALSE,
-    'logging'     => FALSE,
+    'logging'     => TRUE,
     'commentaire' => NULL,
     'sequence'    => 'unicaen_parametre_parametre_id_seq',
     'columns'     => [
@@ -106,6 +106,30 @@ return [
             'position'    => 6,
             'commentaire' => NULL,
         ],
+        'modifiable' => [
+            'name'        => 'modifiable',
+            'type'        => 'bool',
+            'bdd-type'    => 'boolean',
+            'length'      => 0,
+            'scale'       => NULL,
+            'precision'   => NULL,
+            'nullable'    => FALSE,
+            'default'     => 'true',
+            'position'    => 9,
+            'commentaire' => NULL,
+        ],
+        'affichable' => [
+            'name'        => 'affichable',
+            'type'        => 'bool',
+            'bdd-type'    => 'boolean',
+            'length'      => 0,
+            'scale'       => NULL,
+            'precision'   => NULL,
+            'nullable'    => FALSE,
+            'default'     => 'true',
+            'position'    => 10,
+            'commentaire' => NULL,
+        ]
     ],
 ];
 

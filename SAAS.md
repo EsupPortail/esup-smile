@@ -49,25 +49,74 @@ Méthode utilisée à l'université de Caen pour avoir un compte ACME pour gére
 - Dans les paramètres de ce compte, il faut préciser qu'il n'a des droits que sur le nom de domaine définit précédement.
 - Une fois le compte ACME créé, vous avez toutes les informations nécessaires pour gérer le cycle de vie du certificat.
 
-### 5. SHIBBOLETH
+### 5. RENATER/SHIBBOLETH
 
 Pour le bon fonctionnement de Smile, il est nécessaire de déclarer le service Shibboleth sur votre portail Renater.
 
+Rendez-vous sur le portail Renater : https://registry.federation.renater.fr/entities et ajoutez un nouveau service.
+
+#### Présentation
+
+Pour être éligible à la fédération Edugain les champs en anglais doivent être renseignés.
+Nom (fr et en) : Smile
+Logo : https://smile.unicaen.fr/img/logo_smile_RVB.jpg
+Description (vous pouvez adapter) : Système de gestion en ligne des publics en mobilité internationale de l’université de XXXXXX.
+Description (en) : Online management system for international students.
+URL du service : https://smile.XXXXX.fr/ (exemple pour Caen : https://smile.unicaen.fr/)
+
+Public du service : Service à portée nationale
+Type du service : Application métier
+
+#### Responsables
+
+Langue: Français
+Responsables : la/les personnes qui gèrent la déclaration du service.
+
+Sélection de l'organisme : Votre établissement
+
+#### Contacts
+
+Les adresses de contact doivent être des adresses génériques sinon Edugain refusera la déclaration (on peut mettre deux adresses identiques).
+Contact technique : (exemple: contact-smile@unicaen.fr)
+Contact sécurité : (exemple: contact-smile@unicaen.fr)
+
+#### Fédération
+
+Si vous venez de créer le service, enregistrez-vous d'abord dans la fédération de Test pour vérifier que tout fonctionne correctement. Vous pourrez changer après pour la fédération de production.
+
+Si vous voulez passer en production, ça se fait en 2 étapes.
+- Il faut d'abord s'enregistrer dans la fédération Education-Recherche.
+- Il faudra attendre la validaton de Renater, quand vous êtes validé, vous pouvez demander à vous enregistrer dans la fédération Edugain puis attendre la validation.
+
+#### Attributs
+
+Pour Smile, il faut fournir les attributs suivants :
+Vous pouvez cocher obligatoire pour tous les éléments.
+
+Nom : Finalité
+- eduPersonPrincipalName : identification
+- o (organizationName) : identification
+- mail : identification
+- displayName : Information obligatoire pour générer un contrat pédagogique
+- eduOrgLegalName : Information obligatoire pour générer un contrat pédagogique
+- homePostalAddress : Information obligatoire pour générer un contrat pédagogique
+- shacDateOfBirth : Information obligatoire pour générer un contrat pédagogique
+- shacHomeOrganization : Information obligatoire pour générer un contrat pédagogique
+
+Cocher "Les données sont traitées en France ou dans un autre pays de l'UE"
+
+#### Informations techniques
+
+L'URL des métadonnées est l'URL de votre instance suivi de /Shibboleth.sso/Metadata
+- Exemple : https://smile.unicaen.fr/Shibboleth.sso/Metadata
+
+Vous faites ensuite "Chargez les métadonnées" pour que Renater récupère les métadonnées de votre instance.
+Le reste de la page devrait se remplir automatiquement.
+
 L'entity ID est le nom de domaine de votre instance de Smile suivi de /shibboleth-sp
+- Exemple : https://smile.monuniversite.fr/shibboleth-sp
 
-Exemple :
-``` 
-https://smile.monuniversite.fr/shibboleth-sp
-```
+#### Conformité
 
-Les attributs nécessaires pour Smile sont :
-- displayName
-- mail
-- eduPersonPrincipalName
-- eduOrgLegalName
-- shacDateOfBirth
-- givenName
-- sn (surname)
-- homePostalAddress
-- o (organizationName)
-- shacHomeOrganization
+A définir.
+

@@ -6,7 +6,7 @@ return [
     'schema'      => 'public',
     'name'        => 'type_diplome',
     'temporary'   => FALSE,
-    'logging'     => FALSE,
+    'logging'     => TRUE,
     'commentaire' => NULL,
     'sequence'    => 'type_diplome_id_seq',
     'columns'     => [

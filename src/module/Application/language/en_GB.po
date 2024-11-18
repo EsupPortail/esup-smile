@@ -212,3 +212,6 @@ msgstr "you can't connect with the federation (left form), use your demo account
 
 msgid "demoConnect"
 msgstr "Se connecter avec mon compte de demo"
+
+msgid "Login with my university"
+msgstr "Login with my university"

@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install -y cron postgresql-client
 
 RUN apt-get install -y python3-full python3-pip
 RUN apt-get install -y python3-boto3
+RUN apt-get install -y jq
 COPY ./deploy_configuration/time-machine/upload-dump-database-s3.py /
 RUN chmod u+x /upload-dump-database-s3.py
 

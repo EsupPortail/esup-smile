@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.3.31
+- Changement du système d'authentification du S3 qui corrige les problèmes d'upload en SAAS
+- Mise à jour des paquets unicaen
+- Suppression de référence à un mail fixe dans le code
+- Correction d'un bug d'historisation des cours
+
 ## 1.3.11
 - Intégration de l'authentification SMTP
 - Mise à jour BddAdmin

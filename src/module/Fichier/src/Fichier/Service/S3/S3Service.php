@@ -8,16 +8,20 @@ use Aws\S3\S3Client;
 
 class S3Service {
 
-    protected string $bucketName;
+    protected string $defaultBucket;
     protected S3Client $client;
     public function __construct()
     {
-        $this->bucketName = $_ENV['AWS_BUCKET_NAME'];
+        $this->defaultBucket = $_ENV['AWS_BUCKET_NAME'];
         $this->client = new S3Client([
-            'region' => $_ENV['AWS_DEFAULT_REGION'],
             'version' => 'latest',
+            'region' => $_ENV['AWS_DEFAULT_REGION'],
             'endpoint' => $_ENV['AWS_ENDPOINT'],
-            'profile' => $_ENV['AWS_PROFILE'],
+            'use_path_style_endpoint' => true,
+            'credentials' => [
+                'key' => $_ENV['AWS_ACCESS_KEY_ID'],
+                'secret' => $_ENV['AWS_SECRET_ACCESS_KEY'],
+            ],
         ]);
     }
     public function getS3Client()
@@ -45,7 +49,7 @@ class S3Service {
     public function getBucketContent(?string $path = ''): \Aws\Result
     {
         $result = $this->client->listObjects([
-            'Bucket' => $this->bucketName,
+            'Bucket' => $this->defaultBucket,
             'Prefix' => $path,
         ]);
 
@@ -55,21 +59,25 @@ class S3Service {
     public function addFileToBucket(string $key, string $sourceFilePath): \Aws\Result
     {
         try {
-            $result = $this->client->putObject([
-                'Bucket' => $this->bucketName,
+            // Validate the source file path
+            if (!file_exists($sourceFilePath)) {
+                throw new \RuntimeException("Source file does not exist: " . $sourceFilePath);
+            }
+
+            return $this->client->putObject([
+                'Bucket' => $this->defaultBucket,
                 'Key' => $key,
                 'SourceFile' => $sourceFilePath,
             ]);
         } catch (\Exception $e) {
-            throw new RuntimeException("Un problème s'est produit lors de l'ajout d'un fichier dans le bucket S3.", 0, $e);
+            throw new RuntimeException("Un problème s'est produit lors de l'ajout d'un fichier dans le bucket S3. : ".$e->getMessage(), $e->getCode(), $e);
         }
-        return $result;
     }
 
     public function getObject(string $key): \Aws\Result
     {
         $result = $this->client->getObject([
-            'Bucket' => $this->bucketName,
+            'Bucket' => $this->defaultBucket,
             'Key' => $key,
         ]);
         return $result;
@@ -78,7 +86,7 @@ class S3Service {
     public function getFileDownloadUrl(string $key): string
     {
         $cmd = $this->client->getCommand('GetObject', [
-            'Bucket' => $this->bucketName,
+            'Bucket' => $this->defaultBucket,
             'Key' => $key
         ]);
 
@@ -93,7 +101,7 @@ class S3Service {
     public function removeFileFromBucket(string $key): \Aws\Result
     {
         $result = $this->client->deleteObject([
-            'Bucket' => $this->bucketName,
+            'Bucket' => $this->defaultBucket,
             'Key' => $key,
         ]);
         return $result;

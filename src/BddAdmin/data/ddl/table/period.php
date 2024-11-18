@@ -6,7 +6,7 @@ return [
     'schema'      => 'public',
     'name'        => 'period',
     'temporary'   => FALSE,
-    'logging'     => FALSE,
+    'logging'     => TRUE,
     'commentaire' => NULL,
     'sequence'    => 'period_id_seq',
     'columns'     => [
