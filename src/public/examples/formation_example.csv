@@ -1,0 +1,1042 @@
+code,libelle,acronyme,type_diplome,niveau_etude,code_composante
+M1DOC1_201,M1 MEEF Second degré - parcours Documentation,,M,1,980
+M1PD01_203,M1 MEEF Premier Degré - parcours Professorat des écoles à St Lô,,M,1,980
+M1EPS1_201,M1 MEEF Second degré - parcours Education Physique et Sportive,,M,1,980
+2MMON2_717,Master 2ème année Monnaie Banque Finance Assurance parcours RCPA EB Caen Promo 1,,M,2,910
+2MEMPU_211,Master 2A Economie et Management Public,,M,2,11
+1MACSA_102,Master 1 Santé Parcours Management des activités de santé - FC - EAD,,M,1,14
+3LGES1_714,Licence 3A Gestion P. Management des Entreprises - FI,,L,3,910
+M1FORM_102,M1 MEEF PIF - P. Formation de formateurs en milieu scolaire,,M,1,980
+1MPATR_706,Master 1A Gestion du Patrimoine Arkéa - FC dédiée - Mars 2021,,M,1,910
+1MACSA_101,Master 1 Santé Parcours Management des activités de santé - EAD,,M,1,14
+2MMARK_711,Master 2A Marketing Vente - FI,,M,2,910
+1MBIOS_702,Master 1A Biologie-Santé (réservé aux étudiants de médecine et pharmacien),,M,1,13
+M1EDUC_101,M1 MEEF parcours Encadrement Éducatif,,M,1,980
+2MSCM2_711,Master 2 Sciences du Médicaments parcours Drug Design (DD),,M,2,14
+2MPSY2_711,Master 2A Psychologie P. Psychologie de l'éducation,,M,2,924
+M2PCH2_211,"M2 MEEF Second degré - parcours Physique, Chimie",,M,2,980
+2MMANA_712,Master 2A Management parcours Atrium,,M,2,910
+1MMINN_702,Master 1A Management de l'Innovation - FC,,M,1,910
+2MMON2_714,Master 2ème année Monnaie Banque Finance Assurance parcours RCPA Brie promo 2,,M,2,910
+3LECO_711,Licence 3A Economie,,L,3,11
+2LSTA3_701,Licence 2A STAPS P. Entraînement Sportif,,L,2,914
+M1PCH1_201,"M1 MEEF Second degré - parcours Physique, Chimie",,M,1,980
+2LSANT_701,Licence 2A Sciences pour la Santé,,L,2,13
+2MEMP1_711,Master 2A Economie et Management Publics P. Chargé d'Etudes Economiques,,M,2,11
+M2INFO_211,M2 MEEF Ingénierie - parcours Formation Formateurs,,M,2,980
+2LECO_701,Licence 2A Economie,,L,2,11
+1LGEST_701,Licence 1A Gestion,,L,1,11
+3LEDU2_711,"Licence 3A Sciences de l'Education P. Métier du Social, du Médico-social et de l'Insertion",,L,3,12
+3LGES1_711,Licence 3A Gestion P. Management des Entreprises - FC,,L,3,910
+3LGES5_711,"Licence 3A Gestion P. Banque, Finance, Assurance",,L,3,910
+M2DOC2_211,M2 MEEF Second degré - parcours Documentation,,M,2,980
+M1EE01_201,M1 MEEF - parcours Encadrement Educatif à Caen,,M,1,980
+1MMINN_703,Master 1A Management de l'Innovation - FOAD,,M,1,910
+1LPHYS_701,Licence 1A Physique,,L,1,13
+2MSCM1_711,Master 2 Sciences du Médicaments parcours Développement Clinique du Médicaments (DCM),,M,2,14
+3LSTA2_711,Licence 3A STAPS P. Education et Motricité,,L,3,914
+3LLEAR_711,Licence 3A Langues Etrangères Appliquées Anglais/Russe,,L,3,907
+2MEMP2_711,Master 2A Economie et Management Publics P. Décisions et Politiques Publiques,,M,2,11
+M2LVE2_211,M2 MEEF Second degré - parcours  parcours Langues Vivantes Etrangères,,M,2,980
+M2EE02_211,M2 MEEF - Encadrement Educatif à Caen,,M,2,980
+M1PIF_201,M1 MEEF Pratiques et Ingénierie de la Formation - parcours Formation pour l'Education Inclusive (FEI),,M,1,980
+M1HIG1_201,"M1 MEEF Second degré - parcours Histoire, Géographie",,M,1,980
+2MSOC2_712,Master 2A Sociologie P. Gouvernance des Risques et de l'Environnement (CEMU),,M,2,12
+DROIL2_201,Licence 2 Droit Caen,,L,2,901
+M2INMC_211,M2 MEEF Ingénierie - parcours Médiation Culturelle et Enseignement,,M,2,980
+2MDCIV_711,Master 2A Droit Civil P. Protection des Personnes Vulnérables,,M,2,901
+2MPATR_714,Master 2ème année Gestion de Patrimoine Crédit Agricole Caen janvier 2022,,M,2,910
+CPTHL3_211,Licence 3 Arts du Spectacle parcours Etudes théâtrales - Classe préparatoire à l'Enseignement Supérieur (CPES),,L,3,12
+CPTHL2_201,Licence 2 Arts du Spectacle parcours Etudes théâtrales - Classe préparatoire à l'Enseignement Supérieur (CPES),,L,2,12
+CPTHL1_201,Licence 1 Arts du spectacle - Classe préparatoire à l'Enseignement Supérieur - Théâtre,,L,1,12
+MATI_100,TEST MATHILDE,,L,1,961
+TESTSI_222,Test SI scol pour test compensation,,L,1,914
+SVTL2_201,Licence 2 Sciences de la Vie et de la Terre,,L,2,13
+1MSCM2_701,Master 1 Sciences du Médicaments parcours Drug Design (DD),,M,1,14
+SVTL1_201,Licence 1 Sciences de la Vie et de la Terre,,L,1,13
+LETTL1_201,Licence 1 Lettres,,L,1,12
+M2HIG2_211,"M2 MEEF Second degré - parcours Histoire, Géographie",,M,2,980
+M2SES2_211,M2 MEEF Second degré - parcours Sciences Economiques et Sociales,,M,2,980
+M1PIF_203,M1 MEEF Pratiques et Ingénierie de la Formation - parcours Médiation culturelle et enseignement,,M,1,980
+1MPATR_705,Master 1ère année Gestion du Patrimoine FC Crédit Mutuel Arkéa Mars 2022,,M,1,910
+MSE4M2_214,Master 2 Management sectoriel parcours Management et Coordination des Petites Unités de Santé MC PUS,,M,2,910
+LEA2M2_212,Master 2 Langues Étrangères Appliquées parcours Expert en Projets Européens au service du développement local EPE,,M,2,907
+CGEM1_201,Master 1 Contrôle de Gestion et audit organisat p. Contrôle de gestion Business Partner et Amélioration Continue BPAC,,M,1,11
+1LECO_701,Licence 1A Economie,,L,1,11
+1MMONN_701,Master 1A Monnaie Banque Finance Assurance P. Banque finance assurance (G2C),,M,1,910
+2LEDUC_701,Licence 2A Sciences de l'Education,,L,2,12
+2MPATR_712,Master 2ème année Gestion du Patrimoine à distance Promo 1,,M,2,910
+HIS3L2_209,Licence 2 Histoire parcours Histoire-Sciences Sociales EAD,,L,2,12
+3LPSYC_711,Licence 3A Psychologie,,L,3,924
+M2PD02_212,M2 MEEF Premier Degré - parcours Professorat des écoles à Alençon,,M,2,980
+M2EPS2_211,M2 MEEF Second degré - parcours Education Physique et Sportive,,M,2,980
+M2PD02_213,M2 MEEF Premier Degré - parcours Professorat des écoles à ST Lô,,M,2,980
+M2PLPB_211,M2 MEEF Second degré - parcours Professeur de Lycée Professionnel (non admissibles),,M,2,980
+M1LMO1_201,M1MEEF Second degré - parcours Lettres Modernes,,M,1,980
+PSYLAS_231,Licence 1 Psychologie- Accès Santé,,L,1,924
+ECOLAS_221,Licence 1 Economie - Accès Santé,,L,1,11
+SOC3M1_203,Master 1 Sociologie parcours Vulnérabilités,,M,1,12
+SOC3M1_209,Master 1 Sociologie parcours Vulnérabilités EAD,,M,1,12
+PHY3M2_213,"Master 2 Physique parcours Nuclei, Atoms, Collisions NAC",,M,2,13
+PHY2M2_212,Master 2 Physique parcours Radiation Protection RP,,M,2,13
+LETTL2_209,Licence 2 Lettres EAD,,L,2,12
+SLANL1_209,Licence 1 Sciences du langage EAD,,L,1,12
+LLR2L1_209,Licence 1 LLCER parcours Anglais EAD,,L,1,907
+MIASL1_202,"Licence 1 Mathématiques, Informatique et Applications aux Sciences Humaines et Sociales Parcours adapté en 2 ans",,L,1,13
+SOC1L3_219,Licence 3 Sociologie parcours sociologie et sciences sociales EAD,,L,3,12
+SOC1L2_209,Licence 2 Sociologie parcours sociologie et sciences sociales EAD,,L,2,12
+ECO2M1_202,Master 1 Économie Appliquée parcours Advanced Applied Economics AAE,,M,1,11
+GES1L3_211,Licence 3 Gestion parcours Entrepreneuriat et développement d affaires,,L,3,11
+PSY2M1_202,Master 1 Psychologie parcours Neuropsychologie clinique de l enfant à l adulte,,M,1,924
+LEA1M2_211,Master 2 Langues Étrangères Appliquées parcours Dév. Durable : Stratégies de Concertation et de Communication DDSC,,M,2,907
+SMATM2_211,Master 2 Sciences de la Matière parcours Matériaux Avancés pour l Énergie AME,,M,2,13
+M2LAH2_201,"M2 MEEF  Second degré - parcours Lettres, Anglais, Histoire, Géographie",,M,2,980
+CHIML1_202,Licence 1 Chimie en deux ans Parcours adapté,,L,1,13
+CHI2M1_202,Master 1 Chimie parcours Chimie Organique et Interfaces COI,,M,1,13
+SOC3L2_203,"Licence 2 Sociologie parcours métiers du social, du médico-social et de l insertion",,L,2,12
+PSY3M2_213,Master 2 Psychologie parcours Psychologie de l éducation,,M,2,924
+MASPM1_201,"Master 1 Management du Sport parcours Parcours Sports : territoires, acteurs et réseaux STAR",,M,1,914
+LEA3M2_213,Master 2 Langues Étrangères Appliquées parcours Implantation des Entreprises à l´International IEI,,M,2,907
+LEA1M1_201,Master 1 Langues Étrangères Appliquées parcours Dév. Durable : Stratégies de Concertation et de Communication DDSC,,M,1,907
+MSE3M1_203,Master 1 Management sectoriel parcours Management de l'Économie Solidaire - Développement Durable MES DD,,M,1,910
+SOC3L3_213,"Licence 3 Sociologie parcours métiers du social, du médico-social et de l insertion",,L,3,12
+HISL1_209,Licence 1 Histoire EAD,,L,1,12
+URBM1_201,Master 1 Urbanisme et Aménagement parcours Aménagement Durable et Urbanisme Rénové MADURA,,M,1,11
+ENTM1_201,Master 1 Entreprenariat et Management de Projets parcours Ingénierie des Projets Entrepreneuriaux IPE,,M,1,11
+PSY2M2_212,Master 2 Psychologie parcours Neuropsychologie clinique de l enfant à l adulte,,M,2,924
+LEA2M1_202,Master 1 Langues Étrangères Appliquées parcours Expert en Projets Européens au service du développement local EPE,,M,1,907
+DROIL1_203,Licence 1 Droit Alençon,,L,1,901
+GENVM1_201,Master 1 Gestion de l'environnement parcours Ingénierie et Géosciences du Littoral IGL,,M,1,13
+SLANL2_209,Licence 2 Sciences du Langage EAD,,L,2,12
+SOC2M1_202,Master 1 de Sociologie parcours Gouvernance des risques et environnement GREEN,,M,1,12
+SOCL1_209,Licence 1 Sociologie EAD,,L,1,12
+GRHM1_202,Master 1 Gestion des Ressources Humaines Formation continue et apprentissage,,M,1,910
+M2PDEF_111,M2 Premier Degré FSTG Caen,,M,2,980
+2LLEAA_701,Licence 2A Langues Etrangères Appliquées Anglais/Allemand,,L,2,907
+2MHIS1_712,Master 2A Histoire P. Histoire (CEMU),,M,2,12
+1MSCM1_701,Master 1 Sciences du Médicaments parcours Développement Clinique du Médicament (DCM),,M,1,14
+2LSVIE_701,Licence 2A Sciences de la Vie,,L,2,13
+M2PDEF_113,M2 Premier Degré FSTG Alençon,,M,2,980
+M2LMO2_211,M2 MEEF Second degré - parcours Lettres Modernes,,M,2,980
+M1PD01_202,M1 MEEF Premier Degré - parcours Professorat des écoles à Alençon,,M,1,980
+M2PDEF_112,M2 Premier Degré FSTG Saint-Lô,,M,2,980
+SLANL3_219,Licence 3 Sciences du Langage P. Linguistique et didactique du français lang. matern. et du français lang. étrangère EAD,,L,3,12
+HIS3L3_219,Licence 3 Histoire parcours Histoire-Sciences Sociales EAD,,L,3,12
+STALAS_228,Licence 1 STAPS - Accès Santé,,L,1,914
+BFA4M2_214,"Master 2 Monnaie, Banque, Finance, Assurance parcours Expertise bancaire PROMO 3",,M,2,910
+SOC3M2_219,Master 2 Sociologie parcours Vulnérabilités EAD,,M,2,12
+PSY3M1_203,Master 1 Psychologie parcours Psychologie de l éducation,,M,1,924
+MASPM2_211,"Master 2 Management du Sport parcours Parcours Sports : territoires, acteurs et réseaux STAR",,M,2,914
+CHI2M2_212,Master 2 Chimie parcours Chimie Organique et Interfaces COI,,M,2,13
+BIOIM2_211,Master 2 Biologie intégrative et physiologie parcours Management de l expérimentation préclinique et éthique animale,,M,2,13
+SOC2M2_212,Master 2 de Sociologie parcours Gouvernance des risques et environnement GREEN,,M,2,12
+URBM2_211,Master 2 Urbanisme et Aménagement parcours Aménagement Durable et Urbanisme Rénové MADURA,,M,2,11
+ENTM2_211,Master 2 Entreprenariat et Management de Projets parcours Ingénierie des Projets Entrepreneuriaux IPE,,M,2,11
+DEN2M1_202,Master 1 Droit de l'entreprise parcours Contrats et contentieux d affaires,,M,1,901
+MSE4M1_204,Master 1 Management sectoriel parcours Management et Coordination des Petites Unités de Santé MC PUS,,M,1,910
+MSE3M2_213,Master 2 Management sectoriel parcours Management de l'Économie Solidaire - Développement Durable MES DD,,M,2,910
+INF2M1_202,Master 1 Informatique P. Grad'School MINMACS Math et Sc de l'information en Normandie,,M,1,13
+MAT2M2_212,M2 Mathématiques P. Grad'School MINMACS Math et Sc de l'information en Normandie,,M,2,13
+MAS2M1_202,"Master 1 Mathématiques appliquées, statistiques parcours Grad'School MINMACS Math et Sc de l'information en Normandie",,M,1,13
+MAT2M1_202,M1 Mathématiques P. Grad'School MINMACS Math et Sc de l'information en Normandie,,M,1,13
+INF2M2_212,Master 2 Informatique P. Grad'School MINMACS Math et Sc de l'information en Normandie,,M,2,13
+MSE5M1_205,Master 1 Management sectoriel parcours Ingénierie et Management de l'Intervention Sociale IMIS,,M,1,910
+MAEM2_212,Master 2 Management et Administration des Entreprises Formation continue,,M,2,910
+MSE1M2_211,Master 2 Management sectoriel parcours Management des Établissements et des Structures Gérontologiques MESG,,M,2,910
+GES6L3_211,Licence 3 Gestion parcours Management des Entreprises Formation initiale,,L,3,910
+MAEM2_211,Master 2 Management et Administration des Entreprises Formation Initiale,,M,2,910
+MAEM2_214,Master 2 Management et Administration des Entreprises Évreux,,M,2,910
+GES6L3_219,Licence 3 Gestion parcours Management des Entreprises FOAD,,L,3,910
+GES4L3_212,Licence 3 Gestion parcours Banque Finance Assurance option post marché Formation apprentissage,,L,3,910
+GRHM1_201,Master 1 Gestion des Ressources Humaines Formation continue et apprentissage,,M,1,910
+GRHM2_211,Master 2 Gestion des Ressources Humaines Formation continue et apprentissage,,M,2,910
+1MDASS_701,Master 1A Droit des Assurances P. Assurances et Personnes,,M,1,901
+3LSAN1_711,Licence 3A Sciences pour la Santé P. Physiopathologies des grandes fonctions et biotechnologies,,L,3,13
+M2PD02_211,M2 MEEF Premier Degré - parcours Professorat des écoles CAEN,,M,2,980
+M1SVT1_201,M1MEEF Second degré - parcours Sciences de la Vie et de la Terre,,M,1,980
+MCI1M2_212,Master 2 Management et Commerce International parcours Développement International PME-PMI - Guadeloupe,,M,2,910
+3L2SOI_114,L3 Soins infirmiers - 2e semestre /L'Aigle,,L,3,14
+3LSOIN_114,L3 Soins infirmiers/Lisieux,,L,3,14
+M2SES2_212,M2 MEEF Second degré - Non alternant - parc Sciences Economiques et Sociales,,M,2,980
+3LPMOT_101,L3 Psychomotricien,,L,3,14
+3LPEDI_101,L3 Pédicure podologue,,L,3,14
+3LSOIN_115,L3 Soins infirmiers/Mémorial de St Lô,,L,3,14
+3LSOIN_112,L3 Soins infirmiers/Caen,,L,3,14
+3L1SOI_111,L3 Soins infirmiers - 1er semestre/Falaise,,L,3,14
+3L2SOI_113,L3 Soins infirmiers - 2e semestre/Granville,,L,3,14
+3L1SOI_114,L3 Soins infirmiers - 1er semestre /L'Aigle,,L,3,14
+AUDIM2_212,Master 2 Contrôle de Gestion et Audit Org. parcours Contrôle Gestion et Pilotage Digital Perf · en alternance · Évreux,,M,2,910
+3L2SOI_112,L3 Soins infirmiers - 2e semestre/Flers,,L,3,14
+MAEM1_202,Master 1 Management et Administration des Entreprises Evreux,,M,1,910
+3L1SOI_113,L3 Soins infirmiers - 1er semestre/Granville,,L,3,14
+3L2SOI_111,L3 Soins infirmiers - 2e semestre/Falaise,,L,3,14
+3LKINE_101,L3 Masseur-kinésithérapeute,,L,3,14
+3LMANI_101,L3 Manipulateurs en Électroradiologie Médicale,,L,3,14
+3L1SOI_112,L3 Soins infirmiers - 1er semestre/Flers,,L,3,14
+3LSOIN_111,L3 Soins infirmiers/Alençon,,L,3,14
+3LSOIN_113,L3 Soins infirmiers/Cherbourg,,L,3,14
+3LSOIN_116,L3 Soins infirmiers/ Vire,,L,3,14
+3LERGO_101,L3 Ergothérapeute,,L,3,14
+1MMONN_705,Master 1ère année Monnaie Banque Finance Assurance parcours Responsable de clientèle Pro/Agri BRED Promo 1,,M,1,910
+BFA1M2_219,"Master 2 Monnaie, Banque, Finance, Assurance parcours Chargés d Affaires Entreprises et Institutions CAEI - FOAD",,M,2,910
+BFA2M2_212,"Master 2 Monnaie, Banque, Finance, Assurance parcours Gestion d actifs, Contrôle des risques et Conformité G2C",,M,2,910
+BFA1M2_211,"Master 2 Monnaie, Banque, Finance, Assurance parcours Chargés d Affaires Entreprises et Institutions CAEI",,M,2,910
+BFA3M2_213,"Master 2 Monnaie, Banque, Finance, Assurance parcours Responsable de clientèle Professionnels et Agri RCPA",,M,2,910
+CHI3M2_213,Master 2 Chimie parcours Contrôle de l Environnement Industriel CEI,,M,2,13
+APSM1_201,Master 1 Activité Physique Adaptée et Santé parcours Prév Réhab et Interv en Santé par les Activ Phys Adaptées PRISAPA,,M,1,914
+BFA3M1_203,"Master 1 Monnaie, Banque, Finance, Assurance parcours Responsable de clientèle Professionnels et Agri RCPA",,M,1,910
+CGPAM2_212,Master 2 Gestion de patrimoine BRED et BPRI - Promo Octobre 2022,,M,2,910
+1MPATR_707,Master 1ère année Gestion du Patrimoine BRED Paris Février 2022,,M,1,910
+1MPATR_704,Master 1A Gestion du Patrimoine - BRED PARIS - Janvier 2021,,M,1,910
+2MMON2_715,Master 2A Monnaie Banque Finance Assurance P. RCPA - BRIE - promo 3,,M,2,910
+1LINFA_201,L1 Informatique parcours adapté,,L,1,13
+1LMIAA_201,L1 Mathématiques Informatique Appliquées aux Sciences Humaines parcours adapté,,L,1,13
+1LMATA_201,L1 Mathématiques parcours adapté,,L,1,13
+1MCHMX_201,M1 CHIMIE parcours EUR  XLCHEM,,M,1,13
+1MMIM_702,Master 1A In International Management (MIM) P. Franco-Américain,,M,1,910
+1MMANA_702,Master 1A Management FOAD,,M,1,910
+MATI2_111,mati2,,L,1,961
+CGPAM1_203,Master 1 Gestion de patrimoine - BRED - promo 4,,M,1,910
+CGPAM1_204,Master 1 Gestion de patrimoine - ARKEA promo 4,,M,1,910
+GES6L3_212,Licence 3 Gestion parcours Management des Entreprises Formation continue,,L,3,910
+BFA4M2_215,"Master 2 Monnaie, Banque, Finance, Assurance parcours Expertise bancaire Promo septembre 2022",,M,2,910
+CGEM2_211,Master 2 Contrôle de Gestion et audit organisat p. Contrôle de gestion Business Partner et Amélioration Continue BPAC,,M,2,11
+M1PD01_201,M1 MEEF Premier Degré - parcours Professorat des écoles CAEN,,M,1,980
+DENTM1_201,Master 1 Droit de l'entreprise parcours Diplôme Juriste Conseil d'Entreprise DJCE,,M,1,901
+AUDIM1_201,Master 1 Contrôle de Gestion et Audit Org. parcours Contrôle de Gestion et Pilotage Digital de la Performance CGPGP,,M,1,910
+APSM2_211,Master 2 Activité Physique Adaptée et Santé parcours Prév Réhab et Interv en Santé par les Activ Phys Adaptées PRISAPA,,M,2,914
+BFA1M1_201,"Master 1 Monnaie, Banque, Finance, Assurance parcours Chargés d Affaires Entreprises et Institutions CAEI",,M,1,910
+BFA2M1_202,"Master 1 Monnaie, Banque, Finance, Assurance parcours Gestion d actifs, Contrôle des risques et Conformité G2C",,M,1,910
+PHYSM1_202,Master 1 Physique,,M,1,13
+DENTM2_211,Master 2 Droit de l'entreprise parcours Diplôme Juriste Conseil d'Entreprise DJCE,,M,2,901
+GES5L3_211,"Licence 3 Gestion parcours Comptabilité, Contrôle, Audit. Formation initiale",,L,3,910
+GES5L3_212,"Licence 3 Gestion parcours Comptabilité, Contrôle, Audit. Formation continue",,L,3,910
+CGPAM1_202,Master 1 Gestion de patrimoine - FC dédiée - 22j BPRI - promo 4 - novembre  2022,,M,1,910
+M2INGP_211,M2 MEEF Ingénierie - Besoin éducatif particulier,,M,2,980
+2LSOIN_106,L2 Soins infirmiers/Flers,,L,2,14
+2L1SOI_102,L2 Soins infirmiers - 1er semestre/Vire,,L,2,14
+BFA3M2_215,"Master 2 Monnaie, Banque, Finance, Assurance parcours RCPA CA CAEN - Promo 3",,M,2,910
+2LKINE_101,L2 Masseur-kinésithérapeute,,L,2,14
+BFA3M2_214,"Master 2 Monnaie, Banque, Finance, Assurance parcours RCPA BRIE - Promo novembre 2022",,M,2,910
+BFA3M1_204,"Master 1 Monnaie, Banque, Finance, Assurance parcours RCPA PRO BRED promo 2",,M,1,910
+WELCOM_201,VET UNIQUE POUR ETUDIANTS EN  ECHANGE,,L,1,970
+EDU2M2_212,Master 2 Sciences de l'Éducation et F parcours Ing. numériques dans l'enseignement supérieur et la formation des adultes,,M,2,12
+EDUFM1_201,Master 1 Sciences de l'Education et de la Formation,,M,1,12
+2MIMAS_211,"Master 2A Mathématiques et Informatique P. Label ""Graduate School MINMACS""",,M,2,13
+1MIMAS_201,"Master 1A Mathématiques et Informatique P. Label ""Graduate School MINMACS""",,M,1,13
+EDU1M2_211,"Master 2 Sciences de l'Éducation et F. parcours Ing. de la formation des adultes, de la coordination et de l'insertion",,M,2,12
+MCI1M1_202,Master 1 Management et Commerce International parcours Développement International PME-PMI - Guadeloupe,,M,1,910
+CGPAM2_213,Master 2 Gestion de patrimoine Distanciel - Promo Septembre 2022,,M,2,910
+1LSOC_702,Licence 1A Sociologie - A distance,,L,1,12
+LAS_200,LAS,,L,1,14
+1LSANT_701,Licence 1A Sciences pour la Santé,,L,1,13
+M2INGM_211,"M2 MEEF Ingénierie - parcours Voyages, Séjours et Mobilités Scolaires Educatifs",,M,2,980
+1MPATR_702,Master 1A Gestion du Patrimoine - Arkea + Interbancaire - FC,,M,1,910
+MECAL1_201,Licence 1 Mécanique,,L,1,13
+MATHL2_201,Licence 2 Mathématiques,,L,2,13
+MATHL2_203,Licence 2 CUPGE Mathématiques/Informatique,,L,2,13
+MAT1M1_201,Master 1 Mathématiques parcours Mathématiques Générales,,M,1,13
+INFOL2_201,Licence 2 Informatique,,L,2,13
+MASSM2_211,"Master 2 Mathématiques appliquées, statistiques parcours Statistiques Appliquées et Analyse Décisionnelle",,M,2,13
+MEDIM2_211,Master 2 Information et médiation scientifique et technique parcours Médiation sc et société : recherche et innovations,,M,2,13
+SVIL2_201,Licence 2 Sciences de la Vie,,L,2,13
+AGROM1_201,Master 1 Agrosc. Environnement Territoires Paysage Forêt parcours Gestion et valorisation agri-environnementale,,M,1,13
+CPESL2_201,Licence 2 Sciences et Société Parcours Cycle Pluridisciplinaire d'Etudes Supérieures (CPES),,L,2,13
+CPESL1_201,Licence 1 Sciences et Société Parcours Cycle Pluridisciplinaire d'Etudes Supérieures (CPES),,L,1,13
+APASL3_211,Licence 3 STAPS : Activité Physique Adaptée et Santé,,L,3,914
+2MACS2_112,Master 2 Santé P. Management des activités de santé spé Prévention et contrôle des infections associées aux soins - EAD,,M,2,14
+DROIL1_201,Licence 1 Droit Caen,,L,1,901
+EEEAL1_202,"Licence 1 Électronique, Énergie Électrique et Automatique Parcours adapté en 2 ans",,L,1,13
+2MACS1_111,Master 2 Santé parcours Management des activités de santé spécialisation Coordination en gérontologie - EAD,,M,2,14
+GPLAM2_212,Master 2 Gestion de Production Logistique Achat  - Formation apprentissage,,M,2,910
+NUTRM2_211,Master 2 Nutrition et Sciences des aliments parcours Qualité des aliments et innovation santé,,M,2,13
+NEU1M2_211,Master 2 Neurosciences parcours Neurosciences moléculaires cellulaires et intégrées,,M,2,13
+LETTL3_211,Licence 3 Lettres,,L,3,12
+SLANL2_201,Licence 2 Sciences du Langage,,L,2,12
+SOC1L3_211,Licence 3 Sociologie parcours sociologie et sciences sociales,,L,3,12
+GES2L3_212,Licence 3 Gestion parcours Gestion Opérationnelle,,L,3,11
+GESL1_201,Licence 1 Gestion,,L,1,11
+GEO2M1_202,"Master 1 Géo., aménagement, envt. et développement parcours Environnement, risques et diagnostics territoriaux",,M,1,11
+GEOL2_201,Licence 2 Géographie et Aménagement,,L,2,11
+ERGOM2_211,Master 2 Ergonomie,,M,2,914
+CGPAM1_201,Master 1 Gestion de patrimoine,,M,1,910
+MAEM1_201,Master 1 Management et Administration des Entreprises,,M,1,910
+GPLAM1_201,Master 1 Gestion de Production Logistique Achat,,M,1,910
+MINNM2_211,Master 2 Management de l'Innovation,,M,2,910
+TRADM2_211,Master 2 Traduction Interprétation parcours Traduction spécialisée et localisation,,M,2,907
+LLR2L2_202,Licence 2 LLCER parcours Anglais,,L,2,907
+LLR7L1_207,"Licence 1 LLCER parcours Études Franco-Allemandes : langue, culture et numérique",,L,1,907
+MSE6M2_216,Master 2 Management sectoriel parcours Management des organisations en santé,,M,2,910
+DCIVM2_211,Master 2 Droit Civil parcours Droit civil Protection des Personnes Vulnérables,,M,2,901
+DLIBM2_211,Master 2 Droit des Libertés,,M,2,901
+DPUBM2_211,"Master 2 Droit Public parcours Contrats, finances et gouvernance publics",,M,2,901
+SAN1M2_211,Master 2 Santé Publique parcours Méthodes en Recherche Clinique et Epidémiologique,,M,2,14
+2L2SOI_104,L2 Soins infirmiers - 2e semestre /L'Aigle,,L,2,14
+CHILAS_222,Licence 1 Chimie - Accès Santé,,L,1,13
+SVILAS_227,Licence 1 Sciences de la vie - Accès Santé,,L,1,13
+MATHL1_201,Licence 1 Mathématiques,,L,1,13
+PHYSL1_201,Licence 1 Physique,,L,1,13
+CHIML2_201,Licence 2 Chimie,,L,2,13
+INNOM1_201,"Master 1 Innovation, Entreprise et Société parcours Valorisation des Innovations Biotechnologiques",,M,1,13
+INFOM1_201,Master 1 Informatique parcours A la carte avec combinaisons Majeures/Mineures optionnelles,,M,1,13
+TERRL2_201,Licence 2 Sciences de la Terre,,L,2,13
+BIO1M2_211,Master 2 Biologie santé parcours Oncologie Immunologie génétique,,M,2,13
+SMERM1_201,Master 1 Sciences de la mer parcours Ecosystèmes côtiers et physiologie des espèces exploitées par pêche et aquaculture,,M,1,13
+NEU2M1_202,Master 1 Neurosciences parcours Sciences des comportements,,M,1,13
+2MACS7_117,Master 2 Santé P.Manag activ de santé spé. Douleur - Soins palliatifs - Accompag : coord. et parc de soins vulnérab- EAD,,M,2,14
+2MACS4_114,Master 2 Santé parcours Management des activités de santé spéc Réponse territoriale aux besoins de santé - EAD,,M,2,14
+INFOL1_202,Licence 1 Informatique Parcours adapté en 2 ans,,L,1,13
+SME2M2_212,Master 2 Sciences de la Mer parcours Ecosys côtiers et physio ds espèces exploitées par pêche et aquaculture Pro,,M,2,13
+BIOIM1_201,Master 1 Biologie intégrative et physiologie parcours Management de l expérimentation préclinique et éthique animale,,M,1,13
+LASECO_200,L1 LAS ECONOMIE - Accès santé,,L,1,11
+MSE5M2_215,Master 2 Management sectoriel parcours Ingénierie et Management de l'Intervention Sociale IMIS,,M,2,910
+GES5L3_213,"Licence 3 Gestion parcours Comptabilité, Contrôle, Audit. Formation apprentissage",,L,3,910
+ART1M2_219,"Master 2 Arts, Lettres, Civilisations parcours Lettres EAD",,M,2,12
+CHI1M2_211,"Master 2 Chimie parcours Catalyse, Environnement et Développement Durable CE2D",,M,2,13
+MSE2M2_219,Master 2 Management sectoriel parcours Management des Organisations Sociales MOS FOAD,,M,2,910
+ART3M1_203,"Master 1 Arts, Lettres, Civilisations parcours Métiers de la production cinématographique et audiovisuelle",,M,1,12
+PHIL1_200,Licence 1 Philosophie,,L,1,12
+HIS4M1_204,Master 1 Histoire parcours Métiers de la recherche en archéologie,,M,1,12
+LIV2M2_212,Master 2 Métiers du livre et de l'édition parcours Édition,,M,2,12
+LIV1M2_211,Master 2 Métiers du Livre et de l'Édition parcours Métiers des bibliothèques,,M,2,12
+SOC1L2_201,Licence 2 Sociologie parcours sociologie et sciences sociales,,L,2,12
+ECOL1_201,Licence 1 Économie,,L,1,11
+ECO2M2_212,Master 2 Économie Appliquée parcours Advanced Applied Economics AAE,,M,2,11
+HIS3L2_203,Licence 2 Histoire parcours Histoire-Sciences Sociales,,L,2,12
+MINNM1_201,Master 1 Management de l'Innovation,,M,1,910
+LEA1L3_211,Licence 3 Langues Étrangères Appliquées parcours Anglais - Espagnol,,L,3,907
+2LERGO_101,L2 Ergothérapeute,,L,2,14
+LEA4L2_204,Licence 2 Langues Étrangères Appliquées parcours Anglais - Russe,,L,2,907
+LEA3L1_203,Licence 1 Langues Étrangères Appliquées parcours Anglais - Portugais,,L,1,907
+LEA2L1_202,Licence 1 Langues Étrangères Appliquées parcours Anglais - Italien,,L,1,907
+LEA6L3_216,Licence 3 Langues Étrangères Appliquées parcours Anglais - Français,,L,3,907
+LLR5L3_215,Licence 3 LLCER parcours Italien,,L,3,907
+LLR6L1_206,Licence 1 LLCER parcours Russe,,L,1,907
+LLR3L1_203,Licence 1 LLCER parcours Espagnol,,L,1,907
+LLR1L1_201,Licence 1 LLCER parcours Allemand,,L,1,907
+LLC2M2_219,"Master 2 Langues, litté. et civ. étrangères et régionales P. Etudes Cult. Anglais - EAD",,M,2,907
+LLC1M1_201,"Master 1 Langues, litté. et civ. étrangères et régionales parcours Ling. Multilingue (ang, rus, lang nord, esp, all, it)",,M,1,907
+AESL1_201,Licence 1 Administration Économique et Sociale,,L,1,901
+DINTM2_211,Master 2 Droit international et droit européen parcours Droit et régulation des marchés internationaux,,M,2,901
+2LPMOT_101,L2 Psychomotricien,,L,2,14
+2L2SOI_101,L2 Soins infirmiers - 2e semestre/Falaise,,L,2,14
+INFLAS_223,Licence 1 Informatique - Accès Santé,,L,1,13
+PHYSL2_202,Licence 2 Physique CUPGE,,L,2,13
+PHYSL1_202,Licence 1 Physique CUPGE,,L,1,13
+CHIML3_211,Licence 3 Chimie,,L,3,13
+EEEAL1_201,"Licence 1 Électronique, Énergie Électrique et Automatique",,L,1,13
+MASSM1_201,"Master 1 Mathématiques appliquées, statistiques parcours Statistiques Appliquées et Analyse Décisionnelle",,M,1,13
+AGROM2_211,Master 2 Agrosc. Environnement Territoires Paysage Forêt parcours Gestion et valorisation agri-environnementale,,M,2,13
+SAN4L3_214,"Licence 3 Sciences pour la Santé parcours Physiopathologie, environnement et santé",,L,3,13
+LLR2L3_219,Licence 3 LLCER parcours Anglais EAD,,L,3,907
+LLR2L2_209,Licence 2 LLCER parcours Anglais EAD,,L,2,907
+LEA3M1_203,Master 1 Langues Étrangères Appliquées parcours Implantation des Entreprises à l´International IEI,,M,1,907
+DEN2M2_212,Master 2 Droit de l'entreprise parcours Contrats et contentieux d affaires,,M,2,901
+MCI1M2_211,Master 2 Management et Commerce International parcours Développement International de la PME PMI DI PME/PMI,,M,2,910
+MCI1M1_201,Master 1 Management et Commerce International parcours Développement International de la PME PMI DI PME/PMI,,M,1,910
+GPLAM2_211,Master 2 Gestion de Production Logistique Achat - Formation continue,,M,2,910
+CCAM1_203,"Master 1 Comptabilité, Contrôle, Audit - Formation apprentissage",,M,1,910
+AUDIM2_211,Master 2 Contrôle de Gestion et Audit Org. parcours Contrôle de Gestion et Pilotage Digital de la Performance CGPGP,,M,2,910
+ART4M2_214,"Master 2 Arts, Lettres, Civilisations parcours Théâtre",,M,2,12
+ART2M1_202,"Master 1 Arts, Lettres, Civilisations parcours Cinéma",,M,1,12
+LAN2M1_202,Master 1 Sciences du Langage parcours Didactique du Français Langue Étrangère,,M,1,12
+LAN1M1_201,Master 1 Sciences du Langage parcours Linguistique et traitement de données,,M,1,12
+ARS1L2_201,Licence 2 Arts du Spectacle parcours Études théâtrales,,L,2,12
+HIS2M1_202,"Master 1 Histoire parcours Histoire, cultures et sciences politiques",,M,1,12
+HIS4M2_214,Master 2 Histoire parcours Métiers de la recherche en archéologie,,M,2,12
+LIV2M1_202,Master 1 Métiers du livre et de l'édition parcours Édition,,M,1,12
+GESL2_201,Licence 2 Gestion,,L,2,11
+GEOL3_211,Licence 3 Géographie et Aménagement,,L,3,11
+PSYCL1_201,Licence 1 Psychologie,,L,1,924
+PSY4M2_214,Master 2 Psychologie parcours Psychologie psycho-dynamique clinique et pathologique,,M,2,924
+MDSL3_211,Licence 3 STAPS : Management du Sport,,L,3,914
+ESL2_201,Licence 2 STAPS : Entraînement Sportif,,L,2,914
+PHI2L3_212,Licence 3 Philosophie parcours Philosophie-Sciences Sociales,,L,3,12
+PHI1L2_201,Licence 2 Philosophie parcours Philosophie-Sciences Politiques,,L,2,12
+HIS1L3_211,Licence 3 Histoire parcours Histoire-Archéologie,,L,3,12
+HIS2L2_202,Licence 2 Histoire parcours Histoire-Sciences Politiques,,L,2,12
+HIS1L2_201,Licence 2 Histoire parcours Histoire-Archéologie,,L,2,12
+DROLAS_230,Licence 1 Droit - Accès Santé à Alençon,,L,1,901
+MCI2M1_202,Master 1 Management et Commerce International parcours Franco-Américain,,M,1,910
+LEA5L3_215,Licence 3 Langues Étrangères Appliquées parcours Anglais - Allemand,,L,3,907
+LLR6L3_216,Licence 3 LLCER parcours Russe,,L,3,907
+LLC1M2_211,"Master 2 Langues, litté. et civ. étrangères et régionales parcours Ling. Multilingue (ang, rus, lang nord, esp, all, it)",,M,2,907
+DNOTM2_211,Master 2 Droit Notarial,,M,2,901
+APUBL3_211,Licence 3 Administration Publique,,L,3,901
+JUSTM2_211,"Master 2 Justice, procès et procédures parcours Carrières judiciaires",,M,2,901
+PHYLAS_225,Licence 1 Physique - Accès Santé,,L,1,13
+DPUBM1_201,"Master 1 Droit Public parcours Contrats, finances et gouvernance publics",,M,1,901
+SAN2M2_212,Master 2 Santé Publique parcours Ethique en Santé,,M,2,14
+2LSOIN_105,L2 Soins infirmiers/Mémorial de St Lô,,L,2,14
+INSTM1_201,"Master 1 Instrumentation, Mesure, Métrologie parcours Électronique, photonique et applications",,M,1,13
+PHYSL2_201,Licence 2 Physique,,L,2,13
+MIASL2_201,Licence 2 Maths Info et app. aux Sc. Humaines et Sociales,,L,2,13
+INFOL3_211,Licence 3 Informatique,,L,3,13
+EEEAL3_211,"Licence 3 Électronique, Énergie Électrique et Automatique",,L,3,13
+LETTL1_209,Licence 1 Lettres EAD,,L,1,12
+INNOM2_211,"Master 2 Innovation, Entreprise et Société parcours Valorisation des Innovations Biotechnologiques",,M,2,13
+M2PDEG_111,M2 MEEF Premier degré Caen,,M,2,980
+M2PDEG_113,M2 MEEF Premier degré Alençon,,M,2,980
+M2PDEG_112,M2 MEEF Premier degré Saint-Lô,,M,2,980
+M1PDEG_101,M1 MEEF Premier degré Caen,,M,1,980
+ART1M1_209,"Master 1 Arts, Lettres, Civilisations parcours Lettres EAD",,M,1,12
+M1PDEG_103,M1 MEEF Premier degré Alençon,,M,1,980
+MECAM2_211,Master 2 Mécanique parcours Modélisation et Simulation Numérique,,M,2,13
+SVIL1_201,Licence 1 Sciences de la Vie,,L,1,13
+NEU2M2_212,Master 2 Neurosciences parcours Sciences des comportements,,M,2,13
+SAN3L3_213,Licence 3 Sciences pour la Santé parcours Neurosciences et Sciences des Comportements,,L,3,13
+BIOAM1_201,"Master 1 Biologie, Agrosciences parcours ECOproduction, BIOtechnologies végétales et BioVALOrisation (ECOBIOVALO)",,M,1,13
+ART2M2_212,"Master 2 Arts, Lettres, Civilisations parcours Cinéma",,M,2,12
+ARSL1_200,Licence 1 Arts du Spectacle,,L,1,12
+HIS3M1_203,Master 1 Histoire parcours Métiers du Patrimoine : archives et musées,,M,1,12
+SOC2L3_212,Licence 3 Sociologie parcours sociologie et sciences politiques,,L,3,12
+HISL1_200,Licence 1 Histoire,,L,1,12
+GEO1M2_211,Master 2 Géo aménagement env et développement parcours Territoires en transition : métiers du diagnostic et du dév local,,M,2,11
+ECOL3_211,Licence 3 Économie,,L,3,11
+M1INCL_104,M1 MEEF PIF parcours Formation pour l'Éducation Inclusive,,M,1,980
+ECO1M2_211,Master 2 Économie Appliquée parcours Études socio-économiques et développement durable,,M,2,11
+INFOM2_211,Master 2 Informatique parcours A la carte avec combinaisons Majeures/Mineures optionnelles,,M,2,13
+2MMON2_718,Master 2ème année Monnaie Banque Finance Assurance parcours RCPA EB Caen Promo 2,,M,2,910
+DNUMM2_211,Master 2 Droit du Numérique,,M,2,901
+1LMANI_101,L1 Manipulateur en Électroradiologie Médicale,,L,1,14
+PHI1L3_211,Licence 3 Philosophie parcours Philosophie-Sciences Politiques,,L,3,12
+M1EFE2_106,M1 MEEF PIF parcours Enseignement français à l'étranger dans le 2nd degré,,M,1,980
+M2EFE2_116,M2 MEEF PIF parcours Enseignement français à l'étranger dans le 2nd degré,,M,2,980
+M2EFE1_115,M2 MEEF PIF parcours Enseignement français à l'étranger dans le 1er degré,,M,2,980
+M1EFE1_105,M1 MEEF PIF parcours Enseignement français à l'étranger dans le 1er degré,,M,1,980
+M2PEPS_113,M2 MEEF Second degré parcours Éducation physique et sportive,,M,2,980
+M2PDOC_112,M2 MEEF Second degré parcours Professeur documentaliste,,M,2,980
+M2EDUC_111,M2 MEEF parcours Encadrement Éducatif,,M,2,980
+M2PSES_117,M2 MEEF Second degré parcours Sciences économiques et sociales,,M,2,980
+M2PPHY_120,M2 MEEF Second degré parcours Physique Chimie,,M,2,980
+M2PMAT_119,M2 MEEF Second degré parcours Mathématiques,,M,2,980
+M2PLVE_116,M2 MEEF Second degré parcours Langues vivantes étrangères,,M,2,980
+M2PLMO_115,M2 MEEF Second degré parcours Lettres Modernes,,M,2,980
+M2PHG_114,M2 MEEF Second degré parcours Histoire Géographie,,M,2,980
+M1PMAT_109,M1 MEEF Second degré parcours Mathématiques,,M,1,980
+M1TOUR_101,M1 MEEF PIF parcours Mobilités et tourismes éducatifs,,M,1,980
+LASDRO_200,L1 LAS Droit - Accès santé,,L,1,901
+LASSAN_200,L1 LAS Sciences pour la Santé - Accès santé,,L,1,13
+LASSVI_200,L1 LAS Sciences de la Vie - Accès santé,,L,1,13
+LASPHY_200,L1 LAS Physique - Accès santé,,L,1,13
+LASINF_200,L1 LAS Informatique - Accès santé,,L,1,13
+LASMAT_200,L1 LAS Mathématiques - Accès santé,,L,1,13
+LASPSY_200,L1 LAS Psychologie - Accès santé,,L,1,924
+1LKINE_101,L1 Masseur-kinésithérapeute,,L,1,14
+M2PSVT_118,M2 MEEF Second degré parcours Sciences de la vie et de la terre,,M,2,980
+M1PSES_107,M1 MEEF Second degré parcours Sciences économiques et sociales,,M,1,980
+M1MEDI_103,M1 MEEF PIF parcours Médiation culturelle et enseignement,,M,1,980
+M1PPHY_110,M1 MEEF Second degré parcours Physique Chimie,,M,1,980
+M1PSVT_108,M1 MEEF Second degré parcours Sciences de la vie et de la terre,,M,1,980
+M1PLVE_106,M1 MEEF Second degré parcours Langues vivantes étrangères,,M,1,980
+1LSOIN_106,L1 Soins infirmiers/ Flers,,L,1,14
+1L1SOI_102,L1 Soins infirmiers - 1er semestre/Vire,,L,1,14
+1L2SOI_102,L1 Soins infirmiers - 2e semestre/Vire,,L,1,14
+1L2SOI_104,L1 Soins infirmiers - 2e semestre /L'Aigle,,L,1,14
+1L1SOI_101,L1 Soins infirmiers - 1er semestre/Falaise,,L,1,14
+1LSOIN_104,L1 Soins infirmiers/Lisieux,,L,1,14
+1LSOIN_103,L1 Soins infirmiers/Cherbourg,,L,1,14
+1L2SOI_101,L1 Soins infirmiers - 2e semestre/Falaise,,L,1,14
+1LSOIN_105,L1 Soins infirmiers/Mémorial de St Lô,,L,1,14
+1LSOIN_102,L1 Soins infirmiers/Caen,,L,1,14
+1L1SOI_103,L1 Soins infirmiers - 1er semestre/Granville,,L,1,14
+1LERGO_101,L1 Ergothérapeute,,L,1,14
+1L2SOI_103,L1 Soins infirmiers - 2e semestre/Granville,,L,1,14
+1L1SOI_104,L1 Soins infirmiers - 1er semestre /L'Aigle,,L,1,14
+1LPMOT_101,L1 Psychomotricien,,L,1,14
+1LPEDI_101,L1 Pédicure podologue,,L,1,14
+1LSOIN_101,L1 Soins infirmiers/Alençon,,L,1,14
+M2PIF_211,M2 MEEF Pratiques et Ingénierie de la Formation - parcours Formation pour l'Education Inclusive (FEI),,M,2,980
+M2TOUR_111,M2 MEEF PIF parcours Mobilités et tourismes éducatifs,,M,2,980
+M2FORM_112,M2 MEEF PIF parcours Formation de formateurs du milieu scolaire,,M,2,980
+M2MEDI_113,M2 MEEF PIF parcours Médiation culturelle et enseignement,,M,2,980
+M2SVT2_211,M2 MEEF Second degré - parcours Sciences de la Vie et de la Terre,,M,2,980
+M2MAT2_211,M2 MEEF Second degré - parcours Mathématiques,,M,2,980
+M2PLPA_211,M2 MEEF Second degré - parcours Professeur de Lycée Professionnel Admissible,,M,2,980
+M1PDEG_102,M1 MEEF Premier degré Saint-Lô,,M,1,980
+M2INCL_114,M2 MEEF PIF - P. Formation pour l'Education Inclusive,,M,2,980
+2MGRH_712,Master 2A Gestion des Ressources Humaines - FC,,M,2,910
+2LSANT_101,Licence 2A Sciences pour la Santé,,L,2,13
+3LGES5_712,"Licence 3A Gestion P. Banque, Finance, Assurance option Post marché",,L,3,910
+M1LCLA_101,M1 MEEF Second degré parcours Lettres Classiques,,M,1,980
+M1PEPS_103,M1 MEEF Second degré parcours Éducation physique et sportive,,M,1,980
+M1PDOC_102,M1 MEEF Second degré parcours Professeur documentaliste,,M,1,980
+M1PLMO_105,M1 MEEF Second degré parcours Lettres Modernes,,M,1,980
+M1PHG_104,M1 MEEF Second degré parcours Histoire Géographie,,M,1,980
+M2LCLA_111,M2 Second degré parcours Lettres Classiques,,M,2,980
+M2PIF_214,"M2 MEEF Pratiques et Ingénierie de la Formation - parcours Voyages, séjours, mobilités scolaires et éducatifs",,M,2,980
+M1PLVE_108,M1 MEEF Second degré - P. Langues vivantes étrangères : Espagnol,,M,1,980
+M1PLVE_107,M1 MEEF Second degré - P. Langues vivantes étrangères : Allemand,,M,1,980
+M1PLVE_109,M1 MEEF Second degré - P. Langues vivantes étrangères : Italien,,M,1,980
+M1PIF_202,M1 MEEF Pratiques et Ingénierie de la Formation - parcours Formation de formateurs du milieu scolaire,,M,1,980
+M1SES1_201,M1MEEF Second degré : Parcours Sciences Economiques et Sociales,,M,1,980
+M1LVE1_201,M1 MEEF Second degré - parcours Langues Vivantes Etrangères,,M,1,980
+M1MAT1_201,M1 MEEF Second degré - parcours Mathématiques,,M,1,980
+M1LAH1_201,"M1 MEEF  Second degré - parcours Lettres, Anglais, Histoire, Géographie",,M,1,980
+M1PIF_204,"M1 MEEF Pratiques et Ingénierie de la Formation - parcours Voyages, séjours et mobilités éducatifs",,M,1,980
+M1S2I1_202,M1MEEF Second degré - parcours Sciences Industrielles et d l'ingénieur à Alençon,,M,1,980
+1MEDUC_701,Master 1A Sciences de l'Education P. Professionnalité Savoir  dans les Métiers de la Relation,,M,1,12
+2MAPAS_711,Master 2A STAPS : Activités Physique Adapté et Santé P. Prévention Réhabilitation et Intervention en Santé par les APAS,,M,2,914
+2LHUMA_701,Licence 2A Humanités,,L,2,12
+3LLEAA_711,Licence 3A Langues Etrangères Appliquées Anglais/Allemand,,L,3,907
+1MSMER_701,Master 1A Sciences de la Mer P. Exploitation des Ressources Vivantes Cotières,,M,1,13
+2MERGO_711,Master 2A Ergonomie,,M,2,914
+2LSVT_701,Licence 2A Sciences de la Vie et de la Terre,,L,2,13
+1LEEEA_701,"Licence 1A Electronique, Energie Electrique, Automatique (EEEA)",,L,1,13
+1MCOMP_703,Master 1A Comptabilité Contrôle Audit - FC,,M,1,910
+2LPHYS_701,Licence 2A Physique,,L,2,13
+1MNEU2_701,"Master 1A Neurosciences P. Neurosciences Moléculaire, Cellulaires et Intégrées",,M,1,13
+2LTERR_701,Licence 2A Sciences de la Terre,,L,2,13
+1MHIS3_701,Master 1A Histoire P. Archéologie,,M,1,12
+1LANGL_701,Licence 1A LLCER P. Anglais,,L,1,907
+1LLAN1_702,Licence 1A Sciences du Langage - A distance,,L,1,12
+1MLLC2_701,Master 1A Langues Littératures et Civilisations Etrangères et Régionales (LLCER) P. Linguistique Multilingue,,M,1,907
+1LSTAP_702,Licence 1A STAPS - Etudiants dont le nom commence par G à Z,,L,1,914
+LASAPS_200,L1 LAS STAPS - Accès santé,,L,1,914
+LASCHI_200,L1 LAS Chimie - Accès santé,,L,1,13
+1MPATR_703,Master 1A Gestion du Patrimoine - FC - BPRI 22J - Septembre 2021,,M,1,910
+2MCHMX_715,M2 CHIMIE parcours EUR  XLCHEM,,M,2,13
+2MARD2_711,"Master 2A Arts, Lettres et Civilisations P. Théâtre",,M,2,12
+DROIL2_203,Licence 2 Droit Alençon,,L,2,901
+CCAM2_212,"Master 2 Comptabilité, Contrôle, Audit Formation continue et apprentissage",,M,2,910
+GRHM2_212,Master 2 Gestion des Ressources Humaines Formation apprentissage,,M,2,910
+GENVM2_211,Master 2 Gestion de l'environnement parcours Ingénierie et Géosciences du Littoral IGL,,M,2,13
+GRHM2_219,Master 2 Gestion des Ressources Humaines - FOAD,,M,2,910
+1MHIS1_701,Master 1A Histoire P. Histoire,,M,1,12
+3LHIS2_711,Licence 3A Histoire P. Histoire - Sciences Politiques,,L,3,12
+1MCHIM_701,Master 1A Chimie,,M,1,13
+2LPHI2_701,Licence 2A Philosophie P. Philosophie - Sciences Politiques,,L,2,12
+1MLEA3_701,Master 1A Langues Etrangères Appliquées (LEA) P. Implantation Entreprises à l'International (IEI),,M,1,907
+3LNORD_711,"Licence 3A Langues, Littératures et Civilisations Etrangères et Régionales P. Etudes Nordiques",,L,3,907
+1MPSY1_701,Master 1A Psychologie P. Psychologie psycho-dynamique clinique et pathologique,,M,1,924
+2LHIS2_701,Licence 2A Histoire P. Histoire - Sciences Politiques,,L,2,12
+3LART2_711,Licence 3A Arts du Spectacle P. Arts de la scène,,L,3,12
+2LLET1_702,Licence 2A Lettres - A distance,,L,2,12
+1LMATH_701,Licence 1A Mathématiques,,L,1,13
+1MURBA_701,"Master 1A Urbanisme et Aménagement P. Aménagement Durable, Urbanisme Rénové et Assistance à Maîtrise d'Ouvrage (MADURA)",,M,1,11
+M2PIF_212,M2 MEEF Pratiques et Ingénierie de la Formation - parcours Formation de formateurs du milieu scolaire,,M,2,980
+2MMIC1_711,Master 2A Microbiologie P. Mécanisme Moléculaire Microbiens,,M,2,13
+2MCGAO_712,Master 2A Contrôle de Gestion et Audit Organisationnel - FA/FC,,M,2,910
+3LDRO2_711,Licence 3A Droit P. Droit Public,,L,3,901
+LASDRO_201,L1 LAS Droit avec option Accès Santé à Alençon,,L,1,901
+1MMSS4_701,Master 1A Management Sectoriel P. Management et Qualité des Soins  (FOAD),,M,1,910
+1MGEO1_701,Master 1A Géographie Aménagement Environnement Développement P. Environnement,,M,1,11
+2MGEO1_711,Master 2A Géographie Aménagement Environnement Développement  P.Environnement,,M,2,11
+2MGEO2_711,Master 2A Géographie Aménagement Environnement Développement P. Territoires en  Transition,,M,2,11
+1LSOC_902,Licence 1A Sociologie - A distance,,L,1,12
+1LSANT_201,Licence 1A Sciences pour la Santé,,L,1,13
+PSY5M1_205,Master 1 Psychologie parcours Psychologie sociale et conduite du changement : diagnostic et intervention,,M,1,924
+ESPML2_201,Licence 2 STAPS : Ergonomie du Sport et Performance Motrice,,L,2,914
+ESL3_211,Licence 3 STAPS : Entraînement Sportif,,L,3,914
+ERGOM1_201,Master 1 Ergonomie,,M,1,914
+LEA3L3_213,Licence 3 Langues Étrangères Appliquées parcours Anglais - Portugais,,L,3,907
+LEA2L3_212,Licence 3 Langues Étrangères Appliquées parcours Anglais - Italien,,L,3,907
+LEA1L1_201,Licence 1 Langues Étrangères Appliquées parcours Anglais - Espagnol,,L,1,907
+LLR1L3_211,Licence 3 LLCER parcours Allemand,,L,3,907
+MATLAS_224,Licence 1 Mathématiques - Accès Santé,,L,1,13
+LLC2M1_202,"Master 1 Langues, litté. et civ. étrangères et régionales parcours Études Cult (angl germ ibé ibéro-am ita nord sla)",,M,1,907
+AES2L3_212,Licence 3 Administration Économique et Sociale parcours Droit - Gestion,,L,3,901
+DASUM1_201,Master 1 Droit des assurances parcours Assurances de personnes et dommage corporel,,M,1,901
+2LSOIN_103,L2 Soins infirmiers/Cherbourg,,L,2,14
+SMATM1_201,Master 1 Sciences de la Matière,,M,1,13
+MATHL1_203,Licence 1 CUPGE Mathématiques/Informatique,,L,1,13
+MAT1M2_211,Master 2 Mathématiques parcours Mathématiques Générales,,M,2,13
+MIA2L1_203,Licence 1 Maths Info et app. aux Sc. Humaines et Sociales parcours Préparatoire au Professorat des Ecoles,,L,1,13
+EEEAL2_201,"Licence 2 Électronique, Énergie Électrique et Automatique",,L,2,13
+CHI1M1_201,Master 1 Chimie parcours Chimie analytique et environnement,,M,1,13
+DROIL1_202,Licence 1 Droit Caen 2,,L,1,901
+LETTL3_219,Licence 3 Lettres EAD,,L,3,12
+HIS1M1_201,"Master 1 Histoire parcours Histoire : Sources, sociétés et cultures de l Antiquité à nos jours",,M,1,12
+CCAM1_201,"Master 1 Comptabilité, Contrôle, Audit Formation initiale",,M,1,910
+2MACS3_113,Master 2 Santé parcours Management des activités de santé spéc Qualité gestion de crise et situation extrême - EAD,,M,2,14
+2L2SOI_102,L2 Soins infirmiers - 2e semestre/Vire,,L,2,14
+MEDIM1_201,Master 1 Information et médiation scientifique et technique parcours Médiation sc et société : recherche et innovations,,M,1,13
+BIO2M2_212,Master 2 Biologie santé parcours Physiologie et physiopathologie intégratives thérapies,,M,2,13
+SAN2L3_212,Licence 3 Sciences pour la Santé parcours Microbiologie et risques sanitaires,,L,3,13
+ART3M2_213,"Master 2 Arts, Lettres, Civilisations parcours Métiers de la production cinématographique et audiovisuelle",,M,2,12
+EDU1L3_211,Licence 3 Sciences de l'Éducation et de la Formation parcours Enseignement et éducation scolaires,,L,3,12
+ARS2L2_202,Licence 2 Arts du Spectacle parcours Études cinématographiques,,L,2,12
+HIS2M2_212,"Master 2 Histoire parcours Histoire, cultures et sciences politiques",,M,2,12
+STAPL1_201,Licence 1 STAPS,,L,1,914
+MARKM1_201,"Master 1 Marketing, vente parcours Marketing Digital et Social Media",,M,1,910
+MANAM2_211,Master 2 Management parcours Conseil et Recherche,,M,2,910
+LEA4L3_214,Licence 3 Langues Étrangères Appliquées parcours Anglais - Russe,,L,3,907
+LLR5L2_205,Licence 2 LLCER parcours Italien,,L,2,907
+LLC2M1_209,"Master 1 Langues, litté. et civ. étrangères et régionales P. Etudes Cult. Anglais - EAD",,M,1,907
+AESL2_201,Licence 2 Administration Économique et Sociale,,L,2,901
+DRO1L3_211,Licence 3 Droit parcours Droit privé,,L,3,901
+DNOTM1_201,Master 1 Droit Notarial,,M,1,901
+DASUM2_211,Master 2 Droit des assurances parcours Assurances de personnes et dommage corporel,,M,2,901
+DNUMM1_201,Master 1 Droit du Numérique,,M,1,901
+DINTM1_201,Master 1 Droit international et droit européen parcours Droit et régulation des marchés internationaux,,M,1,901
+2L1SOI_103,L2 Soins infirmiers - 1er semestre/Granville,,L,2,14
+2L1SOI_101,L2 Soins infirmiers - 1er semestre/Falaise,,L,2,14
+PHYSL3_211,Licence 3 Physique,,L,3,13
+MIA2L3_213,Licence 3 Maths Info et app. aux Sc. Humaines et Sociales parcours Préparatoire au Professorat des Ecoles,,L,3,13
+SLANL1_201,Licence 1 Sciences du langage,,L,1,12
+CHI4M2_214,Master 2 Chimie P. EUR XLCHEM,,M,2,13
+MECAM1_201,Master 1 Mécanique parcours Modélisation et Simulation Numérique,,M,1,13
+TERRL1_201,Licence 1 Sciences de la Terre,,L,1,13
+BIOSM1_202,Master 1 Biologie-Santé (réservé aux étudiants de médecine et pharmacien),,M,1,13
+NEU1M1_203,Master 1 Neurosciences (réservé aux étudiants de médecine et pharmacien),,M,1,13
+SAN1L3_211,Licence 3 Sciences pour la Santé parcours Biotechnologie,,L,3,13
+SANL2_201,Licence 2 Sciences pour la Santé,,L,2,13
+SANL1_201,Licence 1 Sciences pour la Santé,,L,1,13
+ART1M2_211,"Master 2 Arts, Lettres, Civilisations parcours Lettres",,M,2,12
+ART4M1_204,"Master 1 Arts, Lettres, Civilisations parcours Théâtre",,M,1,12
+ART1M1_201,"Master 1 Arts, Lettres, Civilisations parcours Lettres",,M,1,12
+ARS2L3_212,Licence 3 Arts du Spectacle parcours Études cinématographiques,,L,3,12
+PHILM1_201,Master 1 Philosophie,,M,1,12
+PHI2L2_202,Licence 2 Philosophie parcours Philosophie-Sciences Sociales,,L,2,12
+CPESL3_211,Licence 3 Sciences et Société Parcours Cycle Pluridisciplinaire d'Etudes Supérieures (CPES),,L,3,13
+SOC3M2_213,Master 2 Sociologie parcours Vulnérabilités,,M,2,12
+HIS1M2_211,"Master 2 Histoire parcours Histoire : Sources, sociétés et cultures de l Antiquité à nos jours",,M,2,12
+MSE2M1_202,Master 1 Management sectoriel parcours Management des Organisations Sociales MOS FC,,M,1,910
+SOCL1_200,Licence 1 Sociologie,,L,1,12
+HUM1L3_211,Licence 3 Humanités parcours Humanités classiques,,L,3,12
+GEO2M2_212,"Master 2 Géo., aménagement, envt. et développement parcours Environnement, risques et diagnostics territoriaux",,M,2,11
+HUM2L1_202,Licence 1 Humanités parcours Humanités numériques,,L,1,12
+ECOL2_201,Licence 2 Économie,,L,2,11
+EML3_211,Licence 3 STAPS : Éducation et Motricité,,L,3,914
+EML2_201,Licence 2 STAPS : Éducation et Motricité,,L,2,914
+GES8L3_211,"Licence 3 Gestion parcours Management du Social, de la Santé et de la Solidarité",,L,3,910
+GES7L3_211,Licence 3 Gestion parcours Management des opérations,,L,3,910
+CGPAM2_211,Master 2 Gestion de patrimoine,,M,2,910
+LEA5L2_205,Licence 2 Langues Étrangères Appliquées parcours Anglais - Allemand,,L,2,907
+LEA5L1_205,Licence 1 Langues Étrangères Appliquées parcours Anglais - Allemand,,L,1,907
+LEA4L1_204,Licence 1 Langues Étrangères Appliquées parcours Anglais - Russe,,L,1,907
+TRADM1_201,Master 1 Traduction Interprétation parcours Traduction spécialisée et localisation,,M,1,907
+LLR4L3_214,Licence 3 LLCER parcours Études nordiques,,L,3,907
+LLR2L3_212,Licence 3 LLCER parcours Anglais,,L,3,907
+LLR6L2_206,Licence 2 LLCER parcours Russe,,L,2,907
+LLR5L1_205,Licence 1 LLCER parcours Italien,,L,1,907
+LLR7L3_217,"Licence 3 LLCER parcours Études Franco-Allemandes : langue, culture et numérique",,L,3,907
+DCIVM1_201,Master 1 Droit Civil parcours Droit civil Protection des Personnes Vulnérables,,M,1,901
+APUBL2_201,Licence 2 Administration Publique,,L,2,901
+DLIBM1_201,Master 1 Droit des Libertés,,M,1,901
+2LSOIN_104,L2 Soins infirmiers/Lisieux,,L,2,14
+2LSOIN_101,L2 Soins infirmiers/Alençon,,L,2,14
+MECAL3_211,Licence 3 Mécanique,,L,3,13
+MECAL2_201,Licence 2 Mécanique,,L,2,13
+MATHL3_211,Licence 3 Mathématiques,,L,3,13
+MIASL3_211,Licence 3 Maths Info et app. aux Sc. Humaines et Sociales,,L,3,13
+MIASL1_201,"Licence 1 Mathématiques, Informatique et Applications aux Sciences Humaines et Sociales",,L,1,13
+CHIML1_201,Licence 1 Chimie,,L,1,13
+INFOL1_201,Licence 1 Informatique,,L,1,13
+HIS2L3_212,Licence 3 Histoire parcours Histoire-Sciences Politiques,,L,3,12
+CHI4M1_204,Master 1 Chimie P. EUR XLCHEM,,M,1,13
+TERRL3_211,Licence 3 Sciences de la Terre,,L,3,13
+MICRM2_211,"Master 2 Microbiologie parcours Santé, Bien-être et Industrie",,M,2,13
+BIOSM1_201,Master 1 Biologie-Santé parcours Biologie santé (BS),,M,1,13
+SVI1L3_211,Licence 3 Sciences de la Vie parcours Biologie et Écologie,,L,3,13
+LETTL2_201,Licence 2 Lettres,,L,2,12
+EDUL1_201,Licence 1 Sciences de l'Éducation et de la Formation,,L,1,12
+LAN2M2_212,Master 2 Sciences du Langage parcours Didactique du Français Langue Étrangère,,M,2,12
+LAN1M2_211,Master 2 Sciences du Langage parcours Linguistique et traitement des données,,M,2,12
+2MACS6_116,Master 2 Santé parcours Management des activités de santé spéc. Pilotage d'un dispositif de formation en santé - EAD,,M,2,14
+PSY1M2_211,"Master 2 Psychologie parcours Clinique du développement de l enfant, de l adolescent et de la famille",,M,2,924
+MECAL1_202,Licence 1 Mécanique Parcours adapté en 2 ans,,L,1,13
+MAS2M2_212,"Master 2 Mathématiques appliquées, statistiques parcours Grad'School MINMACS Math et Sc de l'information en Normandie",,M,2,13
+SME1M2_211,Master 2 Sciences de la Mer parcours Ecosys côtiers et physio ds espèces exploitées par pêche et aquaculture Recherche,,M,2,13
+MSE1M1_201,Master 1 Management sectoriel parcours Management des Établissements et des Structures Gérontologiques MESG,,M,1,910
+CCAM2_211,"Master 2 Comptabilité, Contrôle, Audit Formation initiale",,M,2,910
+CCAM1_202,"Master 1 Comptabilité, Contrôle, Audit Formation continue",,M,1,910
+MAEM2_213,Master 2 Management et Administration des Entreprises - FOAD,,M,2,910
+LIV1M1_201,Master 1 Métiers du Livre et de l'Édition parcours Métiers des bibliothèques,,M,1,12
+PHILM2_211,Master 2 Philosophie,,M,2,12
+SOC2L2_202,Licence 2 Sociologie parcours sociologie et sciences politiques,,L,2,12
+HUM2L3_212,Licence 3 Humanités parcours Humanités numériques,,L,3,12
+HUM1L2_201,Licence 2 Humanités parcours Humanités classiques,,L,2,12
+ECO1M1_201,Master 1 Économie Appliquée parcours Études socio-économiques et développement durable,,M,1,11
+GEO1M1_201,Master 1 Géo aménagement env et développement parcours Territoires en transition : métiers du diagnostic et du dév local,,M,1,11
+GEOL1_201,Licence 1 Géographie et Aménagement,,L,1,11
+PSY5M2_215,Master 2 Psychologie parcours Psychologie sociale et conduite du changement : diagnostic et intervention,,M,2,924
+MDSL2_201,Licence 2 STAPS : Management du Sport,,L,2,914
+ESPML3_211,Licence 3 STAPS : Ergonomie du Sport et Performance Motrice,,L,3,914
+AUDIM1_202,Master 1 Contrôle de Gestion et Audit Organisationnel en alternance · Évreux,,M,1,910
+HIS3L3_213,Licence 3 Histoire parcours Histoire-Sciences Sociales,,L,3,12
+SPSLAS_226,Licence 1 Sciences pour la santé - Accès Santé,,L,1,13
+LEA1L2_201,Licence 2 Langues Étrangères Appliquées parcours Anglais - Espagnol,,L,2,907
+LEA6L2_206,Licence 2 Langues Étrangères Appliquées parcours Anglais - Français,,L,2,907
+LEA6L1_206,Licence 1 Langues Étrangères Appliquées parcours Anglais - Français,,L,1,907
+LLR3L3_213,Licence 3 LLCER parcours Espagnol,,L,3,907
+LLR4L2_204,Licence 2 LLCER parcours Études nordiques,,L,2,907
+LLR4L1_204,Licence 1 LLCER parcours Études nordiques,,L,1,907
+LLR2L1_202,Licence 1 LLCER parcours Anglais,,L,1,907
+LLR1L2_201,Licence 2 LLCER parcours Allemand,,L,2,907
+LLR7L2_207,"Licence 2 LLCER parcours Études Franco-Allemandes : langue, culture et numérique",,L,2,907
+AES1L3_211,Licence 3 Administration Économique et Sociale parcours Économie - Gestion,,L,3,901
+APUBL1_201,Licence 1 Administration Publique,,L,1,901
+SAN1M1_201,Master 1 Santé Publique,,M,1,14
+2L2SOI_103,L2 Soins infirmiers - 2e semestre/Granville,,L,2,14
+2L1SOI_104,L2 Soins infirmiers - 1er semestre /L'Aigle,,L,2,14
+2LSOIN_102,L2 Soins infirmiers/Caen,,L,2,14
+INSTM2_211,"Master 2 Instrumentation, Mesure, Métrologie parcours Électronique, photonique et applications",,M,2,13
+MIA2L2_203,Licence 2 Maths Info et app. aux Sc. Humaines et Sociales parcours Préparatoire au Professorat des Ecoles,,L,2,13
+MICRM1_202,Master 1 Microbiologie (réservé aux étudiants de médecine et pharmacien),,M,1,13
+MICRM1_201,"Master 1 Microbiologie parcours Santé, Bien-être et Industrie",,M,1,13
+2LINFO_701,Licence 2A Informatique,,L,2,13
+SVI2L3_212,Licence 3 Sciences de la Vie parcours Biologie et Physiologie des Organismes,,L,3,13
+NUTRM1_201,Master 1 Nutrition et Sciences des aliments parcours Qualité des aliments et innovation santé,,M,1,13
+NEU1M1_201,Master 1 Neurosciences parcours Neurosciences moléculaires cellulaires et intégrées,,M,1,13
+SVTL3_211,Licence 3 Sciences de la Vie et de la Terre,,L,3,13
+BIOAM2_211,"Master 2 Biologie, Agrosciences parcours ECOproduction, BIOtechnologies végétales et BioVALOrisation (ECOBIOVALO)",,M,2,13
+2MACS5_115,Master 2 Santé P. Management des activités de santé spé Entrepreneuriat innov et transformation digitale santé - EAD,,M,2,14
+MATHL1_202,Licence 1 Mathématiques Parcours adapté en 2 ans,,L,1,13
+PHYSL1_203,Licence 1 Physique Parcours adapté en 2 ans,,L,1,13
+PHY1M2_211,Master 2 Physique parcours Contrôle de l Environnement Industriel CEI,,M,2,13
+GES4L3_211,Licence 3 Gestion parcours Banque Finance Assurance Formation initiale,,L,3,910
+PSY1M1_201,"Master 1 Psychologie parcours Clinique du développement de l'enfant, de l'adolescent et de la famille",,M,1,924
+PHYSM1_201,Master 1 Physique,,M,1,13
+MSE2M2_212,Master 2 Management sectoriel parcours Management des Organisations Sociales MOS FC,,M,2,910
+MAEM2_215,Master 2 Management et Administration des Entreprises - Formation initiale en 1 an,,M,2,910
+PHY4M2_214,Master 2 Physique P. Noyaux Atomes Collisions International,,M,2,13
+2LGEST_701,Licence 2A Gestion,,L,2,11
+EDU2L3_212,Licence 3 Sciences de l'Éducation et de la Formation parcours Intervention sociale et accompagnement éducatif,,L,3,12
+EDUL2_201,Licence 2 Sciences de l'Éducation et de la Formation,,L,2,12
+ARS1L3_211,Licence 3 Arts du Spectacle parcours Études théâtrales,,L,3,12
+HIS3M2_213,Master 2 Histoire parcours Métiers du patrimoine : archives et musées,,M,2,12
+HUM2L2_202,Licence 2 Humanités parcours Humanités numériques,,L,2,12
+HUM1L1_201,Licence 1 Humanités parcours Humanités classiques,,L,1,12
+GES3L3_213,Licence 3 Gestion parcours Section Internationale,,L,3,11
+PSYCL3_211,Licence 3 Psychologie,,L,3,924
+PSYCL2_201,Licence 2 Psychologie,,L,2,924
+PSY4M1_204,Master 1 Psychologie parcours Psychologie psycho-dynamique clinique et pathologique,,M,1,924
+APASL2_201,Licence 2 STAPS : Activité Physique Adaptée et Santé,,L,2,914
+MARKM2_211,"Master 2 Marketing, vente parcours Marketing Digital et Social Media",,M,2,910
+MSE6M1_206,Master 1 Management sectoriel parcours Management des organisations en santé,,M,1,910
+MCI2M2_212,Master 2 Management et Commerce International parcours Franco-Américain,,M,2,910
+LEA3L2_203,Licence 2 Langues Étrangères Appliquées parcours Anglais - Portugais,,L,2,907
+LEA2L2_202,Licence 2 Langues Étrangères Appliquées parcours Anglais - Italien,,L,2,907
+LLR3L2_203,Licence 2 LLCER parcours Espagnol,,L,2,907
+SLANL3_211,Licence 3 Sciences du Langage P Linguistique et didactique du français langue maternelle et du français langue étrangère,,L,3,12
+LLC2M2_212,"Master 2 Langues, litté. et civ. étrangères et régionales parcours Études Cult (angl germ ibé ibéro-am ita nord sla)",,M,2,907
+DRO2L3_212,Licence 3 Droit parcours Droit public,,L,3,901
+JUSTM1_201,"Master 1 Justice, procès et procédures parcours Carrières judiciaires",,M,1,901
+DROLAS_229,Licence 1 Droit - Accès Santé,,L,1,901
+2LPEDI_101,L2 Pédicure podologue,,L,2,14
+2LMANI_101,L2 Manipulateurs en Électroradiologie Médicale,,L,2,14
+2MMSS6_711,Master 2A Management Sectoriel P. Management des Etablissements et Structures Gérontologiques (MESG),,M,2,910
+2MARD4_711,"Master 2A Arts, Lettres et Civilisations P. Métiers de la Production Cinématographique et Audiovisuelle",,M,2,12
+1MLIV2_701,Master 1A Métier du livre et de l'édition parcours métiers des bibliothèques,,M,1,12
+2LSTA4_701,Licence 2A STAPS P. Ergonomie du Sport - Performance Motrice,,L,2,914
+2LLEAR_701,Licence 2A Langues Etrangères Appliquées P. Anglais/Russe,,L,2,907
+2MMON2_713,Master 2A Monnaie Banque Finance Assurance P. RCPA - FC - hors Caen CA BRIE PICARDIE Octobre 2018,,M,2,910
+1MNUTR_701,Master 1A Nutrition Sciences Aliments P. Qualité des Aliments et Innovation Santé,,M,1,13
+1MARD3_702,"Master 1A Arts, Lettres et Civilisations P. Lettres ""Culture Ecritures Communication"" (CEMU)",,M,1,12
+1MARD4_701,"Master 1A Arts, lettres et civilisations parcours métier de la production cinématographique et audiovisuelle",,M,1,12
+3LSVI1_711,Licence 3A Sciences de la Vie P. Biologie et Physiologie des Organismes,,L,3,13
+2LLEAI_701,Licence 2A Langues Etrangères Appliquées Anglais/Italien,,L,2,907
+1MDNUM_701,"Master 1A Droit du Numérique P. Droit de l'Internet, des Entreprises Innovantes et des Créations Numériques",,M,1,901
+1MMSS3_701,Master 1A Management Sectoriel P. Management des Organisations en Santé (MOES) FI/FC,,M,1,910
+3LGES6_911,Licence 3A Gestion,,L,3,11
+1MPHIL_701,Master 1A Philosophie,,M,1,12
+3LLET2_711,Licence 3A Lettres p. Métiers de l'Enseignement,,L,3,12
+2MSTRA_711,Master 2A Management Stratégique P. Business Partner et Amélioration Continue,,M,2,11
+2MAGRO_711,Master 2A Agroscience Environnement Territoire Paysage Forêt P. GVA,,M,2,13
+1MLLC3_701,Master 1A Langues Littératures et Civilisations Etrangères et Régionales (LLCER) P. Etudes Cult Littérature/Civilisation,,M,1,907
+3LSTA5_711,Licence 3A STAPS P. Management du Sport,,L,3,914
+2LCHIM_701,Licence 2A Chimie,,L,2,13
+2MCHI3_711,Master 2A Chimie P. Catalyse Environnement et Dév Durable,,M,2,13
+2LLEAP_701,Licence 2A Langues Etrangères Appliquées Anglais/Portugais,,L,2,907
+1MNEUR_701,Master 1A Neurosciences (réservé aux étudiants de médecine et pharmacien),,M,1,13
+1MMATH_701,Master 1A Mathématiques P. Mathématiques Générales,,M,1,13
+2MARD3_711,"Master 2A Arts, Lettres et Civilisations P. Lettres ""Culture Ecritures Communication""",,M,2,12
+1LLET1_702,Licence 1A Lettres - A distance,,L,1,12
+2MGRH_711,Master 2A Gestion des Ressources Humaines - FA,,M,2,910
+2MMAS_711,Master 2A Mathématiques Appliquées - Statistiques P. Statistiques Appliquées et Analyses Décisionnelle,,M,2,13
+1MPHYS_701,Master 1A Physique,,M,1,13
+1MSTPE_701,"Master 1A Sciences de la Terre et des Planètes, Environnement P. Ingénierie et Géosciences du Littoral",,M,1,13
+3LSTA3_711,Licence 3A STAPS P. Entraînement Sportif,,L,3,914
+2MEDUC_711,Master 2A Sciences de l'Education P. Professionnalité et Savoirs dans les Métiers de la Relation,,M,2,12
+2MSAN2_711,Master 2A Santé Publique P. Ethique en Santé,,M,2,14
+1MMICR_701,Master 1A Microbiologie,,M,1,13
+1LGEO_901,Licence 1A Géographie et Aménagement,,L,1,11
+1MSOC2_701,Master 1A Sociologie P. Gouvernance des Risques et de l'Environnement,,M,1,12
+2LSOC2_701,Licence 2A Sociologie P. Sociologie et Sciences Politiques,,L,2,12
+1MERGO_701,Master 1A Ergonomie,,M,1,914
+2LSTA1_701,Licence 2A STAPS P. Activité Physique Adaptée et Santé,,L,2,914
+2MHIS3_711,Master 2A Histoire P. Archéologie,,M,2,12
+2MMCI2_711,Master 2A Management & Commerce International P. Franco-Américain - FI,,M,2,910
+2MLIV1_711,Master 2A Métier du livre et de l'édition parcours édition,,M,2,12
+1MLAN1_701,Master 1A Sciences du Langage P. Didactique du Français Langue Etrangère,,M,1,12
+1MPATR_701,Master 1A Gestion du Patrimoine,,M,1,910
+2MMSS8_711,Master 2A Management Sectoriel P. Management et Qualité des Soins Gérontologiques (FOAD),,M,2,910
+1MARD2_701,"Master 1A Arts, Lettres et Civilisations P. Théâtre",,M,1,12
+3LDRO1_711,Licence 3A Droit P. Droit Privé,,L,3,901
+3LLEA_711,Licence 3A Langues Etrangères Appliquées,,L,3,907
+1LLEAP_701,Licence 1A Langues Etrangères Appliquées P. Anglais/Portugais,,L,1,907
+2MLLC2_711,Master 2A Langues Littératures et Civilisations Etrangères et Régionales (LLCER) P. Linguistique Multilingue,,M,2,907
+1MSANT_701,Master 1A Santé Publique,,M,1,14
+2MPHY1_712,Master 2A Physique P. Noyaux Atomes Collisions International,,M,2,13
+1MAPAS_701,Master 1A STAPS : Activités Physique Adapté et Santé,,M,1,914
+3LLET1_711,Licence 3A Lettres P. Métiers de la culture et du livre,,L,3,12
+1MPSY2_701,Master 1A Psychologie P. Psychologie de l'éducation,,M,1,924
+1LANGL_702,Licence 1A LLCER P. Anglais - A distance,,L,1,907
+1MHIS2_701,Master 1A Histoire P. Histoire et Patrimoine,,M,1,12
+2MBIO1_711,Master 2A Biologie-Santé P. Signalisation et Fonction en Conditions Pathologiques (SFP),,M,2,13
+2MLAN2_711,Master 2A Sciences du Langage P. Linguistique Française,,M,2,12
+1MDNOT_701,Master 1A Droit Notarial,,M,1,901
+3LSOC1_712,Licence 3A Sociologie P. Sociologie et Sciences Sociales - A distance,,L,3,12
+1LCHIM_701,Licence 1A Chimie,,L,1,13
+2MMCI1_711,Master 2A Management & Commerce International P. Dév PME PMI - FI,,M,2,910
+2MARD1_711,"Master 2A Arts, Lettres et Civilisations P. Cinéma",,M,2,12
+2MSAN1_711,Master 2A Santé Publique P. Méthode en Recherche Clinique et Epidémiologie,,M,2,14
+3LEDU1_711,Licence 3A Sciences de l'Education P. Métiers de l'Enseignement et de la Formation,,L,3,12
+2LMIAS_701,Licence 2A Mathématiques et Informatique Appliquées aux SHS,,L,2,13
+2MSOC1_712,Master 2A Sociologie P. Vulnérabilités (CEMU),,M,2,12
+1LSVIE_701,Licence 1A Sciences de la Vie,,L,1,13
+3LMIAS_711,Licence 3A Mathématiques et Informatique Appliquées aux SHS,,L,3,13
+1MARD3_701,"Master 1A Arts, Lettres et Civilisations P. Lettres ""Culture Ecritures Communication""",,M,1,12
+1LESPA_701,"Licence 1A Langues, Littératures et Civilisations Etrangères et Régionales P. Espagnol",,L,1,907
+1LALL_701,"Licence 1A Langues, Littératures et Civilisations Etrangères et Régionales P. Allemand",,L,1,907
+2LDROI_703,Licence 2A Droit (ALENCON),,L,2,901
+2MDNUM_711,"Master 2A Droit du Numérique P. Droit de l'Internet, des Entreprises Innovantes et des Créations Numériques",,M,2,901
+2MLLC3_711,Master 2A Langues Littératures et Civilisations Etrangères et Régionales (LLCER) P. Etudes Cult Littérature/Civilisation,,M,2,907
+1MSOC1_701,Master 1A Sociologie P. Vulnérabilités,,M,1,12
+2LMECA_701,Licence 2A Mécanique,,L,2,13
+1MSOC1_702,Master 1A Sociologie P. Vulnérabilités (CEMU),,M,1,12
+2MPSY4_711,Master 2A Psychologie P. Neuropsychologie clinique de l’enfant à l’adulte,,M,2,924
+2MADMI_713,Master 2A Management et Administration des Entreprises - FC,,M,2,910
+1MMONN_704,Master 1A Monnaie Banque Finance Assurance P. Banque finance assurance à l'étranger,,M,1,910
+3LPHI2_711,Licence 3A Philosophie P. Philosophie - Sciences Politiques,,L,3,12
+1MMSS1_701,"Master 1A Management Sectoriel P. Management des Structures Sociales, Médico sociales et Solidaires - FI/FC",,M,1,910
+3LLET1_712,Licence 3A Lettres P. Métiers de la culture et du livre - A distance,,L,3,12
+2LSOC1_702,Licence 2A Sociologie P. Sociologie et Sciences Sociales - A distance,,L,2,12
+1MJUST_701,Master 1A Justice Procès Procédures P. Contentieux Privé,,M,1,901
+2MBIPH_711,Master 2A Biologie Intégrative et Physiologie P. Management de l'Expérimentation Préclinique,,M,2,13
+3LMATH_711,Licence 3A Mathématiques,,L,3,13
+2MMSS2_711,Master 2A Management Sectoriel P. Ingénie et Expertise des Politiques Sociales FI/FC,,M,2,910
+1LRUSS_701,"Licence 1A Langues, Littératures et Civilisations Etrangères et Régionales P. Russe",,L,1,907
+3LPHYS_711,Licence 3A Physique,,L,3,13
+2LLAN1_702,Licence 2A Sciences du Langage - A distance,,L,2,12
+2MCHI1_711,Master 2A Chimie P. Chimie Organique,,M,2,13
+2MDPUB_711,Master 2A Droit Public P. Carrières Publiques,,M,2,901
+1LHIS1_901,Licence 1A Histoire,,L,1,12
+3LESPA_711,"Licence 3A Langues, Littératures et Civilisations Etrangères et Régionales P. Espagnol",,L,3,907
+2MLIV2_711,Master 2A Métier du livre et de l'édition parcours métiers des bibliothèques,,M,2,12
+1LDROI_702,Licence 1A Droit (CAEN) Etudiants dont le nom commence par K à Z,,L,1,901
+3LSTA4_711,Licence 3A STAPS P. Ergonomie du Sport - Performance Motrice,,L,3,914
+2MBIOA_711,"Master 2A Biologie Agrosciences P. Ecoproduction, Biotechnologie Végétales et Biovalorisation (ECOBIOVALO)",,M,2,13
+2MMANA_711,Master 2A Management P. Métiers du Conseil des Etudes et de la Recherche,,M,2,910
+1LPHIL_901,Licence 1A Philosophie,,L,1,12
+1MDENT_701,Master 1A Droit de l'Entreprise P. Diplôme de Juriste Conseil en Entreprise (DJCE),,M,1,901
+1LPHY_701,Licence 1A Physique CUPGE,,L,1,13
+1LART_701,Licence 1A Arts du Spectacle,,L,1,12
+1MPSY4_701,Master 1A Psychologie P. Neuropsychologie clinique de l’enfant à l’adulte,,M,1,924
+1MLAN2_701,Master 1A Sciences du Langage P. Linguistique Française et Générale,,M,1,12
+3LGEO_911,Licence 3A Géographie et Aménagement,,L,3,11
+2MGRH_713,Master 2A Gestion des Ressources Humaines - FOAD,,M,2,910
+3LSVI2_711,Licence 3A Sciences de la Vie P. Biologie-Ecologie,,L,3,13
+2MPSY5_711,Master 2A Psychologie P. Psychologie sociale de l’intervention : audit et conduite de changement,,M,2,924
+2MDNOT_711,Master 2A Droit Notarial,,M,2,901
+2LRUSS_701,"Licence 2A Langues, Littératures et Civilisations Etrangères et Régionales P. Russe",,L,2,907
+2MDECO_711,Master 2A Droit International et Droit Européen P. Droit et Régulation des Marchés Internationaux,,M,2,901
+2LHIS1_702,Licence 2A Histoire P. Histoire - Sciences Sociales - A distance,,L,2,12
+3LGES3_711,Licence 3A Gestion P. Management du Social et de la Santé,,L,3,910
+1MADMI_701,Master 1A Management et Administration des Entreprises - FI,,M,1,910
+3LAEC1_711,Licence 3A Administration Economique et Sociales Parcours Droit-Gestion,,L,3,901
+2MLEA1_711,Master 2A Langues Etrangères Appliquées (LEA) P. Expert en Projets Européens (EPE),,M,2,907
+1LSOC_901,Licence 1A Sociologie,,L,1,12
+3LLEAI_711,Licence 3A Langues Etrangères Appliquées Anglais/Italien,,L,3,907
+1MBIOA_701,"Master 1A Biologie Agrosciences P. Ecoproduction, Biotechnologie Végétales et Biovalorisation (ECOBIOVALO)",,M,1,13
+1MGRH_701,Master 1A Gestion des Ressources Humaines - FA/FC,,M,1,910
+1LLAN1_701,Licence 1A Sciences du Langage,,L,1,12
+1MBIOS_701,Master 1A Biologie-Santé,,M,1,13
+3LGES1_712,Licence 3A Gestion P. Management des Entreprises - FOAD,,L,3,910
+3LALL_711,"Licence 3A Langues, Littératures et Civilisations Etrangères et Régionales P. Allemand",,L,3,907
+2MADMI_717,Master 2A Management et Administration des Entreprises - Passerelle Manager,,M,2,910
+2MNEU2_711,"Master 2A Neurosciences P. Neurosciences Moléculaires, Cellulaires et Intégrées",,M,2,13
+2MADMI_711,Master 2A Management et Administration des Entreprises - FI,,M,2,910
+2MNEU1_711,Master 2A Neurosciences P. Science des Comportements,,M,2,13
+3LGES1_713,Licence 3A Gestion P. Management des Entreprises - CESI,,L,3,910
+3LHUMA_711,Licence 3A Humanités,,L,3,12
+3LMECA_711,Licence 3A Mécanique,,L,3,13
+1MLIV1_701,Master 1A Métier du livre et de l'édition parcours édition,,M,1,12
+2MDASS_711,Master 2A Droit des Assurances P. Assurances et Personnes,,M,2,901
+2LDROI_701,Licence 2A Droit,,L,2,901
+2MSTAR_711,Master 2A Staps : Management du Sport P. Sport Territoires Acteurs Réseaux (STAR),,M,2,914
+1LSVT_701,Licence 1A Sciences de la Vie et de la Terre,,L,1,13
+1MSTAR_701,Master 1A Staps : Management du Sport P. Sport Territoires Acteurs Réseaux (STAR),,M,1,914
+3LHIS1_712,Licence 3A Histoire P. Histoire - Sciences Sociales - A distance,,L,3,12
+2MHIS2_711,Master 2A Histoire P. Histoire et Patrimoine,,M,2,12
+3LLAN4_911,Licence 3A Sc du langage p. Linguistique et didactique du français langue maternelle et du français langue étrangère,,L,3,12
+2LNORD_701,"Licence 2A Langues, Littératures et Civilisations Etrangères et Régionales P. Langues Nordiques",,L,2,907
+2LPHY_701,Licence 2A Physique CUPGE,,L,2,13
+1MMECA_701,Master 1A Mécanique,,M,1,13
+1MENMP_901,Master 1A Entrepreneuriat et Management de Projets,,M,1,11
+2LHIS1_701,Licence 2A Histoire P. Histoire - Sciences Sociales,,L,2,12
+3LANGL_711,"Licence 3A Langues, Littératures et Civilisations Etrangères et Régionales P. Anglais",,L,3,907
+1MMARK_701,Master 1A Marketing Vente - FA,,M,1,910
+2MNUTR_711,Master 2A Nutrition et Sciences des Aliments P. Qualité des Aliments et Innovation Santé,,M,2,13
+2LART1_701,Licence 2A Arts du Spectacle P. Cinéma,,L,2,12
+1MMONN_703,Master 1A Monnaie Banque Finance Assurance P. Responsable de clientèle Pro/Agri,,M,1,910
+1MSTRA_701,Master 1A Management Stratégique P. Business Partner et Amélioration Continue,,M,1,11
+2LSTA5_701,Licence 2A STAPS P. Management du Sport,,L,2,914
+2MMSS7_711,Master 2A Management Sectoriel P. Hygiène et Qualité des Soins (FOAD),,M,2,910
+1MAGRO_701,Master 1A Agroscience Environnement Territoire Paysage Forêt P. GVA,,M,1,13
+3LITAL_711,"Licence 3A Langues, Littératures et Civilisations Etrangères et Régionales P. Italien",,L,3,907
+2LAPUB_701,Licence 2A Administration Publique,,L,2,901
+2LALL_701,"Licence 2A Langues, Littératures et Civilisations Etrangères et Régionales P. Allemand",,L,2,907
+1LTERR_701,Licence 1A Sciences de la Terre,,L,1,13
+2MMIC2_711,Master 2A Microbiologie P. Microbiologie Industrielle et Biotechnologie,,M,2,13
+2LMATH_701,Licence 2A Mathématiques,,L,2,13
+2LSTA2_701,Licence 2A STAPS P. Education et Motricité,,L,2,914
+1LHIS1_902,Licence 1A Histoire (à distance),,L,1,12
+2MPSY3_711,"Master 2A Psychologie P. Psychologie de l’enfant, de l’adolescent et de la famille",,M,2,924
+1MCOMP_701,Master 1A Comptabilité Contrôle Audit - FI,,M,1,910
+3LSOC3_711,"Licence 3A Sociologie P. Métiers du Social, du Médico-social et de l'Insertion",,L,3,12
+3LHIS3_711,Licence 3A Histoire P. Histoire - Archéologie,,L,3,12
+1MDAFF_701,Master 1A Droit des Affaires P. Droit de la concurrence et de la distribution,,M,1,901
+3LPHI1_711,Licence 3A Philosophie P. Philosophie - Sciences Sociales,,L,3,12
+2LART2_701,Licence 2A Arts du Spectacle P. Arts de la scène,,L,2,12
+2LSOC1_701,Licence 2A Sociologie P. Sociologie et Sciences Sociales,,L,2,12
+2MDENT_711,Master 2A Droit de l'Entreprise P. Diplôme de Juriste Conseil en Entreprise (DJCE),,M,2,901
+2MLEA2_711,Master 2A Langues Etrangères Appliquées (LEA) P. Développement Durable: Stratégies de Concertation et de Com. (DDSC),,M,2,907
+2MENMP_711,Master 2A Entrepreneuriat et Management de Projets P. Ingénierie des Projets Entrepreneuriaux,,M,2,11
+2MLAN1_711,Master 2A Sciences du Langage P. Didactique du Français Langue Etrangère,,M,2,12
+2MMON2_712,Master 2A Monnaie Banque Finance Assurance P. RCPA - FC Caen- Juin 2018,,M,2,910
+3LSVT_711,Licence 3A Sciences de la Vie et de la Terre,,L,3,13
+3LGES4_712,Licence 3A Gestion P. Sciences Comptables et Financières - FA,,L,3,910
+3LSTA1_711,Licence 3A STAPS P. Activité Physique Adaptée et Santé,,L,3,914
+1LHUMA_701,Licence 1A Humanités,,L,1,12
+2MPHY1_711,Master 2A Physique P. Noyaux Atomes Collisions,,M,2,13
+1MBIPH_701,Master 1A Biologie Intégrative et Physiologie P. Management de l'Expérimentation Préclinique,,M,1,13
+1MCOMP_702,Master 1A Comptabilité Contrôle Audit - FA,,M,1,910
+1MLLC3_702,Master 1A LLCE P. Etude Culturelle Littérature/Civilisation (CEMU),,M,1,907
+3LANGL_712,Licence 3A LLCER P. Anglais - A distance,,L,3,907
+2MBIO2_711,Master 2A Biologie-Santé P. Cancer Différenciation Génétique et Biothérapies (CDG-Biother),,M,2,13
+2MMATH_711,Master 2A Mathématiques P. Mathématiques Générales,,M,2,13
+2MPHI1_711,Master 2A Philosophie,,M,2,12
+1MDLIB_701,Master 1A Droit des Libertés,,M,1,901
+3LLEAE_711,Licence 3A Langues Etrangères Appliquées Anglais/Espagnol,,L,3,907
+3LHIS1_711,Licence 3A Histoire P. Histoire - Sciences Sociales,,L,3,12
+2MPATR_713,Master 2A Gestion du Patrimoine - CPAT 2 - FC,,M,2,910
+2LITAL_701,"Licence 2A Langues, Littératures et Civilisations Etrangères et Régionales P. Italien",,L,2,907
+3LSVI3_711,Licence 3A Sciences de la Vie P. Microbiologie,,L,3,13
+1LLEAR_701,Licence 1A Langues Etrangères Appliquées P. Anglais/Russe,,L,1,907
+1LMECA_701,Licence 1A Mécanique,,L,1,13
+2MLLC3_712,Master 2A Langues Littérature et Civilisations Etrangères (LLCER) P. Etude Culturelle Littérature/Civilisation (CEMU),,M,2,907
+1LPSYC_701,Licence 1A Psychologie,,L,1,924
+1LPCI_901,Licence 1A Portail Physique Chimie Ingénierie (PCI) - Parcours adapté,,L,1,13
+2MMON1_712,Master 2A Monnaie Banque Finance Assurance P. CAEI - FOAD,,M,2,910
+2LANGL_702,Licence 2A LLCER P. Anglais - A distance,,L,2,907
+1MGPRO_701,Master 1A Gestion de Production Logistique Achats - FA,,M,1,910
+1LLEAE_701,Licence 1A Langues Etrangères Appliquées P. Anglais/Espagnol,,L,1,907
+2MCOMP_711,Master 2A Comptabilité Contrôle Audit - FI,,M,2,910
+2MLLC1_711,Master 2A Langues Littératures et Civilisations Etrangères et Régionales (LLCER) P. Traduction Spécialisée,,M,2,907
+1MLEA2_701,Master 1A Langues Etrangères Appliquées (LEA) P. Développement Durable: Stratégies de Concertation et de Com. (DDSC),,M,1,907
+2MCOMP_712,Master 2A Comptabilité Contrôle Audit - FA,,M,2,910
+3LLET4_711,Licence 3A Lettres P. Etudes Anciennes,,L,3,12
+2LHIS3_701,Licence 2A Histoire P. Histoire - Archéologie,,L,2,12
+2MHIS1_711,Master 2A Histoire P. Histoire,,M,2,12
+1LITAL_701,"Licence 1A Langues, Littératures et Civilisations Etrangères et Régionales P. Italien",,L,1,907
+2MSMER_711,Master 2A Sciences de la Mer P. Exploitation Ressources Vivantes Cotières,,M,2,13
+2MADMI_714,Master 2A Management et Administration des Entreprises - FOAD,,M,2,910
+2MSOC1_711,Master 2A Sociologie P. Vulnérabilités,,M,2,12
+2MEEEA_711,"Master 2A Electronique, Energie Electrique, Automatique",,M,2,13
+1LDROI_703,Licence 1A Droit (ALENCON),,L,1,901
+1LDROI_701,Licence 1A Droit (CAEN) Etudiants dont le nom commence par A à J,,L,1,901
+2LPHI1_701,Licence 2A Philosophie P. Philosophie - Sciences Sociales,,L,2,12
+2MMSS4_711,Master 2A Management Sectoriel P. Management de l'Economie Solidaire FI/FC,,M,2,910
+2MADMI_712,Master 2A Management et Administration des Entreprises - FI - 1 an,,M,2,910
+3LRUSS_711,"Licence 3A Langues, Littératures et Civilisations Etrangères et Régionales P. Russe",,L,3,907
+1MEMP_901,Master 1A Economie et Management publics,,M,1,11
+2MCHI4_711,Master 2A Chimie P. Matériaux Nanostructure et Energie,,M,2,13
+1MGEO2_701,Master 1A Géographie Aménagement Environnement Développement P. Territoires en Transition,,M,1,11
+1MPSY5_701,Master 1A Psychologie P. Psychologie sociale de l'intervention : audit et conduite de changement,,M,1,924
+1MMSS2_701,Master 1A Management Sectoriel P. Ingénierie et Expertise des Politiques Sociales FI/FC,,M,1,910
+2MMSS5_711,Master 2A Management Sectoriel P. Management des Organisations Sociales - FC,,M,2,910
+1LNORD_701,"Licence 1A Langues, Littératures et Civilisations Etrangères et Régionales P. Langues Nordiques",,L,1,907
+3LGES4_713,Licence 3A Gestion P. Sciences Comptables et Financières - FC,,L,3,910
+2LEEEA_701,"Licence 2A Electronique, Energie Electrique, Automatique (EEEA)",,L,2,13
+1LINFO_701,Licence 1A Informatique,,L,1,13
+2MPHY2_711,Master 2A Physique P. Matériaux Nanosciences Energie,,M,2,13
+3LSOC1_711,Licence 3A Sociologie P. Sociologie et Sciences Sociales,,L,3,12
+2MMSS3_711,Master 2A Management Sectoriel P. Management des Organisations en Santé (MOES),,M,2,910
+2MINF4_711,Master 2A Informatique P. IDC (Internet Données et Connaissances),,M,2,13
+2MINF1_711,Master 2A Informatique P. DECIM (Décision et Optimisation),,M,2,13
+2MINF3_711,Master 2A Informatique P. IDM (Image et Données Multimédia),,M,2,13
+2MINF2_711,Master 2A Informatique P. E-SECURE (Sécurité des Systèmes Informatiques),,M,2,13
+1MMANA_701,Master 1A Management FC,,M,1,910
+M2CCHP_121,Master 2 2nd Degré parcours Champs professionnels,,M,2,980
+2MPATR_715,Master 2A Gestion du Patrimoine  BPRI + BRED - Fevrier 2021,,M,2,910
+1MINFO_701,Master 1A Informatique,,M,1,13
+2MMON2_716,Master 2A Monnaie Banque Finance Assurance P. RCPA - CAEN - promo 2,,M,2,910
+1MPATR_708,Master 1A Gestion du Patrimoine Arkéa - FC dédiée - Septembre 2020,,M,1,910
+2MPATR_716,Master 2 Gestion de Patrimoine CRED. AGR. CAEN - Décembre 2019,,M,2,910
+1MMIM_701,Master 1A In International Management (MIM) P. PME-PMI,,M,1,910
+2LGEO_901,Licence 2A Géographie et Aménagement,,L,2,11
+2MMSS5_712,Master 2A Management Sectoriel P. Management des Organisations Sociales - FOAD,,M,2,910
+3LLEAP_711,Licence 3A Langues Etrangères Appliquées Anglais/Portugais,,L,3,907
+1MNEU1_701,Master 1A Neurosciences P. Sciences des Comportements,,M,1,13
+1LLEAI_701,Licence 1A Langues Etrangères Appliquées P. Anglais/Italien,,L,1,907
+2MCOMP_713,Master 2A Comptabilité Contrôle Audit - FC,,M,2,910
+1MDCIV_701,Master 1A Droit Civil P. Protection des Personnes Vulnérable,,M,1,901
+1LLEAA_701,Licence 1A Langues Etrangères Appliquées P. Anglais/Allemand,,L,1,907
+2MDLIB_711,Master 2A Droit des Libertés,,M,2,901
+3LAPUB_711,Licence 3A Administration Publique,,L,3,901
+M2PIF_213,M2 MEEF Pratiques et Ingénierie de la Formation - parcours Médiation culturelle et enseignement,,M,2,980
+2LLAN1_701,Licence 2A Sciences du Langage,,L,2,12
+2LESPA_701,"Licence 2A Langues, Littératures et Civilisations Etrangères et Régionales P. Espagnol",,L,2,907
+2MMON2_711,Master 2A Monnaie Banque Finance Assurance P. Responsables de Clientèle Pro/Agri (RCPA) - FA/FC,,M,2,910
+1LMIAS_701,Licence 1A Mathématiques et Informatique Appliquées aux SHS,,L,1,13
+1MMAS_701,Master 1A Mathématiques Appliquées - Statistiques P. Statistiques Appliquées et Analyse Décisionnelle,,M,1,13
+2LLEAE_701,Licence 2A Langues Etrangères Appliquées Anglais/Espagnol,,L,2,907
+3LTERR_711,Licence 3A Sciences de la terre,,L,3,13
+2MADMI_715,Master 2A Management et Administration des Entreprises - EVREUX,,M,2,910
+2MCHI2_711,Master 2A Chimie P. Contrôle Environnement Industriel,,M,2,13
+3LGES4_711,Licence 3A Gestion P. Sciences Comptables et Financières - FI,,L,3,910
+2MGPRO_711,Master 2A Gestion de Production Logistique Achats - FA,,M,2,910
+1MARD1_701,"Master 1A Arts, Lettres et Civilisations P. Cinéma",,M,1,12
+3LLAN4_912,Licence 3A Sc du langage p. Linguistique et didactique du français langue maternelle et du FLE (à distance),,L,3,12
+1LAPUB_701,Licence 1A Administration Publique,,L,1,901
+2LANGL_701,Licence 2A LLCER P. Anglais,,L,2,907
+3LCHIM_711,Licence 3A Chimie,,L,3,13
+1MDECO_701,Master 1A Droit International et Droit Européen P. Droit et Régulation des Marchés Internationaux,,M,1,901
+2MINNO_711,Master 2A Innovation Entreprise Société P. Valorisation des Innovations Biotechnologiques (VIB)VIB,,M,2,13
+2LAECO_701,Licence 2A Administration Economique et Sociale,,L,2,901
+2MJUST_711,Master 2A Justice Procès Procédures P. Contentieux Privé,,M,2,901
+1LSTAP_701,Licence 1A STAPS - Etudiants dont le nom commence par A à F,,L,1,914
+1MMONN_702,Master 1A Monnaie Banque Finance Assurance P. Chargés d'affaires entreprises et institutions,,M,1,910
+2MMON1_711,Master 2A Monnaie Banque Finance Assurance P. Chargés d'Affaires Entreprise et Institutions (CAEI) - FA/FC,,M,2,910
+2MGPRO_712,Master 2A Gestion de Production Logistique Achats - FC,,M,2,910
+1MLLC1_701,Master 1A Langues Littératures et Civilisations Etrangères et Régionales (LLCER) P. Traduction Spécialisée,,M,1,907
+3LSOC2_711,Licence 3A Sociologie P. Sociologie et Sciences Politiques,,L,3,12
+1MPSY3_701,"Master 1A Psychologie P.Psychologie de l’enfant, de l’adolescent et de la famille",,M,1,924
+2MMINN_711,Master 2A Management de l'Innovation,,M,2,910
+2MSTPE_711,"Master 2A Sciences de la Terre et des Planètes, Environnement P. Ingénierie et Géosciences du Littoral",,M,2,13
+2MMARK_712,Master 2A Marketing Vente - FA/FC,,M,2,910
+2MLEA3_711,Master 2A Langues Etrangères Appliquées (LEA) P. Implantation Entreprises à l'International (IEI),,M,2,907
+WELCOM_901,VET UNIQUE POUR ETUDIANTS EN  ECHANGE,,L,1,970
+2LSOC3_701,"Licence 2A Sociologie P. Métiers du Social, du Médico-social et de l'Insertion",,L,2,12
+3LEEEA_711,"Licence 3A Electronique, Energie Electrique, Automatique",,L,3,13
+3LAEC2_711,Licence 3A Administration Economique et Sociales Parcours Economie-Gestion,,L,3,901
+2MARD3_712,"Master 2A Arts, Lettres et Civilisations P. Lettres ""Culture Ecritures Communication"" (CEMU)",,M,2,12
+2MMON3_711,"Master 2A Monnaie Banque Finance Assurance P. Gestion d'Actifs, Contrôle des Risques et Conformité (G2C)",,M,2,910
+1MDPUB_701,Master 1A Droit Public P. Carrières Publiques,,M,1,901
+1MMICR_702,Master 1A Microbiologie (réservé aux étudiants de médecine et pharmacien),,M,1,13
+1MCGAO_701,Master 1A Contrôle de Gestion et Audit Organisationnel - FA,,M,1,910
+1MLEA_701,Master 1A  Langues Etrangères Appliquées (LEA) P. Expert en Projets Européens (EPE),,M,1,907
+2LPSYC_701,Licence 2A Psychologie,,L,2,924
+2MSOC2_711,Master 2A Sociologie P. Gouvernance des Risques et de l'Environnement,,M,2,12
+1MINNO_701,Master 1A Innovation Entreprise Société P. Valorisation des Innovations Biotechnologiques (VIB),,M,1,13
+2MPHY3_711,Master 2A Physique P. Contrôle de l'Environnement Industriel,,M,2,13
+1LLET1_701,Licence 1A Lettres,,L,1,12
+2MDAFF_711,Master 2A Droit des Affaires P. Droit de la concurrence et de la distribution,,M,2,901
+1MHIS1_702,Master 1A Histoire P. Histoire (CEMU),,M,1,12
+2LLET1_701,Licence 2A Lettres,,L,2,12
+2MURBA_711,"Master 2A Urbanisme et Aménagement P. Aménagement Durable, Urbanisme Rénové et Assistance à Maîtrise d'Ouvrage (MADURA)",,M,2,11
+2MMECA_711,Master 2A Mécanique,,M,2,13
+1MMINN_701,Master 1A Management de l'Innovation - FI,,M,1,910
+3LINFO_711,Licence 3A Informatique,,L,3,13
+2MPATR_711,Master 2A Gestion du Patrimoine,,M,2,910
+1LAECO_701,Licence 1A Administration Economique et Sociale,,L,1,901
+1LEDUC_701,Licence 1A Sciences de l'Education,,L,1,12
+2MPSY1_711,Master 2A Psychologie P. Psychologie psycho-dynamique clinique et pathologique,,M,2,924
+3LART1_711,Licence 3A Arts du Spectacle P. Cinéma,,L,3,12
+3LSAN2_711,Licence 3A Sciences pour la Santé P. Neurosciences,,L,3,13
+3LGES2_711,Licence 3A Gestion P. Management des Opérations,,L,3,910
+INF3M1_303,"Master 1 Informatique Parcours Intelligence Artificielle, Sciences des données et Santé",,M,1,13
+INF3M2_313,"Master 2 Informatique Parcours Intelligence Artificielle, Sciences des données et Santé",,M,2,13
+MCVO8_211,DES Médecine cardio-vasculaire OPTION Imagerie cardiovasculaire d'expertise,,M,1,14

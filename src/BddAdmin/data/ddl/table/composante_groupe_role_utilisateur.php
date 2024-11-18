@@ -6,7 +6,7 @@ return [
     'schema'      => 'public',
     'name'        => 'composante_groupe_role_utilisateur',
     'temporary'   => FALSE,
-    'logging'     => FALSE,
+    'logging'     => TRUE,
     'commentaire' => NULL,
     'sequence'    => 'composante_groupe_role_utilisateur_id_seq',
     'columns'     => [

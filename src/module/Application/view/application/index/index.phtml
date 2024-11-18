@@ -43,11 +43,22 @@ $period = $this->period;
 					<?php if ($isShib): ?>
 
 
-							<div class="col-md-6">
+							<div class="col">
 
-								<?=
-								$this->partial('partials/shibWayf.phtml', []);
+								<?php
+                                    // Emebedded wayf, désactivé à cause des instabilités
+                                    // echo $this->partial('partials/shibWayf.phtml', []);
 								?>
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <form method="POST" action="/auth/connexion/shib">
+                                            <input type="hidden" name="type[]" value="shib">
+                                            <button type="submit" style="padding: 20px;" class="btn btn-info btn-lg">
+                                                <?php echo $this->translate('Login with my university')?>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
 
 							</div>
 

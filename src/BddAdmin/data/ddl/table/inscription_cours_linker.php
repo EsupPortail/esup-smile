@@ -6,7 +6,7 @@ return [
     'schema'      => 'public',
     'name'        => 'inscription_cours_linker',
     'temporary'   => FALSE,
-    'logging'     => FALSE,
+    'logging'     => TRUE,
     'commentaire' => NULL,
     'sequence'    => 'inscription_cours_linker_id_seq',
     'columns'     => [

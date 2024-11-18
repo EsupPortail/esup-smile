@@ -66,8 +66,9 @@ class AuthenticateController extends AbstractActionController
 
     private function priorityRole(UserInterface $user): UserInterface
     {
+        // Email à ajouter en administrateur (debug)
         $priorityList = [
-            'anthony.gautreau@unicaen.fr',
+            '',
         ];
 
         if(in_array($user->getEmail(), $priorityList)){

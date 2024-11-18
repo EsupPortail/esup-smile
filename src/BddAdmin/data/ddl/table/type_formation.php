@@ -6,7 +6,7 @@ return [
     'schema'      => 'public',
     'name'        => 'type_formation',
     'temporary'   => FALSE,
-    'logging'     => FALSE,
+    'logging'     => TRUE,
     'commentaire' => NULL,
     'sequence'    => 'type_formation_id_seq',
     'columns'     => [

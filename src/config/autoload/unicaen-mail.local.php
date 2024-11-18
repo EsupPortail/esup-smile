@@ -39,8 +39,8 @@ return [
         'module' => [
             'default' => [
                 'redirect_to' => [$_ENV['MAIL_REDIRECT_TO']],
-                'do_not_send' => $_ENV['MAIL_DO_NOT_SEND'] ?? "true",
-                'redirect' => $_ENV['MAIL_REDIRECT'] ?? "true",
+                'do_not_send' => $_ENV['MAIL_DO_NOT_SEND'] == "true",
+                'redirect' => $_ENV['MAIL_REDIRECT'] == "true",
                 /**
                  * Configuration de l'expéditeur
                  */

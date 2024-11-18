@@ -6,7 +6,7 @@ return [
     'schema'      => 'public',
     'name'        => 'message',
     'temporary'   => FALSE,
-    'logging'     => FALSE,
+    'logging'     => TRUE,
     'commentaire' => NULL,
     'sequence'    => 'message_id_seq',
     'columns'     => [

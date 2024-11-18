@@ -270,21 +270,23 @@ $inscription = $this->inscription;
                     { "data": "select" },
                 ],
                 "ajax": {
-                    "url": "",
+                    "url": "/dashboard/courses",
                     "type": "POST",
                     "dataSrc": function(json) {
-                        let parsed = JSON.parse(json)
-                        parsed.forEach((j) => {
-                            if (j.selected === 'true') {
-                                allChecked.push({
-                                    ects: parseInt(j.ects),
-                                    composanteId: j.composanteId,
-                                    formationId: j.formationId,
-                                    formationLibelle: j.formationLibelle
-                                })
-                            }
-                        })
-                        return JSON.parse(json)
+                        if(json) {
+                            let parsed = JSON.parse(json)
+                            parsed.forEach((j) => {
+                                if (j.selected === 'true') {
+                                    allChecked.push({
+                                        ects: parseInt(j.ects),
+                                        composanteId: j.composanteId,
+                                        formationId: j.formationId,
+                                        formationLibelle: j.formationLibelle
+                                    })
+                                }
+                            })
+                            return JSON.parse(json)
+                        }
                     }
                 },
             });

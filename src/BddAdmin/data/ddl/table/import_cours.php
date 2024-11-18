@@ -6,7 +6,7 @@ return [
     'schema'      => 'public',
     'name'        => 'import_cours',
     'temporary'   => FALSE,
-    'logging'     => FALSE,
+    'logging'     => TRUE,
     'commentaire' => NULL,
     'sequence'    => 'import_cours_id_seq',
     'columns'     => [

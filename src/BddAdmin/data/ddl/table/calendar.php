@@ -6,7 +6,7 @@ return [
     'schema'      => 'public',
     'name'        => 'calendar',
     'temporary'   => FALSE,
-    'logging'     => FALSE,
+    'logging'     => TRUE,
     'commentaire' => NULL,
     'sequence'    => 'calendar_id_seq',
     'columns'     => [

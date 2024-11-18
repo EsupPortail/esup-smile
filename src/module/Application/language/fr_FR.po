@@ -324,3 +324,6 @@ msgstr "Novembre"
 
 msgid "December"
 msgstr "Décembre"
+
+msgid "Login with my university"
+msgstr "Se connecter avec mon université"

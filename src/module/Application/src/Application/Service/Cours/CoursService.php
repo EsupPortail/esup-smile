@@ -29,7 +29,7 @@ class CoursService extends CommonEntityService implements HistoServiceInterface
 
     public function findAll()
     {
-        return $this->findAllBy([], ["libelle" => "ASC"]);
+        return $this->findAllBy(['deletedOn' => null], ["libelle" => "ASC"]);
     }
 
     public function findAllOpenMobilite()
@@ -44,7 +44,7 @@ class CoursService extends CommonEntityService implements HistoServiceInterface
          * @var Cours[] $cours
          */
         $yo = [];
-        $cours = $this->findAllBy(['ouvertMobilite' => 1]);
+        $cours = $this->findAllBy(['ouvertMobilite' => 1, 'deletedOn' => null]);
         foreach ($cours as $c) {
             if($c->getMobilite()) {
                 foreach ($c->getMobilite() as $m) {
@@ -64,7 +64,7 @@ class CoursService extends CommonEntityService implements HistoServiceInterface
          * @var Formation $f
          */
         foreach ($formations as $f) {
-            $c = $this->findAllBy(['formation' => $f->getId()]);
+            $c = $this->findAllBy(['formation' => $f->getId(), 'deletedOn' => null]);
             $cours = array_merge($cours, $c);
         }
 

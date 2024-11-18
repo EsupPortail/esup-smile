@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4d8aac1e87e3ad36fd8a51f95cfb1728",
+    "content-hash": "07d009ea108c2476ed89de7df025e6a1",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -7777,11 +7777,11 @@
         },
         {
             "name": "unicaen/app",
-            "version": "6.1.4",
+            "version": "6.1.7",
             "source": {
                 "type": "git",
                 "url": "https://git.unicaen.fr/lib/unicaen/app.git",
-                "reference": "9eed2d5eb54a104ee637b36a2057cab9d272b56e"
+                "reference": "07776a260739c36dd119c1923f9b232b8bc7b4aa"
             },
             "require": {
                 "beberlei/assert": "^3.3",
@@ -7833,7 +7833,7 @@
                 ]
             },
             "description": "Module de base des applications unicaen",
-            "time": "2024-02-13T13:34:36+00:00"
+            "time": "2024-09-20T09:04:42+00:00"
         },
         {
             "name": "unicaen/authentification",
@@ -7867,11 +7867,11 @@
         },
         {
             "name": "unicaen/bddadmin",
-            "version": "0.9.8",
+            "version": "0.9.10",
             "source": {
                 "type": "git",
                 "url": "https://git.unicaen.fr/lib/unicaen/bddadmin.git",
-                "reference": "2e43aa1cd6e174bf77785551205fcdd1f9d805ea"
+                "reference": "5215cd8806247c3df0c3d38d8e1b144646081449"
             },
             "require": {
                 "php": ">=8.2"
@@ -7887,7 +7887,7 @@
                 ]
             },
             "description": "Module pour administrer des bases de données Postgresql et Oracle",
-            "time": "2024-08-22T09:14:05+00:00"
+            "time": "2024-10-15T14:39:09+00:00"
         },
         {
             "name": "unicaen/bjy-authorize",
@@ -8026,11 +8026,11 @@
         },
         {
             "name": "unicaen/mail",
-            "version": "6.1.5",
+            "version": "6.1.9",
             "source": {
                 "type": "git",
                 "url": "https://git.unicaen.fr/lib/unicaen/mail.git",
-                "reference": "7ee027b6ccfcbd93c55f5b53374769e92737f3cb"
+                "reference": "6c6563152e2b2e7ddbaffd93b8fb2ecd90baf269"
             },
             "require": {
                 "unicaen/privilege": "^6"
@@ -8043,15 +8043,15 @@
                 ]
             },
             "description": "Module d'envoi de mail",
-            "time": "2024-03-15T15:16:54+00:00"
+            "time": "2024-11-12T16:22:00+00:00"
         },
         {
             "name": "unicaen/parametre",
-            "version": "6.0.5",
+            "version": "6.1.1",
             "source": {
                 "type": "git",
                 "url": "https://git.unicaen.fr/lib/unicaen/parametre.git",
-                "reference": "02ba71859b1dbfa7571be48814f8ff0e4dc954b9"
+                "reference": "5bd013596e35e8a8a5917c488eb77e8597e47c71"
             },
             "require": {
                 "unicaen/privilege": "^6.0"
@@ -8064,18 +8064,17 @@
                 ]
             },
             "description": "Module de gestion de paramètres",
-            "time": "2024-04-30T07:11:07+00:00"
+            "time": "2024-10-30T09:09:38+00:00"
         },
         {
             "name": "unicaen/pdf",
-            "version": "6.1.0",
+            "version": "6.1.1",
             "source": {
                 "type": "git",
                 "url": "https://git.unicaen.fr/lib/unicaen/pdf.git",
-                "reference": "7625ae471c75c0c66debf77a768f921a59b39e12"
+                "reference": "1a0b52ed24ea0d67cdfe1d1f19a1d35393c37338"
             },
             "require": {
-                "laminas/laminas-dependency-plugin": "^2.1",
                 "laminas/laminas-view": "^2.22",
                 "mpdf/mpdf": "^8.0",
                 "php": "^8.0",
@@ -8096,18 +8095,19 @@
                 ]
             },
             "description": "Génération PDF",
-            "time": "2023-05-05T14:22:59+00:00"
+            "time": "2024-07-18T08:02:04+00:00"
         },
         {
             "name": "unicaen/privilege",
-            "version": "6.0.4",
+            "version": "6.2.0",
             "source": {
                 "type": "git",
                 "url": "https://git.unicaen.fr/lib/unicaen/privilege.git",
-                "reference": "3c06570022739634d64fa21be497c8cf174de028"
+                "reference": "ed4d971002a0a33239fa0b327c856a67439d1741"
             },
             "require": {
-                "unicaen/app": ">=5.0"
+                "unicaen/app": ">=5.0",
+                "unicaen/utilisateur": "^6.2"
             },
             "require-dev": {
                 "phpunit/phpunit": ">=3.7"
@@ -8122,15 +8122,15 @@
                 ]
             },
             "description": "Module reprenant la gestion des privileges  - Version laminas",
-            "time": "2023-11-15T15:38:30+00:00"
+            "time": "2024-04-05T14:33:37+00:00"
         },
         {
             "name": "unicaen/renderer",
-            "version": "6.0.3",
+            "version": "6.1.7",
             "source": {
                 "type": "git",
                 "url": "https://git.unicaen.fr/lib/unicaen/renderer.git",
-                "reference": "1225f272d419d4b7b784ed4803fd6782bcad9f91"
+                "reference": "ff7b51fff2e9385ef1d26131225dafe66b183870"
             },
             "require": {
                 "php": "^8.0",
@@ -8143,7 +8143,7 @@
                 ]
             },
             "description": "Module de rendu de texte avec templates et macros",
-            "time": "2023-09-19T14:07:52+00:00"
+            "time": "2024-08-23T06:26:35+00:00"
         },
         {
             "name": "unicaen/shell",
@@ -8199,11 +8199,11 @@
         },
         {
             "name": "unicaen/utilisateur",
-            "version": "6.2.1",
+            "version": "6.2.3",
             "source": {
                 "type": "git",
                 "url": "https://git.unicaen.fr/lib/unicaen/utilisateur.git",
-                "reference": "83a07e8944e1b7c21860051e159a20f067cb7e6f"
+                "reference": "92ca37b242a4c0b45da6a9c0ac1dda88b7b64481"
             },
             "require": {
                 "unicaen/app": "^6.1",
@@ -8226,7 +8226,7 @@
                 ]
             },
             "description": "Module reprenant la gestion des utilisateurs, privileges et roles - Version laminas",
-            "time": "2024-04-26T09:52:58+00:00"
+            "time": "2024-08-23T07:46:32+00:00"
         },
         {
             "name": "unicaen/vue",
